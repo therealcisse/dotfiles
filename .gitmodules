@@ -7,3 +7,6 @@
 [submodule "roles/dotfiles/files/.oh-my-zsh"]
 	path = roles/dotfiles/files/.oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh
+[submodule "vendor/ansible"]
+	path = vendor/ansible
+	url = https://github.com/ansible/ansible
