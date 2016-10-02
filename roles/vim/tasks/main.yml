@@ -1,0 +1,87 @@
+---
+- block:
+    - name: setup
+      include_vars: "{{ item }}"
+      with_first_found:
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - default.yml
+
+    - name: setup
+      include_vars: "{{ ansible_user_shell | basename }}.yml"
+  tags: always
+
+#####=== install ===#####
+
+- block:
+    - name: ubuntu/debian | setup
+      apt_repository: repo='ppa:neovim-ppa/unstable' state=present
+      # become: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: package | neovim
+      package: name={{ neovim_name }} state={{ neovim_install_state }}
+  # rescue:
+    # we don't have permission to use the system package manager
+    # - name: setup | user install
+      # include: user_install.yml
+  tags:
+    - bootstrap
+    - bootstrap_neovim
+    - install
+    - install_neovim
+    - update
+    - update_neovim
+
+- block:
+   - name: pip2 | neovim
+     pip: name=neovim executable={{ pip2_name }} state={{ neovim_install_state }}
+
+   - name: pip3 | neovim
+     pip: name=neovim executable={{ pip3_name }} state={{ neovim_install_state }}
+  ignore_errors: yes # these packages are not very essential and they are error prone
+  tags:
+    - bootstrap
+    - bootstrap_neovim
+    - install
+    - install_neovim
+    - update
+    - update_neovim
+
+#####=== configure ===#####
+
+- name: install | config files
+  template: >
+    src=files/init.vim
+    dest="{{ neovim_config_dir }}/init.vim"
+    force=yes
+  tags:
+    - bootstrap
+    - bootstrap_neovim
+    - configure
+    - configure_neovim
+    - update
+    - update_neovim
+
+- block:
+    - name: setup | vim-plug directory
+      file: path="{{ neovim_config_dir }}/autoload" state=directory
+
+    - name: install | vim-plug
+      get_url:
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: "{{ neovim_config_dir }}/autoload/plug.vim"
+        force: yes
+
+    - name: install | plugins
+      command: "nvim '+silent! +PlugUpdate!' +qall!"
+  tags:
+    - bootstrap
+    - bootstrap_neovim
+    - configure
+    - configure_neovim
+    - plugin
+    - plugin_neovim
+    - update
+    - update_neovim
+

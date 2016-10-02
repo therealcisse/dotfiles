@@ -1,0 +1,37 @@
+---
+# file: tasks/main.yml
+# Top-level installer for NVM & Node.js.
+#
+# @see https://github.com/creationix/nvm
+#
+
+- name: install NVM (Node Version Manager)
+  git: repo=https://github.com/creationix/nvm.git dest={{ nvm_install_path }}
+
+- name: activate NVM
+  template: >
+    src=../templates/activate-nvm.sh.j2
+    dest="{{ ansible_user_dir }}/.zshenv.d/activate-nvm.sh"
+
+
+#
+# "copy" scripts to server instead of "script" command
+# to avoid "setlocale LC_CTYPE" error
+#
+
+- name: copy scripts to server
+  copy: src="../files/{{ item }}"  dest="/tmp/"  mode="a+x"
+  with_items:
+    - check-nodejs-version.sh
+    - install-nodejs.sh
+
+- name: query installed Node.js versions
+  shell: LC_ALL="en_US.UTF-8"  /tmp/check-nodejs-version.sh  {{ nvm_exe_path }}
+  #script: ../files/check-nodejs-version.sh  {{ nvm_exe_path }}
+  register: nodejs_info
+
+- name: apply nvm.sh and set default version
+  shell: LC_ALL="en_US.UTF-8"  /tmp/install-nodejs.sh  {{ nvm_exe_path }}  {{ nodejs_version }}
+  #script: ../files/install-nodejs.sh  {{ nvm_exe_path }}  {{ nodejs_version }}
+  when: not (nodejs_info.stdout|from_json).ok  or  (nodejs_info.stdout|from_json).version.default != "{{ nodejs_version }}"
+

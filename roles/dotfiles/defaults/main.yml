@@ -1,0 +1,15 @@
+---
+dotfiles:
+  - .ackrc
+  - .agignore
+  - .gitattributes
+  - .gitconfig
+  - .gitignore
+  - .hammerspoon
+  - .inputrc
+  - .npmrc
+  - .tmux.conf
+  - .zshenv
+  - .zshrc
+  - .oh-my-zsh
+  - .base16-shell

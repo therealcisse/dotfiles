@@ -1,0 +1,22 @@
+[filter "media"]
+  clean = git media clean %f
+  smudge = git media smudge %f
+  required = true
+[user]
+  name = Amadou CISSE
+  email = cisse.amadou.9@gmail.com
+[filter "hawser"]
+  clean = git hawser clean %f
+  smudge = git hawser smudge %f
+  required = true
+[filter "lfs"]
+  clean = git lfs clean %f
+  smudge = git lfs smudge %f
+  required = true
+[core]
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+[status]
+  submoduleSummary = true
+[color]
+  ui = auto
