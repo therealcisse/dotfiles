@@ -148,14 +148,16 @@ color() {
 
   case "$BACKGROUND" in
   dark|light)
-    if [[ -x "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh" ]]; then
+    if [[ -f "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh" ]]; then
       echo "$SCHEME" >! "$BASE16_CONFIG"
       echo "$BACKGROUND" >> "$BASE16_CONFIG"
+      chmod +x "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh"
       "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh"
-    elif [[ -x "$BASE16_DIR/scripts/base16-$THEME.sh" ]]; then
+    elif [[ -f "$BASE16_DIR/scripts/base16-$SCHEME.sh" ]]; then
       echo "$SCHEME" >! "$BASE16_CONFIG"
       echo dark >> "$BASE16_CONFIG"
-      "$BASE16_DIR/scripts/base16-$THEME.sh"
+      chmod +x "$BASE16_DIR/scripts/base16-$SCHEME.sh"
+      "$BASE16_DIR/scripts/base16-$SCHEME.sh"
     else
       echo "Scheme '$SCHEME' not found in $BASE16_DIR"
       return 1

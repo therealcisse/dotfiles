@@ -6,3 +6,8 @@
     line=/usr/local/bin/zsh
     owner=root
   become: yes
+
+- name: Set zsh as default shell
+  command: chsh -s /usr/local/bin/zsh {{ ansible_user_id }}
+  become: yes
+

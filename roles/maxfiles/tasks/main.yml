@@ -14,5 +14,3 @@
     - limit.maxfiles.plist
   become: yes
 
-- name: maxfiles | copy maxfiles.zsh
-  copy: dest=~/.zshenv.d/maxfiles.zsh src=maxfiles.zsh

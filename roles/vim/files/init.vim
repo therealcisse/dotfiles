@@ -268,7 +268,7 @@ call plug#begin('{{ neovim_config_dir }}/plugged')
 
   Plug 'derekwyatt/vim-scala', { 'for': [ 'scala' ] }
 
-  Plug 'xolox/vim-notes'
+  Plug 'xolox/vim-notes', { 'for': [ 'markdown' ] }
   Plug 'xolox/vim-misc'
   " Plug 'xolox/vim-easytags'
 
@@ -281,8 +281,8 @@ call plug#begin('{{ neovim_config_dir }}/plugged')
   " Plug 'majutsushi/tagbar'
 
   Plug 'maksimr/vim-jsbeautify', {'for': [ 'javascript', 'javascript.jsx' ]}
-  Plug 'ternjs/tern_for_vim'
-  Plug 'carlitux/deoplete-ternjs'
+  Plug 'ternjs/tern_for_vim', {'for': [ 'javascript', 'javascript.jsx' ]}
+  Plug 'carlitux/deoplete-ternjs', {'for': [ 'javascript', 'javascript.jsx' ]}
 
   Plug 'ryanoasis/vim-webdevicons'
 
@@ -294,6 +294,8 @@ call plug#begin('{{ neovim_config_dir }}/plugged')
   " Plug 'othree/javascript-libraries-syntax.vim'
 
   Plug 'qpkorr/vim-bufkill'
+
+  Plug  'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
 
 " call vundle#end()
 call plug#end()
@@ -581,7 +583,7 @@ function s:CheckColorScheme()
     endif
   else " default
     set background=dark
-    color base16-tomorrow
+    colorscheme base16-ocean
   endif
 
   " execute 'highlight Comment cterm=italic'
@@ -589,7 +591,7 @@ function s:CheckColorScheme()
   " Allow for overrides:
   " - `statusline.vim` will re-set User1, User2 etc.
   " - `after/plugin/loupe.vim` will override Search.
-  doautocmd ColorScheme
+  " doautocmd ColorScheme
 endfunction
 
 if v:progname !=# 'vi'
@@ -709,7 +711,8 @@ let g:NERDTreeMouseMode=2
 " [,v ] Make the opening of the `.vimrc` file easier.
 
 " nmap <leader>v :e $MYVIMRC<CR>
-nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+" nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
 nmap <leader>rv :source $MYVIMRC<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

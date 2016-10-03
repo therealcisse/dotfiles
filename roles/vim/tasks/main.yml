@@ -3,12 +3,9 @@
     - name: setup
       include_vars: "{{ item }}"
       with_first_found:
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
-        - default.yml
-
-    - name: setup
-      include_vars: "{{ ansible_user_shell | basename }}.yml"
+        - "roles/vim/vars/{{ ansible_distribution }}.yml"
+        - "roles/vim/vars/{{ ansible_os_family }}.yml"
+        - roles/vim/vars/default.yml
   tags: always
 
 #####=== install ===#####
@@ -50,9 +47,18 @@
 
 #####=== configure ===#####
 
+- name: install | create config folders
+  file: path="{{ neovim_config_dir }}{{ item }}" state=directory
+  with_items:
+    -
+    - /tmp
+    - /tmp/backups
+    - /tmp/undos
+    - /tmp/swaps
+
 - name: install | config files
   template: >
-    src=files/init.vim
+    src=roles/vim/files/init.vim
     dest="{{ neovim_config_dir }}/init.vim"
     force=yes
   tags:
@@ -74,7 +80,7 @@
         force: yes
 
     - name: install | plugins
-      command: "nvim '+silent! +PlugUpdate!' +qall!"
+      command: "nvim '+silent! +PlugInstall!' +qall!"
   tags:
     - bootstrap
     - bootstrap_neovim
