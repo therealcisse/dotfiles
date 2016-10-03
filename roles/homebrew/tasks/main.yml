@@ -26,4 +26,5 @@
   command: brew bundle cleanup chdir=roles/homebrew/files
 
 - name: fzf | Install fzf shell extensions
-  command: /usr/local/opt/fzf/install
+  command: /usr/local/opt/fzf/install --no-update-rc --64
+

@@ -97,13 +97,13 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-test -e "$HOME/Library/Android/sdk" && export ANDROID_HOME=$HOME/Library/Android/sdk
+test -e "~/Library/Android/sdk" && export ANDROID_HOME=$HOME/Library/Android/sdk
 
 alias play=activator
 
-test -e "$HOME/.bin" && export PATH=$PATH:$HOME/.bin
+test -e "~/.bin" && export PATH=$PATH:~/.bin
 
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export DISABLE_AUTO_TITLE='true'
 
