@@ -4,6 +4,8 @@
 
 scriptencoding utf-8
 
+set termguicolors
+
 set nocompatible               " Don't make Vim vi-compatibile.
 
 syntax on                      " Enable syntax highlighting.
@@ -221,7 +223,8 @@ call plug#begin('{{ neovim_config_dir }}/plugged')
   Plug 'kana/vim-textobj-line'   " al, il
 
   Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
-  Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
+  " Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
+  Plug 'maxmellon/vim-jsx-pretty', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'elzr/vim-json', { 'for': [ 'json' ] }
   Plug 'flazz/vim-colorschemes'
   Plug 'matchit.zip'
@@ -296,6 +299,9 @@ call plug#begin('{{ neovim_config_dir }}/plugged')
   Plug 'qpkorr/vim-bufkill'
 
   Plug  'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
+
+  " Plug 'junegunn/goyo.vim'
+  " Plug 'junegunn/limelight.vim'
 
 " call vundle#end()
 call plug#end()
@@ -1456,7 +1462,7 @@ nnoremap ; :
 
 nnoremap <leader>v V`]
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Delete current buffer
 map <C-c> :BD<cr>
@@ -1482,3 +1488,46 @@ map <C-c> :BD<cr>
 "     call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
 "   endif
 " endfunction
+
+" Goyo & Limelight
+
+" function! s:goyo_enter()
+"   silent !tmux set status off
+"   silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+"   set noshowmode
+"   set noshowcmd
+"   " set scrolloff=999
+"   Limelight
+"   " ...
+" endfunction
+"
+" function! s:goyo_leave()
+"   silent !tmux set status on
+"   silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+"   set showmode
+"   set showcmd
+"   " set scrolloff=5
+"   Limelight!
+"   " ...
+" endfunction
+"
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave()
+"
+" map <leader>z :Goyo<cr>
+"
+" let g:goyo_width='100%-10%'
+"
+" let g:goyo_linenr=1
+
+
+" augroup VimJsxPretty
+"   autocmd!
+"   autocmd VimEnter *.js,*.jsx highlight jsNoise ctermfg=197 cterm=bold guifg=#F92672 gui=bold
+"   autocmd VimEnter *.js,*.jsx highlight jsArrowFunction ctermfg=197 cterm=bold guifg=#F92672 gui=bold
+"   autocmd VimEnter *.js,*.jsx highlight jsObjectBraces ctermfg=197 cterm=bold guifg=#F92672 gui=bold
+"   autocmd VimEnter *.js,*.jsx highlight jsFuncBraces ctermfg=118 guifg=#A6E22E
+"   autocmd VimEnter *.js,*.jsx highlight jsFuncCall ctermfg=228 guifg=#A6A5AE
+"   autocmd VimEnter *.js,*.jsx highlight jsBrackets cterm=bold gui=bold
+" augroup END
+

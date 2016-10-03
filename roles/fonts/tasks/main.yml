@@ -14,8 +14,7 @@
   register: fontCloned
 
 - name: Install Fonts
-  shell: ~/.config/nerd-fonts/install.sh SourceCodePro
+  shell: ~/.config/nerd-fonts/install.sh SourceCodePro chdir=~/.config/nerd-fonts/
   when:
-    - not nerdFonts.stat.exists
     - fontCloned|success
 
