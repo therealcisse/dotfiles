@@ -1533,3 +1533,8 @@ map <C-c> :BD<cr>
 
 nmap Y y$
 
+let s:vimrc_local = '~/.vimrc.local'
+if filereadable(s:vimrc_local)
+  execute 'source ' . s:vimrc_local
+endif
+

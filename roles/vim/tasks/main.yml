@@ -13,15 +13,11 @@
 - block:
     - name: ubuntu/debian | setup
       apt_repository: repo='ppa:neovim-ppa/unstable' state=present
-      # become: yes
+      become: yes
       when: ansible_os_family == 'Debian'
 
     - name: package | neovim
       package: name={{ neovim_name }} state={{ neovim_install_state }}
-  # rescue:
-    # we don't have permission to use the system package manager
-    # - name: setup | user install
-      # include: user_install.yml
   tags:
     - bootstrap
     - bootstrap_neovim
@@ -55,6 +51,14 @@
     - /tmp/backups
     - /tmp/undos
     - /tmp/swaps
+
+- name: install | link config folders
+  file: >
+    src="roles/vim/files/{{ item }}"
+    dst="{{ neovim_config_dir }}/{{ item }}"
+    state=link
+  with_items:
+    -  snippets
 
 - name: install | config files
   template: >

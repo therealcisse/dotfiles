@@ -23,7 +23,7 @@ sudo nvram SystemAudioVolume=" "
 #   "/System/Library/CoreServices/Menu Extras/Clock.menu" 2> 1
 
 # Disables "Scroll direction: natural" in favor of old and correct style.
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
 # Set highlight color to green
 defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
@@ -245,9 +245,9 @@ fi
 
 # System Preferences -> General -> Appearance -> Automatically hide and show the menu bar
 if [ -z `defaults read NSGlobalDomain _HIHideMenuBar 2> /dev/null` ]; then
-  defaults write NSGlobalDomain _HIHideMenuBar -int 1
+  defaults write NSGlobalDomain _HIHideMenuBar -int 0
 elif [ `defaults read NSGlobalDomain _HIHideMenuBar` -ne 1 ]; then
-  defaults write NSGlobalDomain _HIHideMenuBar -int 1
+  defaults write NSGlobalDomain _HIHideMenuBar -int 0
 fi
 
 # System Preferences -> General -> Appearance -> Graphite

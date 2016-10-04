@@ -4,6 +4,9 @@
     path: ~/.config/nerd-fonts
   register: nerdFonts
 
+- name: Install Fonts | create config folders
+  file: path=~/.config state=directory
+
 - name: Cloning nerd-fonts
   git:
     repo=https://github.com/ryanoasis/nerd-fonts
