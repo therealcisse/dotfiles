@@ -1465,7 +1465,7 @@ nnoremap <leader>v V`]
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Delete current buffer
-map <C-c> :BD<cr>
+map <C-c> :bd<cr>
 
 " Tabularize
 "
@@ -1531,10 +1531,25 @@ map <C-c> :BD<cr>
 "   autocmd VimEnter *.js,*.jsx highlight jsBrackets cterm=bold gui=bold
 " augroup END
 
+" Expected behavior
+
 nmap Y y$
 
-let s:vimrc_local = '~/.vimrc.local'
-if filereadable(s:vimrc_local)
-  execute 'source ' . s:vimrc_local
+" Backspace should delete selection and put me in insert mode
+
+vnoremap <BS> "_xi
+
+" ----------------------------------------------------------------------
+" | Local Settings                                                     |
+" ----------------------------------------------------------------------
+
+" Load local settings if they exist.
+"
+" [!] The following needs to remain at the end of this file in
+"     order to allow any of the above settings to be overwritten
+"     by the local ones.
+
+if filereadable(glob("~/.vimrc.local"))
+  source ~/.vimrc.local
 endif
 

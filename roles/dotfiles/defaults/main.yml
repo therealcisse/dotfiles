@@ -5,7 +5,6 @@ dotfiles:
   - .gitattributes
   - .gitconfig
   - .gitignore
-  - .hammerspoon
   - .inputrc
   - .npmrc
   - .tmux.conf
