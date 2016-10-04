@@ -1531,3 +1531,5 @@ map <C-c> :BD<cr>
 "   autocmd VimEnter *.js,*.jsx highlight jsBrackets cterm=bold gui=bold
 " augroup END
 
+nmap Y y$
+
