@@ -1,0 +1,7 @@
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
+sudo apt-get -y install python-software-properties software-properties-common \
+    gcc make build-essential libssl-dev libffi-dev python-dev \
+    git-core tmux python3 python ssh zsh xclip

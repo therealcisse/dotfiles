@@ -18,6 +18,8 @@
 
     - name: package | neovim
       package: name={{ neovim_name }} state={{ neovim_install_state }}
+      become: yes
+      when: ansible_os_family == 'Debian'
   tags:
     - bootstrap
     - bootstrap_neovim

@@ -248,3 +248,10 @@ function tmux() {
 alias t=tmux
 alias v=nvim
 
+HOST_OS=$(uname)
+
+if [ "$HOST_OS" = 'Linux' ]; then
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+fi
+

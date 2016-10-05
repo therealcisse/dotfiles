@@ -6,8 +6,15 @@
     line=/usr/local/bin/zsh
     owner=root
   become: yes
+  when: ansible_os_family == 'Darwin'
 
-- name: Set zsh as default shell
+- name: Darwin | Set zsh as default shell
   command: chsh -s /usr/local/bin/zsh {{ ansible_user_id }}
   become: yes
+  when: ansible_os_family == 'Darwin'
+
+- name: Debian | Set zsh as default shell
+  command: chsh -s /usr/bin/zsh {{ ansible_user_id }}
+  become: yes
+  when: ansible_os_family == 'Debian'
 

@@ -247,7 +247,7 @@ fi
 if [ -z `defaults read NSGlobalDomain _HIHideMenuBar 2> /dev/null` ]; then
   defaults write NSGlobalDomain _HIHideMenuBar -int 0
 elif [ `defaults read NSGlobalDomain _HIHideMenuBar` -ne 1 ]; then
-  defaults write NSGlobalDomain _HIHideMenuBar -int 0
+  defaults write NSGlobalDomain _HIHideMenuBar -int 1
 fi
 
 # System Preferences -> General -> Appearance -> Graphite
