@@ -296,7 +296,7 @@ call plug#begin('{{ neovim_config_dir }}/plugged')
 
   " Plug 'othree/javascript-libraries-syntax.vim'
 
-  Plug 'qpkorr/vim-bufkill'
+  " Plug 'qpkorr/vim-bufkill'
 
   Plug  'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
 
