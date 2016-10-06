@@ -601,12 +601,12 @@ function s:CheckColorScheme()
 endfunction
 
 if v:progname !=# 'vi'
-  if has('autocmd')
-    augroup AmsaykAutocolor
-      autocmd!
-      autocmd FocusGained * call s:CheckColorScheme()
-    augroup END
-  endif
+  " if has('autocmd')
+  "   augroup AmsaykAutocolor
+  "     autocmd!
+  "     autocmd FocusGained * call s:CheckColorScheme()
+  "   augroup END
+  " endif
 
   call s:CheckColorScheme()
 endif
@@ -623,14 +623,17 @@ let mapleader = ","
 
 " [,* ] Search and replace the word under the cursor.
 
-nmap <leader>* :%s/\<<C-r><C-w>\>//<Left>
+" Replace all
+
+nmap <leader>r :%s/\<<C-r><C-w>\>//<Left>
+vnoremap <leader>r "sy:%s/<c-r>s/"
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 " [,cc] Toggle code comments.
 " https://github.com/tomtom/tcomment_vim
 
-map <leader>cc :TComment<CR>
+" map <leader>cc :TComment<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -643,7 +646,7 @@ nmap <leader>cr 0yt=A<C-r>=<C-r>"<CR><Esc>
 
 " [,cs] Clear search.
 
-map <leader>cs <Esc>:noh<CR>
+" map <leader>cs <Esc>:noh<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1309,8 +1312,8 @@ noremap <leader>q :q<cr>
 
 " Apply macros with Q
 
-nnoremap Q @q
-vnoremap Q :norm @q<cr>
+" nnoremap Q @q
+" vnoremap Q :norm @q<cr>
 
 " Align current paragraph
 
@@ -1458,6 +1461,11 @@ nnoremap k gk
 
 nnoremap ; :
 
+nnoremap q; q: " much easier to hit
+command! Q q
+
+nnoremap <F5> :e %<CR> " reload file
+
 " au FocusLost * :wa
 
 nnoremap <leader>v V`]
@@ -1538,6 +1546,9 @@ nmap Y y$
 " Backspace should delete selection and put me in insert mode
 
 vnoremap <BS> "_xi
+
+autocmd FocusLost * silent! wa " write all on lost focus
+autocmd TabLeave * silent! wa " autowriteall doesn't capture tab changing
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |
