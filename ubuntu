@@ -4,10 +4,25 @@ sudo apt-get dist-upgrade
 
 sudo apt-get -y install python-software-properties software-properties-common \
     gcc make build-essential libssl-dev libffi-dev python-dev \
-    git-core tmux python3 python ssh zsh xclip
+    git-core tmux python3 python ssh zsh xclip xsel \
+    libevent-dev libncurses-dev pkg-config \
+    autotools-dev automake
 
-if [ ! -e ~/.fzf ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install --no-update-rc --64
+if [ -e ~/.fzf ]; then
+  rm -fr ~/.fzf
 fi
 
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --no-update-rc --64
+
+if [ -e ~/.tmux ]; then
+  rm -fr ~/.tmux
+fi
+
+# Clone tmux from git
+git clone https://github.com/tmux/tmux.git ~/.tmux
+cd ~/.tmux
+./autogen.sh
+./configure
+make -j 12
+sudo make install

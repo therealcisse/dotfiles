@@ -56,9 +56,10 @@
 
 - name: install | link config folders
   file: >
-    src="roles/vim/files/{{ item }}"
-    path="{{ neovim_config_dir }}/{{ item }}"
+    src="{{ ansible_env.PWD }}/roles/vim/files/{{ item }}"
+    dest="{{ neovim_config_dir }}/{{ item }}"
     state=link
+    force=yes
   with_items:
     -  snippets
 

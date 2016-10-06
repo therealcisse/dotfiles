@@ -4,6 +4,8 @@
 <dict>
 	<key>AdjustWindowForFontSizeChange</key>
 	<true/>
+	<key>AllowClipboardAccess</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
@@ -51,6 +53,8 @@
 	<array/>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>524 257 701 297 0 0 1440 878 </string>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>503 353 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
@@ -58,13 +62,13 @@
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>155 119 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>124 360 570 427 0 0 1440 878 </string>
+	<string>19 43 1368 811 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>82 110 829 731 0 0 1440 878 </string>
+	<string>82 414 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>144 123 570 427 0 0 1440 878 </string>
+	<string>37 81 927 507 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>239 445 570 427 0 0 1440 900 </string>
+	<string>117 121 1088 603 0 0 1440 900 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -721,7 +725,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-10-03T01:40:11Z</date>
+	<date>2016-10-05T22:17:40Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>TabStyle</key>
@@ -733,6 +737,6 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.0.9</string>
+	<string>3.0.10</string>
 </dict>
 </plist>

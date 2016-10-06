@@ -85,10 +85,6 @@ fi
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 
-# export NVM_DIR="$HOME/.nvm"
-# # alias loadnvm="[ -s "$NVM_DIR/nvm.sh" ] && . $NVM_DIR/nvm.sh"
-# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 # Setting ag as the default source for fzf
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -101,7 +97,8 @@ test -e "~/Library/Android/sdk" && export ANDROID_HOME=$HOME/Library/Android/sdk
 
 alias play=activator
 
-test -e "~/.bin" && export PATH=$PATH:~/.bin
+test -e ~/.bin && export PATH=$PATH:~/.bin
+test -e ~/bin && export PATH=$PATH:~/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -122,9 +119,6 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
-
-# BASE16_SHELL=$HOME/.base16-shell
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 #
 # Colors
@@ -248,10 +242,4 @@ function tmux() {
 alias t=tmux
 alias v=nvim
 
-HOST_OS=$(uname)
-
-if [ "$HOST_OS" = 'Linux' ]; then
-  alias pbcopy='xclip -selection clipboard'
-  alias pbpaste='xclip -selection clipboard -o'
-fi
 
