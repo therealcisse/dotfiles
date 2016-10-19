@@ -121,8 +121,8 @@ call plug#end()
 
 " Use a different mapleader (default is '\').
 
-let mapleader='\<Space>'
-let maplocalleader='\\'
+let mapleader="\<Space>"
+let maplocalleader="\\"
 
 set termencoding=utf-8
 scriptencoding utf-8
