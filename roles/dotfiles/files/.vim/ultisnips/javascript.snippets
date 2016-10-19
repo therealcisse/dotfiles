@@ -1,0 +1,266 @@
+global !p
+fn_base = fn.split(os.extsep)[0];
+endglobal
+
+snippet "imp(ort)?" "import" !br
+import ${1:Module} from '${2}';
+endsnippet
+
+snippet "func?" "function" !r
+function ${1: name}(${2:arg}) {
+	$0
+}
+endsnippet
+
+#
+# console methods
+#
+
+snippet dir "console.dir"
+console.dir(${1});
+endsnippet
+
+snippet log "console.log"
+console.log(${1});
+endsnippet
+
+snippet time "console.time"
+console.time('${1}');
+endsnippet
+
+snippet end "console.timeEnd"
+console.timeEnd('${1}');
+endsnippet
+
+# -------------- r (react)
+snippet rc "React Component"
+class ${1:`!p snip.rv = fn_base`} extends React.Component {
+	static propTypes = {
+		${3:onMyAction: PropTypes.func.isRequired}
+	}
+
+	render() {
+		return (${2:<div>Hello world</div>});
+	}
+}
+endsnippet
+
+snippet rpc "React Pure Component"
+class ${1:`!p snip.rv = fn_base`} extends React.PureComponent {
+	render() {
+		return (${2:<div>Hello world</div>});
+	}
+}
+endsnippet
+
+snippet "\.(map|filter|forEach|reduce)" "Map with an arrow function" r
+.`!p snip.rv = match.group(1)`($1 => {
+		return $2;
+		});
+endsnippet
+
+snippet "\.(map|filter|forEach|reduce)=" "Map with an arrow function inline" r
+.`!p snip.rv = match.group(1)`($1 => $2)
+endsnippet
+
+snippet icx "Import classnames" b
+import cx from 'classnames';
+endsnippet
+
+snippet imm "Import immutable" b
+import Immutable from 'immutable';
+endsnippet
+
+snippet ed "Export default" b
+export default $0
+endsnippet
+
+# ==========================================
+# Component Specs and Lifecycle Section
+#
+snippet dp "get default props" b
+static defaultProps = {
+	$1
+};
+endsnippet
+
+snippet ct "get contextTypes" b
+static contextTypes = {
+	$1
+};
+endsnippet
+
+snippet pt "React prop types definition" b
+static propTypes = {
+	${1:className}: ${2:PropTypes.string},${0}
+};
+endsnippet
+
+
+snippet cwm "component will mount" b
+componentWillMount() {
+	$1
+}
+endsnippet
+
+snippet cdm "component did mount" b
+componentDidMount() {
+	$1
+}
+endsnippet
+
+snippet cwrp "component will receive props" b
+componentWillReceiveProps(nextProps) {
+	$1
+}
+endsnippet
+
+snippet scu "should component update" b
+shouldComponentUpdate(nextProps, nextState) {
+	return $1;
+}
+endsnippet
+
+snippet cwu "component will update" b
+componentWillUpdate(nextProps, nextState) {
+	$3
+}
+endsnippet
+
+snippet cdu "component did update" b
+componentDidUpdate(prevProps, prevState) {
+	$1
+}
+endsnippet
+
+snippet cwum "component will unmount" b
+componentWillUnmount() {
+	$1
+}
+endsnippet
+
+
+# ==========================================
+# Prop Types Section
+#
+
+# Inline prop types
+snippet pt.a "React PropTypes array" w
+PropTypes.array,
+endsnippet
+
+snippet pt.ar "React PropTypes array required" w
+PropTypes.array.isRequired,
+endsnippet
+
+snippet pt.b "React PropTypes boolean" w
+PropTypes.bool,
+endsnippet
+
+snippet pt.br "React PropTypes boolean required" w
+PropTypes.bool.isRequired,
+endsnippet
+
+snippet pt.f "React PropTypes function" w
+PropTypes.func,
+endsnippet
+
+snippet pt.fr "React PropTypes function required" w
+PropTypes.func.isRequired,
+endsnippet
+
+snippet pt.nu "React PropTypes number" w
+PropTypes.number,
+endsnippet
+
+snippet pt.nur "React PropTypes number required" w
+PropTypes.number.isRequired,
+endsnippet
+
+snippet pt.o "React PropTypes object" w
+PropTypes.object,
+endsnippet
+
+snippet pt.or "React PropTypes object required" w
+PropTypes.object.isRequired,
+endsnippet
+
+snippet pt.s "React PropType string" w
+PropTypes.string,
+endsnippet
+
+snippet pt.sr "React PropType string required" w
+PropTypes.string.isRequired,
+endsnippet
+
+snippet pt.no "React PropTypes node" w
+PropTypes.node,
+endsnippet
+
+snippet pt.nor "React PropTypes node required" w
+PropTypes.node.isRequired,
+endsnippet
+
+snippet pt.e "React PropTypes element" w
+PropTypes.element,
+endsnippet
+
+snippet pt.er "React PropTypes element required" w
+PropTypes.element.isRequired,
+endsnippet
+
+snippet pt.ao "React PropTypes arrayOf" w
+PropTypes.arrayOf(${1:PropTypes.string}),
+endsnippet
+
+snippet pt.aor "React PropTypes arrayOf required" w
+PropTypes.arrayOf(${1:PropTypes.string}).isRequired,
+endsnippet
+
+snippet pt.io "React PropTypes instanceOf" w
+PropTypes.instanceOf(${1:PropTypes.string}),
+endsnippet
+
+snippet pt.ior "React PropTypes instanceOf required" w
+PropTypes.instanceOf(${1:PropTypes.string}).isRequired,
+endsnippet
+
+snippet pt.oo "React PropTypes objectOf" w
+PropTypes.objectOf(${1:PropTypes.string}),
+endsnippet
+
+snippet pt.oor "React PropTypes objectOf required" w
+PropTypes.objectOf(${1:PropTypes.string}).isRequired,
+endsnippet
+
+snippet pt.one "React PropTypes oneOf" w
+PropTypes.oneOf(['$1'$2]),
+endsnippet
+
+snippet pt.oner "React PropTypes oneOf required" w
+PropTypes.oneOf(['$1'$2]).isRequired,
+endsnippet
+
+snippet pt.onet "React PropTypes onOfType" w
+PropTypes.oneOfType([
+	$1
+]),
+endsnippet
+
+snippet pt.onetr "React PropTypes onOfType required" w
+PropTypes.oneOfType([
+	$1
+]).isRequired,
+endsnippet
+
+snippet pt.sh "React PropTyes shape" w
+PropTypes.shape({
+	$1
+}),
+endsnippet
+
+snippet pt.shr "React PropTypes shape required" w
+React.PropTypes.shape({
+	$1
+}).isRequired,
+endsnippet

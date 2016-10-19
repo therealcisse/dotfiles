@@ -10,3 +10,6 @@
 [submodule "vendor/ansible"]
 	path = vendor/ansible
 	url = https://github.com/ansible/ansible
+[submodule "roles/dotfiles/files/.tpm"]
+	path = roles/dotfiles/files/.tpm
+	url = https://github.com/tmux-plugins/tpm

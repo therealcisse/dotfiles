@@ -21,12 +21,8 @@
       become: yes
       when: ansible_os_family == 'Debian'
   tags:
-    - bootstrap
-    - bootstrap_neovim
     - install
-    - install_neovim
-    - update
-    - update_neovim
+    - ubuntu
 
 - block:
    - name: pip2 | neovim
@@ -36,65 +32,31 @@
      pip: name=neovim executable={{ pip3_name }} state={{ neovim_install_state }}
   ignore_errors: yes # these packages are not very essential and they are error prone
   tags:
-    - bootstrap
-    - bootstrap_neovim
     - install
-    - install_neovim
-    - update
-    - update_neovim
+    - neovim-python
 
 #####=== configure ===#####
 
-- name: install | create config folders
-  file: path="{{ neovim_config_dir }}{{ item }}" state=directory
-  with_items:
-    -
-    - /tmp
-    - /tmp/backups
-    - /tmp/undos
-    - /tmp/swaps
-
-- name: install | link config folders
-  file: >
-    src="{{ ansible_env.PWD }}/roles/vim/files/{{ item }}"
-    dest="{{ neovim_config_dir }}/{{ item }}"
+- name: install | link config folder
+  file:
+    src="{{ vim_config_dir }}"
+    path="{{ neovim_config_dir }}"
     state=link
     force=yes
-  with_items:
-    -  snippets
-
-- name: install | config files
-  template: >
-    src=roles/vim/files/init.vim
-    dest="{{ neovim_config_dir }}/init.vim"
-    force=yes
-  tags:
-    - bootstrap
-    - bootstrap_neovim
-    - configure
-    - configure_neovim
-    - update
-    - update_neovim
 
 - block:
-    - name: setup | vim-plug directory
-      file: path="{{ neovim_config_dir }}/autoload" state=directory
-
     - name: install | vim-plug
       get_url:
         url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        dest: "{{ neovim_config_dir }}/autoload/plug.vim"
+        dest: "{{ vim_config_dir }}/autoload/plug.vim"
         force: yes
 
     - name: install | plugins
       command: "nvim '+silent! +PlugInstall!' +qall!"
   tags:
-    - bootstrap
-    - bootstrap_neovim
-    - configure
-    - configure_neovim
-    - plugin
-    - plugin_neovim
-    - update
-    - update_neovim
+    - neovim-config
 
+- name: vim | create or update spell file
+  command:
+    vim -u NONE -N -c 'mkspell! {{ spellfile }} | quit'
+    creates={{ spellfile }}.spl
