@@ -935,8 +935,8 @@ if has('viminfo')
   if exists('$SUDO_USER')
     set viminfo=                      " don't create root-owned files
   else
-    if isdirectory(expand('~/.vim/tmp'))
-      set viminfo+=n~/.vim/tmp/viminfo
+    if isdirectory(expand('~/.vim/tmp/info'))
+      set viminfo+=n~/.vim/tmp/info/viminfo
     endif
 
   endif

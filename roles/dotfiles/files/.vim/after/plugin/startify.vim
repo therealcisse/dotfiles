@@ -13,11 +13,11 @@ let g:startify_session_delete_buffers = 0
 
 let g:startify_skiplist = [
       \ 'COMMIT_EDITMSG',
-      \ '~/.vim/vimrc'
+      \ '~/.config/nvim/init.vim'
       \ ]
 
 let g:startify_bookmarks = [
-      \ '~/.vim/vimrc'
+      \ '~/.config/nvim/init.vim'
       \ ]
 
 let g:startify_custom_footer =
