@@ -42,7 +42,7 @@
 
 - name: vim | check for non-symlink neovim config directory
   command: test -e {{ neovim_config_dir }} -a ! -L {{ neovim_config_dir }}
-  failed_when: original_check.rc > 1
+  failed_when: neovim_config_dir_check.rc > 1
   register: neovim_config_dir_check
   changed_when: false
 

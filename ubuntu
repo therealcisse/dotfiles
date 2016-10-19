@@ -16,7 +16,7 @@ if [ -e ~/.fzf ]; then
 fi
 
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install --no-update-rc --64
+~/.fzf/install --no-update-rc --64 --key-bindings --completion
 
 if [ -e ~/.tmux ]; then
   rm -fr ~/.tmux
