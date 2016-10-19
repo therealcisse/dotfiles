@@ -37,6 +37,22 @@
 
 #####=== configure ===#####
 
+- name: vim | create backup directory
+  file: path=~/.backups state=directory
+
+- name: vim | check for non-symlink neovim config directory
+  command: test -e {{ neovim_config_dir }} -a ! -L {{ neovim_config_dir }}
+  failed_when: original_check.rc > 1
+  register: neovim_config_dir_check
+  changed_when: false
+
+- name: vim | backup original neovim config directory
+  command:
+    mv {{ neovim_config_dir }} ~/.backups/
+    creates=~/.backups/{{ neovim_config_dir | basename }}
+    removes={{ neovim_config_dir }}
+  when: neovim_config_dir_check.rc == 0 # item exists and is not a symlink
+
 - name: install | link config folder
   file:
     src="{{ vim_config_dir }}"
