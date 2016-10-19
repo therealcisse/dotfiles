@@ -900,11 +900,11 @@ vnoremap <BS> "_xi
 
 set suffixesadd+=.js
 
-if isdirectory($PWD.'/node_modules')
+if isdirectory(expand($PWD.'/node_modules'))
   set path+=$PWD/node_modules
 endif
 
-if isdirectory($PWD.'/js')
+if isdirectory(expand($PWD.'/js'))
   set path+=$PWD/js
 endif
 
@@ -935,7 +935,7 @@ if has('viminfo')
   if exists('$SUDO_USER')
     set viminfo=                      " don't create root-owned files
   else
-    if isdirectory('~/.vim/tmp')
+    if isdirectory(expand('~/.vim/tmp'))
       set viminfo+=n~/.vim/tmp/viminfo
     endif
 
@@ -943,7 +943,7 @@ if has('viminfo')
 endif
 
 if has('mksession')
-  if isdirectory('~/.vim/tmp')
+  if isdirectory(expand('~/.vim/tmp'))
     set viewdir=~/.vim/tmp/view
   endif
   set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
