@@ -6,7 +6,7 @@ sudo apt-get -y install python-software-properties software-properties-common \
     gcc make build-essential libssl-dev libffi-dev python-dev \
     git-core tmux python3 python ssh zsh xclip xsel \
     libevent-dev libncurses-dev pkg-config \
-    autotools-dev automake
+    autotools-dev automake vim
 
 if [ -e ~/.fzf ]; then
   rm -fr ~/.fzf

@@ -242,4 +242,8 @@ function tmux() {
 alias t=tmux
 alias v=nvim
 
+if [ $(uname) == 'Linux' ]; then
+  alias vi=vim;
+fi
+
 
