@@ -144,7 +144,6 @@ if !has('nvim')
   endif
 
   set ttyfast
-  set ttymouse=xterm2
   set ttyscroll=3
 
   set laststatus=2
@@ -159,6 +158,11 @@ if !has('nvim')
   set incsearch                   " Shows the match while typing
   set hlsearch                    " Highlight found searches
   set mouse=a
+  if has('mouse_sgr')
+    set ttymouse=sgr
+  else
+    set ttymouse=xterm2
+  endif
 endif
 
 if exists('$SUDO_USER')
@@ -211,10 +215,15 @@ set lazyredraw                 " Do not redraw the screen while
                                " and other commands that have
                                " not been typed.
 
-if has('!nvim')
+if !has('nvim')
   syntax enable
   set t_Co=256
   set term=ansi
+
+  imap <ESC>oA <ESC>ki
+  imap <ESC>oB <ESC>ji
+  imap <ESC>oC <ESC>li
+  imap <ESC>oD <ESC>hi
 endif
 
 if has('gui_macvim')
