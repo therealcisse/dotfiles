@@ -113,6 +113,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
   Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
 
+  Plug 'skywind3000/asyncrun.vim'
+
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -220,6 +222,7 @@ if !has('nvim')
   set t_Co=256
   set term=ansi
 
+  " Make arrow keys work in vim
   imap <ESC>oA <ESC>ki
   imap <ESC>oB <ESC>ji
   imap <ESC>oC <ESC>li
@@ -413,7 +416,7 @@ function! s:StripTrailingWhitespaces()
 
 endfunction
 
-nnoremap <leader>W :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <leader>w :call <SID>StripTrailingWhitespaces()<CR>
 
 " ----------------------------------------------------------------------
 " | Automatic Commands                                                 |
@@ -1034,8 +1037,6 @@ if !exists(':DiffOrig')
         \ | wincmd p | diffthis
 endif
 
-" inoremap <C-U> <C-G>u<C-U>
-
 function! s:ToggleCase()
   let cursorLine = line('.')
   let cursorColumn = col('.')
@@ -1059,6 +1060,8 @@ vmap <leader>' S'
 
 vnoremap D y`]p
 
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+
 " Are you ready?
 
 inoremap jk <esc>
@@ -1070,6 +1073,14 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
+
+" Paste toggle nightmare
+set pastetoggle=
+
+" Resize split easily
+
+nnoremap <silent> <leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |

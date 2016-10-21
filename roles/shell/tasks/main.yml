@@ -1,6 +1,6 @@
 ---
 - name: shell | add /usr/local/bin/zsh to /etc/shells
-  lineinfile: >
+  lineinfile:
     dest=/etc/shells
     group=wheel
     line=/usr/local/bin/zsh

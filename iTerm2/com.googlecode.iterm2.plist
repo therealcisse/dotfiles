@@ -159,17 +159,17 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>488 245 796 473 0 0 1440 900 </string>
+	<string>488 341 918 495 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>79 366 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>133 423 570 427 0 0 1440 878 </string>
+	<string>133 183 941 667 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>387 143 570 427 0 0 1440 878 </string>
+	<string>57 60 1221 683 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>53 34 1340 747 0 0 1440 878 </string>
+	<string>53 162 969 619 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
 	<string>117 153 906 571 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
@@ -740,6 +740,8 @@
 			<string></string>
 			<key>Silence Bell</key>
 			<false/>
+			<key>Smart Cursor Color</key>
+			<false/>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -754,6 +756,8 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Cursor Guide</key>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -834,7 +838,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-10-17T22:01:24Z</date>
+	<date>2016-10-19T13:40:55Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
