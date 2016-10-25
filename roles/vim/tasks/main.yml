@@ -40,6 +40,9 @@
 - name: vim | create backup directory
   file: path=~/.backups state=directory
 
+- name: vim | make sure {{ xdg_config_home }} exists
+  file: path={{ xdg_config_home }} state=directory
+
 - name: vim | check for non-symlink neovim config directory
   command: test -e {{ neovim_config_dir }} -a ! -L {{ neovim_config_dir }}
   failed_when: neovim_config_dir_check.rc > 1

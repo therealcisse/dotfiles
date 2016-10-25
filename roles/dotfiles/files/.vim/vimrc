@@ -45,7 +45,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'othree/html5.vim'
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
- Plug 'airblade/vim-gitgutter'
+  Plug 'airblade/vim-gitgutter'
   Plug  'neomake/neomake'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
@@ -99,7 +99,6 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-  Plug 'unblevable/quick-scope'
   Plug 'ConradIrwin/vim-bracketed-paste'
 
   Plug 'mbbill/undotree'
@@ -181,11 +180,10 @@ if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
 endif
 
-set clipboard=unnamed          " ┐
-                               " │ Use the system clipboard
-if has('unnamedplus')          " │ as the default register.
-  set clipboard+=unnamedplus " │
-endif                          " ┘
+if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard') && exists('$DISPLAY')
+  set clipboard=unnamed          " ┐ Use the system clipboard
+  set clipboard+=unnamedplus     " ┘ as the default register.
+endif
 
 set cpoptions+=$               " When making a change, don't
                                " redisplay the line, and instead,
@@ -231,7 +229,7 @@ endif
 
 if has('gui_macvim')
   " No toolbars, menu or scrollbars in the GUI
-  set guifont=Source\ Code\ Pro:h12
+  set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h12
   set clipboard+=unnamed
   set vb t_vb=
   set guioptions-=m  "no menu
@@ -690,7 +688,7 @@ xmap <s-j> ]egv
 xmap <s-k> [egv
 
 " convert to/from spaces/tabs...
-nnoremap <silent> ts :%retab!<cr>
+nnoremap <silent> TS :%retab!<cr>
 
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
@@ -713,7 +711,7 @@ noremap <leader>q :q<cr>
 
 " Align current paragraph
 
-noremap <leader>a =i{
+noremap <leader>a =iB
 
 " Clone paragraph with `cp`
 
@@ -997,10 +995,6 @@ let g:tcommentMapLeaderUncommentAnyway='gu'
 
 nnoremap <leader>* *<C-O>:%s///gn<CR>
 
-" Trigger a highlight in the appropriate direction when pressing these keys:
-
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
 "" Git
 noremap <leader>ga :Gwrite<CR>
 noremap <leader>gc :Gcommit<CR>
@@ -1069,10 +1063,14 @@ inoremap <esc> <nop>
 
 " Arrow keys madness: Are you ready?
 
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
 
 " Paste toggle nightmare
 set pastetoggle=
@@ -1081,6 +1079,9 @@ set pastetoggle=
 
 nnoremap <silent> <leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
+" Repeat in visual mode
+vnoremap . :norm.<CR>
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |

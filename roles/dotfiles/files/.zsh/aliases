@@ -1,0 +1,28 @@
+#
+# Command aliases
+#
+
+alias ....='cd ../..'
+alias :e=nvim
+alias :qa=exit
+alias :sp='test -n "$TMUX" && tmux split-window'
+alias :vs='test -n "$TMUX" && tmux split-window -h'
+alias :wq=exit
+alias a=ag
+alias cd..='cd ..'
+alias cdtmp='cd $(mktemp -d $TMPDIR/$USER-cdtmp-XXXXXX)'
+alias d='hash -d'
+alias e=exit
+alias g=git
+alias groot='cd $(git rev-parse --show-toplevel 2> /dev/null || echo -n ".")'
+alias h=history
+alias l='ls -F'
+alias ll='ls -laF'
+alias o='git oneline'
+alias p='git patch'
+alias oo='git oneline -10'
+alias s=ssh
+alias serve='python -m SimpleHTTPServer' # optional arg: port (defaults to 8000)
+alias t=tmux
+alias v=nvim
+

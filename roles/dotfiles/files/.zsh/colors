@@ -1,0 +1,77 @@
+#
+# Colors
+#
+
+BASE16_DIR=$HOME/.base16-shell
+BASE16_CONFIG=$HOME/.base16
+
+color() {
+  BACKGROUND="$1"
+  SCHEME="$2"
+
+  if [ $# -eq 0 -a -s "$BASE16_CONFIG" ]; then
+    cat $BASE16_CONFIG
+    return
+  fi
+
+  if [[ "$SCHEME" = 'help' ]]; then
+    BACKGROUND='help'
+  fi
+
+  case "$BACKGROUND" in
+  dark|light)
+    if [[ -f "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh" ]]; then
+      echo "$SCHEME" >! "$BASE16_CONFIG"
+      echo "$BACKGROUND" >> "$BASE16_CONFIG"
+      chmod +x "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh"
+      "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh"
+    elif [[ -f "$BASE16_DIR/scripts/base16-$SCHEME.sh" ]]; then
+      echo "$SCHEME" >! "$BASE16_CONFIG"
+      echo dark >> "$BASE16_CONFIG"
+      chmod +x "$BASE16_DIR/scripts/base16-$SCHEME.sh"
+      "$BASE16_DIR/scripts/base16-$SCHEME.sh"
+    else
+      echo "Scheme '$SCHEME' not found in $BASE16_DIR"
+      return 1
+    fi
+    ;;
+  help)
+    echo 'color dark [ocean|grayscale|ashes|default|railscasts|tomorrow|twilight|...]'
+    echo 'color light [grayscale|harmonic16|ocean|tomorrow|twilight|...]'
+    echo
+    echo 'Available schemes:'
+    find "$BASE16_DIR/scripts/" -name 'base16-*.sh' | \
+      sed -E 's|.+/base16-||' | \
+      sed -E 's/\.(dark|light)\.sh/ (\1)/' | \
+      column
+      ;;
+
+  *)
+    echo 'Unknown subcommand: use one of {dark,light,help}'
+    ;;
+  esac
+
+}
+
+dark() {
+  color dark "$1"
+}
+
+light() {
+  color light "$1"
+}
+
+if [[ -s "$BASE16_CONFIG" ]]; then
+  SCHEME=$(head -1 "$BASE16_CONFIG")
+  BACKGROUND=$(sed -n -e '2 p' "$BASE16_CONFIG")
+  if [ "$BACKGROUND" = 'dark' ]; then
+    dark "$SCHEME"
+  elif [ "$BACKGROUND" = 'light' ]; then
+    light "$SCHEME"
+  else
+    echo "error: unknown background type in $BASE16_CONFIG"
+  fi
+else
+  # default
+  dark ocean
+fi

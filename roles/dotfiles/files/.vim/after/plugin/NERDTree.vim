@@ -10,10 +10,6 @@ let NERDTreeRespectWildIgnore=1
 " Disable display of '?' text and 'Bookmarks' label.
 let g:NERDTreeMinimalUI=1
 
-" Let <leader><leader> (^#) return from NERDTree window.
-let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
-
-
 " The default of 31 is just a little too narrow.
 let g:NERDTreeWinSize=40
 
@@ -29,6 +25,7 @@ let NERDTreeHijackNetrw = 0
 
 " the amount of space to use after the glyph character (default ' ')
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+let g:WebDevIconsNerdTreeGitPluginForceVAlign=0
 
 " NERDTree
 

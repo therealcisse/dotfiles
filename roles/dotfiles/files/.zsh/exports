@@ -1,0 +1,54 @@
+export PAGER=less
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
+
+case "$(uname)" in
+  Darwin*)
+    if [ -x /usr/libexec/java_home ]; then
+      export JAVA_HOME=$(/usr/libexec/java_home)
+    fi
+    ;;
+  Linux*)
+    ;;
+esac
+
+# usually this means running on a machine with a statically-linked, hand-built
+# tmux (and ncurses)
+if [ -d "$HOME/share/terminfo" ]; then
+  export TERMINFO=$HOME/share/terminfo
+fi
+
+# filename (if known), line number if known, falling back to percent if known,
+# falling back to byte offset, falling back to dash
+export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
+
+# i = case-insensitive searches, unless uppercase characters in search string
+# F = exit immediately if output fits on one screen
+# M = verbose prompt
+# R = ANSI color support
+# S = chop long lines (rather than wrap them onto next line)
+# X = suppress alternate screen
+export LESS=iFMRSX
+
+# for the benefit of CPAN and potentially others
+export FTP_PASSIVE=1
+
+# colour ls listings
+export CLICOLOR=true
+
+# Setting ag as the default source for fzf
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# Setting ag as the default source for fzf
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+test -e "~/Library/Android/sdk" && export ANDROID_HOME=$HOME/Library/Android/sdk
+
+

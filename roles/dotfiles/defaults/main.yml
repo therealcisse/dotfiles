@@ -14,3 +14,4 @@ dotfiles:
   - .base16-shell
   - .tpm
   - .vim
+  - .zsh

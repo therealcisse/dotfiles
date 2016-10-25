@@ -46,7 +46,7 @@ ZSH_THEME="robbyrussell"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=~/.zsh/oh-my-zsh
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -63,42 +63,11 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="$EDITOR ~/.zshrc"
-alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
-
-# Setting ag as the default source for fzf
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# Setting ag as the default source for fzf
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-test -e "~/Library/Android/sdk" && export ANDROID_HOME=$HOME/Library/Android/sdk
-
-alias play=activator
-
-test -e ~/.bin && export PATH=$PATH:~/.bin
-test -e ~/bin && export PATH=$PATH:~/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -120,126 +89,66 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-#
-# Colors
-#
-
-BASE16_DIR=$HOME/.base16-shell
-BASE16_CONFIG=$HOME/.base16
-
-color() {
-  BACKGROUND="$1"
-  SCHEME="$2"
-
-  if [ $# -eq 0 -a -s "$BASE16_CONFIG" ]; then
-    cat $BASE16_CONFIG
-    return
+if [ "$(uname)" = "Darwin" ]; then
+  # Suppress unwanted Homebrew-installed stuff.
+  if [ -e /usr/local/share/zsh/site-functions/_git ]; then
+    mv -f /usr/local/share/zsh/site-functions/{,disabled.}_git
   fi
-
-  if [[ "$SCHEME" = 'help' ]]; then
-    BACKGROUND='help'
-  fi
-
-  case "$BACKGROUND" in
-  dark|light)
-    if [[ -f "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh" ]]; then
-      echo "$SCHEME" >! "$BASE16_CONFIG"
-      echo "$BACKGROUND" >> "$BASE16_CONFIG"
-      chmod +x "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh"
-      "$BASE16_DIR/scripts/base16-$SCHEME-$BACKGROUND.sh"
-    elif [[ -f "$BASE16_DIR/scripts/base16-$SCHEME.sh" ]]; then
-      echo "$SCHEME" >! "$BASE16_CONFIG"
-      echo dark >> "$BASE16_CONFIG"
-      chmod +x "$BASE16_DIR/scripts/base16-$SCHEME.sh"
-      "$BASE16_DIR/scripts/base16-$SCHEME.sh"
-    else
-      echo "Scheme '$SCHEME' not found in $BASE16_DIR"
-      return 1
-    fi
-    ;;
-  help)
-    echo 'color dark [ocean|grayscale|ashes|default|railscasts|tomorrow|twilight|...]'
-    echo 'color light [grayscale|harmonic16|ocean|tomorrow|twilight|...]'
-    echo
-    echo 'Available schemes:'
-    find "$BASE16_DIR/scripts/" -name 'base16-*.sh' | \
-      sed -E 's|.+/base16-||' | \
-      sed -E 's/\.(dark|light)\.sh/ (\1)/' | \
-      column
-      ;;
-
-  *)
-    echo 'Unknown subcommand: use one of {dark,light,help}'
-    ;;
-  esac
-
-}
-
-dark() {
-  color dark "$1"
-}
-
-light() {
-  color light "$1"
-}
-
-if [[ -s "$BASE16_CONFIG" ]]; then
-  SCHEME=$(head -1 "$BASE16_CONFIG")
-  BACKGROUND=$(sed -n -e '2 p' "$BASE16_CONFIG")
-  if [ "$BACKGROUND" = 'dark' ]; then
-    dark "$SCHEME"
-  elif [ "$BACKGROUND" = 'light' ]; then
-    light "$SCHEME"
-  else
-    echo "error: unknown background type in $BASE16_CONFIG"
-  fi
-else
-  # default
-  dark ocean
 fi
 
-function tmux() {
+alias man='nocorrect man'
+alias mkdir='nocorrect mkdir'
+alias mv='nocorrect mv'
+alias sudo='nocorrect sudo'
+
+#
+# History
+#
+
+export HISTSIZE=100000
+export HISTFILE="$HOME/.history"
+export SAVEHIST=$HISTSIZE
+
+source $HOME/.zsh/aliases
+source $HOME/.zsh/common
+source $HOME/.zsh/colors
+source $HOME/.zsh/exports
+source $HOME/.zsh/functions
+source $HOME/.zsh/path
+source $HOME/.zsh/vars
+
+#
+# Hooks
+#
+
+autoload -U add-zsh-hook
+
+function set-tab-and-window-title() {
   emulate -L zsh
-
-  # Make sure even pre-existing tmux sessions use the latest SSH_AUTH_SOCK.
-  # (Inspired by: https://gist.github.com/lann/6771001)
-  local SOCK_SYMLINK=~/.ssh/ssh_auth_sock
-  if [ -r "$SSH_AUTH_SOCK" -a ! -L "$SSH_AUTH_SOCK" ]; then
-    ln -sf "$SSH_AUTH_SOCK" $SOCK_SYMLINK
-  fi
-
-  # If provided with args, pass them through.
-  if [[ -n "$@" ]]; then
-    env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux "$@"
-    return
-  fi
-
-  # Check for .tmux file (poor man's Tmuxinator).
-  if [ -x .tmux ]; then
-    # Prompt the first time we see a given .tmux file before running it.
-    local DIGEST="$(openssl sha -sha512 .tmux)"
-    if ! grep -q "$DIGEST" ~/..tmux.digests 2> /dev/null; then
-      cat .tmux
-      read -k 1 -r \
-        'REPLY?Trust (and run) this .tmux file? (t = trust, otherwise = skip) '
-      echo
-      if [[ $REPLY =~ ^[Tt]$ ]]; then
-        echo "$DIGEST" >> ~/..tmux.digests
-        ./.tmux
-        return
-      fi
-    else
-      ./.tmux
-      return
-    fi
-  fi
-
-  # Attach to existing session, or create one, based on current directory.
-  SESSION_NAME=$(basename "$(pwd)")
-  env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
+  local CMD="${1:gs/$/\\$}"
+  print -Pn "\e]0;$CMD:q\a"
 }
 
-alias t=tmux
-alias v=nvim
+function update-window-title-precmd() {
+  emulate -L zsh
+  set-tab-and-window-title `history | tail -1 | cut -b8-`
+}
+add-zsh-hook precmd update-window-title-precmd
 
+function update-window-title-preexec() {
+  emulate -L zsh
+  setopt extended_glob
+
+  # skip ENV=settings, sudo, ssh; show first distinctive word of command;
+  # mostly stolen from:
+  #   https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/termsupport.zsh
+  set-tab-and-window-title ${2[(wr)^(*=*|ssh|sudo)]}
+}
+add-zsh-hook preexec update-window-title-preexec
+
+HOST_RC=$HOME/.zsh/host/$(hostname -s)
+test -f $HOST_RC && source $HOST_RC
+
+LOCAL_RC=$HOME/.zshrc.local
+test -f $LOCAL_RC && source $LOCAL_RC
 
