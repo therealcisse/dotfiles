@@ -114,6 +114,11 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'skywind3000/asyncrun.vim'
 
+  Plug 'justinmk/vim-sneak'
+
+  Plug 'matze/vim-move'
+  Plug 'terryma/vim-smooth-scroll'
+
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -681,12 +686,6 @@ nnoremap <s-l> >>`]
 vnoremap <s-h> <gv`]
 vnoremap <s-l> >gv`]
 
-nmap <s-j> ]e
-nmap <s-k> [e
-
-xmap <s-j> ]egv
-xmap <s-k> [egv
-
 " convert to/from spaces/tabs...
 nnoremap <silent> TS :%retab!<cr>
 
@@ -834,9 +833,6 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 " Store relative line number jumps in the jumplist if they exceed a threshold.
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
-
-" Toggle fold at current position.
-nnoremap <Tab> za
 
 " Make the jk behave
 
@@ -1080,8 +1076,43 @@ set pastetoggle=
 nnoremap <silent> <leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
-" Repeat in visual mode
 vnoremap . :norm.<CR>
+
+" vim-sneak
+
+"replace 'f' with 1-char Sneak
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+xmap f <Plug>Sneak_f
+xmap F <Plug>Sneak_F
+omap f <Plug>Sneak_f
+omap F <Plug>Sneak_F
+
+"replace 't' with 1-char Sneak
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+xmap t <Plug>Sneak_t
+xmap T <Plug>Sneak_T
+omap t <Plug>Sneak_t
+omap T <Plug>Sneak_T
+
+nmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : 'za'
+nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : 'za'
+
+vmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : '<Tab>'
+vmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : '<S-Tab>'
+
+" vim-move
+
+let g:move_key_modifier = 'S'
+
+" vim smooth scroll
+
+" git@github.com:terryma/vim-smooth-scroll.git
+noremap <silent> <c-e> :call smooth_scroll#up(&scroll, 30, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 30, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 30, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 30, 4)<CR>
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |
@@ -1096,21 +1127,4 @@ vnoremap . :norm.<CR>
 if filereadable(glob('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

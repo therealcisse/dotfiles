@@ -18,13 +18,8 @@ function history() {
 function ssh() {
   emulate -L zsh
 
-  if [[ -z "$@" ]]; then
-    # common case: getting to my workstation
-    command ssh sandbox-clipper
-  else
-    local LOCAL_TERM=$(echo -n "$TERM" | sed -e s/tmux/screen/)
-    env TERM=$LOCAL_TERM command ssh "$@"
-  fi
+  local LOCAL_TERM=$(echo -n "$TERM" | sed -e s/tmux/screen/)
+  env TERM=$LOCAL_TERM ssh "$@"
 }
 
 function tmux() {
