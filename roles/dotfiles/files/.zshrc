@@ -117,6 +117,11 @@ source $HOME/.zsh/functions
 source $HOME/.zsh/path
 source $HOME/.zsh/vars
 
+# tmux unsets this and then xclip gets confused
+if [ -n "$DISPLAY" ]; then
+  export DISPLAY=:0
+fi
+
 #
 # Hooks
 #

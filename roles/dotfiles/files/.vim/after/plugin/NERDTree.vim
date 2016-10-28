@@ -47,6 +47,10 @@ let g:NERDTreeGitStatusWithFlags = 0
 " Let <Leader><Leader> (^#) return from NERDTree window.
 let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
 
+let g:webdevicons_conceal_nerdtree_brackets = 1
+
+let g:webdevicons_enable_nerdtree = 1
+
 " Tweaks for browsing
 let g:netrw_banner = 0
 let g:netrw_browse_splits = 4

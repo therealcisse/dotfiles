@@ -21,3 +21,4 @@ nvm_parent_path: "{{ ansible_user_dir }}"
 
 nvm_install_path: "{{ nvm_parent_path }}/.nvm"
 nvm_exe_path:     "{{ nvm_install_path }}/nvm.sh"
+

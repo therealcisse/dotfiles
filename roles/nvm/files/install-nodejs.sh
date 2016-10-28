@@ -35,8 +35,8 @@ trap 'RETVAL=$?;  do_error_exit '  ERR
 
 # enable NVM
 source "$NVM_EXE_PATH"             > /dev/null 2>&1
-nvm install $NODEJS_VERSION --lts  > /dev/null 2>&1
-nvm use $NODEJS_VERSION     --lts  > /dev/null 2>&1
+nvm install --lts $NODEJS_VERSION  > /dev/null 2>&1
+nvm use --lts $NODEJS_VERSION      > /dev/null 2>&1
 nvm alias default $NODEJS_VERSION  > /dev/null 2>&1
 
 

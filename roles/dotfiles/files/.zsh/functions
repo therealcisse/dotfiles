@@ -3,8 +3,17 @@
 function ag() {
   emulate -L zsh
 
+  # Overwrite alias of ag btw omz debian plugin to use for silver searcher
+  if [ -e /usr/bin/ag ];
+  then
+    AG=/usr/bin/ag
+  else
+    # on osx brew installs ag as Ag
+    AG=Ag
+  fi
+
   # italic blue paths, pink line numbers, underlined purple matches
-  command ag --pager="less -iFMRSX" --color-path=34\;3 --color-line-number=35 --color-match=35\;1\;4 "$@"
+  $AG --pager="less -iFMRSX" --color-path=34\;3 --color-line-number=35 --color-match=35\;1\;4 "$@"
 }
 
 function history() {

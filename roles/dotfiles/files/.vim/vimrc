@@ -21,6 +21,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'glts/vim-textobj-comment' " ac, ic
   Plug 'kana/vim-textobj-function' " af, if
   Plug 'thinca/vim-textobj-function-javascript'
+  Plug 'mattn/vim-textobj-url' " au, iu
 
   Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
@@ -471,8 +472,8 @@ set t_Co=256                   " Enable full-color support.
 
 " Replace all
 
-nnoremap <leader>r :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
-vnoremap <leader>r "sy:%s/<c-r>s//gc<Left><Left><Left>
+nnoremap <leader>r :%s/\<<C-r>=functions#escape_pattern(expand('<cword>'))<CR>\>//gc<Left><Left><Left>
+vnoremap <leader>r "sy:<c-u>%s/<c-r>=functions#escape_pattern(functions#get_visual_selection())<CR>//gc<Left><Left><Left>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -680,11 +681,23 @@ if exists('$TMUX')
   execute "set <F12>=\e[24;*~"
 endif
 
+" Drag line/selection
+
 nnoremap <s-h> <<`]
 nnoremap <s-l> >>`]
 
 vnoremap <s-h> <gv`]
 vnoremap <s-l> >gv`]
+
+" Cursor Moving
+cnoremap ∆ <Down>
+cnoremap ˚ <Up>
+cnoremap ˙ <Left>
+cnoremap ¬ <Right>
+inoremap ∆ <Down>
+inoremap ˚ <Up>
+inoremap ˙ <Left>
+inoremap ¬ <Right>
 
 " convert to/from spaces/tabs...
 nnoremap <silent> TS :%retab!<cr>
@@ -813,6 +826,7 @@ augroup AmsaykAutocmds
     autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | endif
   endif
 
+  autocmd BufWritePost */spell/*.add silent! :mkspell! %
 augroup end
 
 
@@ -1040,14 +1054,7 @@ inoremap <C-U> <ESC>:call <SID>ToggleCase()<CR>i
 
 set sessionoptions-=options
 
-" Surround with quotes
-
-nmap <leader>" ysiw"
-nmap <leader>' ysiw'
-
-vmap <leader>" S"
-vmap <leader>' S'
-
+" Duplicate selection
 vnoremap D y`]p
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
@@ -1102,6 +1109,10 @@ nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : 'za'
 vmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : '<Tab>'
 vmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : '<S-Tab>'
 
+let g:sneak#s_next = 1
+
+let g:sneak#prompt = 'Target key: '
+
 " vim-move
 
 let g:move_key_modifier = 'S'
@@ -1113,6 +1124,26 @@ noremap <silent> <c-e> :call smooth_scroll#up(&scroll, 30, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 30, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 30, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 30, 4)<CR>
+
+" Ack word under cursor
+nnoremap <leader>f :Ack! -Q <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
+vnoremap <leader>f :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
+
+" Remote copy/paste
+
+function! PropagatePasteBufferToOSX()
+  let @n=getreg("*")
+  call system('pbcopy-remote', @n)
+  echo "done"
+endfunction
+
+function! PopulatePasteBufferFromOSX()
+  let @+ = system('pbpaste-remote')
+  echo "done"
+endfunction
+
+nnoremap <leader>6 :call PopulatePasteBufferFromOSX()<cr>
+nnoremap <leader>7 :call PropagatePasteBufferToOSX()<cr>
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |
