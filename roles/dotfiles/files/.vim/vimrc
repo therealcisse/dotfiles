@@ -20,8 +20,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'kana/vim-textobj-line'   " al, il
   Plug 'glts/vim-textobj-comment' " ac, ic
   Plug 'kana/vim-textobj-function' " af, if
-  Plug 'thinca/vim-textobj-function-javascript'
   Plug 'mattn/vim-textobj-url' " au, iu
+  Plug 'saihoooooooo/vim-textobj-space' " aS, iS
+
+  Plug 'thinca/vim-textobj-function-javascript'
 
   Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }

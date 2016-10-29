@@ -1,4 +1,4 @@
 /python
 
 .DS_Store
-
+/roles/ssh/files/ssh_config

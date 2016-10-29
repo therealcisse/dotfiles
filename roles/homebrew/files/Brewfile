@@ -1,3 +1,5 @@
+cask_args appdir: '/Applications'
+
 tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'homebrew/bundle'
@@ -9,6 +11,7 @@ tap 'neovim/neovim'
 tap 'olafurpg/scalafmt'
 tap 'Goles/battery'
 tap 'homebrew/dupes'
+
 cask 'launchcontrol'
 cask 'java'
 cask 'rdm'
@@ -100,6 +103,7 @@ brew 'libusb'
 brew 'libusb-compat'
 brew 'libvo-aacenc'
 brew 'libyaml'
+brew 'macvim'
 brew 'libyubikey'
 brew 'links'
 brew 'makedepend'
@@ -156,6 +160,7 @@ brew 'nailgun'
 brew 'watchman'
 brew 'fzf', args: ['HEAD']
 brew 'gradle'
+
 cask '1password-beta'
 cask 'arq'
 cask 'bartender'
@@ -181,4 +186,23 @@ cask 'vlc'
 brew 'homebrew/devel-only/elm-format', args: ['HEAD']
 cask 'xquartz'
 cask 'keycastr'
+
+#
+# mas (Mac App Store)
+#
+# mas is a neat idea, but in practice worse than just clicking
+# around in the app. Several apps fail to install, and others
+# are invisible to the search (replaced by newer, paid versions).
+#
+#mas 'Diagrammix', id: 418534796
+#mas 'Fantastical', id: 975937182
+#mas 'Kindle', id: 405399194
+#mas 'Marked 2', id: 890031187
+#mas 'Net Monitor', id: 480482806
+# ScreenFlow 4 (not listed) -> (now) ScreenFlow 6
+#mas 'Skitch', id: 425955336
+#mas 'Textual 5', id: 896450579
+#mas 'The Unarchiver', id: 425424353 # Fails
+#mas 'Wunderlist', id: 410628904 # Fails
+# xScope (not listed) -> (now) xScope 4
 

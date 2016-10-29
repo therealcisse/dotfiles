@@ -13,3 +13,6 @@
 [submodule "roles/dotfiles/files/.tpm"]
 	path = roles/dotfiles/files/.tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "vendor/git-cipher"]
+	path = vendor/git-cipher
+	url = https://github.com/wincent/git-cipher

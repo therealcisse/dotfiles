@@ -146,3 +146,5 @@
 
   # Include summaries of merged commits in newly created merge commit messages
   log = true
+[cipher]
+	gpguser = cisse.amadou.9@gmail.com
