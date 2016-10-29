@@ -535,10 +535,12 @@ endif
 let g:airline_symbols.space = "\ua0"
 
 let g:airline#extensions#whitespace#enabled = 1
-let g:airline_section_error = ''
-let g:airline_section_warning = ''
 
 let g:airline_symbols.maxlinenr = ''
+
+let g:airline_symbols.linenr = 'ℓ'
+
+let g:airline_skip_empty_sections = 1
 
 if has('nvim')
   " Use deoplete.
@@ -1133,7 +1135,7 @@ vnoremap <leader>f :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_v
 
 " Remote copy/paste
 
-nmap <leader>6 <Plug>(ClipperClip)
+nmap <leader>cc <Plug>(ClipperClip)
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
