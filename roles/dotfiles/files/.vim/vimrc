@@ -733,15 +733,6 @@ noremap <leader>a =iB
 
 noremap cp yap<S-}>p
 
-" Copy & paste to system clipboard with <Space>p and <Space>y:
-
-vmap <leader>y "+y
-vmap <leader>d "+d
-nmap <leader>p "+p
-nmap <leader>P "+P
-vmap <leader>p "+p
-vmap <leader>P "+P
-
 " Elm
 
 let g:elm_jump_to_error = 0
@@ -1132,10 +1123,6 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 30, 4)<CR>
 " Ack word under cursor
 nnoremap <leader>f :Ack! -Q <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
 vnoremap <leader>f :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
-
-" Remote copy/paste
-
-nmap <leader>cc <Plug>(ClipperClip)
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
