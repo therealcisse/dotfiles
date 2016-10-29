@@ -8,7 +8,7 @@ fi
 
 
 if [ -n "$SSH_CONNECTION" ]; then
-  echo "$url" | /usr/bin/nc localhost 2226
+  echo "$url" | clip
 elif [ -e '/Applications/Google Chrome.app' ]; then
   /usr/bin/open -a /Applications/Google\ Chrome.app "$url"
 else

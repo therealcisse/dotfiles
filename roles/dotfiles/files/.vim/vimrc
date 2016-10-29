@@ -120,6 +120,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'matze/vim-move'
   Plug 'terryma/vim-smooth-scroll'
 
+  Plug 'wincent/vim-clipper'
+
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -1131,19 +1133,7 @@ vnoremap <leader>f :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_v
 
 " Remote copy/paste
 
-function! PropagatePasteBufferToOSX()
-  let @n=getreg("*")
-  call system('pbcopy-remote', @n)
-  echo "done"
-endfunction
-
-function! PopulatePasteBufferFromOSX()
-  let @+ = system('pbpaste-remote')
-  echo "done"
-endfunction
-
-nnoremap <leader>6 :call PopulatePasteBufferFromOSX()<cr>
-nnoremap <leader>7 :call PropagatePasteBufferToOSX()<cr>
+nmap <leader>6 <Plug>(ClipperClip)
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
@@ -1158,6 +1148,7 @@ if executable("ag")
       \ --ignore .svn
       \ --ignore .hg
       \ --ignore node_modules
+      \ --ignore bower_components
       \ --ignore logs
       \ --ignore out
       \ -g ""'

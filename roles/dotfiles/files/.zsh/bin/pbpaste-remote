@@ -1,2 +1,0 @@
-#!/bin/sh
-/usr/bin/nc localhost 2225
