@@ -1,2 +1,2 @@
 #!/bin/sh
-nc localhost 2225
+/usr/bin/nc localhost 2225
