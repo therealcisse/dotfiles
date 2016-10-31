@@ -827,6 +827,10 @@ augroup AmsaykAutocmds
   endif
 
   autocmd BufWritePost */spell/*.add silent! :mkspell! %
+
+  if has('nvim')
+    autocmd TermOpen * setlocal nocursorline
+  endif
 augroup end
 
 
