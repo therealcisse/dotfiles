@@ -509,6 +509,9 @@ set highlight+=c:LineNr               " blend vertical separators with line numb
 " Don't continue comment mark after press 'o' when you're on a commented line.
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+" Don't automatically break lines at textwidth
+autocmd FileType * setlocal formatoptions-=t
+
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
