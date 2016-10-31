@@ -24,6 +24,7 @@ alias d='hash -d'
 alias e=exit
 alias g=git
 alias clip="nc localhost 8377"
+alias d='hash -d'
 alias h=history
 alias l='ls -F'
 alias ll='ls -laF'
