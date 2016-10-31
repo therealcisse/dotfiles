@@ -1127,11 +1127,11 @@ let g:move_key_modifier = 'S'
 
 " vim smooth scroll
 
-" git@github.com:terryma/vim-smooth-scroll.git
-noremap <silent> <c-e> :call smooth_scroll#up(&scroll, 30, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 30, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 30, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 30, 4)<CR>
+" " git@github.com:terryma/vim-smooth-scroll.git
+noremap <silent> <c-u> :setlocal nocursorline <BAR> :call smooth_scroll#up(&scroll, 30, 2)<CR> <BAR> :setlocal cursorline<CR>
+noremap <silent> <c-d> :setlocal nocursorline <BAR> :call smooth_scroll#down(&scroll, 30, 2)<CR> <BAR> :setlocal cursorline<CR>
+noremap <silent> <c-b> :setlocal nocursorline <BAR> :call smooth_scroll#up(&scroll*2, 30, 4)<CR> <BAR> :setlocal cursorline<CR>
+noremap <silent> <c-f> :setlocal nocursorline <BAR> :call smooth_scroll#down(&scroll*2, 30, 4)<CR> <BAR> :setlocal cursorline<CR>
 
 " Ack word under cursor
 nnoremap <leader>f :Ack! -Q <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
