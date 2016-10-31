@@ -160,6 +160,7 @@ brew 'nailgun'
 brew 'watchman'
 brew 'fzf', args: ['HEAD']
 brew 'gradle'
+brew 'homebrew/devel-only/elm-format', args: ['HEAD']
 
 cask '1password-beta'
 cask 'arq'
@@ -183,9 +184,9 @@ cask 'steam'
 cask 'superduper'
 cask 'tcl'
 cask 'vlc'
-brew 'homebrew/devel-only/elm-format', args: ['HEAD']
 cask 'xquartz'
 cask 'keycastr'
+cask 'rowanj-gitx'
 
 #
 # mas (Mac App Store)
