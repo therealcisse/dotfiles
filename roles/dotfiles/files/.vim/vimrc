@@ -644,8 +644,11 @@ function! s:SetColorScheme()
   " highlight link EndOfBuffer ColorColumn
 
   " make comments and HTML attributes italic
-  highlight Comment cterm=italic
-  highlight htmlArg cterm=italic
+  highlight Comment cterm=italic  gui=italic
+  highlight htmlArg cterm=italic  gui=italic
+
+  let &t_ZH="^[[3m"
+  let &t_ZR="^[[23m"
 
   " Allow for overrides:
   " - `statusline.vim` will re-set User1, User2 etc.
