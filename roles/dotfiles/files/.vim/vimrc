@@ -107,6 +107,10 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'wincent/vim-clipper'
 
+  if has('nvim')
+    Plug 'kassio/neoterm'
+  endif
+
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -577,20 +581,6 @@ let g:javascript_conceal_arrow_function = "⇒"
 
 let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
-
-" VIM notes
-
-" let g:notes_directories = ['~/Documents/Notes', '~/Dropbox/Shared Notes']
-"
-" let g:notes_tagsindex = '~/Documents/Notes/tags.txt'
-" let g:notes_conceal_italic = 0
-" let g:notes_conceal_bold = 0
-" let g:notes_conceal_url = 0
-"
-" nnoremap <leader>do :Note Todo<CR>
-"
-" " using command-line-only abbrev to alias Note
-" cabbrev note Note
 
 function! s:SetColorScheme()
   if !has('termguicolors')
@@ -1119,6 +1109,16 @@ endfunc
 
 " Ctrl-o: Go back in the jumplist, also realign the screen
 nnoremap <c-o> <c-o>zzzv
+
+" NeoTerm
+
+if has('nvim')
+  let g:neoterm_position   = 'vertical'
+  let g:neoterm_shell      = $SHELL
+  let g:neoterm_autoinsert = 1
+
+  nnoremap <silent> <leader>t :T ll<CR>
+endif
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |
