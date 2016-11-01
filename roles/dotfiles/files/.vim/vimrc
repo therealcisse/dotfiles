@@ -62,12 +62,9 @@ call plug#begin('~/.vim/plugged')
 
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    " Plug 'carlitux/deoplete-ternjs', { 'for': [ 'javascript', 'javascript.jsx' ] }
   endif
 
   Plug 'duggiefresh/vim-easydir'
-
-  " Plug 'jonathanfilip/lucius'
 
   Plug 'wakatime/vim-wakatime'
 
@@ -75,18 +72,11 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'derekwyatt/vim-scala', { 'for': [ 'scala' ] }
 
-  Plug 'xolox/vim-notes', { 'for': [ 'markdown' ] }
-  Plug 'xolox/vim-misc'
-  " Plug 'xolox/vim-easytags'
-
   Plug 'elmcast/elm-vim', { 'for': [ 'elm' ] }
-
-  " Plug 'majutsushi/tagbar'
-
-  " Plug 'ternjs/tern_for_vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
   Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
   Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-webdevicons'
 
   Plug 'chriskempson/base16-vim'
@@ -95,14 +85,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'tpope/vim-abolish'
 
-  Plug 'junegunn/goyo.vim', { 'on' : 'Goyo' }
-  " Plug 'junegunn/limelight.vim', { 'on' : 'Limelight' }
-
   Plug 'mhinz/vim-startify'
-
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-  Plug 'ConradIrwin/vim-bracketed-paste'
 
   Plug 'mbbill/undotree'
   Plug 'tpope/vim-eunuch'
@@ -597,17 +580,17 @@ let g:javascript_plugin_flow = 1
 
 " VIM notes
 
-let g:notes_directories = ['~/Documents/Notes', '~/Dropbox/Shared Notes']
-
-let g:notes_tagsindex = '~/Documents/Notes/tags.txt'
-let g:notes_conceal_italic = 0
-let g:notes_conceal_bold = 0
-let g:notes_conceal_url = 0
-
-nnoremap <leader>do :Note Todo<CR>
-
-" using command-line-only abbrev to alias Note
-cabbrev note Note
+" let g:notes_directories = ['~/Documents/Notes', '~/Dropbox/Shared Notes']
+"
+" let g:notes_tagsindex = '~/Documents/Notes/tags.txt'
+" let g:notes_conceal_italic = 0
+" let g:notes_conceal_bold = 0
+" let g:notes_conceal_url = 0
+"
+" nnoremap <leader>do :Note Todo<CR>
+"
+" " using command-line-only abbrev to alias Note
+" cabbrev note Note
 
 function! s:SetColorScheme()
   if !has('termguicolors')
@@ -833,10 +816,6 @@ augroup end
 cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>/<C-r>/' : '<C-z>'
 cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>?<C-r>/' : '<S-Tab>'
 
-" Tagbar
-
-" nmap <F8> :TagbarToggle<CR>
-
 " Neovim enhancements
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -860,40 +839,6 @@ nnoremap : ;
 
 " Delete current buffer
 noremap <C-c> :close<CR>
-
-" Goyo & Limelight
-
-function! s:goyo_enter()
-  silent !tmux set status off
-  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  set noshowmode
-  set noshowcmd
-  " set scrolloff=999
-  " Limelight
-  " ...
-endfunction
-
-function! s:goyo_leave()
-  silent !tmux set status on
-  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  set showmode
-  set showcmd
-  " set scrolloff=5
-  " Limelight!
-  " ...
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-nnoremap <leader>j :Goyo<cr>
-
-let g:goyo_width='100%'
-let g:goyo_height = '100%'
-
-let g:goyo_linenr=1
-
-" Expected behavior
 
 nnoremap Y y$
 
