@@ -701,16 +701,6 @@ nnoremap <s-l> >>`]
 vnoremap <s-h> <gv`]
 vnoremap <s-l> >gv`]
 
-" Cursor Moving
-cnoremap ∆ <Down>
-cnoremap ˚ <Up>
-cnoremap ˙ <Left>
-cnoremap ¬ <Right>
-inoremap ∆ <Down>
-inoremap ˚ <Up>
-inoremap ˙ <Left>
-inoremap ¬ <Right>
-
 " convert to/from spaces/tabs...
 nnoremap <silent> TS :%retab!<cr>
 
