@@ -10,4 +10,5 @@
     - { role: ssh,      tags: ['ssh'] }
     - { role: fonts,    tags: ['fonts'] }
     - { role: nvm,      tags: ['nvm', 'node'] }
+    - { role: keyboard,      tags: ['keyboard', 'karabiner'] }
 

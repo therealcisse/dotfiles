@@ -1,0 +1,5 @@
+---
+
+# karabiner config path
+karabiner_config_path: '{{ ansible_env.HOME }}/.karabiner.d/configuration/karabiner.json'
+
