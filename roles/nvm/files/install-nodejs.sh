@@ -37,8 +37,7 @@ trap 'RETVAL=$?;  do_error_exit '  ERR
 source "$NVM_EXE_PATH"             > /dev/null 2>&1
 nvm install --lts $NODEJS_VERSION  > /dev/null 2>&1
 nvm use --lts $NODEJS_VERSION      > /dev/null 2>&1
-nvm alias default $NODEJS_VERSION  > /dev/null 2>&1
-
+nvm alias default lts/*            > /dev/null 2>&1
 
 # output result in JSON format
 cat <<EOF
