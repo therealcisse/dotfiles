@@ -815,6 +815,9 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 nnoremap j gj
 nnoremap k gk
 
+" Do not show stupid q: window
+nnoremap q: :q
+
 nnoremap q; q: " much easier to hit
 command! Q q
 
@@ -900,14 +903,6 @@ nnoremap <silent> <localleader>c :syntax sync fromstart<CR>
 syntax sync minlines=256 " start highlighting from 256 lines backwards
 set synmaxcol=300        " do not highlith very long lines
 set re=1                 " use explicit old regexpengine, seems to be more faster
-
-" Same when moving up and down
-noremap <C-d> <C-d>zz
-noremap <C-u> <C-u>zz
-
-" Do not show stupid q: window
-noremap q: :q
-noremap q; :q
 
 " Time out on key codes but not mappings.
 " Basically this makes terminal Vim work sanely.
