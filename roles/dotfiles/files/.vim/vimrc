@@ -815,16 +815,8 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 nnoremap j gj
 nnoremap k gk
 
-" Do not show stupid q: window
-nnoremap q: :q
-
-nnoremap q; q: " much easier to hit
-command! Q q
-
 nnoremap ; :
 vnoremap ; :
-
-nnoremap : ;
 
 " Delete current buffer
 noremap <C-c> :close<CR>
@@ -926,6 +918,7 @@ let g:tcommentTextObjectInlineComment=''
 " The default (g<) is a bit awkward to type.
 let g:tcommentMapLeaderUncommentAnyway='gu'
 
+" Count occurences of word under cursor
 nnoremap <leader>* *<C-O>:%s///gn<CR>
 
 "" Git
@@ -1053,8 +1046,8 @@ noremap <silent> <c-b> :setlocal nocursorline <BAR> :call smooth_scroll#up(&scro
 noremap <silent> <c-f> :setlocal nocursorline <BAR> :call smooth_scroll#down(&scroll*2, 30, 4)<CR> <BAR> :setlocal cursorline<CR>
 
 " Ack word under cursor
-nnoremap <leader>f :Ack! -Q <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
-vnoremap <leader>f :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
+nnoremap <leader>/ :Ack! -Q <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
+vnoremap <leader>/ :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
@@ -1110,6 +1103,20 @@ if has('nvim')
 
   nnoremap <silent> <leader>t :T ll<CR>
 endif
+
+" the /g flag on :s substitutions by default
+set gdefault
+
+" Simple word movements in INSERT MODE.
+
+inoremap <c-l> <right>
+
+" set kbs=\177 in xterm-color256.terminfo for this to work
+inoremap <c-h> <left>
+
+inoremap <c-b> <c-o>B
+inoremap <c-w> <c-o>W
+inoremap <c-e> <c-o>E<right>
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |
