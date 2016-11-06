@@ -75,6 +75,22 @@ export DISABLE_AUTO_TITLE='true'
 
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+#
+# Bindings
+#
+
+autoload -U select-word-style
+select-word-style bash # only alphanumeric chars are considered WORDCHARS
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
+
+bindkey ' ' magic-space # do history expansion on space
+
+bindkey "\e[1;5D" backward-word # Ctrl + <letf>
+bindkey "\e[1;5C" forward-word  # Ctrl + <right>
+
 # Switch back and forward between program faster
 
 fancy-ctrl-z () {

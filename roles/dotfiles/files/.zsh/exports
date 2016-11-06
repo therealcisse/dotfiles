@@ -7,6 +7,8 @@ else
   export EDITOR='nvim'
 fi
 
+export VISUAL=$EDITOR
+
 case "$(uname)" in
   Darwin*)
     if [ -x /usr/libexec/java_home ]; then

@@ -150,7 +150,6 @@ if !has('nvim')
     set encoding=utf-8 nobomb              " Set default encoding to UTF-8
   endif
 
-  set autoread                    " Automatically reread changed files without asking me anything
   set autoindent
   set backspace=indent,eol,start  " Makes backspace key more powerful.
   set incsearch                   " Shows the match while typing
@@ -214,7 +213,7 @@ set lazyredraw                 " Do not redraw the screen while
 
 if !has('nvim')
   syntax enable
-  set t_Co=256
+  let &t_Co = 256
   set term=ansi
 
   " Make arrow keys work in vim
@@ -419,45 +418,37 @@ nnoremap <leader>w :call <SID>StripTrailingWhitespaces()<CR>
 
 if has('autocmd')
 
-    " Autocommand Groups.
-    " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
+  " Autocommand Groups.
+  " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
 
-    " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    " Automatically strip the trailing
-    " whitespaces when files are saved.
+  " Automatically strip the trailing
+  " whitespaces when files are saved.
 
-    augroup strip_trailing_whitespaces
+  augroup strip_trailing_whitespaces
 
-        " List of file types that use the trailing whitespaces:
-        "
-        "  * Markdown
-        "    https://daringfireball.net/projects/markdown/syntax#block
+    " List of file types that use the trailing whitespaces:
+    "
+    "  * Markdown
+    "    https://daringfireball.net/projects/markdown/syntax#block
 
-        let excludedFileTypes = [
-            \ "markdown",
-            \ "mkd.markdown"
-        \]
+    let excludedFileTypes = [
+          \ "markdown",
+          \ "mkd.markdown"
+          \]
 
-        " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        " Only strip the trailing whitespaces if
-        " the file type is not in the excluded list.
+    " Only strip the trailing whitespaces if
+    " the file type is not in the excluded list.
 
-        autocmd!
-        autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :call s:StripTrailingWhitespaces()
+    autocmd!
+    autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :call s:StripTrailingWhitespaces()
 
-    augroup END
+  augroup END
 
 endif
-
-" ----------------------------------------------------------------------
-" | Color Scheme                                                       |
-" ----------------------------------------------------------------------
-
-set t_Co=256                   " Enable full-color support.
-
-" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 " Search and replace the word under the cursor.
 
@@ -700,10 +691,6 @@ noremap <leader>q :q<cr>
 
 noremap <leader>a =iB
 
-" Clone paragraph with `cp`
-
-noremap cp yap<S-}>p
-
 " Elm
 
 let g:elm_jump_to_error = 0
@@ -729,7 +716,7 @@ augroup AmsaykAutocmds
   autocmd!
 
   " Disable paste mode on leaving insert mode.
-  " autocmd InsertLeave * set nopaste
+  autocmd InsertLeave * set nopaste
 
   function! s:should_colorcolumn() abort
     return index(g:AmsaykColorColumnBlacklist, &filetype) == -1
@@ -764,9 +751,6 @@ augroup AmsaykAutocmds
   autocmd VimEnter * autocmd WinEnter * let w:created=1
   autocmd VimEnter * let w:created=1
 
-  " Disable paste mode on leaving insert mode.
-  autocmd InsertLeave * set nopaste
-
   " Make current window more obvious by turning off/adjusting some features in non-current
   " windows.
   if exists('+colorcolumn')
@@ -779,7 +763,7 @@ augroup AmsaykAutocmds
 
   if has('mksession')
     " Save/restore folds and cursor position.
-    autocmd BufWritePost,BufLeave,WinLeave ?* if s:should_mkview() | call s:mkview() | endif
+    autocmd BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if s:should_mkview() | call s:mkview() | endif
     if has('folding')
       autocmd BufWinEnter ?* if s:should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
     else
@@ -853,6 +837,11 @@ let g:delimitMate_smart_quotes = 1
 let g:delimitMate_expand_inside_quotes = 0
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
+augroup DelimitMate
+  autocmd!
+  au FileType vim,html,javascript.jsx let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+augroup END
+
 set switchbuf=usetab
 
 set whichwrap=b,h,l,s,<,>,[,],~     " Allow <BS>/h/l/<Right>/<Space> to move cross line boundaries
@@ -881,6 +870,7 @@ if has('mksession')
     set viewdir=~/.vim/tmp/view
   endif
   set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
+  set sessionoptions=folds
 endif
 
 " <Leader><Leader> -- Open last buffer.
@@ -933,21 +923,11 @@ noremap <leader>gr :Gremove<CR>
 
 
 if has('virtualedit')
-  set virtualedit=all            " Allow cursor to be anywhere.
+  set virtualedit=block            " Allow cursor to be anywhere.
 endif
 
 " Make vaa select the entire file...
 vmap aa VGo1G
-
-nnoremap <leader>v V`]
-
-if has('unix')
-  let s:uname = system('uname -s')
-  if s:uname =~ 'Darwin'
-    " Do Mac stuff here
-    imap <c-v> <ESC>"+P=ip`]A
-  endif
-endif
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -967,8 +947,6 @@ function! s:ToggleCase()
 endfunction
 
 inoremap <C-U> <ESC>:call <SID>ToggleCase()<CR>i
-
-set sessionoptions-=options
 
 " Duplicate selection
 vnoremap D y`]p

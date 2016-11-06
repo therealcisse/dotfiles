@@ -166,11 +166,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 207 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>212 181 796 473 0 0 1440 878 </string>
+	<string>194 226 937 465 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 154 1440 724 0 0 1440 878 </string>
+	<string>0 74 1440 804 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>113 411 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -358,6 +358,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Bound Hosts</key>
+			<array/>
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
@@ -845,7 +847,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-10-24T03:44:07Z</date>
+	<date>2016-11-04T02:06:10Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
