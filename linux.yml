@@ -5,6 +5,5 @@
     - { role: terminfo,  tags: ['terminfo'] }
     - { role: shell,     tags: ['shell'] }
     - { role: vim,       tags: ['vim', 'neovim'] }
-    - { role: nvm,       tags: ['nvm', 'node'] }
   vars:
     terminfo_path: ~/share/terminfo
