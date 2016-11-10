@@ -52,7 +52,11 @@ ZSH_CUSTOM=~/.zsh/oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(osx npm)
+if [ $(uname) =~ 'Darwin' ]; then
+  plugins=(osx npm)
+else
+  plugins=(npm)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -72,8 +76,6 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export DISABLE_AUTO_TITLE='true'
-
-# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 #
 # Bindings
