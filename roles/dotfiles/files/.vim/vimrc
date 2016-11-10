@@ -111,6 +111,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'kassio/neoterm'
   endif
 
+  Plug 'terryma/vim-expand-region'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -552,7 +553,7 @@ set showtabline=0
 
 " For conceal markers.
 if has('conceal')
-  set conceallevel=2
+  set conceallevel=1
 endif
 
 " VIM jsx
@@ -1013,7 +1014,7 @@ let g:sneak#prompt = 'Target key: '
 
 " vim-move
 
-let g:move_key_modifier = 'S'
+let g:move_key_modifier = 'C'
 
 " vim smooth scroll
 
@@ -1088,13 +1089,60 @@ set gdefault
 " Simple word movements in INSERT MODE.
 
 inoremap <c-l> <right>
+inoremap <c-j> <down>
 
 " set kbs=\177 in xterm-color256.terminfo for this to work
 inoremap <c-h> <left>
 
-inoremap <c-b> <c-o>B
-inoremap <c-w> <c-o>W
-inoremap <c-e> <c-o>E<right>
+inoremap <c-b> <c-o>b
+inoremap <c-w> <c-o>w
+inoremap <c-e> <c-o>e<right>
+
+" ----------------------------------------------------------------------
+" Startify
+" ----------------------------------------------------------------------
+
+let g:startify_enable_special         = 0
+let g:startify_files_number           = 10
+let g:startify_relative_path          = 1
+let g:startify_change_to_dir          = 0
+let g:startify_update_oldfiles        = 1
+let g:startify_session_delete_buffers = 0
+
+let g:startify_skiplist = [
+      \ 'COMMIT_EDITMSG',
+      \ '~/.config/nvim/init.vim'
+      \ ]
+
+let g:startify_bookmarks = [
+      \ '~/.config/nvim/init.vim'
+      \ ]
+
+let g:startify_custom_footer =
+      \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
+
+hi StartifyBracket ctermfg=240
+hi StartifyFile    ctermfg=147
+hi StartifyFooter  ctermfg=240
+hi StartifyHeader  ctermfg=114
+hi StartifyNumber  ctermfg=215
+hi StartifyPath    ctermfg=245
+hi StartifySlash   ctermfg=240
+hi StartifySpecial ctermfg=240
+
+if exists('$SUDO_USER')
+  let g:startify_session_autoload     = 0
+  let g:startify_session_persistence  = 0
+else
+  let g:startify_session_autoload     = 1
+  let g:startify_session_persistence  = 1
+  let g:startify_session_dir          = '~/.vim/tmp/session'
+endif
+
+" Vim expand region
+
+map K <Plug>(expand_region_expand)
+map J <Plug>(expand_region_shrink)
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |

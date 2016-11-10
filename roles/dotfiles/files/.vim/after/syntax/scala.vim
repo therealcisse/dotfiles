@@ -80,4 +80,4 @@ endif
 
 hi link scalaNiceOperator Operator
 hi! link Conceal Operator
-setlocal conceallevel=2
+" setlocal conceallevel=2
