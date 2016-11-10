@@ -103,7 +103,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'justinmk/vim-sneak'
 
   Plug 'matze/vim-move'
-  Plug 'terryma/vim-smooth-scroll'
+  Plug 'joeytwiddle/sexy_scroller.vim'
 
   Plug 'wincent/vim-clipper'
 
@@ -1016,14 +1016,6 @@ let g:sneak#prompt = 'Target key: '
 
 let g:move_key_modifier = 'C'
 
-" vim smooth scroll
-
-" " git@github.com:terryma/vim-smooth-scroll.git
-noremap <silent> <c-u> :setlocal nocursorline <BAR> :call smooth_scroll#up(&scroll, 30, 2)<CR> <BAR> :setlocal cursorline<CR>
-noremap <silent> <c-d> :setlocal nocursorline <BAR> :call smooth_scroll#down(&scroll, 30, 2)<CR> <BAR> :setlocal cursorline<CR>
-noremap <silent> <c-b> :setlocal nocursorline <BAR> :call smooth_scroll#up(&scroll*2, 30, 4)<CR> <BAR> :setlocal cursorline<CR>
-noremap <silent> <c-f> :setlocal nocursorline <BAR> :call smooth_scroll#down(&scroll*2, 30, 4)<CR> <BAR> :setlocal cursorline<CR>
-
 " Ack word under cursor
 nnoremap <leader>/ :Ack! -Q <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
 vnoremap <leader>/ :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
@@ -1041,6 +1033,8 @@ if executable("ag")
       \ --ignore .svn
       \ --ignore .hg
       \ --ignore node_modules
+      \ --ignore target
+      \ --ignore .idea
       \ --ignore bower_components
       \ --ignore logs
       \ --ignore out
