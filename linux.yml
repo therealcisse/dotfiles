@@ -7,3 +7,4 @@
     - { role: vim,       tags: ['vim', 'neovim'] }
   vars:
     terminfo_path: ~/share/terminfo
+

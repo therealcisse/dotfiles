@@ -13,7 +13,7 @@
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
 	<key>Default Bookmark Guid</key>
-	<string>826E6275-4B9D-42FF-B839-A4DE2EC15504</string>
+	<string>8844F010-D0AE-4EA6-9C7A-D0B60E08CD55</string>
 	<key>EnableRendezvous</key>
 	<false/>
 	<key>ExperimentalOptimizationsEnabled</key>
@@ -166,7 +166,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 207 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>194 221 918 512 0 0 1440 878 </string>
+	<string>143 178 796 473 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -410,7 +410,7 @@
 				<real>0.73333334922790527</real>
 			</dict>
 			<key>Guid</key>
-			<string>826E6275-4B9D-42FF-B839-A4DE2EC15504</string>
+			<string>8844F010-D0AE-4EA6-9C7A-D0B60E08CD55</string>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>
@@ -1456,7 +1456,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-11-09T11:32:47Z</date>
+	<date>2016-11-10T11:37:41Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
