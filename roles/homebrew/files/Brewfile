@@ -78,6 +78,7 @@ brew 'git', args: ['with-pcre']
 brew 'glib'
 brew 'gmp'
 brew 'go'
+brew 'clipper', service_restart: true
 brew 'htop-osx'
 brew 'httping'
 brew 'httrack'
