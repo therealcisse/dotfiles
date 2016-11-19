@@ -25,23 +25,21 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'thinca/vim-textobj-function-javascript'
 
-  Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] }
-  Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
+  Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] } | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'elzr/vim-json', { 'for': [ 'json' ] }
-  Plug 'flazz/vim-colorschemes'
+  " Plug 'flazz/vim-colorschemes'
   Plug 'matchit.zip'
 
   " Ag/Ack for project-wide searching
-  Plug 'mileszs/ack.vim'
+  Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
 
   Plug 'editorconfig/editorconfig-vim'
   Plug 'kien/ctrlp.vim'
 
-  Plug 'amirh/HTML-AutoCloseTag'
-  Plug 'hail2u/vim-css3-syntax'
-  " Plug 'ap/vim-css-color'
-  Plug 'gorodinskiy/vim-coloresque'
-  Plug 'tpope/vim-haml'
+  Plug 'amirh/HTML-AutoCloseTag', { 'for': [ 'html', 'javascript', 'javascript.jsx' ] }
+  Plug 'JulesWang/css.vim'
+  Plug 'ap/vim-css-color'
+  Plug 'tpope/vim-haml', { 'for': [ 'haml', 'scss', 'sass' ] }
   Plug 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'javascript.jsx' ] }
 
   Plug 'mattn/webapi-vim'
@@ -50,15 +48,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
   Plug  'neomake/neomake'
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
 
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
+  Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -68,15 +64,14 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'wakatime/vim-wakatime'
 
-  Plug 'tommcdo/vim-lion'
+  Plug 'tommcdo/vim-lion' " Align: gl, gL
 
   Plug 'derekwyatt/vim-scala', { 'for': [ 'scala' ] }
 
   Plug 'elmcast/elm-vim', { 'for': [ 'elm' ] }
 
   Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
-  Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] } | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-webdevicons'
 
   Plug 'chriskempson/base16-vim'
@@ -93,16 +88,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'AndrewRadev/splitjoin.vim'
 
   Plug 'tmux-plugins/vim-tmux-focus-events'
-  Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
+  Plug 'tmux-plugins/vim-tmux', { 'for': [  'tmux' ] }
 
-  Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
-  Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
+  Plug 'ekalinin/Dockerfile.vim', { 'for' : 'Dockerfile' }
+  Plug 'fatih/vim-nginx' , { 'for' : 'nginx' }
 
   Plug 'skywind3000/asyncrun.vim'
 
   Plug 'justinmk/vim-sneak'
 
-  Plug 'matze/vim-move'
+  Plug 'matze/vim-move' " <c-k>, <c-j>
   Plug 'joeytwiddle/sexy_scroller.vim'
 
   Plug 'wincent/vim-clipper'
@@ -112,6 +107,11 @@ call plug#begin('~/.vim/plugged')
   endif
 
   Plug 'terryma/vim-expand-region'
+
+  Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript' ] }
+  Plug 'Quramy/vim-js-pretty-template', { 'for': [ 'javascript', 'javascript.jsx' ] }
+
+  Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -121,7 +121,13 @@ call plug#end()
 " Use a different mapleader (default is '\').
 
 let mapleader="\<Space>"
-let maplocalleader="\\"
+let maplocalleader=mapleader
+
+if exists("$TMUX")
+  " Disable CTRL-Space on tmux or on screen
+  nnoremap <C-Space> <NOP>
+  nnoremap <leader><C-Space> <C-Space>
+endif
 
 set termencoding=utf-8
 scriptencoding utf-8
@@ -666,6 +672,15 @@ nnoremap <s-l> >>`]
 vnoremap <s-h> <gv`]
 vnoremap <s-l> >gv`]
 
+" ----------------------------------------------------------------------------
+" Readline-style key bindings in command-line (excerpt from rsi.vim)
+" ----------------------------------------------------------------------------
+cnoremap        <C-A> <Home>
+cnoremap        <C-B> <Left>
+cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
+cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
+
+"
 " convert to/from spaces/tabs...
 nnoremap <silent> TS :%retab!<cr>
 
@@ -679,7 +694,7 @@ command! -nargs=0 -bar Update if &modified
                            \|    endif
                            \|endif
 
-nnoremap <silent> <C-S> :<C-u>Update<CR>
+nnoremap <silent> <C-S> :Update<CR>
 inoremap <c-s> <c-o>:Update<CR><Esc>
 vmap <C-s> <esc>:w<CR>gv
 
@@ -694,7 +709,7 @@ noremap <leader>a =iB
 
 " Elm
 
-let g:elm_jump_to_error = 0
+let g:elm_jump_to_error = 1
 let g:elm_make_output_file = 'elm.js'
 let g:elm_make_show_warnings = 0
 let g:elm_syntastic_show_warnings = 0
@@ -778,6 +793,19 @@ augroup AmsaykAutocmds
   endif
 
   autocmd BufWritePost */spell/*.add silent! :mkspell! %
+
+  " Close preview window
+  if exists('##CompleteDone')
+    au CompleteDone * pclose
+  else
+    au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
+  endif
+
+  " Automatic rename of tmux window
+  if exists('$TMUX') && !exists('$NORENAME')
+    au BufEnter * if empty(&buftype) | call system('tmux rename-window '.expand('%:t:S')) | endif
+    au VimLeave * call system('tmux set-window automatic-rename on')
+  endif
 augroup end
 
 
@@ -802,9 +830,6 @@ nnoremap k gk
 
 nnoremap ; :
 vnoremap ; :
-
-" Delete current buffer
-noremap <C-c> :close<CR>
 
 nnoremap Y y$
 
@@ -938,30 +963,10 @@ if !exists(':DiffOrig')
         \ | wincmd p | diffthis
 endif
 
-function! s:ToggleCase()
-  let cursorLine = line('.')
-  let cursorColumn = col('.')
-
-  normal! g~iw
-
-  call cursor(cursorLine, cursorColumn + 1)
-endfunction
-
-inoremap <C-U> <ESC>:call <SID>ToggleCase()<CR>i
-
 " Duplicate selection
-vnoremap D y`]p
+vnoremap <expr> D 'y`]:normal ]<space>jP`[' . strpart(getregtype(), 0, 1) . '`]<CR>'
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-
-" Are you ready?
-
-inoremap jk <ESC>
-inoremap <ESC> <nop>
-
-if has('nvim')
-  tnoremap jk <C-\><C-n>
-endif
 
 " Arrow keys madness: Are you ready?
 
@@ -1012,6 +1017,14 @@ let g:sneak#s_next = 1
 
 let g:sneak#prompt = 'Target key: '
 
+function! s:RestoreS()
+  " Restore default s/S behavoir
+  nunmap s
+  nunmap S
+endfunction
+
+au VimEnter * :call s:RestoreS()
+
 " vim-move
 
 let g:move_key_modifier = 'C'
@@ -1051,7 +1064,7 @@ noremap <leader>b :CtrlPBuffer<CR>
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:50,results:50'
 let g:ctrlp_reuse_window = 'NERD_tree'
-let g:ctrlp_max_files = 0
+let g:ctrlp_max_files    = 0
 
 let g:ctrlp_cmd = 'call CallCtrlP()'
 
@@ -1074,7 +1087,7 @@ if has('nvim')
   let g:neoterm_shell      = $SHELL
   let g:neoterm_autoinsert = 1
 
-  nnoremap <silent> <leader>t :T ll<CR>
+  nnoremap <silent> <leader>t :T git status<CR>
 endif
 
 " the /g flag on :s substitutions by default
@@ -1082,15 +1095,16 @@ set gdefault
 
 " Simple word movements in INSERT MODE.
 
-inoremap <c-l> <right>
-inoremap <c-j> <down>
+imap <c-l> <c-o>l
+imap <c-j> <c-o>j
+imap <c-k> <c-o>k
 
 " set kbs=\177 in xterm-color256.terminfo for this to work
-inoremap <c-h> <left>
+imap <c-h> <c-o>h
 
 inoremap <c-b> <c-o>b
 inoremap <c-w> <c-o>w
-inoremap <c-e> <c-o>e<right>
+inoremap <c-e> <c-o>e<c-o>l
 
 " ----------------------------------------------------------------------
 " Startify
@@ -1124,19 +1138,86 @@ hi StartifyPath    ctermfg=245
 hi StartifySlash   ctermfg=240
 hi StartifySpecial ctermfg=240
 
-if exists('$SUDO_USER')
-  let g:startify_session_autoload     = 0
-  let g:startify_session_persistence  = 0
-else
-  let g:startify_session_autoload     = 1
-  let g:startify_session_persistence  = 1
-  let g:startify_session_dir          = '~/.vim/tmp/session'
-endif
+let g:startify_session_autoload     = 0
+let g:startify_session_persistence  = 0
 
 " Vim expand region
 
 map K <Plug>(expand_region_expand)
 map J <Plug>(expand_region_shrink)
+
+" Optimize
+hi! NonText cterm=NONE ctermfg=NONE
+
+" Typescript
+
+let g:typescript_compiler_binary  = 'tsc'
+let g:typescript_compiler_options = ''
+
+let g:typescript_indent_disable = 1
+
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+autocmd FileType typescript JsPreTmpl html
+" autocmd FileType typescript syn clear foldBraces  " For leafgarland/typescript-vim users only. Please see https://github.com/Quramy/vim-js-pretty-template/issues/1 for details.
+
+" Flow
+
+let g:flow#enable    = 1
+let g:flow#errjmp    = 1
+let g:flow#autoclose = 1
+
+" ----------------------------------------------------------------------------
+" :Root | Change directory to the root of the Git repository
+" ----------------------------------------------------------------------------
+function! s:root()
+  let root = systemlist('git rev-parse --show-toplevel')[0]
+  if v:shell_error
+    echo 'Not in git repo'
+  else
+    execute 'lcd' root
+    echo 'Changed directory to: '.root
+  endif
+endfunction
+command! Root call s:root()
+
+" ----------------------------------------------------------------------------
+" HL | Find out syntax group
+" ----------------------------------------------------------------------------
+function! s:hl()
+  " ech  synIDattr(synID(line('.'), col('.'), 0), 'name')
+  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
+endfunction
+command! HL call <SID>hl()
+
+" ----------------------------------------------------------------------------
+" EX | chmod +x
+" ----------------------------------------------------------------------------
+command! EX if !empty(expand('%'))
+         \|   write
+         \|   call system('chmod +x '.expand('%'))
+         \|   silent e
+         \| else
+         \|   echohl WarningMsg
+         \|   echo 'Save the file first'
+         \|   echohl None
+         \| endif
+
+" ----------------------------------------------------------------------------
+" Profile
+" ----------------------------------------------------------------------------
+function! s:profile(bang)
+  if a:bang
+    profile pause
+    noautocmd qall
+  else
+    profile start /tmp/profile.log
+    profile func *
+    profile file *
+  endif
+endfunction
+command! -bang Profile call s:profile(<bang>0)
 
 " ----------------------------------------------------------------------
 " | Local Settings                                                     |

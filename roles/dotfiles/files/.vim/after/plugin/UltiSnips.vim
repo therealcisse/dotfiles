@@ -23,13 +23,13 @@ function! g:UltiSnips_Reverse()
   return ""
 endfunction
 
-if !exists("g:UltiSnipsJumpForwardTrigger")
+" if !exists("g:UltiSnipsJumpForwardTrigger")
   let g:UltiSnipsJumpForwardTrigger = "<tab>"
-endif
+" endif
 
-if !exists("g:UltiSnipsJumpBackwardTrigger")
+" if !exists("g:UltiSnipsJumpBackwardTrigger")
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-endif
+" endif
 
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<CR>"
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<CR>"
@@ -48,7 +48,7 @@ imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "<
 
 let g:UltiSnipsSnippetsDir = $HOME . '/.config/nvim/ultisnips'
 let g:UltiSnipsSnippetDirectories = [
-      \ $HOME . '/.config/nvim/ultisnips',
+      \ $HOME . '/.vim/ultisnips',
       \ $HOME . '/.vim/plugged/vim-snippets/UltiSnips/'
       \ ]
 
