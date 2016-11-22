@@ -964,28 +964,51 @@ if !exists(':DiffOrig')
 endif
 
 " Duplicate selection
-vnoremap <expr> D 'y`]:normal ]<space>jP`[' . strpart(getregtype(), 0, 1) . '`]<CR>'
+vnoremap <expr> D 'y`]:keepjumps normal ]<space>jP`[' . strpart(getregtype(), 0, 1) . '`]<CR>'
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
-" Arrow keys madness: Are you ready?
+augroup ArrowKeys
+  autocmd!
 
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+  function! s:ToggleArrowKeys() abort
+    if winnr() > 1
 
-" Paste toggle nightmare
+      " Resize split easily
+
+      nnoremap <silent> <up> :exe "resize " . (winheight(0) * 3/2)<CR>
+      nnoremap <silent> <down> :exe "resize " . (winheight(0) * 2/3)<CR>
+
+      nnoremap <silent> <right> :exe "vertical resize +5"<CR>
+      nnoremap <silent> <left> :exe "vertical resize -5"<CR>
+
+      inoremap <silent> <up> <c-o>:exe "resize " . (winheight(0) * 3/2)<CR>
+      inoremap <silent> <down> <c-o>:exe "resize " . (winheight(0) * 2/3)<CR>
+
+      inoremap <silent> <right> <c-o>:exe "vertical resize +5"<CR>
+      inoremap <silent> <left> <c-o>:exe "vertical resize -5"<CR>
+
+    else
+
+      " Arrow keys madness: Are you ready?
+
+      nnoremap <up> <nop>
+      nnoremap <down> <nop>
+      nnoremap <left> <nop>
+      nnoremap <right> <nop>
+      inoremap <up> <nop>
+      inoremap <down> <nop>
+      inoremap <left> <nop>
+      inoremap <right> <nop>
+
+    endif
+
+  endfunction
+
+  autocmd BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
+augroup end
+
 set pastetoggle=
-
-" Resize split easily
-
-nnoremap <silent> <leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
 vnoremap . :norm.<CR>
 
@@ -1037,7 +1060,7 @@ vnoremap <leader>/ :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_v
 " | CTRLP                                                              |
 " ----------------------------------------------------------------------
 
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'ra'
 
 if executable("ag")
   let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
@@ -1104,7 +1127,7 @@ imap <c-h> <c-o>h
 
 inoremap <c-b> <c-o>b
 inoremap <c-w> <c-o>w
-inoremap <c-e> <c-o>e<c-o>l
+inoremap <c-e> <c-o>e<right>
 
 " ----------------------------------------------------------------------
 " Startify
@@ -1220,7 +1243,7 @@ endfunction
 command! -bang Profile call s:profile(<bang>0)
 
 " ----------------------------------------------------------------------
-" | Local Settings                                                     |
+"  Local Settings                                                     |
 " ----------------------------------------------------------------------
 
 " Load local settings if they exist.
