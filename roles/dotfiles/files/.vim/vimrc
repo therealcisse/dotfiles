@@ -47,7 +47,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
-  Plug  'neomake/neomake'
+  " Plug  'neomake/neomake'
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
@@ -135,6 +135,9 @@ scriptencoding utf-8
 if has('termguicolors')
   set termguicolors
 endif
+
+" Live substitution
+set inccommand=split
 
 " Vim usable (these are default on NeoVim)
 if !has('nvim')
@@ -536,26 +539,34 @@ if has('nvim')
   " Use deoplete.
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_smart_case = 1
-  " let g:deoplete#enable_refresh_always = 1
+  let g:deoplete#auto_complete_start_length = 3
 
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
   endif
-
 endif
 
 set showtabline=0
 
-" " neomake
-" let g:neomake_verbose = 3
-" autocmd BufWritePost,BufEnter * Neomake
+" Neomake
 
-" let g:neomake_javascript_jshint_maker = {
-"     \ 'args': [ '--format' ],
-"     \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-"     \ }
-" let g:neomake_javascript_enabled_makers = ['eslint']
-" let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
+" let g:neomake_verbose = 0
+" let g:neomake_error_sign = {'text': '❌', 'texthl': 'NeomakeErrorSign'}
+" let g:neomake_warning_sign = {'text': '❌', 'texthl': 'NeomakeWarningSign'}
+" let g:neomake_place_signs = 0
+"
+" function! Lint()
+"   if &filetype =~ 'javascript'
+"     Neomake eslint
+"   else
+"     Neomake
+"   end
+" endfunction
+"
+" augroup lint_events
+"   autocmd!
+"   autocmd BufWritePost,BufEnter,FocusLost * call Lint()
+" augroup end
 
 " For conceal markers.
 if has('conceal')
@@ -833,6 +844,9 @@ vnoremap ; :
 
 nnoremap Y y$
 
+vnoremap y myy`y
+vnoremap Y myY`y
+
 " Backspace should delete selection and put me in insert mode
 
 vnoremap <BS> "_xi
@@ -968,41 +982,33 @@ vnoremap <expr> D 'y`]:keepjumps normal ]<space>jP`[' . strpart(getregtype(), 0,
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
+" Arrow keys madness: Are you ready?
+
+nnoremap <up>    <nop>
+nnoremap <down>  <nop>
+nnoremap <left>  <nop>
+nnoremap <right> <nop>
+inoremap <up>    <nop>
+inoremap <down>  <nop>
+inoremap <left>  <nop>
+inoremap <right> <nop>
+
+" Resize split easily
 augroup ArrowKeys
   autocmd!
 
   function! s:ToggleArrowKeys() abort
-    if winnr() > 1
+    nnoremap <silent> <c-up>    :exe "resize " . (winheight(0) * 3/2)<CR>
+    nnoremap <silent> <c-down>  :exe "resize " . (winheight(0) * 2/3)<CR>
 
-      " Resize split easily
+    nnoremap <silent> <c-right> :exe "vertical resize +5"<CR>
+    nnoremap <silent> <c-left>  :exe "vertical resize -5"<CR>
 
-      nnoremap <silent> <up> :exe "resize " . (winheight(0) * 3/2)<CR>
-      nnoremap <silent> <down> :exe "resize " . (winheight(0) * 2/3)<CR>
+    inoremap <silent> <c-up>    <c-o>:exe "resize " . (winheight(0) * 3/2)<CR>
+    inoremap <silent> <c-down>  <c-o>:exe "resize " . (winheight(0) * 2/3)<CR>
 
-      nnoremap <silent> <right> :exe "vertical resize +5"<CR>
-      nnoremap <silent> <left> :exe "vertical resize -5"<CR>
-
-      inoremap <silent> <up> <c-o>:exe "resize " . (winheight(0) * 3/2)<CR>
-      inoremap <silent> <down> <c-o>:exe "resize " . (winheight(0) * 2/3)<CR>
-
-      inoremap <silent> <right> <c-o>:exe "vertical resize +5"<CR>
-      inoremap <silent> <left> <c-o>:exe "vertical resize -5"<CR>
-
-    else
-
-      " Arrow keys madness: Are you ready?
-
-      nnoremap <up> <nop>
-      nnoremap <down> <nop>
-      nnoremap <left> <nop>
-      nnoremap <right> <nop>
-      inoremap <up> <nop>
-      inoremap <down> <nop>
-      inoremap <left> <nop>
-      inoremap <right> <nop>
-
-    endif
-
+    inoremap <silent> <c-right> <c-o>:exe "vertical resize +5"<CR>
+    inoremap <silent> <c-left>  <c-o>:exe "vertical resize -5"<CR>
   endfunction
 
   autocmd BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
@@ -1110,7 +1116,8 @@ if has('nvim')
   let g:neoterm_shell      = $SHELL
   let g:neoterm_autoinsert = 1
 
-  nnoremap <silent> <leader>t :T git status<CR>
+  nnoremap <silent> <leader>tn :Tnew<CR>
+  nnoremap <silent> <leader>tt :Ttoggle<CR>
 endif
 
 " the /g flag on :s substitutions by default
@@ -1187,8 +1194,8 @@ autocmd FileType typescript JsPreTmpl html
 
 " Flow
 
-let g:flow#enable    = 1
-let g:flow#errjmp    = 1
+let g:flow#enable    = 0
+let g:flow#errjmp    = 0
 let g:flow#autoclose = 1
 
 " ----------------------------------------------------------------------------
@@ -1241,6 +1248,18 @@ function! s:profile(bang)
   endif
 endfunction
 command! -bang Profile call s:profile(<bang>0)
+
+" Terminal mappings
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+
+  tnoremap <C-w>h <C-\><C-n><C-w><C-h>
+  tnoremap <C-w>j <C-\><C-n><C-w><C-j>
+  tnoremap <C-w>k <C-\><C-n><C-w><C-k>
+  tnoremap <C-w>l <C-\><C-n><C-w><C-l>
+
+  tnoremap <C-w>w <C-\><C-n><C-w><C-w>
+endif
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
