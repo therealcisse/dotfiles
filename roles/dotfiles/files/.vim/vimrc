@@ -187,8 +187,7 @@ if exists('&belloff')
 endif
 
 if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard') && exists('$DISPLAY')
-  set clipboard=unnamed          " ┐ Use the system clipboard
-  set clipboard+=unnamedplus     " ┘ as the default register.
+  set clipboard=unnamed,unnamedplus     "  Use the system clipboard as the default register.
 endif
 
 set cpoptions+=$               " When making a change, don't
@@ -675,14 +674,6 @@ if exists('$TMUX')
   execute "set <F12>=\e[24;*~"
 endif
 
-" Drag line/selection
-
-nnoremap <s-h> <<`]
-nnoremap <s-l> >>`]
-
-vnoremap <s-h> <gv`]
-vnoremap <s-l> >gv`]
-
 " ----------------------------------------------------------------------------
 " Readline-style key bindings in command-line (excerpt from rsi.vim)
 " ----------------------------------------------------------------------------
@@ -1122,19 +1113,6 @@ endif
 
 " the /g flag on :s substitutions by default
 set gdefault
-
-" Simple word movements in INSERT MODE.
-
-imap <c-l> <c-o>l
-imap <c-j> <c-o>j
-imap <c-k> <c-o>k
-
-" set kbs=\177 in xterm-color256.terminfo for this to work
-imap <c-h> <c-o>h
-
-inoremap <c-b> <c-o>b
-inoremap <c-w> <c-o>w
-inoremap <c-e> <c-o>e<right>
 
 " ----------------------------------------------------------------------
 " Startify

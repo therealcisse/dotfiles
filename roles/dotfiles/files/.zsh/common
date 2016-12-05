@@ -1,2 +1,6 @@
 # turn off flow control (prevent CTRL-S from capturing all output)
 stty -ixon
+
+# Shell only exists after the 10th consecutive Ctrl-d
+set -o ignoreeof  # Same as setting IGNOREEOF=10
+
