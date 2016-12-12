@@ -686,28 +686,9 @@ cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 " convert to/from spaces/tabs...
 nnoremap <silent> TS :%retab!<cr>
 
-" If the current buffer has never been saved, it will have no name,
-" call the file browser to save it, otherwise just save it.
-command! -nargs=0 -bar Update if &modified
-                           \|    if empty(bufname('%'))
-                           \|        browse confirm write
-                           \|    else
-                           \|        confirm write
-                           \|    endif
-                           \|endif
-
-nnoremap <silent> <C-S> :Update<CR>
-inoremap <c-s> <c-o>:Update<CR><Esc>
-vmap <C-s> <esc>:w<CR>gv
-
-
-" Quit files easily
-
-noremap <leader>q :q<cr>
-
 " Align current paragraph
 
-noremap <leader>a =iB
+noremap <leader>a =i{
 
 " Elm
 
