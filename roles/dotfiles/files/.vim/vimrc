@@ -12,7 +12,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'jparise/vim-graphql', { 'for': [ 'graphql' ] }
 
-  Plug 'haya14busa/incsearch.vim'
+  " Plug 'haya14busa/incsearch.vim'
 
   Plug 'kana/vim-textobj-user'
   Plug 'kana/vim-textobj-entire' " ae, ie
@@ -111,7 +111,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript' ] }
   Plug 'Quramy/vim-js-pretty-template', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
-  Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
+  " Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
+
+  Plug 'eugen0329/vim-esearch'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -137,7 +139,9 @@ if has('termguicolors')
 endif
 
 " Live substitution
-set inccommand=split
+if has('nvim')
+  set inccommand=split
+endif
 
 " Vim usable (these are default on NeoVim)
 if !has('nvim')
@@ -201,6 +205,7 @@ if exists('+colorcolumn')
 endif
 
 set cursorline                 " Highlight the current line.
+set cursorcolumn               " Highlight the current column.
 
 if exists('$SUDO_USER')
   set noswapfile                      " don't create root-owned files
@@ -343,6 +348,8 @@ set wildmenu                   " Enable enhanced command-line
 set wildmode=longest:full,full        " shell-like autocomplete to unambiguous portion
 
 set wildcharm=<C-z>            " substitue for 'wildchar' (<Tab>) in macros
+
+set wildignore+=*/.git/*,*/tmp/*,*.swp " Ignore files
 
 set winminheight=0             " Allow windows to be squashed.
 
@@ -543,6 +550,14 @@ if has('nvim')
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
   endif
+
+  if !exists('g:deoplete#sources')
+    let g:deoplete#sources = {}
+  endif
+
+  " Scala
+  let g:deoplete#sources.scala = ['buffer', 'tags', 'omni']
+  let g:deoplete#omni#input_patterns.scala = ['[^. *\t0-9]\.\w*',': [A-Z]\w', '[\[\t\( ][A-Za-z]\w*']
 endif
 
 set showtabline=0
@@ -1040,22 +1055,36 @@ vnoremap <leader>/ :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_v
 
 let g:ctrlp_working_path_mode = 'ra'
 
-if executable("ag")
+if executable("rg")
+  let g:ctrlp_user_command = 'rg %s --files --color=never -g ""'
+
+  let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
+  cnoreabbrev ag Ack!
+
+  set grepprg=rg\ --color=never\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+
+  " rg is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+elseif executable("ag")
   let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .DS_Store
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore node_modules
-      \ --ignore target
-      \ --ignore .idea
-      \ --ignore bower_components
-      \ --ignore logs
-      \ --ignore out
-      \ -g ""'
+        \ --ignore .git
+        \ --ignore .DS_Store
+        \ --ignore .svn
+        \ --ignore .hg
+        \ --ignore node_modules
+        \ --ignore target
+        \ --ignore .idea
+        \ --ignore bower_components
+        \ --ignore logs
+        \ --ignore out
+        \ -g ""'
 
   let g:ackprg = 'ag --vimgrep --smart-case'
   cnoreabbrev ag Ack!
+
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
@@ -1153,9 +1182,9 @@ autocmd FileType typescript JsPreTmpl html
 
 " Flow
 
-let g:flow#enable    = 0
-let g:flow#errjmp    = 0
-let g:flow#autoclose = 1
+" let g:flow#enable    = 0
+" let g:flow#errjmp    = 0
+" let g:flow#autoclose = 1
 
 " ----------------------------------------------------------------------------
 " :Root | Change directory to the root of the Git repository
@@ -1219,6 +1248,11 @@ if has('nvim')
 
   tnoremap <C-w>w <C-\><C-n><C-w><C-w>
 endif
+
+" esearch
+let g:esearch = {
+      \ 'adapter': 'ag',
+      \}
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

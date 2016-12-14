@@ -144,6 +144,7 @@ brew 's3cmd'
 brew 'shellcheck'
 brew 'sqlite'
 brew 'the_silver_searcher'
+brew 'ripgrep'
 brew 'tig'
 brew 'tmux', args: ['HEAD']
 brew 'unar'
