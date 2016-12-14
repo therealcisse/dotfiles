@@ -1,6 +1,7 @@
 setlocal nolist
 setlocal nonumber
 setlocal norelativenumber
+setlocal nocursorcolumn
 
 if exists('+colorcolumn')
   setlocal colorcolumn=
