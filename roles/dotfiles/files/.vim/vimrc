@@ -53,6 +53,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
+  Plug 'kshenoy/vim-signature'    "show marks
 
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
@@ -107,6 +108,7 @@ call plug#begin('~/.vim/plugged')
   endif
 
   Plug 'terryma/vim-expand-region'
+  Plug 'vim-scripts/ReplaceWithRegister' "replace <motion> with register
 
   Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript' ] }
   Plug 'Quramy/vim-js-pretty-template', { 'for': [ 'javascript', 'javascript.jsx' ] }
@@ -114,6 +116,8 @@ call plug#begin('~/.vim/plugged')
   " Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
   Plug 'eugen0329/vim-esearch'
+
+  " Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -485,8 +489,8 @@ nnoremap <leader>m :NERDTreeFind<CR>
 
 " Make the opening of the `.vimrc` file easier.
 
-nnoremap <leader>ev :e $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <c-s>e :e $MYVIMRC<CR>
+nnoremap <c-s>r :source $MYVIMRC<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -520,6 +524,7 @@ set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 
 set completeopt-=preview    " Don't show preview window during completion.
 set complete-=i
+
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop
 
 set textwidth=80               " automatically hard wrap at 80 columns
@@ -697,12 +702,7 @@ cnoremap        <C-B> <Left>
 cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
 cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
-"
-" convert to/from spaces/tabs...
-nnoremap <silent> TS :%retab!<cr>
-
 " Align current paragraph
-
 noremap <leader>a =i{
 
 " Elm
@@ -797,12 +797,6 @@ augroup AmsaykAutocmds
     au CompleteDone * pclose
   else
     au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
-  endif
-
-  " Automatic rename of tmux window
-  if exists('$TMUX') && !exists('$NORENAME')
-    au BufEnter * if empty(&buftype) | call system('tmux rename-window '.expand('%:t:S')) | endif
-    au VimLeave * call system('tmux set-window automatic-rename on')
   endif
 augroup end
 
@@ -939,15 +933,33 @@ let g:tcommentMapLeaderUncommentAnyway='gu'
 nnoremap <leader>* *<C-O>:%s///gn<CR>
 
 "" Git
-noremap <leader>ga :Gwrite<CR>
-noremap <leader>gc :Gcommit<CR>
-noremap <leader>gh :Gpush<CR>
-noremap <leader>gl :Gpull<CR>
-noremap <leader>gs :Gstatus<CR>
-noremap <leader>gb :Gblame<CR>
-noremap <leader>gd :Gvdiff<CR>
-noremap <leader>gr :Gremove<CR>
+"no mappings by gitgutter
+let g:gitgutter_map_keys = 0
 
+"focus window of last created buffer
+function! JumpLastBufferWindow()
+  call win_gotoid(win_getid(bufwinnr(last_buffer_nr())))
+endfunction
+
+nnoremap <c-g>b :Gblame<cr>
+nnoremap <c-g>B :Gbrowse<cr>
+nnoremap <c-g>s :Gstatus<cr>
+nnoremap <c-g>c :Gcommit<cr>
+nnoremap <c-g>d :Gvdiff<cr>
+nnoremap <c-g>P :Gpush<cr>
+nnoremap <c-g>L :Gpull<cr>
+nnoremap <c-g>R :!git checkout <c-r>%<cr><cr>
+nnoremap <c-g>p :GitGutterPreviewHunk<cr>:call JumpLastBufferWindow()<cr>
+nnoremap <c-g>r :GitGutterUndoHunk<cr>
+nnoremap <c-g>S :GitGutterStageHunk<cr>
+nnoremap <c-g>l :GitGutterLineHighlightsToggle<cr>
+nnoremap [h :GitGutterPrevHunk<cr>
+nnoremap ]h :GitGutterNextHunk<cr>
+
+let g:gitgutter_sign_added = '↪'
+let g:gitgutter_sign_removed = '↩'
+let g:gitgutter_sign_modified = '↬'
+let g:gitgutter_sign_modified_removed = '↫'
 
 if has('virtualedit')
   set virtualedit=block            " Allow cursor to be anywhere.
@@ -1046,8 +1058,8 @@ au VimEnter * :call s:RestoreS()
 let g:move_key_modifier = 'C'
 
 " Ack word under cursor
-nnoremap <leader>/ :Ack! -Q <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
-vnoremap <leader>/ :<c-u>Ack! -Q "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
+nnoremap <leader>/ :Ack! <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
+vnoremap <leader>/ :<c-u>Ack! "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
@@ -1084,7 +1096,8 @@ elseif executable("ag")
   cnoreabbrev ag Ack!
 
   " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --column\ --nogroup\ --nocolor
+  set grepformat=%f:%l:%c:%m
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
@@ -1092,9 +1105,11 @@ endif
 
 noremap <leader>b :CtrlPBuffer<CR>
 
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:50,results:50'
-let g:ctrlp_reuse_window = 'NERD_tree'
-let g:ctrlp_max_files    = 0
+let g:ctrlp_match_window  = 'bottom,order:btt,min:1,max:50,results:50'
+let g:ctrlp_mruf_relative = 1
+let g:ctrlp_mruf_max      = 10
+let g:ctrlp_reuse_window  = 'NERD_tree'
+let g:ctrlp_max_files     = 0
 
 let g:ctrlp_cmd = 'call CallCtrlP()'
 
@@ -1106,6 +1121,12 @@ func! CallCtrlP()
     CtrlPMRU
   endif
 endfunc
+
+" ----------------------------------------------------------------------
+" | FAR                                                                |
+" ----------------------------------------------------------------------
+
+let g:far#source = 'agnvim'
 
 " Ctrl-o: Go back in the jumplist, also realign the screen
 nnoremap <c-o> <c-o>zzzv
@@ -1253,6 +1274,32 @@ endif
 let g:esearch = {
       \ 'adapter': 'ag',
       \}
+
+"select pasted text
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+"stay same position on insert mode exit
+inoremap <silent> <Esc> <Esc>`^
+
+"mixed indent
+nnoremap <c-c>i :retab<cr>
+
+"trailing
+nnoremap <c-c>t :%s/\s\+$//e<cr>:nohl<cr>
+
+" Toggle quickfix list
+fun! s:QuickfixToggle()
+  let nr = winnr("$")
+  copen
+  let nr2 = winnr("$")
+  if nr == nr2
+    cclose
+  endif
+endfunction
+nnoremap <c-c>q :call <SID>QuickfixToggle()<cr>
+
+" Vim-signiture
+let g:SignatureMarkTextHLDynamic = 1
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
