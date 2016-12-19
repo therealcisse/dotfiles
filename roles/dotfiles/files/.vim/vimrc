@@ -33,8 +33,8 @@ call plug#begin('~/.vim/plugged')
   " Ag/Ack for project-wide searching
   Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
 
-  Plug 'editorconfig/editorconfig-vim'
-  Plug 'kien/ctrlp.vim'
+  " Plug 'editorconfig/editorconfig-vim'
+  Plug 'ctrlpvim/ctrlp.vim'
 
   Plug 'amirh/HTML-AutoCloseTag', { 'for': [ 'html', 'javascript', 'javascript.jsx' ] }
   Plug 'JulesWang/css.vim'
@@ -71,8 +71,8 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'elmcast/elm-vim', { 'for': [ 'elm' ] }
 
-  Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
-  Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] } | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-webdevicons'
 
   Plug 'chriskempson/base16-vim'
@@ -115,9 +115,11 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
-  Plug 'eugen0329/vim-esearch'
+  Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins', 'branch': 'dev' }
 
-  " Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] }
+
+  Plug 'tpope/vim-vinegar'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -474,8 +476,8 @@ endif
 
 " Replace all
 
-nnoremap <leader>r :%s/\<<C-r>=functions#escape_pattern(expand('<cword>'))<CR>\>//gc<Left><Left><Left>
-vnoremap <leader>r "sy:<c-u>%s/<c-r>=functions#escape_pattern(functions#get_visual_selection())<CR>//gc<Left><Left><Left>
+nnoremap <leader>r :%s/\V\<<C-r>=functions#escape_pattern(expand('<cword>'))<CR>\>//gc<Left><Left><Left>
+vnoremap <leader>r :<c-u>%s/\V<c-r>=functions#escape_pattern(functions#get_visual_selection())<CR>//gc<Left><Left><Left>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -642,7 +644,7 @@ function! s:SetColorScheme()
   " highlight SpecialKey ctermbg=none ctermfg=8
   " highlight NonText ctermfg=8 ctermbg=none
 
-  " highlight link EndOfBuffer ColorColumn
+  highlight link EndOfBuffer ColorColumn
 
   " make comments and HTML attributes italic
   highlight Comment cterm=italic  gui=italic
@@ -822,6 +824,13 @@ nnoremap k gk
 
 nnoremap ; :
 vnoremap ; :
+
+" Relying on Hammerspoon to avoid collision between <Tab> and <C-i> (have it
+" send F6 instead for <C-i>).
+nnoremap <F6> <C-i>
+
+" Avoid unintentional switches to Ex mode. This would be more useful.
+nnoremap Q :normal n.<CR>
 
 nnoremap Y y$
 
@@ -1057,9 +1066,9 @@ au VimEnter * :call s:RestoreS()
 
 let g:move_key_modifier = 'C'
 
-" Ack word under cursor
-nnoremap <leader>/ :Ack! <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space>
-vnoremap <leader>/ :<c-u>Ack! "<C-r>=functions#escape_pattern(functions#get_visual_selection())<CR>"<Space>
+" Search word under cursor
+nnoremap <leader>/ :F <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space> **/*.*
+vnoremap <leader>/ :<c-u>F <C-r>=functions#escape_pattern(functions#get_visual_selection())<CR><Space> **/*.*
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
@@ -1126,7 +1135,19 @@ endfunc
 " | FAR                                                                |
 " ----------------------------------------------------------------------
 
-let g:far#source = 'agnvim'
+if executable("rg")
+  if has('nvim')
+    let g:far#source = 'rgnvim'
+  else
+    let g:far#source = 'rg'
+  endif
+elseif executable("ag")
+  if has('nvim')
+    let g:far#source = 'agnvim'
+  else
+    let g:far#source = 'ag'
+  endif
+endif
 
 " Ctrl-o: Go back in the jumplist, also realign the screen
 nnoremap <c-o> <c-o>zzzv
@@ -1258,6 +1279,11 @@ function! s:profile(bang)
 endfunction
 command! -bang Profile call s:profile(<bang>0)
 
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
+
 " Terminal mappings
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
@@ -1270,11 +1296,6 @@ if has('nvim')
   tnoremap <C-w>w <C-\><C-n><C-w><C-w>
 endif
 
-" esearch
-let g:esearch = {
-      \ 'adapter': 'ag',
-      \}
-
 "select pasted text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
@@ -1282,7 +1303,7 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 inoremap <silent> <Esc> <Esc>`^
 
 "mixed indent
-nnoremap <c-c>i :retab<cr>
+nnoremap <c-c>i :%retab!<CR>
 
 "trailing
 nnoremap <c-c>t :%s/\s\+$//e<cr>:nohl<cr>
@@ -1300,6 +1321,74 @@ nnoremap <c-c>q :call <SID>QuickfixToggle()<cr>
 
 " Vim-signiture
 let g:SignatureMarkTextHLDynamic = 1
+
+" ----------------------------------------------------------------------------
+" NERDTree
+" ----------------------------------------------------------------------------
+
+let g:NERDTreeMapMenu='M'
+
+let NERDTreeShowLineNumbers=0
+
+" let NERDTreeIgnore=['dist/*', 'out', 'logs', '.DS_Store', '.git', '.idea', '.tags', '\~$']
+
+let NERDTreeShowHidden=1
+
+let NERDTreeRespectWildIgnore=1
+
+" Disable display of '?' text and 'Bookmarks' label.
+let g:NERDTreeMinimalUI=1
+
+" The default of 31 is just a little too narrow.
+let g:NERDTreeWinSize=40
+
+" Single-click to toggle directory nodes, double-click to open non-directory
+" nodes.
+let g:NERDTreeMouseMode=2
+
+let NERDTreeHijackNetrw=1
+
+
+" let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+" let g:DevIconsEnableFoldersOpenClose = 1
+
+" the amount of space to use after the glyph character (default ' ')
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+let g:WebDevIconsNerdTreeGitPluginForceVAlign=0
+
+" NERDTree
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:WebDevIconsOS = 'Darwin'
+
+" let g:NERDTreeDirArrowExpandable = '›'
+" let g:NERDTreeDirArrowCollapsible = '⌄'
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+let g:NERDTreeGitStatusNodeColorization = 1
+let g:NERDTreeGitStatusWithFlags = 0
+
+" let g:NERDTreeFileExtensionHighlightFullName = 1
+
+" Let <Leader><Leader> (^#) return from NERDTree window.
+let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
+
+let g:webdevicons_conceal_nerdtree_brackets = 1
+
+let g:webdevicons_enable_nerdtree = 1
+
+" Tweaks for browsing
+let g:netrw_banner = 0
+let g:netrw_browse_splits = 4
+let g:netrw_altv = 1
+let g:netrw_liststyle = 3
+let g:netrw_list_hide = netrw_gitignore#Hide()
+let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
+
+nnoremap <silent> <c-n>e :Explore<cr>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

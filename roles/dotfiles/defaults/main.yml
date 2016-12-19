@@ -15,3 +15,6 @@ dotfiles:
   - .tpm
   - .vim
   - .zsh
+  - .hammerspoon
+  - .clipper.json
+  - .gitk
