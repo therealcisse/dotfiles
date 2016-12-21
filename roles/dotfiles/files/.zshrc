@@ -53,9 +53,9 @@ ZSH_CUSTOM=~/.zsh/oh-my-zsh
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 if [ `uname` = 'Darwin' ]; then
-  plugins=(osx yarn)
+  plugins=(osx git-extras yarn)
 else
-  plugins=(yarn)
+  plugins=(yarn git-extras)
 fi
 
 source $ZSH/oh-my-zsh.sh
