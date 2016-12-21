@@ -76,6 +76,7 @@ brew 'gettext'
 # brew 'ghc'
 brew 'gifsicle'
 brew 'git', args: ['with-pcre']
+brew 'git-extras'
 brew 'glib'
 brew 'gmp'
 brew 'go'
