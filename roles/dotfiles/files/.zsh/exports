@@ -43,12 +43,9 @@ export FTP_PASSIVE=1
 # colour ls listings
 export CLICOLOR=true
 
-# Setting ag as the default source for fzf
-if [ `uname` = 'Darwin' ]; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --glob "!.git/*"'
-else
-  export FZF_DEFAULT_COMMAND='ag -g ""'
-fi
+# Setting rg as the default source for fzf
+export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --glob "!.git/*"'
+# export FZF_DEFAULT_COMMAND='ag -g ""'
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 

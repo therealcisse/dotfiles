@@ -985,9 +985,6 @@ if !exists(':DiffOrig')
         \ | wincmd p | diffthis
 endif
 
-" Duplicate selection
-vnoremap <expr> D 'y`]:keepjumps normal ]<space>jP`[' . strpart(getregtype(), 0, 1) . '`]<CR>'
-
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 " Arrow keys madness: Are you ready?
