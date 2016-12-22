@@ -47,5 +47,5 @@ if ! type cargo > /dev/null; then
 fi
 
 # Install rg
-cargo install ripgrep
+cargo install ripgrep --force
 

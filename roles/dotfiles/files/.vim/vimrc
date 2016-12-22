@@ -12,7 +12,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'jparise/vim-graphql', { 'for': [ 'graphql' ] }
 
-  " Plug 'haya14busa/incsearch.vim'
+  Plug 'haya14busa/incsearch.vim'
 
   Plug 'kana/vim-textobj-user'
   Plug 'kana/vim-textobj-entire' " ae, ie
@@ -118,8 +118,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins', 'branch': 'dev' }
 
   Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] }
-
-  Plug 'tpope/vim-vinegar'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -374,6 +372,10 @@ if v:version > 703 || v:version == 703 && has('patch541')
 endif
 
 set formatoptions+=n                  " smart auto-indenting inside numbered lists
+
+" indentation
+set formatoptions+=w
+set smartindent
 
 if has('linebreak')
   set linebreak                       " wrap long lines at characters in 'breakat'
@@ -832,6 +834,9 @@ nnoremap <F6> <C-i>
 " Avoid unintentional switches to Ex mode. This would be more useful.
 nnoremap Q :normal n.<CR>
 
+" Like vim-vinegar.
+nnoremap <silent> - :silent edit <C-R>=empty(expand('%')) ? '.' : fnameescape(expand('%:p:h'))<CR><CR>
+
 nnoremap Y y$
 
 vnoremap y myy`y
@@ -1074,18 +1079,18 @@ vnoremap <leader>/ :<c-u>F <C-r>=functions#escape_pattern(functions#get_visual_s
 let g:ctrlp_working_path_mode = 'ra'
 
 if executable("rg")
-  let g:ctrlp_user_command = 'rg %s --files --color=never -g ""'
+  let g:ctrlp_user_command = 'rg %s -l --files --color=never -g ""'
 
-  let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
+  let g:ackprg = 'rg --vimgrep'
   cnoreabbrev ag Ack!
 
-  set grepprg=rg\ --color=never\ --no-heading\ --vimgrep
-  set grepformat=%f:%l:%c:%m,%f:%l:%m
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
 
   " rg is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 elseif executable("ag")
-  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
         \ --ignore .git
         \ --ignore .DS_Store
         \ --ignore .svn
@@ -1098,12 +1103,11 @@ elseif executable("ag")
         \ --ignore out
         \ -g ""'
 
-  let g:ackprg = 'ag --vimgrep --smart-case'
+  let g:ackprg = 'ag --vimgrep'
   cnoreabbrev ag Ack!
 
   " Use ag over grep
-  set grepprg=ag\ --column\ --nogroup\ --nocolor
-  set grepformat=%f:%l:%c:%m
+  set grepprg=ag\ --nogroup\ --nocolor
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
@@ -1131,6 +1135,8 @@ endfunc
 " ----------------------------------------------------------------------
 " | FAR                                                                |
 " ----------------------------------------------------------------------
+
+let g:far#auto_preview = 0
 
 if executable("rg")
   if has('nvim')
@@ -1353,8 +1359,6 @@ let NERDTreeHijackNetrw=1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 let g:WebDevIconsNerdTreeGitPluginForceVAlign=0
 
-" NERDTree
-
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:WebDevIconsOS = 'Darwin'
@@ -1386,6 +1390,13 @@ let g:netrw_list_hide = netrw_gitignore#Hide()
 let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
 
 nnoremap <silent> <c-n>e :Explore<cr>
+
+if has('autocmd')
+  augroup AmsaykNERDTree
+    autocmd!
+    autocmd User NERDTreeInit call functions#attempt_select_last_file()
+  augroup END
+endif
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
