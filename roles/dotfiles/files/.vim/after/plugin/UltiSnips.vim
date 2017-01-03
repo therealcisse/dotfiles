@@ -49,6 +49,7 @@ imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "<
 let g:UltiSnipsSnippetsDir = $HOME . '/.config/nvim/ultisnips'
 let g:UltiSnipsSnippetDirectories = [
       \ $HOME . '/.vim/ultisnips',
-      \ $HOME . '/.vim/plugged/vim-snippets/UltiSnips/'
+      \ $HOME . '/.vim/plugged/vim-react-snippets/UltiSnips',
+      \ $HOME . '/.vim/plugged/vim-es2015-snippets/UltiSnips'
       \ ]
 

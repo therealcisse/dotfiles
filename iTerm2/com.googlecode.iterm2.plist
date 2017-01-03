@@ -429,7 +429,7 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>524 257 701 297 0 0 1440 878 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>410 382 620 392 0 0 1440 900 </string>
+	<string>0 256 700 622 0 0 1440 878 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 207 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
@@ -437,7 +437,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 74 1440 804 0 0 1440 878 </string>
+	<string>0 10 1440 868 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>113 411 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1884,6 +1884,8 @@
 	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -1893,7 +1895,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-11-14T09:20:10Z</date>
+	<date>2016-12-30T23:26:58Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
@@ -1902,6 +1904,10 @@
 	<real>0.75</real>
 	<key>TabStyle</key>
 	<integer>0</integer>
+	<key>ToolbeltTools</key>
+	<array>
+		<string>Profiles</string>
+	</array>
 	<key>UKCrashReporterLastCrashReportDate</key>
 	<real>1474951296</real>
 	<key>UseLionStyleFullscreen</key>
@@ -1909,7 +1915,7 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.0.20161112-nightly</string>
+	<string>3.0.13</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

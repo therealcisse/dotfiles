@@ -20,6 +20,9 @@
             "selected": true,
             "simple_modifications": {
                 "caps_lock": "escape"
+            },
+            "virtual_hid_keyboard": {
+                "keyboard_type": "ansi"
             }
         }
     ]

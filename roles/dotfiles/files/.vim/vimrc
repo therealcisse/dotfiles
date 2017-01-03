@@ -36,7 +36,6 @@ call plug#begin('~/.vim/plugged')
   " Plug 'editorconfig/editorconfig-vim'
   Plug 'ctrlpvim/ctrlp.vim'
 
-  Plug 'amirh/HTML-AutoCloseTag', { 'for': [ 'html', 'javascript', 'javascript.jsx' ] }
   Plug 'JulesWang/css.vim'
   Plug 'ap/vim-css-color'
   Plug 'tpope/vim-haml', { 'for': [ 'haml', 'scss', 'sass' ] }
@@ -48,7 +47,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
   " Plug  'neomake/neomake'
-  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
@@ -118,6 +117,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins', 'branch': 'dev' }
 
   Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] }
+
+  Plug 'kewah/vim-stylefmt', { 'for': [ 'sass', 'scss', 'css' ] }
+
+  Plug 'christoomey/vim-sort-motion'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -434,7 +437,7 @@ function! s:StripTrailingWhitespaces()
 
 endfunction
 
-nnoremap <leader>w :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <c-c>w :call <SID>StripTrailingWhitespaces()<CR>
 
 " ----------------------------------------------------------------------
 " | Automatic Commands                                                 |
@@ -1104,7 +1107,7 @@ elseif executable("ag")
         \ -g ""'
 
   let g:ackprg = 'ag --vimgrep'
-  cnoreabbrev ag Ack!
+  cnoreabbrev rg Ack!
 
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
@@ -1136,7 +1139,7 @@ endfunc
 " | FAR                                                                |
 " ----------------------------------------------------------------------
 
-let g:far#auto_preview = 0
+let g:far#auto_preview = 1
 
 if executable("rg")
   if has('nvim')
@@ -1397,6 +1400,13 @@ if has('autocmd')
     autocmd User NERDTreeInit call functions#attempt_select_last_file()
   augroup END
 endif
+
+" Stylefmt
+nnoremap <silent> <c-c>f :Stylefmt<CR>
+vnoremap <silent> <c-c>f :StylefmtVisual<CR>
+
+" Sort motion
+let g:sort_motion_flags = "u"
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
