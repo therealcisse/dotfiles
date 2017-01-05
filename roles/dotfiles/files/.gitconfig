@@ -161,3 +161,6 @@
 	log = 1000
 [cipher]
 	gpguser = cisse.amadou.9@gmail.com
+[gitchangelog]
+	rc-path = ~/.gitchangelog.rc
+

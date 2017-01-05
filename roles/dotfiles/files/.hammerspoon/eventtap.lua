@@ -215,17 +215,17 @@ mappings[keyCodes.i] = {
 -- These are keys that do one thing when tapped but act like modifiers when
 -- chorded.
 local conditionalKeys = {}
-conditionalKeys[keyCodes.delete] = {
-  tapped = 'delete',
-  chorded = 'ctrl',
-  downAt = nil,
-  isChording = false,
-  -- Caps Lock is mapped to control, so during chording, keyDown events for
-  -- other keys should have these flags.
-  expectedFlags = {ctrl = true},
-  expectedUserData = modifierEvent,
-  rolloverThreshold = 0.2,
-}
+-- conditionalKeys[keyCodes.delete] = {
+--   tapped = 'delete',
+--   chorded = 'ctrl',
+--   downAt = nil,
+--   isChording = false,
+--   -- Caps Lock is mapped to control, so during chording, keyDown events for
+--   -- other keys should have these flags.
+--   expectedFlags = {ctrl = true},
+--   expectedUserData = modifierEvent,
+--   rolloverThreshold = 0.2,
+-- }
 conditionalKeys[keyCodes['return']] = {
   tapped = 'return',
   chorded = 'ctrl',
@@ -377,7 +377,7 @@ end)
 
 return {
   init = (function()
-    retain(eventtap.new({types.flagsChanged}, modifierHandler):start())
+    -- retain(eventtap.new({types.flagsChanged}, modifierHandler):start())
     retain(eventtap.new({keyDown, keyUp}, keyHandler):start())
   end),
 }

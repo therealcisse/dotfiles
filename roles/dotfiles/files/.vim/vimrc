@@ -655,6 +655,9 @@ function! s:SetColorScheme()
   highlight Comment cterm=italic  gui=italic
   highlight htmlArg cterm=italic  gui=italic
 
+  hi Search guifg=#ffffff guibg=#1B5E20 gui=none
+  hi IncSearch guifg=#ffffff guibg=#66BB6A gui=none
+
   let &t_ZH="^[[3m"
   let &t_ZR="^[[23m"
 
