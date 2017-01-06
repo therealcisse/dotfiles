@@ -65,6 +65,23 @@ function tmux() {
   env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
 }
 
+function email() {
+  if ! tmux has-session -t email 2> /dev/null; then
+    # Make saved attachments go to ~/Downloads by default.
+    tmux new-session -d -s email -c ~/Downloads -n mutt
+    tmux send-keys -t email:mutt mutt Enter
+    tmux new-window -t email -c ~/.mutt -n sync
+    tmux send-keys -t email:sync '~/.mutt/scripts/sync.sh home || reattach-to-user-namespace terminal-notifier -title mutt -message "~/.mutt/scripts/sync.sh (home) exited"' Enter
+    # tmux split-window -t email:sync -h -c ~/.mutt
+    # tmux send-keys -t email:sync.right '~/.mutt/scripts/sync.sh work || reattach-to-user-namespace terminal-notifier -title mutt -message "~/.mutt/scripts/sync.sh (work) exited"' Enter
+  fi
+  if [ -z "$TMUX" ]; then
+    tmux attach -t email:mutt
+  else
+    tmux switch-client -t email:mutt
+  fi
+}
+
 # Convenience function for jumping to hashed directory aliases
 # (ie. `j rn` -> `jump rn` -> `cd ~rn`).
 function jump() {

@@ -19,3 +19,6 @@
 [submodule "vendor/base16-iterm2"]
 	path = vendor/base16-iterm2
 	url = https://github.com/chriskempson/base16-iterm2
+[submodule "roles/dotfiles/files/.mutt/vendor/mutt-notmuch-py"]
+	path = roles/dotfiles/files/.mutt/vendor/mutt-notmuch-py
+	url = https://github.com/honza/mutt-notmuch-py

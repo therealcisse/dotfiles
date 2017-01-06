@@ -19,3 +19,11 @@ dotfiles:
   - .clipper.json
   - .gitk
   - .gitchangelog.rc
+  - .urlview
+  - .mutt
+  - .notmuch-config
+  - .msmtprc
+  - .mbsyncrc
+  - .lbdbrc
+  - .imapfilter
+  - .signature

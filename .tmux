@@ -9,7 +9,7 @@ fi
 
 tmux new-session -d -s dot -n vim
 
-tmux send-keys -t dot:vim "nvim -c CtrlP" Enter
+tmux send-keys -t dot:vim "nvim" Enter
 tmux split-window -t dot:vim -h
 tmux send-keys -t dot:vim.right "git status" Enter
 

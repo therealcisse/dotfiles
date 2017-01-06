@@ -52,7 +52,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
-  Plug 'kshenoy/vim-signature'    "show marks
+  " Plug 'kshenoy/vim-signature'    "show marks
 
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
@@ -1410,6 +1410,32 @@ vnoremap <silent> <c-c>f :StylefmtVisual<CR>
 
 " Sort motion
 let g:sort_motion_flags = "u"
+
+" French accents
+" Note:  map! for Insert and Command-line, i.e. imap & cmap
+"
+map! ;z à
+map! ;a â
+map! ;b ä
+map! ;c ç
+map! ;d è
+map! ;e ê
+map! ;f ë
+map! ;g é
+map! ;i î
+map! ;j ï
+map! ;o ô
+map! ;p ö
+imap ;q «  »<Esc>hi
+"         ^inserts within Quotations
+map! ;t ù
+map! ;u û
+map! ;v ü
+
+" Spelling stuff
+" See: https://www.vim-fr.org/index.php/Correction_orthographique
+map <silent> <F7> "<Esc>:silent setlocal spell! spelllang=en<CR>"
+map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

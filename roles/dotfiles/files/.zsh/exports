@@ -49,3 +49,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --glob "!.git/*"'
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+export GPG_TTY=$(tty)
+
+export GOPATH=~/Code/go
+
