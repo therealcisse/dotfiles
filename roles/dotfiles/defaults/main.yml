@@ -27,3 +27,4 @@ dotfiles:
   - .lbdbrc
   - .imapfilter
   - .signature
+  - .octaverc

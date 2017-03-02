@@ -127,7 +127,7 @@ brew 'mobile-shell'
 brew 'mpfr'
 brew 'msmtp'
 brew 'mutt'
-brew 'neovim/neovim/neovim', args: ['HEAD', 'with-release']
+brew 'neovim/neovim/neovim'
 brew 'nettle'
 brew 'nginx', service_restart: true
 brew 'notmuch'
@@ -180,6 +180,7 @@ brew 'fzf', args: ['HEAD']
 brew 'gradle'
 brew 'homebrew/devel-only/elm-format', args: ['HEAD']
 
+cask 'vimr'
 cask '1password-beta'
 cask 'arq'
 cask 'bartender'

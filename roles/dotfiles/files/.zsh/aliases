@@ -33,6 +33,11 @@ alias ll='ls -laF'
 alias t=tmux
 alias v=nvim
 
+alias octave='/Applications/Octave-cli.app/Contents/MacOS/Octave'
+
+alias chrome='open -n -a Google\ Chrome --args --user-data-dir="/tmp/chrome-`uuid`" --disable-web-security'
+alias chrome-canary='open -n -a Google\ Chrome\ Canary --args --user-data-dir="/tmp/chrome-`uuid`" --disable-web-security'
+
 # Simple Static Server (for current directory), stolen from paulirish/dotfiles
 function server() {
   local port="${1:-8080}"

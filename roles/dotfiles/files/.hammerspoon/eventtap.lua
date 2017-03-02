@@ -226,15 +226,15 @@ local conditionalKeys = {}
 --   expectedUserData = modifierEvent,
 --   rolloverThreshold = 0.2,
 -- }
-conditionalKeys[keyCodes['return']] = {
-  tapped = 'return',
-  chorded = 'ctrl',
-  downAt = nil,
-  isChording = false,
-  expectedFlags = {},
-  expectedUserData = 0,
-  rolloverThreshold = repeatDelay,
-}
+-- conditionalKeys[keyCodes['return']] = {
+--   tapped = 'return',
+--   chorded = 'ctrl',
+--   downAt = nil,
+--   isChording = false,
+--   expectedFlags = {},
+--   expectedUserData = 0,
+--   rolloverThreshold = repeatDelay,
+-- }
 local pendingEvents = queue.create()
 
 keyHandler = (function(evt)

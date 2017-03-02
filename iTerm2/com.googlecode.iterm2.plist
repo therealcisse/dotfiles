@@ -435,11 +435,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 207 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>128 332 918 512 0 0 1440 878 </string>
+	<string>0 366 937 512 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 10 1440 868 0 0 1440 878 </string>
+	<string>0 74 1440 804 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>113 411 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -704,13 +704,13 @@
 				<key>Alpha Component</key>
 				<real>0.25</real>
 				<key>Blue Component</key>
-				<real>1</real>
+				<real>0.96485793590545654</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.9268307089805603</real>
+				<real>0.96044003963470459</real>
 				<key>Red Component</key>
-				<real>0.70213186740875244</real>
+				<real>0.94671708345413208</real>
 			</dict>
 			<key>Cursor Text Color</key>
 			<dict>
@@ -2519,6 +2519,8 @@
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
+	<key>NoSyncHaveWarnedAboutIncompatibleSoftware</key>
+	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>C70FFC99-0353-4606-AB93-339F5ECFA4B0</string>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -2583,7 +2585,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-01-05T15:26:56Z</date>
+	<date>2017-02-03T22:47:55Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>

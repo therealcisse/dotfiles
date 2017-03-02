@@ -1,10 +1,10 @@
 let s:INT = { 'MAX': 2147483647 }
 
-function! functions#escape_pattern(str) abort
+function! autocmds#escape_pattern(str) abort
     return escape(a:str, '~"\.^$[]*')
 endfunction
 
-function! functions#get_visual_selection()
+function! autocmds#get_visual_selection()
   " Why is this not a built-in Vim script function?!
   let [lnum1, col1] = getpos("'<")[1:2]
   let [lnum2, col2] = getpos("'>")[1:2]
@@ -16,9 +16,10 @@ endfunction
 
 " Directories where we want to perform auto-encryption on save.
 let s:encrypted={}
+let s:encrypted[expand('~/dotfiles')]='vendor/git-cipher/bin/git-cipher'
 
 " Update encryptable files after saving.
-function! functions#encrypt(file) abort
+function! autocmds#encrypt(file) abort
   let l:base=fnamemodify(a:file, ':h')
   let l:directories=keys(s:encrypted)
   for l:directory in l:directories
@@ -39,10 +40,21 @@ function! functions#encrypt(file) abort
   endfor
 endfunction
 
-function! functions#attempt_select_last_file() abort
+function! autocmds#attempt_select_last_file() abort
   let l:previous=expand('#:t')
   if l:previous != ''
     call search('\v<' . l:previous . '>')
   endif
+endfunction
+
+function! autocmds#idleboot() abort
+  " Make sure we automatically call autocmds#idleboot() only once.
+  augroup AmsaykIdleboot
+    autocmd!
+  augroup END
+
+  " Make sure we run deferred tasks exactly once.
+  doautocmd User AmsaykDefer
+  autocmd! User AmsaykDefer
 endfunction
 

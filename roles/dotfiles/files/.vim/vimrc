@@ -47,7 +47,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
   " Plug  'neomake/neomake'
-  Plug 'SirVer/ultisnips' | Plug 'epilande/vim-es2015-snippets' | Plug 'epilande/vim-react-snippets'
+  Plug 'SirVer/ultisnips'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-repeat'
@@ -95,10 +95,13 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'skywind3000/asyncrun.vim'
 
-  Plug 'justinmk/vim-sneak'
+  " Plug 'justinmk/vim-sneak'
 
   Plug 'matze/vim-move' " <c-k>, <c-j>
-  Plug 'joeytwiddle/sexy_scroller.vim'
+
+  if !has('gui_vimr')
+    Plug 'joeytwiddle/sexy_scroller.vim'
+  endif
 
   Plug 'wincent/vim-clipper'
 
@@ -106,7 +109,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'kassio/neoterm'
   endif
 
-  Plug 'terryma/vim-expand-region'
+  " Plug 'terryma/vim-expand-region'
   Plug 'vim-scripts/ReplaceWithRegister' "replace <motion> with register
 
   Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript' ] }
@@ -114,13 +117,19 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
-  Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins', 'branch': 'dev' }
+  Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins' }
 
   Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] }
 
   Plug 'kewah/vim-stylefmt', { 'for': [ 'sass', 'scss', 'css' ] }
 
   Plug 'christoomey/vim-sort-motion'
+
+  Plug 'zah/nim.vim'
+
+  " Plug 'wellle/targets.vim'
+
+  Plug 'kepbod/quick-scope'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -214,6 +223,8 @@ endif
 set cursorline                 " Highlight the current line.
 set cursorcolumn               " Highlight the current column.
 
+set nostartofline              " Keep cursor on same column while scrolling
+
 if exists('$SUDO_USER')
   set noswapfile                      " don't create root-owned files
 else
@@ -225,7 +236,6 @@ set ignorecase                 " Ignore case in search patterns.
 
 set incsearch                  " Highlight search pattern
                                " as it is being typed.
-
 
 set lazyredraw                 " Do not redraw the screen while
                                " executing macros, registers
@@ -481,8 +491,8 @@ endif
 
 " Replace all
 
-nnoremap <leader>r :%s/\V\<<C-r>=functions#escape_pattern(expand('<cword>'))<CR>\>//gc<Left><Left><Left>
-vnoremap <leader>r :<c-u>%s/\V<c-r>=functions#escape_pattern(functions#get_visual_selection())<CR>//gc<Left><Left><Left>
+nnoremap <leader>r :%s/\V\<<C-r>=autocmds#escape_pattern(expand('<cword>'))<CR>\>//c<Left><Left>
+vnoremap <leader>r :<c-u>%s/\V<c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>//c<Left><Left>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -490,7 +500,7 @@ vnoremap <leader>r :<c-u>%s/\V<c-r>=functions#escape_pattern(functions#get_visua
 
 nnoremap <leader>n :NERDTreeToggle<CR>
 
-nnoremap <leader>m :NERDTreeFind<CR>
+nnoremap <leader>m :NERDTreeFind<CR>zz
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -655,8 +665,12 @@ function! s:SetColorScheme()
   highlight Comment cterm=italic  gui=italic
   highlight htmlArg cterm=italic  gui=italic
 
-  hi Search guifg=#ffffff guibg=#1B5E20 gui=none
-  hi IncSearch guifg=#ffffff guibg=#66BB6A gui=none
+  " hi Search guifg=#ffffff guibg=#1B5E20 gui=none
+  " hi IncSearch guifg=#ffffff guibg=#66BB6A gui=none
+
+  hi VisualNOS gui=bold,underline
+  highlight! link Search VisualNOS
+  highlight! link IncSearch VisualNOS
 
   let &t_ZH="^[[3m"
   let &t_ZR="^[[23m"
@@ -708,12 +722,16 @@ endif
 " Readline-style key bindings in command-line (excerpt from rsi.vim)
 " ----------------------------------------------------------------------------
 cnoremap        <C-A> <Home>
-cnoremap        <C-B> <Left>
+cnoremap        <C-B> <c-Left>
+cnoremap        <C-G> <c-Right>
 cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
 cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Align current paragraph
-noremap <leader>a =i{
+nmap <leader>f =ae``zz
+
+" Kill double quotes
+nmap <c-c>" :%s/\V\"/'<CR><C-L>
 
 " Elm
 
@@ -736,79 +754,91 @@ let g:AmsaykColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf
 let g:AmsaykCursorlineBlacklist = ['ctrlp']
 let g:AmsaykMkviewFiletypeBlacklist = ['diff', 'gitcommit']
 
-augroup AmsaykAutocmds
-  autocmd!
+if has('autocmd')
+  augroup AmsaykAutocmds
+    autocmd!
 
-  " Disable paste mode on leaving insert mode.
-  autocmd InsertLeave * set nopaste
+    " Disable paste mode on leaving insert mode.
+    autocmd InsertLeave * set nopaste
 
-  function! s:should_colorcolumn() abort
-    return index(g:AmsaykColorColumnBlacklist, &filetype) == -1
-  endfunction
+    function! s:should_colorcolumn() abort
+      return index(g:AmsaykColorColumnBlacklist, &filetype) == -1
+    endfunction
 
-  function! s:should_cursorline() abort
-    return index(g:AmsaykCursorlineBlacklist, &filetype) == -1
-  endfunction
+    function! s:should_cursorline() abort
+      return index(g:AmsaykCursorlineBlacklist, &filetype) == -1
+    endfunction
 
-  " Loosely based on: http://vim.wikia.com/wiki/Make_views_automatic
-  function! s:should_mkview() abort
-    return
-          \ &buftype == '' &&
-          \ index(g:AmsaykMkviewFiletypeBlacklist, &filetype) == -1 &&
-          \ !exists('$SUDO_USER') " Don't create root-owned files.
-  endfunction
+    " Loosely based on: http://vim.wikia.com/wiki/Make_views_automatic
+    function! s:should_mkview() abort
+      return
+            \ &buftype == '' &&
+            \ index(g:AmsaykMkviewFiletypeBlacklist, &filetype) == -1 &&
+            \ !exists('$SUDO_USER') " Don't create root-owned files.
+    endfunction
 
-  function! s:mkview() abort
-    if exists('*haslocaldir') && haslocaldir()
-      " We never want to save an :lcd command, so hack around it...
-      cd -
-      mkview
-      lcd -
-    else
-      mkview
+    function! s:mkview() abort
+      if exists('*haslocaldir') && haslocaldir()
+        " We never want to save an :lcd command, so hack around it...
+        cd -
+        mkview
+        lcd -
+      else
+        mkview
+      endif
+    endfunction
+
+    autocmd VimResized * execute "normal! \<c-w>="
+
+    " http://vim.wikia.com/wiki/Detect_window_creation_with_WinEnter
+    autocmd VimEnter * autocmd WinEnter * let w:created=1
+    autocmd VimEnter * let w:created=1
+
+    " Make current window more obvious by turning off/adjusting some features in non-current
+    " windows.
+    if exists('+colorcolumn')
+      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if s:should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
+      autocmd FocusLost,WinLeave * if s:should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
     endif
-  endfunction
 
-  autocmd VimResized * execute "normal! \<c-w>="
+    autocmd InsertLeave,VimEnter,WinEnter * if s:should_cursorline() | setlocal cursorline | endif
+    autocmd InsertEnter,WinLeave * if s:should_cursorline() | setlocal nocursorline | endif
 
-  " http://vim.wikia.com/wiki/Detect_window_creation_with_WinEnter
-  autocmd VimEnter * autocmd WinEnter * let w:created=1
-  autocmd VimEnter * let w:created=1
-
-  " Make current window more obvious by turning off/adjusting some features in non-current
-  " windows.
-  if exists('+colorcolumn')
-    autocmd BufEnter,FocusGained,VimEnter,WinEnter * if s:should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
-    autocmd FocusLost,WinLeave * if s:should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
-  endif
-
-  autocmd InsertLeave,VimEnter,WinEnter * if s:should_cursorline() | setlocal cursorline | endif
-  autocmd InsertEnter,WinLeave * if s:should_cursorline() | setlocal nocursorline | endif
-
-  if has('mksession')
-    " Save/restore folds and cursor position.
-    autocmd BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if s:should_mkview() | call s:mkview() | endif
-    if has('folding')
-      autocmd BufWinEnter ?* if s:should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
+    if has('mksession')
+      " Save/restore folds and cursor position.
+      autocmd BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if s:should_mkview() | call s:mkview() | endif
+      if has('folding')
+        autocmd BufWinEnter ?* if s:should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
+      else
+        autocmd BufWinEnter ?* if s:should_mkview() | silent! loadview | endif
+      endif
+    elseif has('folding')
+      " Like the autocmd described in `:h last-position-jump` but we add `:foldopen!`.
+      autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | execute 'silent! ' . line("'\"") . 'foldopen!' | endif
     else
-      autocmd BufWinEnter ?* if s:should_mkview() | silent! loadview | endif
+      autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | endif
     endif
-  elseif has('folding')
-    " Like the autocmd described in `:h last-position-jump` but we add `:foldopen!`.
-    autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | execute 'silent! ' . line("'\"") . 'foldopen!' | endif
-  else
-    autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | endif
-  endif
 
-  autocmd BufWritePost */spell/*.add silent! :mkspell! %
+    autocmd BufWritePost */spell/*.add silent! :mkspell! %
 
-  " Close preview window
-  if exists('##CompleteDone')
-    au CompleteDone * pclose
-  else
-    au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
-  endif
-augroup end
+    autocmd BufWritePost * call autocmds#encrypt(expand('<afile>:p'))
+
+    " Close preview window
+    if exists('##CompleteDone')
+      au CompleteDone * pclose
+    else
+      au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
+    endif
+  augroup END
+
+  " Wait until idle to run additional "boot" commands.
+  augroup AmsaykIdleboot
+    autocmd!
+    if has('vim_starting')
+      autocmd CursorHold,CursorHoldI * call autocmds#idleboot()
+    endif
+  augroup END
+endif
 
 
 " `<Tab>`/`<S-Tab>` to move between matches without leaving incremental search.
@@ -858,6 +888,7 @@ vnoremap <BS> "_xi
 " gf
 
 set suffixesadd+=.js
+set suffixesadd+=.json
 
 if isdirectory(expand($PWD.'/node_modules'))
   set path+=$PWD/node_modules
@@ -1034,49 +1065,53 @@ set pastetoggle=
 
 vnoremap . :norm.<CR>
 
+" Folds
+nmap <expr> <Tab> 'za'
+nmap <expr> <S-Tab> 'za'
+
 " vim-sneak
 
 "replace 'f' with 1-char Sneak
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-xmap f <Plug>Sneak_f
-xmap F <Plug>Sneak_F
-omap f <Plug>Sneak_f
-omap F <Plug>Sneak_F
+" nmap f <Plug>Sneak_f
+" nmap F <Plug>Sneak_F
+" xmap f <Plug>Sneak_f
+" xmap F <Plug>Sneak_F
+" omap f <Plug>Sneak_f
+" omap F <Plug>Sneak_F
 
 "replace 't' with 1-char Sneak
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-xmap t <Plug>Sneak_t
-xmap T <Plug>Sneak_T
-omap t <Plug>Sneak_t
-omap T <Plug>Sneak_T
+" nmap t <Plug>Sneak_t
+" nmap T <Plug>Sneak_T
+" xmap t <Plug>Sneak_t
+" xmap T <Plug>Sneak_T
+" omap t <Plug>Sneak_t
+" omap T <Plug>Sneak_T
 
-nmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : 'za'
-nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : 'za'
+" nmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : 'za'
+" nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : 'za'
 
-vmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : '<Tab>'
-vmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : '<S-Tab>'
+" vmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : '<Tab>'
+" vmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : '<S-Tab>'
 
-let g:sneak#s_next = 1
+" let g:sneak#s_next = 1
 
-let g:sneak#prompt = 'Target key: '
+" let g:sneak#prompt = 'Target key: '
 
-function! s:RestoreS()
-  " Restore default s/S behavoir
-  nunmap s
-  nunmap S
-endfunction
-
-au VimEnter * :call s:RestoreS()
+" function! s:RestoreS()
+"   " Restore default s/S behavoir
+"   nunmap s
+"   nunmap S
+" endfunction
+"
+" au VimEnter * :call s:RestoreS()
 
 " vim-move
 
 let g:move_key_modifier = 'C'
 
 " Search word under cursor
-nnoremap <leader>/ :F <C-r>=functions#escape_pattern(expand('<cword>'))<CR><Space> **/*.*
-vnoremap <leader>/ :<c-u>F <C-r>=functions#escape_pattern(functions#get_visual_selection())<CR><Space> **/*.*
+nnoremap <leader>/ :F <C-r>=autocmds#escape_pattern(expand('<cword>'))<CR><Space> **/*.*
+vnoremap <leader>/ :<c-u>F <C-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR><Space> **/*.*
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
@@ -1210,10 +1245,26 @@ hi StartifySpecial ctermfg=240
 let g:startify_session_autoload     = 0
 let g:startify_session_persistence  = 0
 
+" Buffer list navigation
+nn J :bp<CR>
+nn K :bn<CR>
+
+" Join lines with M
+nn M J
+
+" Navigate pum with j k
+inoremap <expr> <c-j> ((pumvisible())?("\<C-n>"):("\<c-j>"))
+inoremap <expr> <c-k> ((pumvisible())?("\<C-p>"):("\<c-k>"))
+" inoremap <expr> <tab> ((pumvisible())?("\<Cr>"):("<Cr>"))
+
+" Navigate line with H L
+nn H ^
+nn L $
+
 " Vim expand region
 
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
+" map K <Plug>(expand_region_expand)
+" map J <Plug>(expand_region_shrink)
 
 " Optimize
 hi! NonText cterm=NONE ctermfg=NONE
@@ -1400,7 +1451,7 @@ nnoremap <silent> <c-n>e :Explore<cr>
 if has('autocmd')
   augroup AmsaykNERDTree
     autocmd!
-    autocmd User NERDTreeInit call functions#attempt_select_last_file()
+    autocmd User NERDTreeInit call autocmds#attempt_select_last_file()
   augroup END
 endif
 
@@ -1414,6 +1465,9 @@ let g:sort_motion_flags = "u"
 " French accents
 " Note:  map! for Insert and Command-line, i.e. imap & cmap
 "
+map! ;Z À
+map! ;G É
+
 map! ;z à
 map! ;a â
 map! ;b ä
@@ -1435,7 +1489,22 @@ map! ;v ü
 " Spelling stuff
 " See: https://www.vim-fr.org/index.php/Correction_orthographique
 map <silent> <F7> "<Esc>:silent setlocal spell! spelllang=en<CR>"
-map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
+map <silent> <F8> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
+
+" Trigger a highlight in the appropriate direction when pressing these keys:
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+if has("gui_running") || has('termguicolors') || has('nvim') " gui vim or vim enable TrueColor
+  let g:qs_first_occurrence_highlight_color = '#ffffff'
+  let g:qs_first_occurrence_highlight_bgcolor = '#CD0000'
+  let g:qs_second_occurrence_highlight_color = '#ffffff'
+  let g:qs_second_occurrence_highlight_bgcolor = '#447e27'
+else " terminal vim
+  let g:qs_first_occurrence_highlight_color = 15
+  let g:qs_first_occurrence_highlight_bgcolor = 28
+  let g:qs_first_occurrence_highlight_color = 15
+  let g:qs_second_occurrence_highlight_bgcolor = 205
+endif
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

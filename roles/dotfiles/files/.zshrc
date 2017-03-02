@@ -135,6 +135,9 @@ source $HOME/.zsh/functions
 source $HOME/.zsh/path
 source $HOME/.zsh/vars
 
+test -e $HOME/.zsh/common.private && source $HOME/.zsh/common.private
+test -e $HOME/.zsh/functions.private && source $HOME/.zsh/functions.private
+
 # tmux unsets this and then xclip gets confused
 if [ -n "$DISPLAY" ]; then
   export DISPLAY=:0

@@ -1,7 +1,7 @@
 " Incsearch
 
-" map /  <Plug>(incsearch-forward)
-" map ?  <Plug>(incsearch-backward)
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 let g:incsearch#auto_nohlsearch = 1

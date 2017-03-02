@@ -1,0 +1,8 @@
+# Shotcuts for hard to remember paths.
+# (eg. cd ~rn or `jump rn`/`j rn`)
+# For a full list, run  `hash -d` (alias `d`).
+
+hash -d e=~/Code/Experts-Assurance
+hash -d b=~/Code/b2b-trading-platform
+hash -d d=~/dotfiles
+

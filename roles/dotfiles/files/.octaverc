@@ -1,0 +1,10 @@
+## The following allows plotting to work within iTerm.app
+setenv GNUTERM wxt
+
+# below is optional; changes the prompt to two chevron
+# and gets rid of the long Octave x.x.x >> prompt
+PS1('❯❯ ')
+
+system('mkdir -p ~/Documents/OCTAVE')
+cd ~/Documents/OCTAVE
+

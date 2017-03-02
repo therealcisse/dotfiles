@@ -2,88 +2,99 @@ global !p
 fn_base = fn.split(os.extsep)[0];
 endglobal
 
+# react
+snippet cdm "component did mount" b
+componentDidMount() {
+	${1}
+}
+endsnippet
+
+snippet cdup "component did update" b
+componentDidUpdate(prevProps, prevState) {
+	${1}
+}
+endsnippet
+
+snippet cwm "component will mount" b
+componentWillMount() {
+	${1}
+}
+endsnippet
+
+# --------- rcf react class function
+snippet rcf "React Component as pure function"
+import React from 'react';
+
+export default function `!p snip.rv = fn_base`(${1:props}) {
+	return (
+			${2:<div>`!p snip.rv = fn_base`</div>}
+			);
+}
+endsnippet
+
+snippet cwrp "component will receive props" b
+componentWillReceiveProps(nextProps) {
+	${1}
+}
+endsnippet
+
+snippet cwun "component will unmount" b
+componentWillUnmount() {
+	${1}
+}
+endsnippet
+
+snippet cwu "component will update" b
+componentWillUpdate(nextProps, nextState) {
+	${1}
+}
+endsnippet
+
+snippet scu "should component update" b
+shouldComponentUpdate(nextProps, nextState) {
+	${1}
+}
+endsnippet
+
+snippet re "render" b
+render() {
+	return (
+			${1}
+			);
+}
+endsnippet
+
 snippet "func?" "function" !r
 function ${1: name}(${2:arg}) {
 	${VISUAL}$0
 }
 endsnippet
 
+snippet i}
+import { $1 } from '$0';
+endsnippet
+
+snippet i
+import $1 from '$0';
+endsnippet
+
 snippet :, "Object Value JS"
-${1:value_name}: ${0:value},
+${1:value_name}: ${2:value},$0
 endsnippet
 
 # Snippets for Console Debug Output
-
-snippet ca "console.assert" b
-console.assert(${1:assertion}, ${2:"${3:message}"});
+snippet cl
+console.log($1)$0
 endsnippet
 
-snippet cclear "console.clear" b
-console.clear();
-endsnippet
+snippet react
+import React from 'react'
 
-snippet cdir "console.dir" b
-console.dir(${1:object});
-endsnippet
-
-snippet cdirx "console.dirxml" b
-console.dirxml(${1:object});
-endsnippet
-
-snippet ce "console.error" b
-console.error(${1:"${2:value}"});
-endsnippet
-
-snippet cgroup "console.group" b
-console.group("${1:label}");
-${VISUAL}$0
-console.groupEnd();
-endsnippet
-
-snippet cgroupc "console.groupCollapsed" b
-console.groupCollapsed("${1:label}");
-${VISUAL}$0
-console.groupEnd();
-endsnippet
-
-snippet ci "console.info" b
-console.info(${1:"${2:value}"});
-endsnippet
-
-snippet cl "console.log" b
-console.log(${1:"${2:value}"});
-endsnippet
-
-snippet cd "console.debug" b
-console.debug(${1:"${2:value}"});
-endsnippet
-
-snippet cprof "console.profile" b
-console.profile("${1:label}");
-${VISUAL}$0
-console.profileEnd();
-endsnippet
-
-snippet ctable "console.table" b
-console.table(${1:"${2:value}"});
-endsnippet
-
-snippet ctime "console.time" b
-console.time("${1:label}");
-${VISUAL}$0
-console.timeEnd("$1");
-endsnippet
-
-snippet ctimestamp "console.timeStamp" b
-console.timeStamp("${1:label}");
-endsnippet
-
-snippet ctrace "console.trace" b
-console.trace();
-endsnippet
-
-snippet cw "console.warn" b
-console.warn(${1:"${2:value}"});
+export default class $1 extends React.Component {
+	render() {
+		$0
+	}
+}
 endsnippet
 
 snippet icx "Import classnames" b
@@ -91,7 +102,7 @@ import cx from 'classnames';
 endsnippet
 
 snippet imm "Import immutable" b
-import Immutable from 'immutable';
+import ${1:Immutable} from 'immutable';
 endsnippet
 
 snippet ed "Export default" b
@@ -100,114 +111,109 @@ endsnippet
 
 # Debugging
 snippet de
-	debugger;
-endsnippet
-
-# Query selector
-snippet qs
-	${1:document}.querySelector('${0:CSS selector}')
+debugger;
 endsnippet
 
 # JSON.parse
 snippet jsonp
-	JSON.parse(${0:jstr});
+JSON.parse(${1:jstr})$0
 endsnippet
 # JSON.stringify
 snippet jsons
-	JSON.stringify(${0:object});
+JSON.stringify(${1:object})$0
 endsnippet
 
 # Flow control
 # if
 snippet if
-	if (${1:true}) {
-		${0}
-	}
+if (${1:true}) {
+	${0}
+}
 endsnippet
 # if ... else
 snippet ife
-	if (${1:true}) {
-		${2}
-	} else {
-		${0}
-	}
+if (${1:true}) {
+	${2}
+} else {
+	${0}
+}
 endsnippet
 # tertiary conditional
 snippet ter
-	${1:/* condition */} ? ${2:/* if true */} : ${0:/* if false */}
+${1:/* condition */} ? ${2:/* if true */} : ${0:/* if false */}
 endsnippet
 # switch
 snippet switch
-	switch (${1:expression}) {
-		case '${3:case}':
-			${4}
-			break;
+switch (${1:expression}) {
+	case '${3:case}':
+		${4}
+		break;
 		${0}
-		default:
-			${2}
-	}
+	default:
+		${2}
+}
 endsnippet
 # case
 snippet case
-	case '${1:case}':
-		${2}
-		break;
-	${0}
+case '${1:case}':
+${2}
+break;
+${0}
 endsnippet
 # try
 snippet try
-	try {
-		${1}
-	} catch (${2:e}) {
-		${0:/* handle error */}
-	}
+try {
+	${1}
+} catch (${2:e}) {
+	${0:/* handle error */}
+}
 endsnippet
 # try finally
 snippet tryf
-	try {
-		${1}
-	} catch (${2:e}) {
-		${0:/* handle error */}
-	} finally {
-		${3:/* be executed regardless of the try / catch result*/}
-	}
+try {
+	${1}
+} catch (${2:e}) {
+	${0:/* handle error */}
+} finally {
+	${3:/* be executed regardless of the try / catch result*/}
+}
 endsnippet
 # throw Error
 snippet terr
-	throw new Error('${1:error message}')
+throw new Error('${1:error message}')
 endsnippet
 # return
 snippet ret
-	return ${0:result};
+return ${0:result};
 endsnippet
 # for loop
 snippet for
-	for (var ${2:i} = 0, l = ${1:arr}.length; $2 < l; $2++) {
-		var ${3:v} = $1[$2];${0:}
-	}
+for (var ${2:i} = 0, l = ${1:arr}.length; $2 < l; $2++) {
+	var ${3:v} = $1[$2];${0:}
+}
 endsnippet
 # Reversed for loop
 snippet forr
-	for (var ${2:i} = ${1:arr}.length - 1; $2 >= 0; $2--) {
-		var ${3:v} = $1[$2];${0:}
-	}
+for (var ${2:i} = ${1:arr}.length - 1; $2 >= 0; $2--) {
+	var ${3:v} = $1[$2];${0:}
+}
 endsnippet
 # While loop
 snippet wh
-	while (${1:/* condition */}) {
-		${0}
-	}
+while (${1:/* condition */}) {
+	${0}
+}
 endsnippet
 # Do while loop
 snippet do
-	do {
-		${0}
-	} while (${1:/* condition */});
+do {
+	${0}
+} while (${1:/* condition */});
 endsnippet
 # For in loop
 snippet fori
-	for (var ${1:prop} in ${2:object}) {
-		${0:$2[$1]}
-	}
+for (var ${1:prop} in ${2:object}) {
+	${0:$2[$1]}
+}
 endsnippet
 
