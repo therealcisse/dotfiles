@@ -101,6 +101,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
+	fileMode = false
 [status]
 	submoduleSummary = true
 [color]
