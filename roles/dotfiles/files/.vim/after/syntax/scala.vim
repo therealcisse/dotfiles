@@ -31,13 +31,13 @@ endif
 
 syntax match scalaNiceOperator "<-" conceal cchar=←
 syntax match scalaNiceOperator "->" conceal cchar=→
-syntax match scalaNiceOperator "==" conceal cchar=≟
-syntax match scalaNiceOperator "===" conceal cchar=≡
-syntax match scalaNiceOperator "!=" conceal cchar=≠
-syntax match scalaNiceOperator "=/=" conceal cchar=≢
-syntax match scalaNiceOperator ">>" conceal cchar=»
-syntax match scalaNiceOperator "&&" conceal cchar=∧
-syntax match scalaNiceOperator "||" conceal cchar=∨
+" syntax match scalaNiceOperator "==" conceal cchar=≟
+" syntax match scalaNiceOperator "===" conceal cchar=≡
+" syntax match scalaNiceOperator "!=" conceal cchar=≠
+" syntax match scalaNiceOperator "=/=" conceal cchar=≢
+" syntax match scalaNiceOperator ">>" conceal cchar=»
+" syntax match scalaNiceOperator "&&" conceal cchar=∧
+" syntax match scalaNiceOperator "||" conceal cchar=∨
 
 let s:extraConceal = 1
 " Some windows font don't support some of the characters,
@@ -62,20 +62,20 @@ if s:extraConceal
     syntax match scalaNiceOperator ">=\ze[^>]" conceal cchar=≥
 
     syntax match scalaNiceOperator "=>" conceal cchar=⇒
-    syntax match scalaNiceOperator "=\zs<<" conceal cchar=«
+    " syntax match scalaNiceOperator "=\zs<<" conceal cchar=«
 
     " Redfining to get proper '::' concealing
     syntax match hs_DeclareFunction /^[a-z_(]\S*\(\s\|\n\)*::/me=e-2 nextgroup=scalaNiceOperator contains=hs_FunctionName,hs_OpFunctionName
     syntax match scalaNiceOperator "\:\:" conceal cchar=∷
 
-    syntax match scalaNiceOperator "++" conceal cchar=⧺
-    syntax match scalaNiceOperator "forall" conceal cchar=∀
+    " syntax match scalaNiceOperator "++" conceal cchar=⧺
+    " syntax match scalaNiceOperator "forall" conceal cchar=∀
 
     "syntax match scalaNiceOperator /\s\.\s/ms=s+1,me=e-1 conceal cchar=∘
-    syntax match scalaNiceOperator "map\ze[ ({]" conceal cchar=∘
-    syntax match scalaNiceOperator "flatMap\ze[ ({]" conceal cchar=⤜
+    " syntax match scalaNiceOperator "map\ze[ ({]" conceal cchar=∘
+    " syntax match scalaNiceOperator "flatMap\ze[ ({]" conceal cchar=⤜
 
-    syntax match scalaNiceOperator "exists" conceal cchar=∈
+    " syntax match scalaNiceOperator "exists" conceal cchar=∈
 endif
 
 hi link scalaNiceOperator Operator

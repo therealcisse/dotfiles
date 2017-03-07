@@ -32,6 +32,10 @@ call plug#begin('~/.vim/plugged')
 
   " Ag/Ack for project-wide searching
   Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
+  Plug 'henrik/git-grep-vim', { 'on': [ 'GitGrep' ] }
+  Plug 'henrik/vim-qargs', { 'on': [ 'Qargs', 'Qdo' ] }
+
+  Plug 'henrik/vim-open-url'
 
   " Plug 'editorconfig/editorconfig-vim'
   Plug 'ctrlpvim/ctrlp.vim'
@@ -117,7 +121,7 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
-  Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins' }
 
   Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] }
 
@@ -127,9 +131,15 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'zah/nim.vim'
 
-  " Plug 'wellle/targets.vim'
+  Plug 'wellle/targets.vim'
 
   Plug 'kepbod/quick-scope'
+
+  Plug 'mtth/scratch.vim'
+
+  Plug 'tommcdo/vim-exchange'
+
+  Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -232,7 +242,7 @@ else
 endif
 
 set history=5000               " Increase command line history.
-set ignorecase                 " Ignore case in search patterns.
+set noignorecase                 " Don't ignore case in search patterns.
 
 set incsearch                  " Highlight search pattern
                                " as it is being typed.
@@ -366,7 +376,7 @@ set wildmode=longest:full,full        " shell-like autocomplete to unambiguous p
 
 set wildcharm=<C-z>            " substitue for 'wildchar' (<Tab>) in macros
 
-set wildignore+=*/.git/*,*/tmp/*,*.swp " Ignore files
+set wildignore+=*/tmp/*,*.swp   " Ignored files
 
 set winminheight=0             " Allow windows to be squashed.
 
@@ -577,9 +587,13 @@ if has('nvim')
     let g:deoplete#sources = {}
   endif
 
+  let g:deoplete#sources._ = ['buffer', 'tag']
+
   " Scala
-  let g:deoplete#sources.scala = ['buffer', 'tags', 'omni']
+  let g:deoplete#sources.scala = ['omni']
   let g:deoplete#omni#input_patterns.scala = ['[^. *\t0-9]\.\w*',': [A-Z]\w', '[\[\t\( ][A-Za-z]\w*']
+
+  let deoplete#tag#cache_limit_size = 5000000
 endif
 
 set showtabline=0
@@ -729,6 +743,10 @@ cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Align current paragraph
 nmap <leader>f =ae``zz
+vmap <leader>f =
+
+" Search folders with git
+exe "nn <leader>g :GitGrep --untracked "
 
 " Kill double quotes
 nmap <c-c>" :%s/\V\"/'<CR><C-L>
@@ -745,10 +763,20 @@ let g:elm_format_autosave = 1
 let g:elm_format_fail_silently = 0
 let g:elm_setup_keybindings = 0
 
-" Tags
+""""""""""""""""""""""" }}}
+" Ctags                 {{{
+"""""""""""""""""""""""
 
-" Let Vim walk up directory hierarchy from CWD to root looking for tags file
-set tags=./.tags;,~/.vimtags
+nn <leader>tg :!git ctags<CR><CR>
+
+set tags+=.git/tags
+
+" Let me select my tags
+nnoremap <c-]> g<c-]>
+nnoremap g<c-]> <c-]>
+
+" Open tag for word under cursor in a new vsplit
+map <c-\> :vsp<CR>:exec("tag ".expand("<cword>"))<CR>
 
 let g:AmsaykColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf']
 let g:AmsaykCursorlineBlacklist = ['ctrlp']
@@ -1154,7 +1182,11 @@ elseif executable("ag")
   let g:ctrlp_use_caching = 0
 endif
 
+nnoremap <leader>. :CtrlPTag<CR>
+
 noremap <leader>b :CtrlPBuffer<CR>
+
+let g:ctrlp_extensions = ['tag']
 
 let g:ctrlp_match_window  = 'bottom,order:btt,min:1,max:50,results:50'
 let g:ctrlp_mruf_relative = 1
@@ -1169,7 +1201,7 @@ func! CallCtrlP()
     CtrlPLastMode
   else
     let s:called_ctrlp = 1
-    CtrlPMRU
+    CtrlP
   endif
 endfunc
 
@@ -1505,6 +1537,32 @@ else " terminal vim
   let g:qs_first_occurrence_highlight_color = 15
   let g:qs_second_occurrence_highlight_bgcolor = 205
 endif
+
+" Targets
+let g:targets_nlNL = 'nN  '
+
+" Scratch
+let g:scratch_no_mappings = 1
+
+nmap <leader>s <plug>(scratch-insert-reuse)
+nmap <leader>S <plug>(scratch-insert-clear)
+xmap <leader>s <plug>(scratch-selection-reuse)
+xmap <leader>S <plug>(scratch-selection-clear)
+
+if exists('$SUDO_USER')
+else
+  let g:scratch_persistence_file = '~/.vim/tmp/backup/scratch.txt'
+endif
+
+" Multiple cursors
+let g:multi_cursor_use_default_mapping = 0
+
+" Default mapping
+let g:multi_cursor_start_key = '<leader>d'
+let g:multi_cursor_next_key  = 'n'
+let g:multi_cursor_prev_key  = 'N'
+let g:multi_cursor_skip_key  = 'x'
+let g:multi_cursor_quit_key  = '<Esc>'
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

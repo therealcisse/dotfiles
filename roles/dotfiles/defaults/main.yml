@@ -28,3 +28,4 @@ dotfiles:
   - .imapfilter
   - .signature
   - .octaverc
+  - .ctags

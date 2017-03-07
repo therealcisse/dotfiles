@@ -11,7 +11,7 @@ dir="$(git rev-parse --git-dir)"
 err="$dir/$$.tags.err"
 trap 'rm -f "$dir/$$.tags" "$err"' EXIT
 echo 'Indexing...'
-if git ls-files | ctags --tag-relative -L - -f "$dir/$$.tags" 2> "$err"; then
+if git ls-files | gtags --extra=+f -L - -f "$dir/$$.tags" 2> "$err"; then
   mv "$dir/$$.tags" "$dir/tags"
 else
   status=$?

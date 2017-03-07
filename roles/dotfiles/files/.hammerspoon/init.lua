@@ -29,6 +29,7 @@ local grid = {
   topHalf = '0,0 12x6',
   topThird = '0,0 12x4',
   topTwoThirds = '0,0 12x8',
+  topThreeThirds = '0,0 12x12',
   rightHalf = '6,0 6x12',
   rightThird = '8,0 4x12',
   rightTwoThirds = '4,0 8x12',
@@ -114,7 +115,8 @@ local layoutConfig = {
   ['com.googlecode.iterm2'] = (function(window, forceScreenCount)
     local count = forceScreenCount or screenCount
     if count == 1 then
-      hs.grid.set(window, grid.fullScreen)
+      -- hs.grid.set(window, grid.fullScreen)
+      hs.grid.set(window, grid.topThreeThirds)
     else
       hs.grid.set(window, grid.leftHalf, hs.screen.primaryScreen())
     end

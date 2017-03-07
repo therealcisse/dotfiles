@@ -207,6 +207,7 @@ cask 'vlc'
 cask 'xquartz'
 cask 'keycastr'
 cask 'rowanj-gitx'
+cask 'ksdiff'
 
 #
 # mas (Mac App Store)
