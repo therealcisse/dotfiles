@@ -140,6 +140,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'tommcdo/vim-exchange'
 
   Plug 'terryma/vim-multiple-cursors'
+
+  " Plug 'valloric/wMatchTagAlways', { 'for': ['html', 'javascript.jsx'] }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -1157,7 +1159,7 @@ if executable("rg")
   set grepformat=%f:%l:%c:%m
 
   " rg is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+  " let g:ctrlp_use_caching = 0
 elseif executable("ag")
   let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
         \ --ignore .git
@@ -1179,7 +1181,7 @@ elseif executable("ag")
   set grepprg=ag\ --nogroup\ --nocolor
 
   " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+  " let g:ctrlp_use_caching = 0
 endif
 
 nnoremap <leader>. :CtrlPTag<CR>
@@ -1563,6 +1565,23 @@ let g:multi_cursor_next_key  = 'n'
 let g:multi_cursor_prev_key  = 'N'
 let g:multi_cursor_skip_key  = 'x'
 let g:multi_cursor_quit_key  = '<Esc>'
+
+" Ctrl click and drag for visual block mode
+noremap <S-LeftMouse> <4-LeftMouse>
+noremap <S-LeftDrag> <LeftDrag>
+
+" noremap <LeftRelease> <C-g>
+
+" MatchTag
+" let g:mta_filetypes = {
+      " \ 'javascript.jsx' : 1,
+      " \ 'html' : 1,
+      " \ 'xhtml' : 1,
+      " \ 'xml' : 1,
+      " \ 'jinja' : 1,
+      " \}
+
+" nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
