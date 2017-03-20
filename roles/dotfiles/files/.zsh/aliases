@@ -22,7 +22,6 @@ alias cd..='cd ..'
 alias cdtmp='cd $(mktemp -d $TMPDIR/$USER-cdtmp-XXXXXX)'
 alias d='hash -d'
 alias e=exit
-alias g=git
 alias groot='cd $(git rev-parse --show-toplevel 2> /dev/null || echo -n ".")'
 alias clip="nc -U ~/.clipper.sock"
 alias d='hash -d'

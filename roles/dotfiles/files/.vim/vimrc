@@ -38,7 +38,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'henrik/vim-open-url'
 
   " Plug 'editorconfig/editorconfig-vim'
-  Plug 'ctrlpvim/ctrlp.vim'
+  " Plug 'ctrlpvim/ctrlp.vim'
 
   Plug 'JulesWang/css.vim'
   Plug 'ap/vim-css-color'
@@ -142,6 +142,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'terryma/vim-multiple-cursors'
 
   " Plug 'valloric/wMatchTagAlways', { 'for': ['html', 'javascript.jsx'] }
+
+  Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+
+  " Distraction free writing in vim
+  " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+
+  " fzf greatness (fuzzy finding)
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin --no-update-rc --64 --key-bindings --completion' }
+  Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -589,13 +598,13 @@ if has('nvim')
     let g:deoplete#sources = {}
   endif
 
-  let g:deoplete#sources._ = ['buffer', 'tag']
+  " let g:deoplete#sources._ = ['buffer', 'tag']
 
   " Scala
   let g:deoplete#sources.scala = ['omni']
   let g:deoplete#omni#input_patterns.scala = ['[^. *\t0-9]\.\w*',': [A-Z]\w', '[\[\t\( ][A-Za-z]\w*']
 
-  let deoplete#tag#cache_limit_size = 5000000
+  let deoplete#tag#cache_limit_size = 2000000
 endif
 
 set showtabline=0
@@ -893,6 +902,12 @@ nnoremap k gk
 nnoremap ; :
 vnoremap ; :
 
+" Always use vertical diffs
+set diffopt+=vertical
+
+" disable bracketed paste
+set t_BE=0
+
 " Relying on Hammerspoon to avoid collision between <Tab> and <C-i> (have it
 " send F6 instead for <C-i>).
 nnoremap <F6> <C-i>
@@ -1025,7 +1040,7 @@ endfunction
 nnoremap <c-g>b :Gblame<cr>
 nnoremap <c-g>B :Gbrowse<cr>
 nnoremap <c-g>s :Gstatus<cr>
-nnoremap <c-g>c :Gcommit<cr>
+" nnoremap <c-g>c :Gcommit<cr>
 nnoremap <c-g>d :Gvdiff<cr>
 nnoremap <c-g>P :Gpush<cr>
 nnoremap <c-g>L :Gpull<cr>
@@ -1058,17 +1073,6 @@ if !exists(':DiffOrig')
 endif
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-
-" Arrow keys madness: Are you ready?
-
-nnoremap <up>    <nop>
-nnoremap <down>  <nop>
-nnoremap <left>  <nop>
-nnoremap <right> <nop>
-inoremap <up>    <nop>
-inoremap <down>  <nop>
-inoremap <left>  <nop>
-inoremap <right> <nop>
 
 " Resize split easily
 augroup ArrowKeys
@@ -1152,10 +1156,10 @@ let g:ctrlp_working_path_mode = 'ra'
 if executable("rg")
   let g:ctrlp_user_command = 'rg %s -l --files --color=never -g ""'
 
-  let g:ackprg = 'rg --vimgrep'
+  let g:ackprg = 'rg --vimgrep --smart-case'
   cnoreabbrev ag Ack!
 
-  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob "!.git/*"\  --glob "!vendor/*"
   set grepformat=%f:%l:%c:%m
 
   " rg is fast enough that CtrlP doesn't need to cache
@@ -1172,9 +1176,10 @@ elseif executable("ag")
         \ --ignore bower_components
         \ --ignore logs
         \ --ignore out
+        \ --ignore vendor
         \ -g ""'
 
-  let g:ackprg = 'ag --vimgrep'
+  let g:ackprg = 'ag --vimgrep --smart-case'
   cnoreabbrev rg Ack!
 
   " Use ag over grep
@@ -1184,9 +1189,9 @@ elseif executable("ag")
   " let g:ctrlp_use_caching = 0
 endif
 
-nnoremap <leader>. :CtrlPTag<CR>
+" nnoremap <leader>. :CtrlPTag<CR>
 
-noremap <leader>b :CtrlPBuffer<CR>
+" noremap <leader>b :CtrlPBuffer<CR>
 
 let g:ctrlp_extensions = ['tag']
 
@@ -1582,6 +1587,119 @@ noremap <S-LeftDrag> <LeftDrag>
       " \}
 
 " nnoremap <leader>% :MtaJumpToOtherTag<cr>
+
+" Allows incsearch highlighting for range commands
+" This is just a convenient shorthand of :/foobar/t.  :/foobar/m. and :/foobar/d
+" use regular search to locate the line you want to
+" Copy to current position
+cnoremap $t <CR>:t''<CR>
+" Move to current position
+cnoremap $m <CR>:m''<CR>
+" or Delete
+cnoremap $d <CR>:d<CR>``
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" Add empty line
+map ✠ <c-Enter>
+map <C-Enter> ]<Space>
+
+" Duplicate line
+nn <leader>D yyp
+
+" ----------------------------------------------------------------------------
+" goyo.vim + limelight.vim
+" ----------------------------------------------------------------------------
+
+" nnoremap <leader>G :Goyo<CR>
+
+nnoremap <leader>L :Limelight!!<CR>
+
+let g:limelight_paragraph_span = 1
+let g:limelight_priority = -1
+
+" function! s:goyo_enter()
+"   if has('gui_running')
+"     set fullscreen
+"     set background=light
+"     set linespace=7
+"   elseif exists('$TMUX')
+"     silent !tmux set status off
+"   endif
+"   Limelight
+" endfunction
+"
+" function! s:goyo_leave()
+"   if has('gui_running')
+"     set nofullscreen
+"     set background=dark
+"     set linespace=0
+"   elseif exists('$TMUX')
+"     silent !tmux set status on
+"   endif
+"   execute 'Limelight!'
+" endfunction
+"
+" augroup GOYO
+"   autocmd! User GoyoEnter nested call <SID>goyo_enter()
+"   autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" augroup END
+
+" Get off my lawn: disable arrow keys in normal mode
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
+inoremap <Left> :echoe "Use h"<CR>
+inoremap <Right> :echoe "Use l"<CR>
+inoremap <Up> :echoe "Use k"<CR>
+inoremap <Down> :echoe "Use j"<CR>
+
+" last typed word to lower case
+inoremap <C-w>u <esc>guawA
+
+" last typed word to UPPER CASE
+inoremap <C-w>U <esc>gUawA
+
+" entire line to lower case
+inoremap <C-g>u <esc>guuA
+
+" entire line to UPPER CASE
+inoremap <C-g>U <esc>gUUA
+
+" last word to title case
+inoremap <C-w>t <esc>bvgU<esc>A
+
+" current line to title case
+inoremap <C-g>t <esc>:s/\v<(.)(\w*)/\u\1\L\2/g<cr>A
+
+" =====================================
+"  FZF
+" =====================================
+" set fzf's default input to AG instead of find. This also removes gitignore etc
+" let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+let g:fzf_files_options =
+  \ '--preview "(coderay {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+
+nnoremap <leader>. :Tags<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <C-g>g :Ag<CR>
+vnoremap <C-g>g :<C-u>Ag <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
+nnoremap <C-g>c :Commands<CR>
+nnoremap <C-f>l :BLines<CR>
+vnoremap <C-f>l :<C-u>BLines <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
+nnoremap <C-p> :Files<CR>
+
+" Insert Mode:
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Disable conceal
+set conceallevel=0
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

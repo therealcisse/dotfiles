@@ -1,5 +1,12 @@
 node_modules
+bower_components
+.DS_Store
+.idea
 dist
 out
 logs
+target
+out
+.svn
+.hg
 .git

@@ -1,4 +1,14 @@
 " ==================== UltiSnips ====================
+
+" List all snippets
+let g:UltiSnipsListSnippets = '<c-.>'
+
+" Open in vertical split
+let g:UltiSnipsEditSplit    = 'vertical'
+
+" Prevent UltiSnips from removing our carefully-crafted mappings.
+let g:UltiSnipsMappingsToIgnore = ['autocomplete']
+
 function! g:UltiSnips_Complete()
   call UltiSnips#ExpandSnippet()
   if g:ulti_expand_res == 0
