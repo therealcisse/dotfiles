@@ -18,12 +18,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'kana/vim-textobj-entire' " ae, ie
   Plug 'kana/vim-textobj-indent' " ai, ii
   Plug 'kana/vim-textobj-line'   " al, il
-  Plug 'glts/vim-textobj-comment' " ac, ic
-  Plug 'kana/vim-textobj-function' " af, if
-  Plug 'mattn/vim-textobj-url' " au, iu
-  Plug 'saihoooooooo/vim-textobj-space' " aS, iS
+  " Plug 'glts/vim-textobj-comment' " ac, ic
+  " Plug 'kana/vim-textobj-function' " af, if
+  " Plug 'mattn/vim-textobj-url' " au, iu
+  " Plug 'saihoooooooo/vim-textobj-space' " aS, iS
 
-  Plug 'thinca/vim-textobj-function-javascript'
+  " Plug 'thinca/vim-textobj-function-javascript'
 
   Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] } | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'elzr/vim-json', { 'for': [ 'json' ] }
@@ -31,9 +31,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'matchit.zip'
 
   " Ag/Ack for project-wide searching
-  Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
-  Plug 'henrik/git-grep-vim', { 'on': [ 'GitGrep' ] }
-  Plug 'henrik/vim-qargs', { 'on': [ 'Qargs', 'Qdo' ] }
+  " Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
+  " Plug 'henrik/git-grep-vim', { 'on': [ 'GitGrep' ] }
+  " Plug 'henrik/vim-qargs', { 'on': [ 'Qargs', 'Qdo' ] }
 
   Plug 'henrik/vim-open-url'
 
@@ -64,7 +64,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   endif
 
-  Plug 'duggiefresh/vim-easydir'
+  " Plug 'duggiefresh/vim-easydir'
 
   Plug 'wakatime/vim-wakatime'
 
@@ -82,12 +82,12 @@ call plug#begin('~/.vim/plugged')
 
   Plug  'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
 
-  Plug 'tpope/vim-abolish'
+  " Plug 'tpope/vim-abolish'
 
   Plug 'mhinz/vim-startify'
 
-  Plug 'mbbill/undotree'
-  Plug 'tpope/vim-eunuch'
+  " Plug 'mbbill/undotree'
+  Plug 'tpope/vim-eunuch' " :SudoWrite, ...
 
   Plug 'AndrewRadev/splitjoin.vim'
 
@@ -129,21 +129,21 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'christoomey/vim-sort-motion'
 
-  Plug 'zah/nim.vim'
+  Plug 'zah/nim.vim', { 'for': [ 'nim' ] }
 
   Plug 'wellle/targets.vim'
 
   Plug 'kepbod/quick-scope'
 
-  Plug 'mtth/scratch.vim'
+  " Plug 'mtth/scratch.vim'
 
   Plug 'tommcdo/vim-exchange'
 
-  Plug 'terryma/vim-multiple-cursors'
+  " Plug 'terryma/vim-multiple-cursors'
 
   " Plug 'valloric/wMatchTagAlways', { 'for': ['html', 'javascript.jsx'] }
 
-  Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+  " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 
   " Distraction free writing in vim
   " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
@@ -468,7 +468,7 @@ function! s:StripTrailingWhitespaces()
 
 endfunction
 
-nnoremap <c-c>w :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <c-s>w :call <SID>StripTrailingWhitespaces()<CR>
 
 " ----------------------------------------------------------------------
 " | Automatic Commands                                                 |
@@ -588,7 +588,7 @@ if has('nvim')
   " Use deoplete.
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_smart_case = 1
-  let g:deoplete#auto_complete_start_length = 3
+  let g:deoplete#auto_complete_start_length = 2
 
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
@@ -760,7 +760,7 @@ vmap <leader>f =
 exe "nn <leader>g :GitGrep --untracked "
 
 " Kill double quotes
-nmap <c-c>" :%s/\V\"/'<CR><C-L>
+nmap <c-s>" :%s/\V\"/'<CR><C-L>
 
 " Elm
 
@@ -956,7 +956,7 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 augroup DelimitMate
   autocmd!
-  au FileType vim,html,javascript.jsx let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+  au FileType vim,html,javascript,javascript.jsx,java,scala,rust,nim,ruby,sh let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
 augroup END
 
 set switchbuf=usetab
@@ -1144,43 +1144,43 @@ nmap <expr> <S-Tab> 'za'
 let g:move_key_modifier = 'C'
 
 " Search word under cursor
-nnoremap <leader>/ :F <C-r>=autocmds#escape_pattern(expand('<cword>'))<CR><Space> **/*.*
-vnoremap <leader>/ :<c-u>F <C-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR><Space> **/*.*
+" nnoremap <leader>/ :Ag <C-r>=autocmds#escape_pattern(expand('<cword>'))<CR><Space> **/*.*
+" vnoremap <leader>/ :<c-u>Ag <C-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR><Space> **/*.*
 
 " ----------------------------------------------------------------------
 " | CTRLP                                                              |
 " ----------------------------------------------------------------------
 
-let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_working_path_mode = 'ra'
 
 if executable("rg")
-  let g:ctrlp_user_command = 'rg %s -l --files --color=never -g ""'
+  " let g:ctrlp_user_command = 'rg %s -l --files --color=never -g ""'
 
-  let g:ackprg = 'rg --vimgrep --smart-case'
-  cnoreabbrev ag Ack!
+  " let g:ackprg = 'rg --vimgrep --smart-case'
+  " cnoreabbrev ag Ack!
 
-  set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob "!.git/*"\  --glob "!vendor/*"
+  set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
   set grepformat=%f:%l:%c:%m
 
   " rg is fast enough that CtrlP doesn't need to cache
   " let g:ctrlp_use_caching = 0
 elseif executable("ag")
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
-        \ --ignore .git
-        \ --ignore .DS_Store
-        \ --ignore .svn
-        \ --ignore .hg
-        \ --ignore node_modules
-        \ --ignore target
-        \ --ignore .idea
-        \ --ignore bower_components
-        \ --ignore logs
-        \ --ignore out
-        \ --ignore vendor
-        \ -g ""'
+  " let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
+  "       \ --ignore .git
+  "       \ --ignore .DS_Store
+  "       \ --ignore .svn
+  "       \ --ignore .hg
+  "       \ --ignore node_modules
+  "       \ --ignore target
+  "       \ --ignore .idea
+  "       \ --ignore bower_components
+  "       \ --ignore logs
+  "       \ --ignore out
+  "       \ --ignore vendor
+  "       \ -g ""'
 
-  let g:ackprg = 'ag --vimgrep --smart-case'
-  cnoreabbrev rg Ack!
+  " let g:ackprg = 'ag --vimgrep --smart-case'
+  " cnoreabbrev ag Ack!
 
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
@@ -1402,10 +1402,10 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 inoremap <silent> <Esc> <Esc>`^
 
 "mixed indent
-nnoremap <c-c>i :%retab!<CR>
+nnoremap <c-s>i :%retab!<CR>
 
 "trailing
-nnoremap <c-c>t :%s/\s\+$//e<cr>:nohl<cr>
+nnoremap <c-s>t :%s/\s\+$//e<cr>:nohl<cr>
 
 " Toggle quickfix list
 fun! s:QuickfixToggle()
@@ -1416,7 +1416,7 @@ fun! s:QuickfixToggle()
     cclose
   endif
 endfunction
-nnoremap <c-c>q :call <SID>QuickfixToggle()<cr>
+nnoremap <c-s>q :call <SID>QuickfixToggle()<cr>
 
 " Vim-signiture
 let g:SignatureMarkTextHLDynamic = 1
@@ -1495,8 +1495,8 @@ if has('autocmd')
 endif
 
 " Stylefmt
-nnoremap <silent> <c-c>f :Stylefmt<CR>
-vnoremap <silent> <c-c>f :StylefmtVisual<CR>
+nnoremap <silent> <c-s>f :Stylefmt<CR>
+vnoremap <silent> <c-s>f :StylefmtVisual<CR>
 
 " Sort motion
 let g:sort_motion_flags = "u"
@@ -1549,27 +1549,27 @@ endif
 let g:targets_nlNL = 'nN  '
 
 " Scratch
-let g:scratch_no_mappings = 1
+" let g:scratch_no_mappings = 1
 
-nmap <leader>s <plug>(scratch-insert-reuse)
-nmap <leader>S <plug>(scratch-insert-clear)
-xmap <leader>s <plug>(scratch-selection-reuse)
-xmap <leader>S <plug>(scratch-selection-clear)
+" nmap <leader>s <plug>(scratch-insert-reuse)
+" nmap <leader>S <plug>(scratch-insert-clear)
+" xmap <leader>s <plug>(scratch-selection-reuse)
+" xmap <leader>S <plug>(scratch-selection-clear)
 
 if exists('$SUDO_USER')
 else
-  let g:scratch_persistence_file = '~/.vim/tmp/backup/scratch.txt'
+  " let g:scratch_persistence_file = '~/.vim/tmp/backup/scratch.txt'
 endif
 
 " Multiple cursors
-let g:multi_cursor_use_default_mapping = 0
+" let g:multi_cursor_use_default_mapping = 0
 
 " Default mapping
-let g:multi_cursor_start_key = '<leader>d'
-let g:multi_cursor_next_key  = 'n'
-let g:multi_cursor_prev_key  = 'N'
-let g:multi_cursor_skip_key  = 'x'
-let g:multi_cursor_quit_key  = '<Esc>'
+" let g:multi_cursor_start_key = '<leader>d'
+" let g:multi_cursor_next_key  = 'n'
+" let g:multi_cursor_prev_key  = 'N'
+" let g:multi_cursor_skip_key  = 'x'
+" let g:multi_cursor_quit_key  = '<Esc>'
 
 " Ctrl click and drag for visual block mode
 noremap <S-LeftMouse> <4-LeftMouse>
@@ -1607,18 +1607,38 @@ map ✠ <c-Enter>
 map <C-Enter> ]<Space>
 
 " Duplicate line
-nn <leader>D yyp
+nn <leader>D "xyy"xp
 
 " ----------------------------------------------------------------------------
 " goyo.vim + limelight.vim
 " ----------------------------------------------------------------------------
 
+" Default: 0.5
+" let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+" let g:limelight_paragraph_span = 4
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+" let g:limelight_priority = -1
+
+" Enable by default
+" autocmd VimEnter *.js Limelight
+" autocmd VimEnter *.scss Limelight
+
 " nnoremap <leader>G :Goyo<CR>
 
-nnoremap <leader>L :Limelight!!<CR>
+" nnoremap <leader>L :Limelight!!<CR>
 
-let g:limelight_paragraph_span = 1
-let g:limelight_priority = -1
+" let g:limelight_paragraph_span = 1
+" let g:limelight_priority = -1
 
 " function! s:goyo_enter()
 "   if has('gui_running')
@@ -1678,19 +1698,27 @@ inoremap <C-g>t <esc>:s/\v<(.)(\w*)/\u\1\L\2/g<cr>A
 " =====================================
 "  FZF
 " =====================================
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+autocmd VimEnter * command! -bang -nargs=* Ag
+    \ call fzf#vim#ag(<q-args>, {'down': '40%', 'options': '--no-color'})
+
 " set fzf's default input to AG instead of find. This also removes gitignore etc
 " let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-let g:fzf_files_options =
-  \ '--preview "(coderay {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+" let g:fzf_files_options =
+"   " \ '--preview ""' " Disable preview
+  " " \ '--preview "(coderay {} || cat {}) 2> /dev/null | head -'.&lines.'"' " Enable preview
 
 nnoremap <leader>. :Tags<CR>
 nnoremap <leader>b :Buffers<CR>
-nnoremap <C-g>g :Ag<CR>
-vnoremap <C-g>g :<C-u>Ag <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
+nnoremap <C-g>/ :Ag<CR>
+vnoremap <C-g>/ :<C-u>Ag <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
 nnoremap <C-g>c :Commands<CR>
 nnoremap <C-f>l :BLines<CR>
 vnoremap <C-f>l :<C-u>BLines <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
 nnoremap <C-p> :Files<CR>
+
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 " Insert Mode:
 imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -1700,6 +1728,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Disable conceal
 set conceallevel=0
+
+nn <c-s>m :set mouse=a<CR>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

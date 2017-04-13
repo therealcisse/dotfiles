@@ -286,6 +286,20 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x61-0x80000</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Text</key>
+			<string>a</string>
+		</dict>
+		<key>0x62-0x80000</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Text</key>
+			<string>b</string>
+		</dict>
 		<key>0x9-0x40000</key>
 		<dict>
 			<key>Action</key>
@@ -444,11 +458,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 207 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>56 335 937 465 0 0 1440 878 </string>
+	<string>137 346 796 473 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 52 1440 826 0 0 1440 878 </string>
+	<string>0 10 1440 868 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>113 411 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2594,7 +2608,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-03-16T04:05:22Z</date>
+	<date>2017-03-31T11:16:46Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
@@ -2619,7 +2633,7 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.0.14</string>
+	<string>3.0.15</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
