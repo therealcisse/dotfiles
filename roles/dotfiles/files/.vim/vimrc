@@ -40,7 +40,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'editorconfig/editorconfig-vim'
   " Plug 'ctrlpvim/ctrlp.vim'
 
-  Plug 'JulesWang/css.vim'
+  Plug 'JulesWang/css.vim', { 'for': [ 'haml', 'scss', 'sass' ] }
   Plug 'ap/vim-css-color'
   Plug 'tpope/vim-haml', { 'for': [ 'haml', 'scss', 'sass' ] }
   Plug 'mattn/emmet-vim', { 'for': [ 'html', 'css', 'javascript', 'javascript.jsx' ] }
@@ -227,9 +227,13 @@ if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
 endif
 
-if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard') && exists('$DISPLAY')
-  set clipboard=unnamed,unnamedplus     "  Use the system clipboard as the default register.
-endif
+" if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard') && exists('$DISPLAY')
+"   set clipboard=unnamed,unnamedplus     "  Use the system clipboard as the default register.
+" endif
+
+if has('clipboard')
+  set clipboard=unnamed
+end
 
 set cpoptions+=$               " When making a change, don't
                                " redisplay the line, and instead,
@@ -1605,6 +1609,9 @@ inoremap <C-U> <C-G>u<C-U>
 " Add empty line
 map ✠ <c-Enter>
 map <C-Enter> ]<Space>
+
+map ¥ <C-S-Enter>
+map <C-S-Enter> [<Space>
 
 " Duplicate line
 nn <leader>D "xyy"xp

@@ -314,6 +314,13 @@
 			<key>Text</key>
 			<string>✠</string>
 		</dict>
+		<key>0xd-0x60000</key>
+		<dict>
+			<key>Action</key>
+			<integer>12</integer>
+			<key>Text</key>
+			<string>¥</string>
+		</dict>
 		<key>0xf700-0x300000</key>
 		<dict>
 			<key>Action</key>
@@ -458,11 +465,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 207 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>137 346 796 473 0 0 1440 878 </string>
+	<string>98 287 937 465 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 10 1440 868 0 0 1440 878 </string>
+	<string>0 26 1440 852 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>113 411 570 427 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2608,7 +2615,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-03-31T11:16:46Z</date>
+	<date>2017-04-15T11:41:26Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
