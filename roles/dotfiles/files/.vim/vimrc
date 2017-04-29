@@ -110,7 +110,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'matze/vim-move' " <c-k>, <c-j>
 
   if !has('gui_vimr')
-    Plug 'joeytwiddle/sexy_scroller.vim'
+    " Plug 'joeytwiddle/sexy_scroller.vim'
   endif
 
   Plug 'wincent/vim-clipper'
@@ -1619,6 +1619,9 @@ cnoremap $d <CR>:d<CR>``
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
+" close last open tag
+imap ,/ </<C-x><C-o>
+
 " Add empty line
 map ✠ <c-Enter>
 map <C-Enter> ]<Space>
@@ -1737,6 +1740,8 @@ nnoremap <C-g>c :Commands<CR>
 nnoremap <C-f>l :BLines<CR>
 vnoremap <C-f>l :<C-u>BLines <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
 nnoremap <C-p> :Files<CR>
+nnoremap <leader><C-p> :Buffers<CR>
+nnoremap <leader>M :Marks<CR>
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
@@ -1750,6 +1755,14 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 set conceallevel=0
 
 nn <c-s>m :set mouse=a<CR>
+
+" Change line text object
+" let g:textobj_line_no_default_key_mappings = 1
+
+" xmap aL  <Plug>(textobj-line-a)
+" omap aL  <Plug>(textobj-line-a)
+" xmap iL  <Plug>(textobj-line-i)
+" omap iL  <Plug>(textobj-line-i)
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
