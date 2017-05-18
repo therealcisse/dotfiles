@@ -17,6 +17,11 @@
   register: fontCloned
 
 - name: Install Fonts
+  shell: ~/.config/nerd-fonts/install.sh Hasklig chdir=~/.config/nerd-fonts/
+  when:
+    - fontCloned|success
+
+- name: Install Ascii Fonts
   shell: ~/.config/nerd-fonts/install.sh SourceCodePro chdir=~/.config/nerd-fonts/
   when:
     - fontCloned|success

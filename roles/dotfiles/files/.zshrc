@@ -182,6 +182,9 @@ test -f $HOST_RC && source $HOST_RC
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+# add rust cargo bin to path
+test -e $RUSTPATH && source $RUSTPATH/env
+
 LOCAL_RC=$HOME/.zshrc.local
 test -f $LOCAL_RC && source $LOCAL_RC
 

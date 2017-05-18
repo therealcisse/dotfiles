@@ -352,9 +352,11 @@ end))
 local mash_app = {"cmd", "alt", "ctrl"}
 
 hs.hotkey.bind(mash_app, 'D', function () hs.application.launchOrFocus("Dictionary") end)
-hs.hotkey.bind(mash_app, '1', function () hs.application.launchOrFocus("iterm") end)
+-- hs.hotkey.bind(mash_app, '1', function () hs.application.launchOrFocus("iterm") end)
 hs.hotkey.bind(mash_app, '2', function () hs.application.launchOrFocus("Path Finder") end)
 hs.hotkey.bind(mash_app, '3', function () hs.application.launchOrFocus("Google Chrome") end)
+
+hs.hotkey.bind({"alt"}, 'T', function () hs.application.launchOrFocus("iterm") end)
 
 --
 -- Screencast layout

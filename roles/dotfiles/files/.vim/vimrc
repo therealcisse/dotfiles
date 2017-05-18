@@ -34,7 +34,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] } | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'elzr/vim-json', { 'for': [ 'json' ] }
   " Plug 'flazz/vim-colorschemes'
-  Plug 'matchit.zip'
+  Plug 'benjifisher/matchit.zip'
 
   " Ag/Ack for project-wide searching
   " Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
@@ -159,6 +159,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
 
   Plug 'justinmk/vim-dirvish'
+
+  Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -644,23 +646,23 @@ set showtabline=0
 
 " For conceal markers.
 if has('conceal')
-  set conceallevel=1
+  " set conceallevel=1
 endif
 
 " VIM jsx
 
 " Conceal some characters in javascript
 
-let g:javascript_conceal_function       = "ƒ"
-let g:javascript_conceal_null           = "ø"
-let g:javascript_conceal_this           = "@"
+" let g:javascript_conceal_function       = "ƒ"
+" let g:javascript_conceal_null           = "ø"
+" let g:javascript_conceal_this           = "@"
 " let g:javascript_conceal_return         = "⇚"
-let g:javascript_conceal_undefined      = "¿"
-let g:javascript_conceal_NaN            = "ℕ"
+" let g:javascript_conceal_undefined      = "¿"
+" let g:javascript_conceal_NaN            = "ℕ"
 " let g:javascript_conceal_prototype      = "¶"
 " let g:javascript_conceal_static         = "•"
 " let g:javascript_conceal_super          = "Ω"
-let g:javascript_conceal_arrow_function = "⇒"
+" let g:javascript_conceal_arrow_function = "⇒"
 
 let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
@@ -775,11 +777,9 @@ cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 nmap <leader>f =ae``zz
 vmap <leader>f =
 
-" Search folders with git
-exe "nn <leader>g :GitGrep --untracked "
-
 " Kill double quotes
 nmap <c-s>" :%s/\V\"/'<CR><C-L>
+nmap <c-s>' :%s/\V\'/"<CR><C-L>
 
 " Elm
 
@@ -1175,11 +1175,11 @@ let g:move_key_modifier = 'C'
 if executable("rg")
   " let g:ctrlp_user_command = 'rg %s -l --files --color=never -g ""'
 
-  " let g:ackprg = 'rg --vimgrep --smart-case'
-  " cnoreabbrev ag Ack!
+  let g:ackprg = 'rg --vimgrep --smart-case'
+  cnoreabbrev ag Ack!
 
-  set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
-  set grepformat=%f:%l:%c:%m
+  " set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
+  " set grepformat=%f:%l:%c:%m
 
   " rg is fast enough that CtrlP doesn't need to cache
   " let g:ctrlp_use_caching = 0
@@ -1751,10 +1751,13 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-" Disable conceal
-set conceallevel=0
-
 nn <c-s>m :set mouse=a<CR>
+
+" Erase word in insert mode
+imap <C-BS> <ESC>diwa
+
+" Format rust code after save
+let g:rustfmt_autosave = 1
 
 " Change line text object
 " let g:textobj_line_no_default_key_mappings = 1

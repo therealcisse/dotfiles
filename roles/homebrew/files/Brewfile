@@ -11,6 +11,8 @@ tap 'neovim/neovim'
 tap 'olafurpg/scalafmt'
 tap 'Goles/battery'
 tap 'homebrew/dupes'
+tap 'caskroom/fonts'
+tap 'paulp/extras'
 
 cask 'launchcontrol'
 cask 'java'
@@ -21,6 +23,13 @@ cask 'genymotion'
 cask 'whatsapp'
 cask 'sizeup'
 cask 'transmission'
+cask 'font-hasklig'
+cask 'font-hasklig-nerd-font'
+cask 'android-platform-tools'
+cask 'android-sdk'
+cask 'androidtool'
+
+brew 'coursier'
 brew 'docker-compose', service_restart: true
 brew 'docker'
 brew 'findutils', args: ["--with-default-names"]
