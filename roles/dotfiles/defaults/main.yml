@@ -30,3 +30,4 @@ dotfiles:
   - .octaverc
   - .ctags
   - .gvimrc
+  - .tern-project

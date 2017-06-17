@@ -9,9 +9,11 @@ let g:loaded_rrhelper = 1
 let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 
 " Stop annoying paren match highlighting from flashing all over the screen.
-let loaded_matchparen=1
+let g:loaded_matchparen=1
 
 call plug#begin('~/.vim/plugged')
+  Plug 'itchyny/vim-parenmatch'
+
   Plug 'vim-scripts/gitignore'
 
   Plug 'tpope/vim-unimpaired'
@@ -37,7 +39,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'benjifisher/matchit.zip'
 
   " Ag/Ack for project-wide searching
-  " Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
+  Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
   " Plug 'henrik/git-grep-vim', { 'on': [ 'GitGrep' ] }
   " Plug 'henrik/vim-qargs', { 'on': [ 'Qargs', 'Qdo' ] }
 
@@ -67,7 +69,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
   if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'roxma/nvim-completion-manager'
+    Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
   endif
 
   " Plug 'duggiefresh/vim-easydir'
@@ -80,8 +84,8 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'elmcast/elm-vim', { 'for': [ 'elm' ] }
 
-  Plug 'scrooloose/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  " Plug 'scrooloose/nerdtree'
+  " Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-webdevicons'
 
   Plug 'chriskempson/base16-vim'
@@ -130,6 +134,8 @@ call plug#begin('~/.vim/plugged')
   " Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins' }
 
   Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] }
+  Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] }
+  Plug 'roxma/nvim-cm-racer', { 'for': [ 'rust' ] }
 
   Plug 'kewah/vim-stylefmt', { 'for': [ 'sass', 'scss', 'css' ] }
 
@@ -137,7 +143,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'zah/nim.vim', { 'for': [ 'nim' ] }
 
-  Plug 'wellle/targets.vim'
+  " Plug 'wellle/targets.vim'
 
   Plug 'kepbod/quick-scope'
 
@@ -352,6 +358,10 @@ set shortmess+=a                 " use abbreviations in messages eg. `[RO]` inst
 set shortmess+=o                 " overwrite file-written messages
 set shortmess+=t                 " truncate file messages at start
 
+" don't give |ins-completion-menu| messages.  For example,
+" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+set shortmess+=c
+
 if has('showcmd')
   set showcmd                    " Show the command being typed.
 endif
@@ -459,31 +469,31 @@ let g:vim_markdown_folding_disabled=1
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function! s:StripTrailingWhitespaces()
+" function! s:StripTrailingWhitespaces()
+"     " Save last search and cursor position.
+"
+"     let searchHistory = @/
+"     let cursorLine = line(".")
+"     let cursorColumn = col(".")
+"
+"     " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+"
+"     " Strip trailing whitespaces.
+"
+"     %s/\s\+$//e
+"
+"     " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+"
+"     " Restore previous search history and cursor position.
+"
+"     let @/ = searchHistory
+"     call cursor(cursorLine, cursorColumn)
+"
+"     :nohl
+" endfunction
 
-    " Save last search and cursor position.
-
-    let searchHistory = @/
-    let cursorLine = line(".")
-    let cursorColumn = col(".")
-
-    " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    " Strip trailing whitespaces.
-
-    %s/\s\+$//e
-
-    " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    " Restore previous search history and cursor position.
-
-    let @/ = searchHistory
-    call cursor(cursorLine, cursorColumn)
-
-    :nohl
-endfunction
-
-nnoremap ,w :call <SID>StripTrailingWhitespaces()<CR>
+" nnoremap ,w :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <silent> ,w :call mappings#leader#zap()<CR>
 
 " ----------------------------------------------------------------------
 " | Automatic Commands                                                 |
@@ -534,9 +544,9 @@ vnoremap <leader>r :<c-u>%s/\V<c-r>=autocmds#escape_pattern(autocmds#get_visual_
 
 " Toggle NERDTree.
 
-nnoremap <leader>n :NERDTreeToggle<CR>
+" nnoremap <leader>n :NERDTreeToggle<CR>
 
-nnoremap <leader>m :NERDTreeFind<CR>zz
+" nnoremap <leader>m :NERDTreeFind<CR>zz
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -601,25 +611,25 @@ let g:airline_skip_empty_sections = 1
 
 if has('nvim')
   " Use deoplete.
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#auto_complete_start_length = 2
+  " let g:deoplete#enable_at_startup = 1
+  " let g:deoplete#enable_smart_case = 1
+  " let g:deoplete#auto_complete_start_length = 2
 
   if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
+    " let g:deoplete#omni#input_patterns = {}
   endif
 
   if !exists('g:deoplete#sources')
-    let g:deoplete#sources = {}
+    " let g:deoplete#sources = {}
   endif
 
   " let g:deoplete#sources._ = ['buffer', 'tag']
 
   " Scala
-  let g:deoplete#sources.scala = ['omni']
-  let g:deoplete#omni#input_patterns.scala = ['[^. *\t0-9]\.\w*',': [A-Z]\w', '[\[\t\( ][A-Za-z]\w*']
+  " let g:deoplete#sources.scala = ['omni']
+  " let g:deoplete#omni#input_patterns.scala = ['[^. *\t0-9]\.\w*',': [A-Z]\w', '[\[\t\( ][A-Za-z]\w*']
 
-  let deoplete#tag#cache_limit_size = 2000000
+  " let deoplete#tag#cache_limit_size = 2000000
 endif
 
 set showtabline=0
@@ -718,6 +728,8 @@ function! s:SetColorScheme()
   highlight! link Search VisualNOS
   highlight! link IncSearch VisualNOS
 
+  " highlight! link QuickFixLine PmenuSel
+
   let &t_ZH="^[[3m"
   let &t_ZR="^[[23m"
 
@@ -808,43 +820,12 @@ nnoremap g<c-]> <c-]>
 " Open tag for word under cursor in a new vsplit
 map <c-\> :vsp<CR>:exec("tag ".expand("<cword>"))<CR>
 
-let g:AmsaykColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf']
-let g:AmsaykCursorlineBlacklist = ['ctrlp']
-let g:AmsaykMkviewFiletypeBlacklist = ['diff', 'gitcommit']
-
 if has('autocmd')
   augroup AmsaykAutocmds
     autocmd!
 
     " Disable paste mode on leaving insert mode.
     autocmd InsertLeave * set nopaste
-
-    function! s:should_colorcolumn() abort
-      return index(g:AmsaykColorColumnBlacklist, &filetype) == -1
-    endfunction
-
-    function! s:should_cursorline() abort
-      return index(g:AmsaykCursorlineBlacklist, &filetype) == -1
-    endfunction
-
-    " Loosely based on: http://vim.wikia.com/wiki/Make_views_automatic
-    function! s:should_mkview() abort
-      return
-            \ &buftype == '' &&
-            \ index(g:AmsaykMkviewFiletypeBlacklist, &filetype) == -1 &&
-            \ !exists('$SUDO_USER') " Don't create root-owned files.
-    endfunction
-
-    function! s:mkview() abort
-      if exists('*haslocaldir') && haslocaldir()
-        " We never want to save an :lcd command, so hack around it...
-        cd -
-        mkview
-        lcd -
-      else
-        mkview
-      endif
-    endfunction
 
     autocmd VimResized * execute "normal! \<c-w>="
 
@@ -855,20 +836,25 @@ if has('autocmd')
     " Make current window more obvious by turning off/adjusting some features in non-current
     " windows.
     if exists('+colorcolumn')
-      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if s:should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
-      autocmd FocusLost,WinLeave * if s:should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
+      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
+      autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
     endif
 
-    autocmd InsertLeave,VimEnter,WinEnter * if s:should_cursorline() | setlocal cursorline | endif
-    autocmd InsertEnter,WinLeave * if s:should_cursorline() | setlocal nocursorline | endif
+    if exists('*matchaddpos')
+      autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
+      autocmd FocusLost,WinLeave * call autocmds#blur_window()
+    endif
+
+    autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
+    autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
 
     if has('mksession')
       " Save/restore folds and cursor position.
-      autocmd BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if s:should_mkview() | call s:mkview() | endif
+      autocmd BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if autocmds#should_mkview() | call autocmds#mkview() | endif
       if has('folding')
-        autocmd BufWinEnter ?* if s:should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
+        autocmd BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
       else
-        autocmd BufWinEnter ?* if s:should_mkview() | silent! loadview | endif
+        autocmd BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | endif
       endif
     elseif has('folding')
       " Like the autocmd described in `:h last-position-jump` but we add `:foldopen!`.
@@ -1178,8 +1164,8 @@ if executable("rg")
   let g:ackprg = 'rg --vimgrep --smart-case'
   cnoreabbrev ag Ack!
 
-  " set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
-  " set grepformat=%f:%l:%c:%m
+  set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
+  set grepformat=%f:%l:%c:%m
 
   " rg is fast enough that CtrlP doesn't need to cache
   " let g:ctrlp_use_caching = 0
@@ -1198,8 +1184,8 @@ elseif executable("ag")
   "       \ --ignore vendor
   "       \ -g ""'
 
-  " let g:ackprg = 'ag --vimgrep --smart-case'
-  " cnoreabbrev ag Ack!
+  let g:ackprg = 'ag --vimgrep --smart-case'
+  cnoreabbrev ag Ack!
 
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
@@ -1237,19 +1223,19 @@ endfunc
 
 let g:far#auto_preview = 1
 
-if executable("rg")
-  if has('nvim')
-    let g:far#source = 'rgnvim'
-  else
-    let g:far#source = 'rg'
-  endif
-elseif executable("ag")
-  if has('nvim')
-    let g:far#source = 'agnvim'
-  else
-    let g:far#source = 'ag'
-  endif
-endif
+" if executable("rg")
+"   if has('nvim')
+"     let g:far#source = 'rgnvim'
+"   else
+"     let g:far#source = 'rg'
+"   endif
+" elseif executable("ag")
+"   if has('nvim')
+"     let g:far#source = 'agnvim'
+"   else
+"     let g:far#source = 'ag'
+"   endif
+" endif
 
 " Ctrl-o: Go back in the jumplist, also realign the screen
 nnoremap <c-o> <c-o>zzzv
@@ -1563,7 +1549,7 @@ else " terminal vim
 endif
 
 " Targets
-let g:targets_nlNL = 'nN  '
+" let g:targets_nlNL = 'nN  '
 
 " Scratch
 " let g:scratch_no_mappings = 1
@@ -1622,12 +1608,12 @@ inoremap <C-U> <C-G>u<C-U>
 " close last open tag
 imap ,/ </<C-x><C-o>
 
-" Add empty line
-map ✠ <c-Enter>
-map <C-Enter> ]<Space>
+" " Add empty line
+" map ✠ <c-Enter>
+" map <C-Enter> ]<Space>
 
-map ¥ <C-S-Enter>
-map <C-S-Enter> [<Space>
+" map ¥ <C-S-Enter>
+" map <C-S-Enter> [<Space>
 
 " Duplicate line
 nn <leader>D "xyy"xp
@@ -1766,6 +1752,18 @@ let g:rustfmt_autosave = 1
 " omap aL  <Plug>(textobj-line-a)
 " xmap iL  <Plug>(textobj-line-i)
 " omap iL  <Plug>(textobj-line-i)
+
+" <Leader>zz -- Zap trailing whitespace in the current buffer.
+"
+"        As this one is somewhat destructive and relatively close to the
+"        oft-used <leader>a mapping, make this one a double key-stroke.
+" nnoremap <silent> <leader>zz :call mappings#leader#zap()<CR>
+
+" Stop annoying paren match highlighting from flashing all over the screen,
+" or start it.
+"
+" (mnemonic: [m]atch paren)
+nnoremap <silent> <leader>m :call mappings#leader#matchparen()<CR>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

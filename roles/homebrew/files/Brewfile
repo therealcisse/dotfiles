@@ -29,7 +29,8 @@ cask 'android-platform-tools'
 cask 'android-sdk'
 cask 'androidtool'
 
-brew 'coursier'
+brew 'n'
+brew 'paulp/extras/coursier'
 brew 'docker-compose', service_restart: true
 brew 'docker'
 brew 'findutils', args: ["--with-default-names"]
@@ -173,7 +174,7 @@ brew 'terminal-notifier'
 brew 'the_silver_searcher'
 brew 'ripgrep'
 brew 'tig'
-brew 'tmux', args: ['HEAD']
+brew 'tmux'
 brew 'unar'
 brew 'v8'
 # brew 'valgrind'
