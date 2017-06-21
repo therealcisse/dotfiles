@@ -527,7 +527,7 @@ if has('autocmd')
     " the file type is not in the excluded list.
 
     autocmd!
-    autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :call s:StripTrailingWhitespaces()
+    autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :call mappings#leader#zap()
 
   augroup END
 
@@ -561,9 +561,13 @@ set hidden
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-set highlight+=@:ColorColumn          " ~/@ at end of window, 'showbreak'
-set highlight+=N:DiffText             " make current line number stand out a little
-set highlight+=c:LineNr               " blend vertical separators with line numbers
+try
+  set highlight+=@:ColorColumn          " ~/@ at end of window, 'showbreak'
+  set highlight+=N:DiffText             " make current line number stand out a little
+  set highlight+=c:LineNr               " blend vertical separators with line numbers
+catch
+
+endtry
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

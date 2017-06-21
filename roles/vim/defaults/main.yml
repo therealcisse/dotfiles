@@ -21,10 +21,20 @@ neovim_config_dir: "{{ xdg_config_home }}/nvim"
 #   - pip
 pip2_name: "{{ default_pip2_name }}"
 
+python2_packages_to_install:
+  - neovim
+
 # Executable name for python3 pip
 # default:
 #   - pip3
 pip3_name: "{{ default_pip3_name }}"
+
+python3_packages_to_install:
+  - neovim
+  - jedi
+  - mistune
+  - psutil
+  - setproctitle
 
 spellfile: '{{ ansible_env.PWD }}/roles/dotfiles/files/.vim/spell/en.utf-8.add'
 

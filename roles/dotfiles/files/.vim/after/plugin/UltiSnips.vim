@@ -6,9 +6,9 @@ let g:UltiSnipsListSnippets = '<c-.>'
 " Open in vertical split
 let g:UltiSnipsEditSplit    = 'vertical'
 
-let g:UltiSnipsExpandTrigger    = "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger = "<Tab>"
-let g:UltiSnipsJumpBackwardTrigger  = "<S-Tab>"
+" let g:UltiSnipsExpandTrigger    = "<Plug>(ultisnips_expand)"
+" let g:UltiSnipsJumpForwardTrigger = "<Tab>"
+" let g:UltiSnipsJumpBackwardTrigger  = "<S-Tab>"
 
 " Prevent UltiSnips from removing our carefully-crafted mappings.
 let g:UltiSnipsMappingsToIgnore = ['autocomplete']

@@ -26,10 +26,10 @@
 
 - block:
    - name: pip2 | neovim
-     pip: name=neovim executable={{ pip2_name }} state={{ neovim_install_state }}
+     pip: name="{{ python2_packages_to_install | join(' ') }}" executable={{ pip2_name }} state={{ neovim_install_state }} extra_args="--upgrade"
 
    - name: pip3 | neovim
-     pip: name=neovim executable={{ pip3_name }} state={{ neovim_install_state }}
+     pip: name="{{ python3_packages_to_install | join(' ') }}" executable={{ pip3_name }} state={{ neovim_install_state }} extra_args="--user --upgrade"
   ignore_errors: yes # these packages are not very essential and they are error prone
   tags:
     - install
