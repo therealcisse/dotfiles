@@ -6,10 +6,6 @@ let g:UltiSnipsListSnippets = '<c-.>'
 " Open in vertical split
 let g:UltiSnipsEditSplit    = 'vertical'
 
-" let g:UltiSnipsExpandTrigger    = "<Plug>(ultisnips_expand)"
-" let g:UltiSnipsJumpForwardTrigger = "<Tab>"
-" let g:UltiSnipsJumpBackwardTrigger  = "<S-Tab>"
-
 " Prevent UltiSnips from removing our carefully-crafted mappings.
 let g:UltiSnipsMappingsToIgnore = ['autocomplete']
 
@@ -59,6 +55,20 @@ function ExpandSnippetOrCarriageReturn()
 endfunction
 
 imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "<Plug>delimitMateCR"
+
+" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"
+" func! s:ultisnip()
+"   let g:UltiSnipsExpandTrigger            = "<Tab>"
+"   let g:UltiSnipsJumpForwardTrigger       = "<Tab>"
+"   let g:UltiSnipsJumpBackwardTrigger      = "<S-Tab>"
+"   let g:UltiSnipsRemoveSelectModeMappings = 0
+"
+"   " optional
+"   inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("<Tab>")<cr>
+" endfunc
+
+" call s:ultisnip()
 
 let g:UltiSnipsSnippetsDir = $HOME . '/.config/nvim/ultisnips'
 let g:UltiSnipsSnippetDirectories = [

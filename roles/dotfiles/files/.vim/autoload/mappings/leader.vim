@@ -19,3 +19,13 @@ function! mappings#leader#zap() abort
   call setpos('.', l:pos)
 endfunction
 
+" Zap trailing whitespace.
+function! mappings#leader#format() abort
+  let l:pos=getcurpos()
+  let l:search=@/
+  keepjumps :normal =ae
+  let @/=l:search
+  nohlsearch
+  call setpos('.', l:pos)
+endfunction
+

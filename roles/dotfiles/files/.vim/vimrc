@@ -12,6 +12,8 @@ let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 let g:loaded_matchparen=1
 
 call plug#begin('~/.vim/plugged')
+  Plug 'Chiel92/vim-autoformat'
+
   Plug 'itchyny/vim-parenmatch'
 
   Plug 'vim-scripts/gitignore'
@@ -43,7 +45,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'henrik/git-grep-vim', { 'on': [ 'GitGrep' ] }
   " Plug 'henrik/vim-qargs', { 'on': [ 'Qargs', 'Qdo' ] }
 
-  Plug 'henrik/vim-open-url'
+  Plug 'henrik/vim-open-url' " gx
 
   " Plug 'editorconfig/editorconfig-vim'
   " Plug 'ctrlpvim/ctrlp.vim'
@@ -58,10 +60,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
-  " Plug  'neomake/neomake'
+  " Plug 'neomake/neomake'
   Plug 'SirVer/ultisnips'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
+  Plug 'junegunn/gv.vim'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
   " Plug 'kshenoy/vim-signature'    "show marks
@@ -71,7 +74,10 @@ call plug#begin('~/.vim/plugged')
   if has('nvim')
     " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'roxma/nvim-completion-manager'
-    Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+    " Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+
+    Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/echodoc.vim'
   endif
 
   " Plug 'duggiefresh/vim-easydir'
@@ -151,10 +157,6 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'tommcdo/vim-exchange'
 
-  " Plug 'terryma/vim-multiple-cursors'
-
-  " Plug 'valloric/wMatchTagAlways', { 'for': ['html', 'javascript.jsx'] }
-
   " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 
   " Distraction free writing in vim
@@ -167,6 +169,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'justinmk/vim-dirvish'
 
   Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] }
+
+  Plug 'roxma/vim-paste-easy'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -191,8 +195,17 @@ if has('termguicolors')
   set termguicolors
 endif
 
+if has('termguicolors')
+  " Don't need this in xterm-256color, but do need it inside tmux.
+  " (See `:h xterm-true-color`.)
+  if &term =~# 'tmux-256color'
+    let &t_8f="\e[38;2;%ld;%ld;%ldm"
+    let &t_8b="\e[48;2;%ld;%ld;%ldm"
+  endif
+endif
+
 " Live substitution
-if has('nvim')
+if exists('&inccommand')
   set inccommand=split
 endif
 
@@ -221,12 +234,12 @@ if !has('nvim')
   set backspace=indent,eol,start  " Makes backspace key more powerful.
   set incsearch                   " Shows the match while typing
   set hlsearch                    " Highlight found searches
-  set mouse=a
-  if has('mouse_sgr')
-    set ttymouse=sgr
-  else
-    set ttymouse=xterm2
-  endif
+  " set mouse=a
+  " if has('mouse_sgr')
+  "   set ttymouse=sgr
+  " else
+  "   set ttymouse=xterm2
+  " endif
 endif
 
 if exists('$SUDO_USER')
@@ -272,7 +285,7 @@ else
   set directory=~/.vim/tmp/swap//  " Set directory for swap files.
 endif
 
-set history=5000               " Increase command line history.
+set history=1000               " Increase command line history.
 set noignorecase                 " Don't ignore case in search patterns.
 
 set incsearch                  " Highlight search pattern
@@ -360,7 +373,10 @@ set shortmess+=t                 " truncate file messages at start
 
 " don't give |ins-completion-menu| messages.  For example,
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
-set shortmess+=c
+try
+  set shortmess+=c
+catch
+endtry
 
 if has('showcmd')
   set showcmd                    " Show the command being typed.
@@ -647,15 +663,15 @@ set showtabline=0
 "
 " function! Lint()
 "   if &filetype =~ 'javascript'
-"     Neomake eslint
+"     AsyncRun Neomake eslint
 "   else
-"     Neomake
+"     AsyncRun Neomake
 "   end
 " endfunction
 "
 " augroup lint_events
 "   autocmd!
-"   autocmd BufWritePost,BufEnter,FocusLost * call Lint()
+"   autocmd BufWritePost,BufEnter,FocusLost *.js call Lint()
 " augroup end
 
 " For conceal markers.
@@ -790,7 +806,7 @@ cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
 cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Align current paragraph
-nmap <leader>f =ae``zz
+nmap <leader>f :call mappings#leader#format()<CR>
 vmap <leader>f =
 
 " Kill double quotes
@@ -813,7 +829,7 @@ let g:elm_setup_keybindings = 0
 " Ctags                 {{{
 """""""""""""""""""""""
 
-nn <leader>tg :!git ctags<CR><CR>
+nn <leader>tg :AsyncRun git ctags<CR>
 
 set tags+=.git/tags
 
@@ -824,12 +840,19 @@ nnoremap g<c-]> <c-]>
 " Open tag for word under cursor in a new vsplit
 map <c-\> :vsp<CR>:exec("tag ".expand("<cword>"))<CR>
 
+augroup my_dirvish_events
+  autocmd!
+
+  " Enable :Gstatus and friends.
+  autocmd FileType dirvish call fugitive#detect(@%)
+augroup END
+
 if has('autocmd')
   augroup AmsaykAutocmds
     autocmd!
 
     " Disable paste mode on leaving insert mode.
-    autocmd InsertLeave * set nopaste
+    " autocmd InsertLeave * set nopaste
 
     autocmd VimResized * execute "normal! \<c-w>="
 
@@ -845,8 +868,8 @@ if has('autocmd')
     endif
 
     if exists('*matchaddpos')
-      autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
-      autocmd FocusLost,WinLeave * call autocmds#blur_window()
+      " autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
+      " autocmd FocusLost,WinLeave * call autocmds#blur_window()
     endif
 
     autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
@@ -897,8 +920,6 @@ cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>?<C-
 
 " Neovim enhancements
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
 " Store relative line number jumps in the jumplist if they exceed a threshold.
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
@@ -907,6 +928,9 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
 nnoremap j gj
 nnoremap k gk
+
+nnoremap gj j
+nnoremap gk k
 
 nnoremap ; :
 vnoremap ; :
@@ -941,7 +965,8 @@ vnoremap <BS> "_xi
 
 " gf
 
-set suffixesadd+=.js
+set suffixesadd=.js
+set suffixesadd=.ts
 set suffixesadd+=.json
 
 if isdirectory(expand($PWD.'/node_modules'))
@@ -954,7 +979,8 @@ endif
 
 set shell=/bin/sh
 
-set updatetime=250
+set updatecount=80                    " update swapfiles every 80 typed chars
+set updatetime=2000                   " same as YCM
 
 " ==================== delimitMate ====================
 let g:delimitMate_expand_cr = 1
@@ -968,6 +994,9 @@ augroup DelimitMate
   au FileType vim,html,javascript,javascript.jsx,java,scala,rust,nim,ruby,sh let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
 augroup END
 
+if exists('&swapsync')
+  set swapsync=                       " let OS sync swapfiles lazily
+endif
 set switchbuf=usetab
 
 set whichwrap=b,h,l,s,<,>,[,],~     " Allow <BS>/h/l/<Right>/<Space> to move cross line boundaries
@@ -984,6 +1013,7 @@ if has('viminfo')
   if exists('$SUDO_USER')
     set viminfo=                      " don't create root-owned files
   else
+    set viminfo='100,\"50             " read/write a .viminfo file, don't store more than 50 lines of registers
     if isdirectory(expand('~/.vim/tmp/info'))
       set viminfo+=n~/.vim/tmp/info/viminfo
     endif
@@ -1070,9 +1100,6 @@ if has('virtualedit')
   set virtualedit=block            " Allow cursor to be anywhere.
 endif
 
-" Make vaa select the entire file...
-vmap aa VGo1G
-
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
@@ -1083,22 +1110,21 @@ endif
 
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
+" Execute normal cmds multiple times
+command -count=1 -nargs=+ Normal for i in range(1,<count>) | exe 'normal ' . <q-args> | endfor
+
 " Resize split easily
 augroup ArrowKeys
   autocmd!
 
   function! s:ToggleArrowKeys() abort
-    nnoremap <silent> <c-up>    :exe "resize " . (winheight(0) * 3/2)<CR>
-    nnoremap <silent> <c-down>  :exe "resize " . (winheight(0) * 2/3)<CR>
+    nnoremap <buffer> <silent> <a-up>    :exe "wincmd +"<CR>
+    nnoremap <buffer> <silent> <a-down>  :exe "wincmd -"<CR>
 
-    nnoremap <silent> <c-right> :exe "vertical resize +5"<CR>
-    nnoremap <silent> <c-left>  :exe "vertical resize -5"<CR>
+    nnoremap <buffer> <silent> <a-right> :exe "wincmd <"<CR>
+    nnoremap <buffer> <silent> <a-left>  :exe "wincmd >"<CR>
 
-    inoremap <silent> <c-up>    <c-o>:exe "resize " . (winheight(0) * 3/2)<CR>
-    inoremap <silent> <c-down>  <c-o>:exe "resize " . (winheight(0) * 2/3)<CR>
-
-    inoremap <silent> <c-right> <c-o>:exe "vertical resize +5"<CR>
-    inoremap <silent> <c-left>  <c-o>:exe "vertical resize -5"<CR>
+    nn <buffer> <leader>= :execute "wincmd ="<CR>
   endfunction
 
   autocmd BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
@@ -1202,24 +1228,24 @@ endif
 
 " noremap <leader>b :CtrlPBuffer<CR>
 
-let g:ctrlp_extensions = ['tag']
+" let g:ctrlp_extensions = ['tag']
 
-let g:ctrlp_match_window  = 'bottom,order:btt,min:1,max:50,results:50'
-let g:ctrlp_mruf_relative = 1
-let g:ctrlp_mruf_max      = 10
-let g:ctrlp_reuse_window  = 'NERD_tree'
-let g:ctrlp_max_files     = 0
+" let g:ctrlp_match_window  = 'bottom,order:btt,min:1,max:50,results:50'
+" let g:ctrlp_mruf_relative = 1
+" let g:ctrlp_mruf_max      = 10
+" let g:ctrlp_reuse_window  = 'NERD_tree'
+" let g:ctrlp_max_files     = 0
 
-let g:ctrlp_cmd = 'call CallCtrlP()'
+" let g:ctrlp_cmd = 'call CallCtrlP()'
 
-func! CallCtrlP()
-  if exists('s:called_ctrlp')
-    CtrlPLastMode
-  else
-    let s:called_ctrlp = 1
-    CtrlP
-  endif
-endfunc
+" func! CallCtrlP()
+"   if exists('s:called_ctrlp')
+"     CtrlPLastMode
+"   else
+"     let s:called_ctrlp = 1
+"     CtrlP
+"   endif
+" endfunc
 
 " ----------------------------------------------------------------------
 " | FAR                                                                |
@@ -1294,8 +1320,8 @@ let g:startify_session_autoload     = 0
 let g:startify_session_persistence  = 0
 
 " Buffer list navigation
-nn J :bp<CR>
-nn K :bn<CR>
+" nn J :bp<CR>
+" nn K :bn<CR>
 
 " Join lines with M
 nn M J
@@ -1431,27 +1457,27 @@ let g:SignatureMarkTextHLDynamic = 1
 " NERDTree
 " ----------------------------------------------------------------------------
 
-let g:NERDTreeMapMenu='M'
-
-let NERDTreeShowLineNumbers=0
-
-" let NERDTreeIgnore=['dist/*', 'out', 'logs', '.DS_Store', '.git', '.idea', '.tags', '\~$']
-
-let NERDTreeShowHidden=1
-
-let NERDTreeRespectWildIgnore=1
-
-" Disable display of '?' text and 'Bookmarks' label.
-let g:NERDTreeMinimalUI=1
-
-" The default of 31 is just a little too narrow.
-let g:NERDTreeWinSize=40
-
-" Single-click to toggle directory nodes, double-click to open non-directory
-" nodes.
-let g:NERDTreeMouseMode=2
-
-let NERDTreeHijackNetrw=1
+" let g:NERDTreeMapMenu='M'
+"
+" let NERDTreeShowLineNumbers=0
+"
+" " let NERDTreeIgnore=['dist/*', 'out', 'logs', '.DS_Store', '.git', '.idea', '.tags', '\~$']
+"
+" let NERDTreeShowHidden=1
+"
+" let NERDTreeRespectWildIgnore=1
+"
+" " Disable display of '?' text and 'Bookmarks' label.
+" let g:NERDTreeMinimalUI=1
+"
+" " The default of 31 is just a little too narrow.
+" let g:NERDTreeWinSize=40
+"
+" " Single-click to toggle directory nodes, double-click to open non-directory
+" " nodes.
+" let g:NERDTreeMouseMode=2
+"
+" let NERDTreeHijackNetrw=1
 
 
 " let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -1461,27 +1487,27 @@ let NERDTreeHijackNetrw=1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 let g:WebDevIconsNerdTreeGitPluginForceVAlign=0
 
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:WebDevIconsOS = 'Darwin'
 
 " let g:NERDTreeDirArrowExpandable = '›'
 " let g:NERDTreeDirArrowCollapsible = '⌄'
 
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-
-let g:NERDTreeGitStatusNodeColorization = 1
-let g:NERDTreeGitStatusWithFlags = 0
-
-" let g:NERDTreeFileExtensionHighlightFullName = 1
-
-" Let <Leader><Leader> (^#) return from NERDTree window.
-let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
-
-let g:webdevicons_conceal_nerdtree_brackets = 1
-
-let g:webdevicons_enable_nerdtree = 1
+" let g:NERDTreeDirArrowExpandable = '▸'
+" let g:NERDTreeDirArrowCollapsible = '▾'
+"
+" let g:NERDTreeGitStatusNodeColorization = 1
+" let g:NERDTreeGitStatusWithFlags = 0
+"
+" " let g:NERDTreeFileExtensionHighlightFullName = 1
+"
+" " Let <Leader><Leader> (^#) return from NERDTree window.
+" let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
+"
+" let g:webdevicons_conceal_nerdtree_brackets = 1
+"
+" let g:webdevicons_enable_nerdtree = 1
 
 " Tweaks for browsing
 let g:netrw_banner = 0
@@ -1493,12 +1519,12 @@ let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
 
 nnoremap <silent> <c-n>e :Explore<cr>
 
-if has('autocmd')
-  augroup AmsaykNERDTree
-    autocmd!
-    autocmd User NERDTreeInit call autocmds#attempt_select_last_file()
-  augroup END
-endif
+" if has('autocmd')
+"   augroup AmsaykNERDTree
+"     autocmd!
+"     autocmd User NERDTreeInit call autocmds#attempt_select_last_file()
+"   augroup END
+" endif
 
 " Stylefmt
 nnoremap <silent> ,f :Stylefmt<CR>
@@ -1552,9 +1578,6 @@ else " terminal vim
   let g:qs_second_occurrence_highlight_bgcolor = 205
 endif
 
-" Targets
-" let g:targets_nlNL = 'nN  '
-
 " Scratch
 " let g:scratch_no_mappings = 1
 
@@ -1567,16 +1590,6 @@ if exists('$SUDO_USER')
 else
   " let g:scratch_persistence_file = '~/.vim/tmp/backup/scratch.txt'
 endif
-
-" Multiple cursors
-" let g:multi_cursor_use_default_mapping = 0
-
-" Default mapping
-" let g:multi_cursor_start_key = '<leader>d'
-" let g:multi_cursor_next_key  = 'n'
-" let g:multi_cursor_prev_key  = 'N'
-" let g:multi_cursor_skip_key  = 'x'
-" let g:multi_cursor_quit_key  = '<Esc>'
 
 " Ctrl click and drag for visual block mode
 noremap <S-LeftMouse> <4-LeftMouse>
@@ -1607,17 +1620,10 @@ cnoremap $d <CR>:d<CR>``
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
+" inoremap <C-U> <C-G>u<C-U>
 
 " close last open tag
 imap ,/ </<C-x><C-o>
-
-" " Add empty line
-" map ✠ <c-Enter>
-" map <C-Enter> ]<Space>
-
-" map ¥ <C-S-Enter>
-" map <C-S-Enter> [<Space>
 
 " Duplicate line
 nn <leader>D "xyy"xp
@@ -1691,10 +1697,10 @@ inoremap <Up> :echoe "Use k"<CR>
 inoremap <Down> :echoe "Use j"<CR>
 
 " last typed word to lower case
-inoremap <C-w>u <esc>guawA
+" inoremap <C-w>u <esc>guawA
 
 " last typed word to UPPER CASE
-inoremap <C-w>U <esc>gUawA
+inoremap <C-g>~ <esc>gUawA
 
 " entire line to lower case
 inoremap <C-g>u <esc>guuA
@@ -1703,7 +1709,7 @@ inoremap <C-g>u <esc>guuA
 inoremap <C-g>U <esc>gUUA
 
 " last word to title case
-inoremap <C-w>t <esc>bvgU<esc>A
+" inoremap <C-w>t <esc>bvgU<esc>A
 
 " current line to title case
 inoremap <C-g>t <esc>:s/\v<(.)(\w*)/\u\1\L\2/g<cr>A
@@ -1713,8 +1719,8 @@ inoremap <C-g>t <esc>:s/\v<(.)(\w*)/\u\1\L\2/g<cr>A
 " =====================================
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-autocmd VimEnter * command! -bang -nargs=* Ag
-    \ call fzf#vim#ag(<q-args>, {'down': '40%', 'options': '--no-color'})
+" autocmd VimEnter * command! -bang -nargs=* Ag
+"     \ call fzf#vim#ag(<q-args>, {'down': '40%', 'options': '--no-color'})
 
 " set fzf's default input to AG instead of find. This also removes gitignore etc
 " let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
@@ -1735,39 +1741,115 @@ nnoremap <leader>M :Marks<CR>
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
+inoremap <c-c> <ESC>
+
 " Insert Mode:
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-nn <c-s>m :set mouse=a<CR>
-
-" Erase word in insert mode
-imap <C-BS> <ESC>diwa
-
 " Format rust code after save
 let g:rustfmt_autosave = 1
 
-" Change line text object
-" let g:textobj_line_no_default_key_mappings = 1
+" NVIM completion manager
 
-" xmap aL  <Plug>(textobj-line-a)
-" omap aL  <Plug>(textobj-line-a)
-" xmap iL  <Plug>(textobj-line-i)
-" omap iL  <Plug>(textobj-line-i)
+imap <c-g>r <Plug>(cm_force_refresh)
 
-" <Leader>zz -- Zap trailing whitespace in the current buffer.
-"
-"        As this one is somewhat destructive and relatively close to the
-"        oft-used <leader>a mapping, make this one a double key-stroke.
-" nnoremap <silent> <leader>zz :call mappings#leader#zap()<CR>
+" use this to add airline plugin if airline rtp load is disabled
+let g:airline#extensions#cm_call_signature#enabled = 1
 
-" Stop annoying paren match highlighting from flashing all over the screen,
-" or start it.
-"
-" (mnemonic: [m]atch paren)
-nnoremap <silent> <leader>m :call mappings#leader#matchparen()<CR>
+" let g:cm_sources_override = {
+"     \ 'cm-tags': {'enable':0}
+"     \ }
+
+" Language server
+
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" Auto format
+
+noremap <F3> :Autoformat<CR>
+
+let g:formatdef_rustfmt = '"rustfmt"'
+let g:formatters_rust = ['rustfmt']
+let g:formatdef_scalafmt = '"scalafmt"'
+let g:formatters_scala = ['scalafmt']
+
+if has('gui')
+  set guioptions-=m  "remove menu bar
+  set guioptions-=T  "remove toolbar
+  set guioptions-=r  "remove right-hand scroll bar
+  set guioptions-=L  "remove left-hand scroll bar
+endif
+
+" Don't wake up system with blinking cursor:
+" http://www.linuxpowertop.org/known.php
+let &guicursor = &guicursor . ",a:blinkon0"
+
+" no mouse interaction, mouse is evil
+set mouse=
+
+" A black background would be better for remote terminal
+" due to the low FPS
+hi Normal ctermbg=none
+
+if exists('##TextYankPost')
+  augroup globalYank
+    autocmd!
+    autocmd TextYankPost * :Clip
+  augroup END
+endif
+
+let g:paste_char_threshold = 3
+
+call tweak#enhance_jumps#init()
+nnoremap <silent> g<c-o> :call tweak#enhance_jumps#buffer_c_o()<CR>
+" nnoremap <silent> g<F6> :call tweak#enhance_jumps#buffer_c_i()<CR>
+
+" the m key is taken by easymotion
+" noremap - m
+" ` is more precise than '
+noremap ' `
+
+" do not override the register after paste in select mode
+xnoremap <expr> p 'pgv"'.v:register.'y`>
+
+if has('nvim')
+  set shada='100"50
+endif
+
+" like emacs mode shell command editing
+inoremap <C-E> <C-o>$
+inoremap <C-Q> <C-o>^
+inoremap <C-B> <left>
+inoremap <C-F> <right>
+inoremap <C-D> <Delete>
+
+" command line editing
+cnoremap <C-A>      <Home>
+cnoremap <C-B>      <Left>
+cnoremap <C-D>      <Delete>
+" <C-F>  is also used for open  normal command-line editing. So if the
+" cursor is at the end of the command-line, open normal command-line
+" editing, otherwise move the cursor one character right.
+cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":") ?  "\<Right>" : "\<C-F>"
+" already well mapped by default:
+" <C-P> <Up>
+" <C-N> <Down>
+" <C-E> <End>
+
+" not working?
+snoremap <BS> <BS>i
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
