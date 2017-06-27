@@ -2,3 +2,5 @@
 
 .DS_Store
 /roles/ssh/files/ssh_config
+
+/roles/dotfiles/files/.vim/tmp/viminfo

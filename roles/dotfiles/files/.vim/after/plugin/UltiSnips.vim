@@ -24,6 +24,21 @@ function! g:UltiSnips_Complete()
   return ""
 endfunction
 
+function! g:UltiSnips_CR()
+  if pumvisible()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+      return "\<C-Y>"
+    else
+      call UltiSnips#JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<CR>"
+      endif
+    endif
+  endif
+  return "\<CR>"
+endfunction
+
 function! g:UltiSnips_Reverse()
   call UltiSnips#JumpBackwards()
   if g:ulti_jump_backwards_res == 0
@@ -54,7 +69,12 @@ function ExpandSnippetOrCarriageReturn()
   endif
 endfunction
 
-imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "<Plug>delimitMateCR"
+imap <expr> <CR> delimitMate#WithinEmptyPair() ?
+      \ "<Plug>delimitMateCR" :
+      \ "<C-R>=g:UltiSnips_CR()<CR>"
+
+" imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "<Plug>delimitMateCR"
+" imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
 " inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 "

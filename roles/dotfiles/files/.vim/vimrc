@@ -59,6 +59,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'othree/html5.vim'
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
+  " Plug 'jiangmiao/auto-pairs'
   Plug 'airblade/vim-gitgutter'
   " Plug 'neomake/neomake'
   Plug 'SirVer/ultisnips'
@@ -171,6 +172,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] }
 
   Plug 'roxma/vim-paste-easy'
+
+  Plug 'roxma/vim-window-resize-easy'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -605,8 +608,8 @@ set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION M
 set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 
-set completeopt-=preview    " Don't show preview window during completion.
-set complete-=i
+" set completeopt-=preview    " Don't show preview window during completion.
+" set complete-=i
 
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop
 
@@ -854,7 +857,7 @@ if has('autocmd')
     " Disable paste mode on leaving insert mode.
     " autocmd InsertLeave * set nopaste
 
-    autocmd VimResized * execute "normal! \<c-w>="
+    autocmd VimResized * wincmd =
 
     " http://vim.wikia.com/wiki/Detect_window_creation_with_WinEnter
     autocmd VimEnter * autocmd WinEnter * let w:created=1
@@ -988,11 +991,35 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_smart_quotes = 1
 let g:delimitMate_expand_inside_quotes = 0
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
+let g:delimitMate_excluded_ft = 'mail,txt'
 
 augroup DelimitMate
   autocmd!
-  au FileType vim,html,javascript,javascript.jsx,java,scala,rust,nim,ruby,sh let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+  au FileType html,javascript.jsx,scala,vim let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+  au FileType python,scala let b:delimitMate_nesting_quotes = ['"']
+  au FileType javascript,javascript.jsx let b:delimitMate_nesting_quotes = ['`']
+
+  func! s:delimitMate_map() abort
+    imap <buffer><expr> <C-Tab> delimitMate#JumpAny()
+  endfunc
+
+  func! s:delimitMate_unmap()
+    silent! iunmap <buffer> <C-Tab>
+  endfunction
+
+  au User delimitMate_map call s:delimitMate_map()
+  au User delimitMate_unmap call s:delimitMate_unmap()
 augroup END
+
+" --------------------------------------------------------------------------
+" |                        Auto pairs                                      |
+" --------------------------------------------------------------------------
+
+" augroup AutoPairs
+"   autocmd!
+"   au FileType html,xml,javascript.jsx,scala let b:AutoPairsMoveCharacter = "()[]{}\"'<>"
+"   au FileType html,xml,javascript.jsx,scala let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '<':'>'}
+" augroup END
 
 if exists('&swapsync')
   set swapsync=                       " let OS sync swapfiles lazily
@@ -1013,18 +1040,19 @@ if has('viminfo')
   if exists('$SUDO_USER')
     set viminfo=                      " don't create root-owned files
   else
-    set viminfo='100,\"50             " read/write a .viminfo file, don't store more than 50 lines of registers
-    if isdirectory(expand('~/.vim/tmp/info'))
-      set viminfo+=n~/.vim/tmp/info/viminfo
+    set viminfo+=n~/.vim/tmp/viminfo
+
+    if !empty(glob('~/.vim/tmp/viminfo'))
+      if !filereadable(expand('~/.vim/tmp/viminfo'))
+        echoerr 'warning: ~/.vim/tmp/viminfo exists but is not readable'
+      endif
     endif
 
   endif
 endif
 
 if has('mksession')
-  if isdirectory(expand('~/.vim/tmp'))
-    set viewdir=~/.vim/tmp/view
-  endif
+  set viewdir=~/.vim/tmp/view
   set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)
   set sessionoptions=folds
 endif
@@ -1111,7 +1139,7 @@ endif
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 " Execute normal cmds multiple times
-command -count=1 -nargs=+ Normal for i in range(1,<count>) | exe 'normal ' . <q-args> | endfor
+command! -count=1 -nargs=+ Normal for i in range(1,<count>) | exe 'normal ' . <q-args> | endfor
 
 " Resize split easily
 augroup ArrowKeys
