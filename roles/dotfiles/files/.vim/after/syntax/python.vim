@@ -1,9 +1,9 @@
 " vim: ft=vim:fdm=marker
 
 " DESC: Disable script loading
-if g:no_pymode_syntax
-  finish
-endif
+" if g:no_pymode_syntax
+"   finish
+" endif
 
 " For version 5.x: Clear all syntax items
 if version < 600
@@ -42,28 +42,28 @@ syn keyword pythonOperator      and in is not or
 syn match pythonExtraOperator "\%([~!^&|/%+-]\|\%(class\s*\)\@<!<<\|<=>\|<=\|\%(<\|\<class\s\+\u\w*\s*\)\@<!<[^<]\@=\|===\|==\|=\~\|>>\|>=\|=\@<!>\|\.\.\.\|\.\.\|::\)"
 syn match pythonExtraPseudoOperator "\%(-=\|/=\|\*\*=\|\*=\|&&=\|&=\|&&\|||=\||=\|||\|%=\|+=\|!\~\|!=\)"
 
-if !g:pymode_syntax_print_as_function
-  syn keyword pythonStatement print
-endif
+" if !g:pymode_syntax_print_as_function
+"   syn keyword pythonStatement print
+" endif
 
-if g:pymode_syntax_highlight_async_await
+" if g:pymode_syntax_highlight_async_await
   syn keyword pythonStatement async await
   syn match pythonStatement "\<async\s\+def\>" nextgroup=pythonFunction skipwhite
   syn match pythonStatement "\<async\s\+with\>" display
   syn match pythonStatement "\<async\s\+for\>" nextgroup=pythonRepeat skipwhite
-endif
+" endif
 
-if g:pymode_syntax_highlight_equal_operator
+" if g:pymode_syntax_highlight_equal_operator
   syn match pythonExtraOperator "\%(=\)"
-endif
+" endif
 
-if g:pymode_syntax_highlight_stars_operator
+" if g:pymode_syntax_highlight_stars_operator
   syn match pythonExtraOperator "\%(\*\|\*\*\)"
-endif
+" endif
 
-if g:pymode_syntax_highlight_self
+" if g:pymode_syntax_highlight_self
   syn keyword pythonSelf self cls
-endif
+" endif
 
 " }}}
 
@@ -98,14 +98,14 @@ syn match pythonError       "[&|]\{2,}" display
 syn match pythonError       "[=]\{3,}" display
 
 " Indent errors (mix space and tabs)
-if g:pymode_syntax_indent_errors
+" if g:pymode_syntax_indent_errors
   syn match pythonIndentError "^\s*\( \t\|\t \)\s*\S"me=e-1 display
-endif
+" endif
 
 " Trailing space errors
-if g:pymode_syntax_space_errors
+" if g:pymode_syntax_space_errors
   syn match pythonSpaceError  "\s\+$" display
-endif
+" endif
 
 " }}}
 
@@ -156,35 +156,35 @@ syn match  pythonUniRawEscape   "\([^\\]\(\\\\\)*\)\@<=\\u\x\{4}" display contai
 syn match  pythonUniRawEscapeError  "\([^\\]\(\\\\\)*\)\@<=\\u\x\{,3}\X" display contained
 
 " String formatting
-if g:pymode_syntax_string_formatting
+" if g:pymode_syntax_string_formatting
   syn match pythonStrFormatting   "%\(([^)]\+)\)\=[-#0 +]*\d*\(\.\d\+\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
   syn match pythonStrFormatting   "%[-#0 +]*\(\*\|\d\+\)\=\(\.\(\*\|\d\+\)\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
-endif
+" endif
 
 " Str.format syntax
-if g:pymode_syntax_string_format
+" if g:pymode_syntax_string_format
   syn match pythonStrFormat "{{\|}}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
   syn match pythonStrFormat "{\([a-zA-Z0-9_]*\|\d\+\)\(\.[a-zA-Z_][a-zA-Z0-9_]*\|\[\(\d\+\|[^!:\}]\+\)\]\)*\(![rs]\)\=\(:\({\([a-zA-Z_][a-zA-Z0-9_]*\|\d\+\)}\|\([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*\(\.\d\+\)\=[bcdeEfFgGnoxX%]\=\)\=\)\=}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
-endif
+" endif
 
 " String templates
-if g:pymode_syntax_string_templates
+" if g:pymode_syntax_string_templates
   syn match pythonStrTemplate "\$\$" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
   syn match pythonStrTemplate "\${[a-zA-Z_][a-zA-Z0-9_]*}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
   syn match pythonStrTemplate "\$[a-zA-Z_][a-zA-Z0-9_]*" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
-endif
+" endif
 
 " DocTests
-if g:pymode_syntax_doctests
+" if g:pymode_syntax_doctests
   syn region pythonDocTest    start="^\s*>>>" end=+'''+he=s-1 end="^\s*$" contained
   syn region pythonDocTest2   start="^\s*>>>" end=+"""+he=s-1 end="^\s*$" contained
-endif
+" endif
 
 " DocStrings
-if g:pymode_syntax_docstrings
+" if g:pymode_syntax_docstrings
   syn region pythonDocstring  start=+^\s*[uU]\?[rR]\?"""+ end=+"""+ keepend excludenl contains=pythonEscape,@Spell,pythonDoctest,pythonDocTest2,pythonSpaceError
   syn region pythonDocstring  start=+^\s*[uU]\?[rR]\?'''+ end=+'''+ keepend excludenl contains=pythonEscape,@Spell,pythonDoctest,pythonDocTest2,pythonSpaceError
-endif
+" endif
 
 
 " }}}
@@ -209,20 +209,20 @@ syn match   pythonBinError  "\<0[bB][01_]*[2-9][0-9_]*[lL]\=\>" display
 " ============
 
 " Builtin objects and types
-if g:pymode_syntax_builtin_objs
+" if g:pymode_syntax_builtin_objs
   syn keyword pythonBuiltinObj True False Ellipsis None NotImplemented
   syn keyword pythonBuiltinObj __debug__ __doc__ __file__ __name__ __package__
-endif
+" endif
 
-if g:pymode_syntax_builtin_types
+" if g:pymode_syntax_builtin_types
   syn keyword pythonBuiltinType type object
   syn keyword pythonBuiltinType str basestring unicode buffer bytearray bytes chr unichr
   syn keyword pythonBuiltinType dict int long bool float complex set frozenset list tuple
   syn keyword pythonBuiltinType file super
-endif
+" endif
 
 " Builtin functions
-if g:pymode_syntax_builtin_funcs
+" if g:pymode_syntax_builtin_funcs
   syn keyword pythonBuiltinFunc   __import__ abs all any apply
   syn keyword pythonBuiltinFunc   bin callable classmethod cmp coerce compile
   syn keyword pythonBuiltinFunc   delattr dir divmod enumerate eval execfile filter
@@ -232,14 +232,14 @@ if g:pymode_syntax_builtin_funcs
   syn keyword pythonBuiltinFunc   raw_input reduce reload repr reversed round setattr
   syn keyword pythonBuiltinFunc   slice sorted staticmethod sum vars zip
 
-  if g:pymode_syntax_print_as_function
+  " if g:pymode_syntax_print_as_function
     syn keyword pythonBuiltinFunc   print
-  endif
+  " endif
 
-endif
+" endif
 
 " Builtin exceptions and warnings
-if g:pymode_syntax_highlight_exceptions
+" if g:pymode_syntax_highlight_exceptions
   syn keyword pythonExClass   BaseException
   syn keyword pythonExClass   Exception StandardError ArithmeticError
   syn keyword pythonExClass   LookupError EnvironmentError
@@ -259,20 +259,20 @@ if g:pymode_syntax_highlight_exceptions
   syn keyword pythonExClass   PendingDepricationWarning SyntaxWarning
   syn keyword pythonExClass   RuntimeWarning FutureWarning
   syn keyword pythonExClass   ImportWarning UnicodeWarning
-endif
+" endif
 
 " }}}
 
 
-if g:pymode_syntax_slow_sync
-  syn sync minlines=2000
-else
-  " This is fast but code inside triple quoted strings screws it up. It
-  " is impossible to fix because the only way to know if you are inside a
-  " triple quoted string is to start from the beginning of the file.
-  syn sync match pythonSync grouphere NONE "):$"
-  syn sync maxlines=200
-endif
+" if g:pymode_syntax_slow_sync
+"   syn sync minlines=2000
+" else
+"   " This is fast but code inside triple quoted strings screws it up. It
+"   " is impossible to fix because the only way to know if you are inside a
+"   " triple quoted string is to start from the beginning of the file.
+"   syn sync match pythonSync grouphere NONE "):$"
+"   syn sync maxlines=200
+" endif
 
 " Highlight {{{
 " =============

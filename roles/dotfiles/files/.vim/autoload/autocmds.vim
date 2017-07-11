@@ -1,5 +1,6 @@
 let s:INT = { 'MAX': 2147483647 }
 
+let g:AmsaykNumberBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'startify', 'help', 'vim-plug', 'terminal']
 let g:AmsaykColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf']
 let g:AmsaykCursorlineBlacklist = ['ctrlp']
 let g:AmsaykMkviewFiletypeBlacklist = ['diff', 'gitcommit']
@@ -16,6 +17,10 @@ function! autocmds#get_visual_selection()
   let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
   let lines[0] = lines[0][col1 - 1:]
   return join(lines, "\n")
+endfunction
+
+function! autocmds#should_number() abort
+  return index(g:AmsaykNumberBlacklist, &filetype) == -1 && index(g:AmsaykNumberBlacklist, &buftype) == -1
 endfunction
 
 function! autocmds#should_colorcolumn() abort

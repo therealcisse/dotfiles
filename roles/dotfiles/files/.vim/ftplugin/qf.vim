@@ -1,6 +1,8 @@
 " Don't let built-in plug-in override our setting here.
 let b:did_ftplugin=1
 
+autocmd FileType qf wincmd J
+
 if exists('+colorcolumn')
   setlocal colorcolumn=
 endif
@@ -8,7 +10,7 @@ endif
 let b:undo_ftplugin = "setl fo< com< ofu<"
 
 " text wrapping is pretty much useless in the quickfix window
-setlocal nowrap
+setlocal wrap
 
 " relative line numbers don't make much sense either
 " but absolute numbers definitely do

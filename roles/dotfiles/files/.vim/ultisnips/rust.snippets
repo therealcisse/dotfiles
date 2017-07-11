@@ -6,14 +6,14 @@ priority -50
 
 snippet fn "A function, optionally with arguments and return type." b
 fn ${1:function_name}(${2})${3/..*/ -> /}${3} {
-	${VISUAL}${0}
+	${VISUAL}${5}
 }
 endsnippet
 
 snippet test "Test function" b
 #[test]
 fn ${1:test_function_name}() {
-	${VISUAL}${0}
+	${VISUAL}${2}
 }
 endsnippet
 
@@ -22,14 +22,14 @@ snippet bench "Bench function" b
 #[bench]
 fn ${1:bench_function_name}(b: &mut test::Bencher) {
 	b.iter(|| {
-			${VISUAL}${0}
+			${VISUAL}${2}
 			})
 }
 endsnippet
 
 snippet new "A new function" b
 fn new(${2}) -> ${1:Name} {
-	${VISUAL}${0}return $1 { ${3} };
+	${VISUAL}${4}return $1 { ${3} };
 }
 endsnippet
 

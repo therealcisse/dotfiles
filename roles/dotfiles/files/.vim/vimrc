@@ -9,9 +9,10 @@ let g:loaded_rrhelper = 1
 let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 
 " Stop annoying paren match highlighting from flashing all over the screen.
-let g:loaded_matchparen=1
+let g:loaded_matchparen = 1
 
 call plug#begin('~/.vim/plugged')
+  " Plug 'sbdchd/neoformat'
   Plug 'Chiel92/vim-autoformat'
 
   Plug 'itchyny/vim-parenmatch'
@@ -37,18 +38,14 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] } | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'elzr/vim-json', { 'for': [ 'json' ] }
-  " Plug 'flazz/vim-colorschemes'
   Plug 'benjifisher/matchit.zip'
 
   " Ag/Ack for project-wide searching
   Plug 'mileszs/ack.vim', { 'on': [ 'Ack' ] }
-  " Plug 'henrik/git-grep-vim', { 'on': [ 'GitGrep' ] }
-  " Plug 'henrik/vim-qargs', { 'on': [ 'Qargs', 'Qdo' ] }
 
   Plug 'henrik/vim-open-url' " gx
 
   " Plug 'editorconfig/editorconfig-vim'
-  " Plug 'ctrlpvim/ctrlp.vim'
 
   Plug 'JulesWang/css.vim', { 'for': [ 'haml', 'scss', 'sass' ] }
   Plug 'ap/vim-css-color'
@@ -59,21 +56,18 @@ call plug#begin('~/.vim/plugged')
   Plug 'othree/html5.vim'
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
-  " Plug 'jiangmiao/auto-pairs'
   Plug 'airblade/vim-gitgutter'
   " Plug 'neomake/neomake'
   Plug 'SirVer/ultisnips'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
-  Plug 'junegunn/gv.vim'
+  Plug 'junegunn/gv.vim', { 'on': [ 'GV' ] }
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
-  " Plug 'kshenoy/vim-signature'    "show marks
 
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
   if has('nvim')
-    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'roxma/nvim-completion-manager'
     " Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
@@ -81,9 +75,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'Shougo/echodoc.vim'
   endif
 
-  " Plug 'duggiefresh/vim-easydir'
-
-  Plug 'wakatime/vim-wakatime'
+  " Plug 'wakatime/vim-wakatime'
 
   Plug 'tommcdo/vim-lion' " Align: gl, gL
 
@@ -91,22 +83,18 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'elmcast/elm-vim', { 'for': [ 'elm' ] }
 
-  " Plug 'scrooloose/nerdtree'
-  " Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-webdevicons'
 
   Plug 'chriskempson/base16-vim'
 
   Plug  'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
 
-  " Plug 'tpope/vim-abolish'
-
   Plug 'mhinz/vim-startify'
 
-  " Plug 'mbbill/undotree'
   Plug 'tpope/vim-eunuch' " :SudoWrite, ...
 
-  Plug 'AndrewRadev/splitjoin.vim'
+  " Plug 'AndrewRadev/splitjoin.vim' " gJ, gS
+  Plug 'FooSoft/vim-argwrap', { 'on': [ 'ArgWrap' ] }
 
   Plug 'tmux-plugins/vim-tmux-focus-events'
   Plug 'tmux-plugins/vim-tmux', { 'for': [  'tmux' ] }
@@ -116,13 +104,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'skywind3000/asyncrun.vim'
 
-  " Plug 'justinmk/vim-sneak'
-
   Plug 'matze/vim-move' " <c-k>, <c-j>
-
-  if !has('gui_vimr')
-    " Plug 'joeytwiddle/sexy_scroller.vim'
-  endif
 
   Plug 'wincent/vim-clipper'
 
@@ -130,7 +112,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'kassio/neoterm'
   endif
 
-  " Plug 'terryma/vim-expand-region'
   Plug 'vim-scripts/ReplaceWithRegister' "replace <motion> with register
 
   Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript' ] }
@@ -138,11 +119,7 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
-  " Plug 'brooth/far.vim', { 'do': ':UpdateRemotePlugins' }
-
-  Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] }
-  Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] }
-  Plug 'roxma/nvim-cm-racer', { 'for': [ 'rust' ] }
+  Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] } | Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] } | Plug 'roxma/nvim-cm-racer', { 'for': [ 'rust' ] }
 
   Plug 'kewah/vim-stylefmt', { 'for': [ 'sass', 'scss', 'css' ] }
 
@@ -150,18 +127,9 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'zah/nim.vim', { 'for': [ 'nim' ] }
 
-  " Plug 'wellle/targets.vim'
-
   Plug 'kepbod/quick-scope'
 
-  " Plug 'mtth/scratch.vim'
-
   Plug 'tommcdo/vim-exchange'
-
-  " Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-
-  " Distraction free writing in vim
-  " Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
   " fzf greatness (fuzzy finding)
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin --no-update-rc --64 --key-bindings --completion' }
@@ -169,11 +137,13 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'justinmk/vim-dirvish'
 
-  Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] }
-
   Plug 'roxma/vim-paste-easy'
 
-  Plug 'roxma/vim-window-resize-easy'
+  Plug 'ensime/ensime-vim', { 'for': [ 'scala' ], 'do': ':UpdateRemotePlugins' }
+
+  Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] }
+
+  Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious' ] }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -183,7 +153,7 @@ call plug#end()
 " Use a different mapleader (default is '\').
 
 let mapleader="\<Space>"
-let maplocalleader=mapleader
+let maplocalleader=","
 
 if exists("$TMUX")
   " Disable CTRL-Space on tmux or on screen
@@ -237,12 +207,17 @@ if !has('nvim')
   set backspace=indent,eol,start  " Makes backspace key more powerful.
   set incsearch                   " Shows the match while typing
   set hlsearch                    " Highlight found searches
-  " set mouse=a
-  " if has('mouse_sgr')
-  "   set ttymouse=sgr
-  " else
-  "   set ttymouse=xterm2
-  " endif
+  set mouse=a
+  if has('mouse_sgr')
+    set ttymouse=sgr
+  else
+    set ttymouse=xterm2
+  endif
+else
+  " no mouse interaction, mouse is evil
+  " set mouse=
+
+  set mouse=a
 endif
 
 if exists('$SUDO_USER')
@@ -264,7 +239,9 @@ endif
 " endif
 
 if has('clipboard')
-  set clipboard=unnamed
+  "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
+  set clipboard^=unnamed
+  set clipboard^=unnamedplus
 end
 
 set cpoptions+=$               " When making a change, don't
@@ -341,10 +318,6 @@ set nojoinspaces               " When using the join command,
 
 set nostartofline              " Kept the cursor on the same column.
 set number                     " Show line number.
-
-if exists('+relativenumber')
-  set relativenumber                  " show relative numbers in gutter
-endif
 
 set numberwidth=4              " Increase the minimal number of
                                " columns used for the `line number`.
@@ -511,8 +484,8 @@ let g:vim_markdown_folding_disabled=1
 "     :nohl
 " endfunction
 
-" nnoremap ,w :call <SID>StripTrailingWhitespaces()<CR>
-nnoremap <silent> ,w :call mappings#leader#zap()<CR>
+" nnoremap <localleader>w :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <silent> <localleader>w :call mappings#leader#zap()<CR>
 
 " ----------------------------------------------------------------------
 " | Automatic Commands                                                 |
@@ -571,8 +544,8 @@ vnoremap <leader>r :<c-u>%s/\V<c-r>=autocmds#escape_pattern(autocmds#get_visual_
 
 " Make the opening of the `.vimrc` file easier.
 
-nnoremap ,e :e $MYVIMRC<CR>
-nnoremap ,r :source $MYVIMRC<CR>
+nnoremap <localleader>e :e $MYVIMRC<CR>
+nnoremap <localleader>r :source $MYVIMRC<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -832,7 +805,7 @@ let g:elm_setup_keybindings = 0
 " Ctags                 {{{
 """""""""""""""""""""""
 
-nn <leader>tg :AsyncRun git ctags<CR>
+nn <leader>g :AsyncRun git ctags<CR>
 
 set tags+=.git/tags
 
@@ -897,6 +870,12 @@ if has('autocmd')
 
     autocmd BufWritePost * call autocmds#encrypt(expand('<afile>:p'))
 
+    if exists('+relativenumber')
+      " show relative numbers in gutter when window is active
+      autocmd FocusLost,WinLeave,BufWinLeave,InsertEnter * if autocmds#should_number() | setlocal norelativenumber | endif
+      autocmd FocusGained,WinEnter,BufWinEnter,InsertLeave * if autocmds#should_number() | setlocal relativenumber | endif
+    endif
+
     " Close preview window
     if exists('##CompleteDone')
       au CompleteDone * pclose
@@ -951,9 +930,6 @@ nnoremap <F6> <C-i>
 " Avoid unintentional switches to Ex mode. This would be more useful.
 nnoremap Q :normal n.<CR>
 
-" Like vim-vinegar.
-" nnoremap <silent> - :silent edit <C-R>=empty(expand('%')) ? '.' : fnameescape(expand('%:p:h'))<CR><CR>
-
 nnoremap Y y$
 
 vnoremap y myy`y
@@ -982,8 +958,7 @@ endif
 
 set shell=/bin/sh
 
-set updatecount=80                    " update swapfiles every 80 typed chars
-set updatetime=2000                   " same as YCM
+set updatetime=250
 
 " ==================== delimitMate ====================
 let g:delimitMate_expand_cr = 1
@@ -1146,13 +1121,16 @@ augroup ArrowKeys
   autocmd!
 
   function! s:ToggleArrowKeys() abort
-    nnoremap <buffer> <silent> <a-up>    :exe "wincmd +"<CR>
-    nnoremap <buffer> <silent> <a-down>  :exe "wincmd -"<CR>
+    nnoremap <buffer> <silent> <M-up>    :exe "wincmd +"<CR>
+    nnoremap <buffer> <silent> <M-down>  :exe "wincmd -"<CR>
 
-    nnoremap <buffer> <silent> <a-right> :exe "wincmd <"<CR>
-    nnoremap <buffer> <silent> <a-left>  :exe "wincmd >"<CR>
+    nnoremap <buffer> <silent> <M-right> :exe "wincmd <"<CR>
+    nnoremap <buffer> <silent> <M-left>  :exe "wincmd >"<CR>
 
     nn <buffer> <leader>= :execute "wincmd ="<CR>
+
+    map <expr> <M-k> "<Plug>(expand_region_expand)" " a-k
+    map <expr> <M-j> "<Plug>(expand_region_shrink)" " a-j
   endfunction
 
   autocmd BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
@@ -1166,42 +1144,6 @@ vnoremap . :norm.<CR>
 nmap <expr> <Tab> 'za'
 nmap <expr> <S-Tab> 'za'
 
-" vim-sneak
-
-"replace 'f' with 1-char Sneak
-" nmap f <Plug>Sneak_f
-" nmap F <Plug>Sneak_F
-" xmap f <Plug>Sneak_f
-" xmap F <Plug>Sneak_F
-" omap f <Plug>Sneak_f
-" omap F <Plug>Sneak_F
-
-"replace 't' with 1-char Sneak
-" nmap t <Plug>Sneak_t
-" nmap T <Plug>Sneak_T
-" xmap t <Plug>Sneak_t
-" xmap T <Plug>Sneak_T
-" omap t <Plug>Sneak_t
-" omap T <Plug>Sneak_T
-
-" nmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : 'za'
-" nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : 'za'
-
-" vmap <expr> <Tab>   sneak#is_sneaking() ? '<Plug>SneakNext'     : '<Tab>'
-" vmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakPrevious' : '<S-Tab>'
-
-" let g:sneak#s_next = 1
-
-" let g:sneak#prompt = 'Target key: '
-
-" function! s:RestoreS()
-"   " Restore default s/S behavoir
-"   nunmap s
-"   nunmap S
-" endfunction
-"
-" au VimEnter * :call s:RestoreS()
-
 " vim-move
 
 let g:move_key_modifier = 'C'
@@ -1210,90 +1152,19 @@ let g:move_key_modifier = 'C'
 " nnoremap <leader>/ :Ag <C-r>=autocmds#escape_pattern(expand('<cword>'))<CR><Space> **/*.*
 " vnoremap <leader>/ :<c-u>Ag <C-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR><Space> **/*.*
 
-" ----------------------------------------------------------------------
-" | CTRLP                                                              |
-" ----------------------------------------------------------------------
-
-" let g:ctrlp_working_path_mode = 'ra'
-
 if executable("rg")
-  " let g:ctrlp_user_command = 'rg %s -l --files --color=never -g ""'
-
   let g:ackprg = 'rg --vimgrep --smart-case'
   cnoreabbrev ag Ack!
 
   set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
   set grepformat=%f:%l:%c:%m
-
-  " rg is fast enough that CtrlP doesn't need to cache
-  " let g:ctrlp_use_caching = 0
 elseif executable("ag")
-  " let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
-  "       \ --ignore .git
-  "       \ --ignore .DS_Store
-  "       \ --ignore .svn
-  "       \ --ignore .hg
-  "       \ --ignore node_modules
-  "       \ --ignore target
-  "       \ --ignore .idea
-  "       \ --ignore bower_components
-  "       \ --ignore logs
-  "       \ --ignore out
-  "       \ --ignore vendor
-  "       \ -g ""'
-
   let g:ackprg = 'ag --vimgrep --smart-case'
   cnoreabbrev ag Ack!
 
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  " let g:ctrlp_use_caching = 0
 endif
-
-" nnoremap <leader>. :CtrlPTag<CR>
-
-" noremap <leader>b :CtrlPBuffer<CR>
-
-" let g:ctrlp_extensions = ['tag']
-
-" let g:ctrlp_match_window  = 'bottom,order:btt,min:1,max:50,results:50'
-" let g:ctrlp_mruf_relative = 1
-" let g:ctrlp_mruf_max      = 10
-" let g:ctrlp_reuse_window  = 'NERD_tree'
-" let g:ctrlp_max_files     = 0
-
-" let g:ctrlp_cmd = 'call CallCtrlP()'
-
-" func! CallCtrlP()
-"   if exists('s:called_ctrlp')
-"     CtrlPLastMode
-"   else
-"     let s:called_ctrlp = 1
-"     CtrlP
-"   endif
-" endfunc
-
-" ----------------------------------------------------------------------
-" | FAR                                                                |
-" ----------------------------------------------------------------------
-
-let g:far#auto_preview = 1
-
-" if executable("rg")
-"   if has('nvim')
-"     let g:far#source = 'rgnvim'
-"   else
-"     let g:far#source = 'rg'
-"   endif
-" elseif executable("ag")
-"   if has('nvim')
-"     let g:far#source = 'agnvim'
-"   else
-"     let g:far#source = 'ag'
-"   endif
-" endif
 
 " Ctrl-o: Go back in the jumplist, also realign the screen
 nnoremap <c-o> <c-o>zzzv
@@ -1305,8 +1176,7 @@ if has('nvim')
   let g:neoterm_shell      = $SHELL
   let g:neoterm_autoinsert = 1
 
-  nnoremap <silent> <leader>tn :Tnew<CR>
-  nnoremap <silent> <leader>tt :Ttoggle<CR>
+  nnoremap <silent> <leader>t :Ttoggle<CR>
 endif
 
 " the /g flag on :s substitutions by default
@@ -1347,26 +1217,51 @@ hi StartifySpecial ctermfg=240
 let g:startify_session_autoload     = 0
 let g:startify_session_persistence  = 0
 
-" Buffer list navigation
-" nn J :bp<CR>
-" nn K :bn<CR>
-
 " Join lines with M
 nn M J
 
-" Navigate pum with j k
-inoremap <expr> <c-j> ((pumvisible())?("\<C-n>"):("\<c-j>"))
-inoremap <expr> <c-k> ((pumvisible())?("\<C-p>"):("\<c-k>"))
-" inoremap <expr> <tab> ((pumvisible())?("\<Cr>"):("<Cr>"))
+let g:ultisnips_inprogress = 0
+
+augroup amsaykUltisnips
+  autocmd!
+
+  func! s:CustomInnerKeyMapper()
+    let g:ultisnips_inprogress = 1
+  endfunc
+
+  func! s:CustomInnerKeyUnmapper()
+    let g:ultisnips_inprogress = 0
+  endfunc
+
+  autocmd! User UltiSnipsEnterFirstSnippet
+  autocmd User UltiSnipsEnterFirstSnippet call s:CustomInnerKeyMapper()
+  autocmd! User UltiSnipsExitLastSnippet
+  autocmd User UltiSnipsExitLastSnippet call s:CustomInnerKeyUnmapper()
+
+  func! g:TriggerNextCJ()
+    if g:ultisnips_inprogress
+      return "\<C-J>"
+    endif
+
+    return "\<C-N>"
+  endfunction
+
+  func! g:TriggerNextCK()
+    if g:ultisnips_inprogress
+      return "\<C-K>"
+    endif
+
+    return "\<C-P>"
+  endfunction
+
+  " Navigate pum with j k
+  imap <expr> <c-j> "<C-R>=g:TriggerNextCJ()<CR>"
+  imap <expr> <c-k> "<C-R>=g:TriggerNextCK()<CR>"
+augroup END
 
 " Navigate line with H L
 nn H ^
 nn L $
-
-" Vim expand region
-
-" map K <Plug>(expand_region_expand)
-" map J <Plug>(expand_region_shrink)
 
 " Optimize
 hi! NonText cterm=NONE ctermfg=NONE
@@ -1441,11 +1336,6 @@ function! s:profile(bang)
 endfunction
 command! -bang Profile call s:profile(<bang>0)
 
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
-
 " Terminal mappings
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
@@ -1476,66 +1366,16 @@ fun! s:QuickfixToggle()
     cclose
   endif
 endfunction
-nnoremap ,q :call <SID>QuickfixToggle()<cr>
+nnoremap <localleader>q :call <SID>QuickfixToggle()<cr>
 
 " Vim-signiture
 let g:SignatureMarkTextHLDynamic = 1
-
-" ----------------------------------------------------------------------------
-" NERDTree
-" ----------------------------------------------------------------------------
-
-" let g:NERDTreeMapMenu='M'
-"
-" let NERDTreeShowLineNumbers=0
-"
-" " let NERDTreeIgnore=['dist/*', 'out', 'logs', '.DS_Store', '.git', '.idea', '.tags', '\~$']
-"
-" let NERDTreeShowHidden=1
-"
-" let NERDTreeRespectWildIgnore=1
-"
-" " Disable display of '?' text and 'Bookmarks' label.
-" let g:NERDTreeMinimalUI=1
-"
-" " The default of 31 is just a little too narrow.
-" let g:NERDTreeWinSize=40
-"
-" " Single-click to toggle directory nodes, double-click to open non-directory
-" " nodes.
-" let g:NERDTreeMouseMode=2
-"
-" let NERDTreeHijackNetrw=1
-
-
-" let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-" let g:DevIconsEnableFoldersOpenClose = 1
 
 " the amount of space to use after the glyph character (default ' ')
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 let g:WebDevIconsNerdTreeGitPluginForceVAlign=0
 
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 let g:WebDevIconsOS = 'Darwin'
-
-" let g:NERDTreeDirArrowExpandable = '›'
-" let g:NERDTreeDirArrowCollapsible = '⌄'
-
-" let g:NERDTreeDirArrowExpandable = '▸'
-" let g:NERDTreeDirArrowCollapsible = '▾'
-"
-" let g:NERDTreeGitStatusNodeColorization = 1
-" let g:NERDTreeGitStatusWithFlags = 0
-"
-" " let g:NERDTreeFileExtensionHighlightFullName = 1
-"
-" " Let <Leader><Leader> (^#) return from NERDTree window.
-" let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
-"
-" let g:webdevicons_conceal_nerdtree_brackets = 1
-"
-" let g:webdevicons_enable_nerdtree = 1
 
 " Tweaks for browsing
 let g:netrw_banner = 0
@@ -1546,13 +1386,6 @@ let g:netrw_list_hide = netrw_gitignore#Hide()
 let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
 
 nnoremap <silent> <c-n>e :Explore<cr>
-
-" if has('autocmd')
-"   augroup AmsaykNERDTree
-"     autocmd!
-"     autocmd User NERDTreeInit call autocmds#attempt_select_last_file()
-"   augroup END
-" endif
 
 " Stylefmt
 nnoremap <silent> ,f :Stylefmt<CR>
@@ -1606,35 +1439,9 @@ else " terminal vim
   let g:qs_second_occurrence_highlight_bgcolor = 205
 endif
 
-" Scratch
-" let g:scratch_no_mappings = 1
-
-" nmap <leader>s <plug>(scratch-insert-reuse)
-" nmap <leader>S <plug>(scratch-insert-clear)
-" xmap <leader>s <plug>(scratch-selection-reuse)
-" xmap <leader>S <plug>(scratch-selection-clear)
-
-if exists('$SUDO_USER')
-else
-  " let g:scratch_persistence_file = '~/.vim/tmp/backup/scratch.txt'
-endif
-
 " Ctrl click and drag for visual block mode
 noremap <S-LeftMouse> <4-LeftMouse>
 noremap <S-LeftDrag> <LeftDrag>
-
-" noremap <LeftRelease> <C-g>
-
-" MatchTag
-" let g:mta_filetypes = {
-      " \ 'javascript.jsx' : 1,
-      " \ 'html' : 1,
-      " \ 'xhtml' : 1,
-      " \ 'xml' : 1,
-      " \ 'jinja' : 1,
-      " \}
-
-" nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 " Allows incsearch highlighting for range commands
 " This is just a convenient shorthand of :/foobar/t.  :/foobar/m. and :/foobar/d
@@ -1651,68 +1458,10 @@ cnoremap $d <CR>:d<CR>``
 " inoremap <C-U> <C-G>u<C-U>
 
 " close last open tag
-imap ,/ </<C-x><C-o>
+imap <localleader>/ </<C-x><C-o>
 
 " Duplicate line
 nn <leader>D "xyy"xp
-
-" ----------------------------------------------------------------------------
-" goyo.vim + limelight.vim
-" ----------------------------------------------------------------------------
-
-" Default: 0.5
-" let g:limelight_default_coefficient = 0.7
-
-" Number of preceding/following paragraphs to include (default: 0)
-" let g:limelight_paragraph_span = 4
-
-" Beginning/end of paragraph
-"   When there's no empty line between the paragraphs
-"   and each paragraph starts with indentation
-" let g:limelight_bop = '^\s'
-" let g:limelight_eop = '\ze\n^\s'
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
-" let g:limelight_priority = -1
-
-" Enable by default
-" autocmd VimEnter *.js Limelight
-" autocmd VimEnter *.scss Limelight
-
-" nnoremap <leader>G :Goyo<CR>
-
-" nnoremap <leader>L :Limelight!!<CR>
-
-" let g:limelight_paragraph_span = 1
-" let g:limelight_priority = -1
-
-" function! s:goyo_enter()
-"   if has('gui_running')
-"     set fullscreen
-"     set background=light
-"     set linespace=7
-"   elseif exists('$TMUX')
-"     silent !tmux set status off
-"   endif
-"   Limelight
-" endfunction
-"
-" function! s:goyo_leave()
-"   if has('gui_running')
-"     set nofullscreen
-"     set background=dark
-"     set linespace=0
-"   elseif exists('$TMUX')
-"     silent !tmux set status on
-"   endif
-"   execute 'Limelight!'
-" endfunction
-"
-" augroup GOYO
-"   autocmd! User GoyoEnter nested call <SID>goyo_enter()
-"   autocmd! User GoyoLeave nested call <SID>goyo_leave()
-" augroup END
 
 " Get off my lawn: disable arrow keys in normal mode
 nnoremap <Left> :echoe "Use h"<CR>
@@ -1747,15 +1496,6 @@ inoremap <C-g>t <esc>:s/\v<(.)(\w*)/\u\1\L\2/g<cr>A
 " =====================================
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-" autocmd VimEnter * command! -bang -nargs=* Ag
-"     \ call fzf#vim#ag(<q-args>, {'down': '40%', 'options': '--no-color'})
-
-" set fzf's default input to AG instead of find. This also removes gitignore etc
-" let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-" let g:fzf_files_options =
-"   " \ '--preview ""' " Disable preview
-  " " \ '--preview "(coderay {} || cat {}) 2> /dev/null | head -'.&lines.'"' " Enable preview
-
 nnoremap <leader>. :Tags<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <C-g>/ :Ag<CR>
@@ -1784,6 +1524,10 @@ let g:rustfmt_autosave = 1
 
 imap <c-g>r <Plug>(cm_force_refresh)
 
+let g:cm_refresh_length = 2 " [[1,2], [7,2]]
+
+let g:cm_multi_threading = 1
+
 " use this to add airline plugin if airline rtp load is disabled
 let g:airline#extensions#cm_call_signature#enabled = 1
 
@@ -1800,17 +1544,27 @@ let g:LanguageClient_serverCommands = {
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+au FileType javascript,javascript.jsx nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+au FileType javascript,javascript.jsx nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+au FileType javascript,javascript.jsx nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
-" Auto format
+" Formatting
 
-noremap <F3> :Autoformat<CR>
+" let g:neoformat_basic_format_retab = 1
+" let g:neoformat_basic_format_trim  = 1
+"
+" let g:neoformat_enabled_scala = ['scalafmt']
+"
+" let g:neoformat_scala_scalafmt = {
+"       \ 'exe': 'scalafmt',
+"       \ 'args': [],
+"       \ 'replace': 1,
+"       \ }
+"
+" noremap <F1> :Neoformat <BAR> w<CR>
 
-let g:formatdef_rustfmt = '"rustfmt"'
-let g:formatters_rust = ['rustfmt']
-let g:formatdef_scalafmt = '"scalafmt"'
+noremap <F1> :Autoformat <BAR> w<CR>
+let g:formatdef_scalafmt = "'ng scalafmt --stdin'"
 let g:formatters_scala = ['scalafmt']
 
 if has('gui')
@@ -1824,14 +1578,11 @@ endif
 " http://www.linuxpowertop.org/known.php
 let &guicursor = &guicursor . ",a:blinkon0"
 
-" no mouse interaction, mouse is evil
-set mouse=
-
 " A black background would be better for remote terminal
 " due to the low FPS
 hi Normal ctermbg=none
 
-if exists('##TextYankPost')
+if exists('##TextYankPost') && exists("$SSH_CONNECTION")
   augroup globalYank
     autocmd!
     autocmd TextYankPost * :Clip
@@ -1844,8 +1595,6 @@ call tweak#enhance_jumps#init()
 nnoremap <silent> g<c-o> :call tweak#enhance_jumps#buffer_c_o()<CR>
 " nnoremap <silent> g<F6> :call tweak#enhance_jumps#buffer_c_i()<CR>
 
-" the m key is taken by easymotion
-" noremap - m
 " ` is more precise than '
 noremap ' `
 
@@ -1878,6 +1627,61 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 
 " not working?
 snoremap <BS> <BS>i
+
+augroup filetypedetect
+  autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
+  autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf*,sites-available/*,sites-enabled/* setf nginx
+augroup END
+
+" Ensime
+let ensime_server_v2=1
+
+" Same when moving up and down
+noremap <C-d> <C-d>zz
+noremap <C-u> <C-u>zz
+
+" Expand region
+
+let g:expand_region_use_select_mode = 1
+
+" Extend the global defaul
+let g:expand_region_text_objects = {
+      \ 'iw' : 0,
+      \ 'iW' : 0,
+      \ 'i"' : 0,
+      \ 'i''': 0,
+      \ 'i]' : 1,
+      \ 'ib' : 1,
+      \ 'iB' : 1,
+      \ 'il' : 0,
+      \ 'ip' : 0,
+      \ 'ie' : 0,
+      \ 'a]' : 1,
+      \ 'ab' : 1,
+      \ 'aB' : 1,
+      \ 'ii' : 0,
+      \ 'ai' : 0,
+      \ }
+
+" Arg wrap
+nnoremap <silent> J :ArgWrap<CR>
+
+au FileType javascript,javascript.jsx let b:argwrap_tail_comma = 1
+au FileType javascript,javascript.jsx let b:argwrap_padded_braces = '[{'
+au FileType javascript,javascript.jsx let b:argwrap_tail_comma_braces = '[{'
+
+" Tmux Navigation
+
+let g:tmux_navigator_no_mappings = 1
+
+" Write all buffers before navigating from Vim to tmux pane
+let g:tmux_navigator_save_on_switch = 2
+
+nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
+nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
+
+nn <localleader><localleader> :Startify<CR>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

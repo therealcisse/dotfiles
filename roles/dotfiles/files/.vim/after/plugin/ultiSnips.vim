@@ -69,26 +69,9 @@ function ExpandSnippetOrCarriageReturn()
   endif
 endfunction
 
-imap <expr> <CR> delimitMate#WithinEmptyPair() ?
-      \ "<Plug>delimitMateCR" :
-      \ "<C-R>=g:UltiSnips_CR()<CR>"
-
-" imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "<Plug>delimitMateCR"
-" imap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
-
-" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-"
-" func! s:ultisnip()
-"   let g:UltiSnipsExpandTrigger            = "<Tab>"
-"   let g:UltiSnipsJumpForwardTrigger       = "<Tab>"
-"   let g:UltiSnipsJumpBackwardTrigger      = "<S-Tab>"
-"   let g:UltiSnipsRemoveSelectModeMappings = 0
-"
-"   " optional
-"   inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("<Tab>")<cr>
-" endfunc
-
-" call s:ultisnip()
+imap <expr> <CR> pumvisible()
+      \ ? "\<C-y>\<CR>" :
+      \ (delimitMate#WithinEmptyPair() ? "<Plug>delimitMateCR" : "\<CR>")
 
 let g:UltiSnipsSnippetsDir = $HOME . '/.config/nvim/ultisnips'
 let g:UltiSnipsSnippetDirectories = [
