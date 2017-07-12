@@ -1121,16 +1121,10 @@ augroup ArrowKeys
   autocmd!
 
   function! s:ToggleArrowKeys() abort
-    nnoremap <buffer> <silent> <M-up>    :exe "wincmd +"<CR>
-    nnoremap <buffer> <silent> <M-down>  :exe "wincmd -"<CR>
-
-    nnoremap <buffer> <silent> <M-right> :exe "wincmd <"<CR>
-    nnoremap <buffer> <silent> <M-left>  :exe "wincmd >"<CR>
-
     nn <buffer> <leader>= :execute "wincmd ="<CR>
 
-    map <expr> <M-k> "<Plug>(expand_region_expand)" " a-k
-    map <expr> <M-j> "<Plug>(expand_region_shrink)" " a-j
+    map <expr> <M-+> "<Plug>(expand_region_expand)" " a-+
+    map <expr> <M--> "<Plug>(expand_region_shrink)" " a--
   endfunction
 
   autocmd BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
@@ -1463,16 +1457,6 @@ imap <localleader>/ </<C-x><C-o>
 " Duplicate line
 nn <leader>D "xyy"xp
 
-" Get off my lawn: disable arrow keys in normal mode
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
-inoremap <Left> :echoe "Use h"<CR>
-inoremap <Right> :echoe "Use l"<CR>
-inoremap <Up> :echoe "Use k"<CR>
-inoremap <Down> :echoe "Use j"<CR>
-
 " last typed word to lower case
 " inoremap <C-w>u <esc>guawA
 
@@ -1680,8 +1664,20 @@ let g:tmux_navigator_save_on_switch = 2
 nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
 nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
+nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
+nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
 
 nn <localleader><localleader> :Startify<CR>
+
+nnoremap <Left> :vertical resize -1<CR>
+nnoremap <Right> :vertical resize +1<CR>
+nnoremap <Up> :resize -1<CR>
+nnoremap <Down> :resize +1<CR>
+" Disable arrow keys completely in Insert Mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
