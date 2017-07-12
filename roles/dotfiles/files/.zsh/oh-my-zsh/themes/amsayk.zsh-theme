@@ -28,8 +28,6 @@ local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 # Prompt format: \n # USER in DIRECTORY on git:BRANCH STATE [TIME] \n $
 PROMPT="
 %{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
-# %{$fg[cyan]%}%n \
-# %{$fg[white]%}in \
 %{$terminfo[bold]$fg[yellow]%}${current_dir}%{$reset_color%}\
 ${git_info} \
 %{$fg[white]%}
@@ -38,8 +36,6 @@ $ret_status %{$reset_color%}"
 if [[ "$USER" == "root" ]]; then
 PROMPT="
 %{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
-# %{$bg[yellow]%}%{$fg[cyan]%}%n%{$reset_color%} \
-# %{$fg[white]%}in \
 %{$terminfo[bold]$fg[yellow]%}${current_dir}%{$reset_color%}\
 ${git_info} \
 %{$fg[white]%}
