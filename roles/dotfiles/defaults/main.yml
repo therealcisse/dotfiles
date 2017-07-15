@@ -8,6 +8,9 @@ dotfiles:
   - .inputrc
   - .npmrc
   - .tmux.conf
+  - .tmux.conf
+  - .tmux.theme.conf
+  - .tmux.theme.local.conf
   - .zshenv
   - .zshrc
   - .oh-my-zsh

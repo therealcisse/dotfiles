@@ -85,7 +85,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'ryanoasis/vim-webdevicons'
 
-  Plug 'chriskempson/base16-vim'
+  " Plug 'chriskempson/base16-vim'
 
   Plug  'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
 
@@ -144,6 +144,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] }
 
   Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious' ] }
+
+  Plug 'w0ng/vim-hybrid'
+
+  Plug 'coderifous/textobj-word-column.vim' " ic, ac, iC, and aC or vic, cic, and daC
+
+  Plug 'vim-scripts/ZoomWin'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -251,7 +257,7 @@ set cpoptions+=$               " When making a change, don't
 
 if exists('+colorcolumn')
   " Highlight at textwidth and from 80 + 40 columns (this is the current Vim max) beyond 'textwidth'
-  let &l:colorcolumn="80," . join(map(range(40,999), '"+" . v:val'), ',')
+  " let &l:colorcolumn="80," . join(map(range(40,999), '"+" . v:val'), ',')
 endif
 
 set cursorline                 " Highlight the current line.
@@ -411,8 +417,45 @@ if has('folding')
   if has('windows')
     " set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
   endif
-  set foldmethod=indent               " not as cool as syntax, but faster
+  set foldenable                      " enable folding
+  set foldmethod=syntax               " not as cool as syntax, but faster
   set foldlevelstart=99               " start unfolded
+
+  set foldtext=FoldText()
+  function! FoldText()
+    let l:lpadding = &fdc
+    redir => l:signs
+    execute 'silent sign place buffer='.bufnr('%')
+    redir End
+    let l:lpadding += l:signs =~ 'id=' ? 2 : 0
+
+    if exists("+relativenumber")
+      if (&number)
+        let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+      elseif (&relativenumber)
+        let l:lpadding += max([&numberwidth, strlen(v:foldstart) + strlen(v:foldstart - line('w0')), strlen(v:foldstart) + strlen(line('w$') - v:foldstart)]) + 1
+      endif
+    else
+      if (&number)
+        let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+      endif
+    endif
+
+    " expand tabs
+    let l:start = substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
+    let l:end = substitute(substitute(getline(v:foldend), '\t', repeat(' ', &tabstop), 'g'), '^\s*', '', 'g')
+
+    let l:info = ' (' . (v:foldend - v:foldstart) . ')'
+    let l:infolen = strlen(substitute(l:info, '.', 'x', 'g'))
+    let l:width = winwidth(0) - l:lpadding - l:infolen
+
+    let l:separator = ' … '
+    let l:separatorlen = strlen(substitute(l:separator, '.', 'x', 'g'))
+    let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
+    let l:text = l:start . ' … ' . l:end
+
+    return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
+  endfunction
 endif
 
 set pumheight=10             " Completion window max size
@@ -461,30 +504,6 @@ let g:vim_markdown_folding_disabled=1
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" function! s:StripTrailingWhitespaces()
-"     " Save last search and cursor position.
-"
-"     let searchHistory = @/
-"     let cursorLine = line(".")
-"     let cursorColumn = col(".")
-"
-"     " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-"
-"     " Strip trailing whitespaces.
-"
-"     %s/\s\+$//e
-"
-"     " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-"
-"     " Restore previous search history and cursor position.
-"
-"     let @/ = searchHistory
-"     call cursor(cursorLine, cursorColumn)
-"
-"     :nohl
-" endfunction
-
-" nnoremap <localleader>w :call <SID>StripTrailingWhitespaces()<CR>
 nnoremap <silent> <localleader>w :call mappings#leader#zap()<CR>
 
 " ----------------------------------------------------------------------
@@ -555,7 +574,7 @@ set hidden
 
 try
   set highlight+=@:ColorColumn          " ~/@ at end of window, 'showbreak'
-  set highlight+=N:DiffText             " make current line number stand out a little
+  " set highlight+=N:DiffText             " make current line number stand out a little
   set highlight+=c:LineNr               " blend vertical separators with line numbers
 catch
 
@@ -674,44 +693,78 @@ let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
 
 function! s:SetColorScheme()
-  if !has('termguicolors')
-    let g:base16colorspace=256
-  endif
+  " if !has('termguicolors')
+  "   let g:base16colorspace=256
+  " endif
+  "
+  " let s:config_file = expand('~/.base16')
+  "
+  " if filereadable(s:config_file)
+  "   let s:config = readfile(s:config_file, '', 2)
+  "
+  "   if s:config[1] =~# '^dark\|light$'
+  "     execute 'set background=' . s:config[1]
+  "   else
+  "     echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
+  "   endif
+  "
+  "   if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
+  "     execute 'colorscheme base16-' . s:config[0]
+  "   elseif filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
+  "     execute 'colorscheme base16-' . s:config[0] . '-' . s:config[1]
+  "   else
+  "     echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+  "   endif
+  " else " default
+  "   set background=dark
+  "   colorscheme base16-ocean
+  " endif
 
-  let s:config_file = expand('~/.base16')
+  let g:hybrid_custom_term_colors = 1
+  let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+  let g:airline_theme='hybridline'
+  set background=dark
+  colorscheme hybrid
 
-  if filereadable(s:config_file)
-    let s:config = readfile(s:config_file, '', 2)
-
-    if s:config[1] =~# '^dark\|light$'
-      execute 'set background=' . s:config[1]
-    else
-      echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
+  " Highlighting function
+  fun <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
+    if a:guifg != ""
+      exec "hi " . a:group . " guifg=#" . a:guifg
     endif
-
-    if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
-      execute 'colorscheme base16-' . s:config[0]
-    elseif filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
-      execute 'colorscheme base16-' . s:config[0] . '-' . s:config[1]
-    else
-      echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+    if a:guibg != ""
+      exec "hi " . a:group . " guibg=#" . a:guibg
     endif
-  else " default
-    set background=dark
-    colorscheme base16-ocean
-  endif
+    if a:ctermfg != ""
+      exec "hi " . a:group . " ctermfg=" . a:ctermfg
+    endif
+    if a:ctermbg != ""
+      exec "hi " . a:group . " ctermbg=" . a:ctermbg
+    endif
+    if a:attr != ""
+      exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
+    endif
+    if a:guisp != ""
+      exec "hi " . a:group . " guisp=#" . a:guisp
+    endif
+  endfun
+
+  call <sid>hi("ColorColumn", "", "282a2e", "", "282a2e", "none", "")
+
+  highlight link EndOfBuffer ColorColumn
+  highlight link CursorLineNr ColorColumn
+  " highlight link LineNr ColorColumn
 
   " Make tildes at EndOfBuffer less obvious.
   let l:prefix=has('gui') || has('termguicolors') ? 'gui' : 'cterm'
   let l:bg=synIDattr(synIDtrans(hlID('ColorColumn')), 'bg', l:prefix)
   let l:fg=l:bg
   execute 'highlight EndOfBuffer ' . l:prefix . 'fg=' . l:fg . ' ' . l:prefix . 'bg=' . l:bg
+  " execute 'highlight LineNr ' . l:prefix . 'bg=' . l:bg
+  execute 'highlight CursorLineNr ' . l:prefix . 'bg=' . l:bg . ' '. l:prefix.'=bold'
 
   " make the highlighting of tabs and other non-text less annoying
   " highlight SpecialKey ctermbg=none ctermfg=8
   " highlight NonText ctermfg=8 ctermbg=none
-
-  highlight link EndOfBuffer ColorColumn
 
   " make comments and HTML attributes italic
   highlight Comment cterm=italic  gui=italic
@@ -840,7 +893,7 @@ if has('autocmd')
     " windows.
     if exists('+colorcolumn')
       autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
-      autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
+      " autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
     endif
 
     if exists('*matchaddpos')
@@ -1100,7 +1153,9 @@ let g:gitgutter_sign_modified = '↬'
 let g:gitgutter_sign_modified_removed = '↫'
 
 if has('virtualedit')
-  set virtualedit=block            " Allow cursor to be anywhere.
+  set virtualedit=insert    " allow the cursor to go everywhere (insert)
+  set virtualedit+=onemore  " allow the cursor to go just past the end of line
+  set virtualedit+=block    " allow the cursor to go everywhere (visual block)
 endif
 
 " Convenient command to see the difference between the current buffer and the
@@ -1547,7 +1602,7 @@ au FileType javascript,javascript.jsx nnoremap <silent> <F2> :call LanguageClien
 "
 " noremap <F1> :Neoformat <BAR> w<CR>
 
-noremap <F1> :Autoformat <BAR> w<CR>
+noremap <F1> :Autoformat <BAR> update<CR>
 let g:formatdef_scalafmt = "'ng scalafmt --stdin'"
 let g:formatters_scala = ['scalafmt']
 
@@ -1662,10 +1717,10 @@ let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_save_on_switch = 2
 
 nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
+nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
 nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
-nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
-nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
 
 nn <localleader><localleader> :Startify<CR>
 
@@ -1678,6 +1733,20 @@ imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
+
+" move to the position where the last change was made
+noremap gI `.
+
+" change cursor to vertical bar in insert mode when using iTerm2
+if $TERM_PROGRAM == 'iTerm.app'
+  if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
+endif
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
