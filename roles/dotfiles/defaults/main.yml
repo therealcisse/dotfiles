@@ -34,3 +34,4 @@ dotfiles:
   - .ctags
   - .gvimrc
   - .tern-project
+  - .emacs.d

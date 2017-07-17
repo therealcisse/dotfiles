@@ -60,10 +60,10 @@ endfunction
 
 function! autocmds#blur_window() abort
   if autocmds#should_colorcolumn()
-    if !exists('w:matches')
+    if !exists('w:amsayk_matches')
       " Instead of unconditionally resetting, append to existing array.
       " This allows us to gracefully handle duplicate autocmds.
-      let w:matches=[]
+      let w:amsayk_matches=[]
     endif
     let l:height=&lines
     let l:slop=l:height / 2
@@ -72,11 +72,11 @@ function! autocmds#blur_window() abort
     while l:start <= l:end
       let l:next=l:start + 8
       let l:id=matchaddpos(
-            \   'StatusLine',
+            \   'LineNr',
             \   range(l:start, min([l:end, l:next])),
-            \   1000
+            \   0
             \ )
-      call add(w:matches, l:id)
+      call add(w:amsayk_matches, l:id)
       let l:start=l:next
     endwhile
   endif
@@ -84,19 +84,18 @@ endfunction
 
 function! autocmds#focus_window() abort
   if autocmds#should_colorcolumn()
-    if exists('w:matches')
-      for l:match in w:matches
+    if exists('w:amsayk_matches')
+      for l:match in w:amsayk_matches
         try
           call matchdelete(l:match)
         catch /.*/
           " In testing, not getting any error here, but being ultra-cautious.
         endtry
       endfor
-      let w:matches=[]
+      let w:amsayk_matches=[]
     endif
   endif
 endfunction
-
 " Directories where we want to perform auto-encryption on save.
 let s:encrypted={}
 let s:encrypted[expand('~/dotfiles')]='vendor/git-cipher/bin/git-cipher'

@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# Install zsh
+
+yum -y install zsh
+
+usermod -s /usr/bin/zsh $USER
+
+zsh
+
+# Install git
+yum groupinstall -y "Development Tools"
+yum install -y gettext-devel curl-devel openssl-devel perl-CPAN perl-devel zlib-devel nc libevent-devel ssl-devel ffi-devel python-devel python3 python python-pip python3-devel python3-pip zsh xclip xsel ncurses-devel cscope tree vim silversearcher-ag ack git-extras epel-release git-extras ruby python34-setuptools python34-devel libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip gcc-c++ patch readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison iconv-devel
+
+wget https://github.com/git/git/archive/v2.13.2.tar.gz -O git.tar.gz
+tar -zxf git.tar.gz
+cd git-2.13.2/
+make configure
+./configure --prefix=/usr/local
+make install
+cd $HOME
+rm -fr git*
+
+rm -fr $HOME/.fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+
+~/.fzf/install --no-update-rc --64 --key-bindings --completion
+
+# Install tmux
+
+rm -fr $HOME/.tmux
+git clone git://github.com/tmux/tmux.git $HOME/.tmux
+cd .tmux/
+./autogen.sh
+./configure
+make -j 12
+make install
+
+cd $HOME
+
+# Install rust
+curl https://sh.rustup.rs -sSf | sh
+source $HOME/.cargo/env
+cargo install ripgrep
+
+gem install bundler --no-ri --no-rdoc
+
+easy_install-3.4 pip
+
+pip install --user --upgrade neovim jedi mistune psutil setproctitle
+pip3 install --user --upgrade neovim jedi mistune psutil setproctitle
+
+git clone --recursive https://github.com/neovim/neovim
+cd neovim/
+git checkout v0.2.0
+make CMAKE_BUILD_TYPE=Release
+make install
+
+cd $HOME
+rm -fr $HOME/neovim
+
+rm -fr $HOME/.rbenv
+git clone git://github.com/sstephenson/rbenv.git $HOME/.rbenv
+
+git clone --recursive git://github.com/amsayk/dotfiles.git
+cd dotfiles
+./install -v -v -v -v
+
+cd $HOME
+

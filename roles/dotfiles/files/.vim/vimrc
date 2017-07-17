@@ -148,8 +148,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'w0ng/vim-hybrid'
 
   Plug 'coderifous/textobj-word-column.vim' " ic, ac, iC, and aC or vic, cic, and daC
-
-  Plug 'vim-scripts/ZoomWin'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -600,8 +598,8 @@ set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION M
 set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
 
-" set completeopt-=preview    " Don't show preview window during completion.
-" set complete-=i
+set completeopt-=preview    " Don't show preview window during completion.
+set complete-=i
 
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop
 
@@ -727,7 +725,7 @@ function! s:SetColorScheme()
   colorscheme hybrid
 
   " Highlighting function
-  fun <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
+  fun! <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
     if a:guifg != ""
       exec "hi " . a:group . " guifg=#" . a:guifg
     endif
@@ -752,14 +750,12 @@ function! s:SetColorScheme()
 
   highlight link EndOfBuffer ColorColumn
   highlight link CursorLineNr ColorColumn
-  " highlight link LineNr ColorColumn
 
   " Make tildes at EndOfBuffer less obvious.
   let l:prefix=has('gui') || has('termguicolors') ? 'gui' : 'cterm'
   let l:bg=synIDattr(synIDtrans(hlID('ColorColumn')), 'bg', l:prefix)
   let l:fg=l:bg
   execute 'highlight EndOfBuffer ' . l:prefix . 'fg=' . l:fg . ' ' . l:prefix . 'bg=' . l:bg
-  " execute 'highlight LineNr ' . l:prefix . 'bg=' . l:bg
   execute 'highlight CursorLineNr ' . l:prefix . 'bg=' . l:bg . ' '. l:prefix.'=bold'
 
   " make the highlighting of tabs and other non-text less annoying
@@ -767,8 +763,8 @@ function! s:SetColorScheme()
   " highlight NonText ctermfg=8 ctermbg=none
 
   " make comments and HTML attributes italic
-  highlight Comment cterm=italic  gui=italic
-  highlight htmlArg cterm=italic  gui=italic
+  highlight! Comment cterm=italic  gui=italic
+  highlight! htmlArg cterm=italic  gui=italic
 
   " hi Search guifg=#ffffff guibg=#1B5E20 gui=none
   " hi IncSearch guifg=#ffffff guibg=#66BB6A gui=none
@@ -896,13 +892,13 @@ if has('autocmd')
       " autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
     endif
 
+    autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
+    autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
+
     if exists('*matchaddpos')
       " autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
       " autocmd FocusLost,WinLeave * call autocmds#blur_window()
     endif
-
-    autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
-    autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
 
     if has('mksession')
       " Save/restore folds and cursor position.
@@ -976,9 +972,10 @@ set diffopt+=vertical
 " disable bracketed paste
 set t_BE=0
 
-" Relying on Hammerspoon to avoid collision between <Tab> and <C-i> (have it
-" send F6 instead for <C-i>).
+" Relying on Karabiner-Elements to avoid collision between <Tab> and
+" <C-i> (have it send F6 instead for <C-i>).
 nnoremap <F6> <C-i>
+inoremap <F6> <Tab>
 
 " Avoid unintentional switches to Ex mode. This would be more useful.
 nnoremap Q :normal n.<CR>
@@ -1611,6 +1608,9 @@ if has('gui')
   set guioptions-=T  "remove toolbar
   set guioptions-=r  "remove right-hand scroll bar
   set guioptions-=L  "remove left-hand scroll bar
+  set guioptions-=R
+  set guioptions-=b
+  set guioptions-=l
 endif
 
 " Don't wake up system with blinking cursor:

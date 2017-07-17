@@ -4,7 +4,6 @@ hs.grid.MARGINY = 0
 hs.window.animationDuration = 0 -- disable animations
 
 local events = require 'events'
-local eventtap = require 'eventtap'
 local log = require 'log'
 local reloader = require 'reloader'
 
@@ -388,7 +387,6 @@ end)
 -- `open hammerspoon://screencast`
 hs.urlevent.bind('screencast', prepareScreencast)
 
-eventtap.init()
 reloader.init()
 
 log.i('Config loaded')
