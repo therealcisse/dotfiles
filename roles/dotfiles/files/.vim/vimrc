@@ -30,11 +30,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'kana/vim-textobj-indent' " ai, ii
   Plug 'kana/vim-textobj-line'   " al, il
   " Plug 'glts/vim-textobj-comment' " ac, ic
-  " Plug 'kana/vim-textobj-function' " af, if
+
   " Plug 'mattn/vim-textobj-url' " au, iu
   " Plug 'saihoooooooo/vim-textobj-space' " aS, iS
 
-  " Plug 'thinca/vim-textobj-function-javascript'
+  Plug 'thinca/vim-textobj-function-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] } | Plug 'kana/vim-textobj-function' " af, if
 
   Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] } | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
   Plug 'elzr/vim-json', { 'for': [ 'json' ] }
@@ -896,8 +896,8 @@ if has('autocmd')
     autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
 
     if exists('*matchaddpos')
-      " autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
-      " autocmd FocusLost,WinLeave * call autocmds#blur_window()
+      autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
+      autocmd FocusLost,WinLeave * call autocmds#blur_window()
     endif
 
     if has('mksession')
@@ -989,9 +989,6 @@ vnoremap Y myY`y
 
 vnoremap <BS> "_xi
 
-" autocmd FocusLost * silent! wa " write all on lost focus
-" autocmd TabLeave * silent! wa " autowriteall doesn't capture tab changing
-
 " gf
 
 set suffixesadd=.js
@@ -1011,12 +1008,12 @@ set shell=/bin/sh
 set updatetime=250
 
 " ==================== delimitMate ====================
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_smart_quotes = 1
+let g:delimitMate_expand_cr            = 1
+let g:delimitMate_expand_space         = 1
+let g:delimitMate_smart_quotes         = 1
 let g:delimitMate_expand_inside_quotes = 0
-let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
-let g:delimitMate_excluded_ft = 'mail,txt'
+let g:delimitMate_smart_matchpairs     = '^\%(\w\|\$\)'
+let g:delimitMate_excluded_ft          = 'mail,txt'
 
 augroup DelimitMate
   autocmd!
