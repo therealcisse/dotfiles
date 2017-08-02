@@ -104,6 +104,9 @@
 	fileMode = false
 [status]
 	submoduleSummary = true
+[submodule]
+	# Added in Git 2.9.0.
+	fetchJobs = 4
 [color]
 	ui = auto
 [push]

@@ -31,6 +31,7 @@ alias l='ls -F'
 alias ll='ls -laF'
 alias t=tmux
 alias v=nvim
+alias trash=rm
 
 alias octave='/Applications/Octave-cli.app/Contents/MacOS/Octave'
 

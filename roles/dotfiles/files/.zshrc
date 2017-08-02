@@ -97,6 +97,8 @@ bindkey ' ' magic-space # do history expansion on space
 bindkey "\e[1;5D" backward-word # Ctrl + <letf>
 bindkey "\e[1;5C" forward-word  # Ctrl + <right>
 
+bindkey \^u backward-kill-line
+
 # Switch back and forward between program faster
 
 fancy-ctrl-z () {

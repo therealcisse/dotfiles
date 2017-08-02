@@ -12,6 +12,8 @@ let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 let g:loaded_matchparen = 1
 
 call plug#begin('~/.vim/plugged')
+  Plug 'duggiefresh/vim-easydir'
+
   " Plug 'sbdchd/neoformat'
   Plug 'Chiel92/vim-autoformat'
 
@@ -121,7 +123,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'rust-lang/rust.vim', { 'for': [ 'rust' ] } | Plug 'racer-rust/vim-racer', { 'for': [ 'rust' ] } | Plug 'roxma/nvim-cm-racer', { 'for': [ 'rust' ] }
 
-  Plug 'kewah/vim-stylefmt', { 'for': [ 'sass', 'scss', 'css' ] }
+  " Plug 'kewah/vim-stylefmt', { 'for': [ 'sass', 'scss', 'css' ] }
 
   Plug 'christoomey/vim-sort-motion'
 
@@ -143,11 +145,13 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] }
 
-  Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious' ] }
+  Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious', 'TmuxNavigateUp', 'TmuxNavigateDown' ] }
 
   Plug 'w0ng/vim-hybrid'
 
   Plug 'coderifous/textobj-word-column.vim' " ic, ac, iC, and aC or vic, cic, and daC
+
+  Plug 'tpope/vim-projectionist', { 'on': ['A', 'AS', 'AV', 'AT'] }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -157,7 +161,7 @@ call plug#end()
 " Use a different mapleader (default is '\').
 
 let mapleader="\<Space>"
-let maplocalleader=","
+let maplocalleader="\\"
 
 if exists("$TMUX")
   " Disable CTRL-Space on tmux or on screen
@@ -255,7 +259,7 @@ set cpoptions+=$               " When making a change, don't
 
 if exists('+colorcolumn')
   " Highlight at textwidth and from 80 + 40 columns (this is the current Vim max) beyond 'textwidth'
-  " let &l:colorcolumn="80," . join(map(range(40,999), '"+" . v:val'), ',')
+  let &l:colorcolumn="80," . join(map(range(40,999), '"+" . v:val'), ',')
 endif
 
 set cursorline                 " Highlight the current line.
@@ -748,6 +752,7 @@ function! s:SetColorScheme()
 
   call <sid>hi("ColorColumn", "", "282a2e", "", "282a2e", "none", "")
 
+  " highlight link ColorColumn CursorLine
   highlight link EndOfBuffer ColorColumn
   highlight link CursorLineNr ColorColumn
 
@@ -831,8 +836,8 @@ cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
 cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Align current paragraph
-nmap <leader>f :call mappings#leader#format()<CR>
-vmap <leader>f =
+nmap <leader>F :call mappings#leader#format()<CR>
+vmap <leader>F =
 
 " Kill double quotes
 nmap <c-s>" :%s/\V\"/'<CR><C-L>
@@ -963,8 +968,17 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
-nnoremap ; :
-vnoremap ; :
+" Save all
+nn <leader>s :wa<CR>
+
+" Save current buffer
+nn <leader>S :update<CR>
+
+" Quickly quick current buffer
+nn <leader>q :q<CR>
+
+" Close all
+nn <leader>Q :qa<CR>
 
 " Always use vertical diffs
 set diffopt+=vertical
@@ -1133,9 +1147,9 @@ nnoremap <c-g>s :Gstatus<cr>
 nnoremap <c-g>d :Gvdiff<cr>
 nnoremap <c-g>P :Gpush<cr>
 nnoremap <c-g>L :Gpull<cr>
-nnoremap <c-g>R :!git checkout <c-r>%<cr><cr>
+" nnoremap <c-g>R :!git checkout <c-r>%<cr><cr>
 nnoremap <c-g>p :GitGutterPreviewHunk<cr>:call JumpLastBufferWindow()<cr>
-nnoremap <c-g>r :GitGutterUndoHunk<cr>
+" nnoremap <c-g>r :GitGutterUndoHunk<cr>
 nnoremap <c-g>S :GitGutterStageHunk<cr>
 nnoremap <c-g>l :GitGutterLineHighlightsToggle<cr>
 nnoremap [h :GitGutterPrevHunk<cr>
@@ -1179,7 +1193,7 @@ augroup ArrowKeys
   autocmd BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
 augroup end
 
-set pastetoggle=
+set pastetoggle=<F2>
 
 vnoremap . :norm.<CR>
 
@@ -1218,6 +1232,7 @@ if has('nvim')
   let g:neoterm_position   = 'vertical'
   let g:neoterm_shell      = $SHELL
   let g:neoterm_autoinsert = 1
+  let g:neoterm_autoscroll = 1
 
   nnoremap <silent> <leader>t :Ttoggle<CR>
 endif
@@ -1395,7 +1410,7 @@ endif
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 "stay same position on insert mode exit
-inoremap <silent> <Esc> <Esc>`^
+" inoremap <silent> <Esc> <Esc>`^
 
 "mixed indent
 nnoremap <c-s>i :%retab!<CR>
@@ -1431,8 +1446,8 @@ let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
 nnoremap <silent> <c-n>e :Explore<cr>
 
 " Stylefmt
-nnoremap <silent> ,f :Stylefmt<CR>
-vnoremap <silent> ,f :StylefmtVisual<CR>
+" nnoremap <silent> <localleader>f :Stylefmt<CR>
+" vnoremap <silent> <localleader>f :StylefmtVisual<CR>
 
 " Sort motion
 let g:sort_motion_flags = "u"
@@ -1561,12 +1576,12 @@ let g:cm_refresh_length = 2 " [[1,2], [7,2]]
 
 let g:cm_multi_threading = 1
 
+let g:cm_sources_override = {
+      \ 'cm-tags': {'enable':0}
+      \ }
+
 " use this to add airline plugin if airline rtp load is disabled
 let g:airline#extensions#cm_call_signature#enabled = 1
-
-" let g:cm_sources_override = {
-"     \ 'cm-tags': {'enable':0}
-"     \ }
 
 " Language server
 
@@ -1583,22 +1598,39 @@ au FileType javascript,javascript.jsx nnoremap <silent> <F2> :call LanguageClien
 
 " Formatting
 
-" let g:neoformat_basic_format_retab = 1
-" let g:neoformat_basic_format_trim  = 1
-"
-" let g:neoformat_enabled_scala = ['scalafmt']
-"
-" let g:neoformat_scala_scalafmt = {
-"       \ 'exe': 'scalafmt',
-"       \ 'args': [],
-"       \ 'replace': 1,
-"       \ }
-"
-" noremap <F1> :Neoformat <BAR> w<CR>
+augroup MyAutoformatCmds
+  autocmd!
 
-noremap <F1> :Autoformat <BAR> update<CR>
-let g:formatdef_scalafmt = "'ng scalafmt --stdin'"
-let g:formatters_scala = ['scalafmt']
+  " Scala
+  let g:formatdef_scalafmt = "'ng scalafmt --stdin'"
+  let g:formatters_scala = ['scalafmt']
+  autocmd FileType scala noremap <buffer> <leader>f :Autoformat <BAR> update<CR>
+
+  " Prettier for js, typescript, flow and css
+  let g:formatdef_prettier  = "'prettier --stdin --parser flow --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+
+  let g:formatters_javascript = ['prettier']
+  let g:formatters_typescript = ['prettier']
+  let g:formatters_css        = ['prettier']
+  let g:formatters_scss       = ['prettier']
+  let g:formatters_sass       = ['prettier']
+
+  function! DoFormatAndCleanHL()
+    let l:pos=getcurpos()
+    let l:search=@/
+    :keepjumps Autoformat
+    :keepjumps %s/\V\"/'/e  " Undo prettier using double quotes on jsx attributes
+    let @/=l:search
+    nohlsearch
+    call setpos('.', l:pos)
+  endfunction
+
+  autocmd FileType javascript,javascript.jsx,typescript noremap <buffer> <leader>f :call DoFormatAndCleanHL()<CR>
+  autocmd BufWritePre *.{js,ts} call DoFormatAndCleanHL() " Autoformat on save
+
+  autocmd FileType css,scss,sass noremap <buffer> <leader>f :keepjumps Autoformat<CR>
+  autocmd BufWritePre *.{css,scss} :keepjumps Autoformat " Autoformat on save
+augroup END
 
 if has('gui')
   set guioptions-=m  "remove menu bar
@@ -1666,7 +1698,7 @@ snoremap <BS> <BS>i
 
 augroup filetypedetect
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
-  autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf*,sites-available/*,sites-enabled/* setf nginx
+  autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf*,sites-available/*,sites-enabled/*,conf.d/* setf nginx
 augroup END
 
 " Ensime
@@ -1702,9 +1734,12 @@ let g:expand_region_text_objects = {
 " Arg wrap
 nnoremap <silent> J :ArgWrap<CR>
 
-au FileType javascript,javascript.jsx let b:argwrap_tail_comma = 1
-au FileType javascript,javascript.jsx let b:argwrap_padded_braces = '[{'
-au FileType javascript,javascript.jsx let b:argwrap_tail_comma_braces = '[{'
+augroup MyArgWrapCmds
+  au!
+  au FileType javascript,javascript.jsx let b:argwrap_tail_comma = 1
+  au FileType javascript,javascript.jsx let b:argwrap_padded_braces = '[{'
+  au FileType javascript,javascript.jsx let b:argwrap_tail_comma_braces = '[{'
+augroup END
 
 " Tmux Navigation
 
@@ -1713,11 +1748,11 @@ let g:tmux_navigator_no_mappings = 1
 " Write all buffers before navigating from Vim to tmux pane
 let g:tmux_navigator_save_on_switch = 2
 
-nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
-nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
-nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
-nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
-nnoremap <silent> <M-\> :TmuxNavigatePrevious<CR>
+noremap <silent> <M-h> :TmuxNavigateLeft<CR>
+noremap <silent> <M-j> :TmuxNavigateDown<CR>
+noremap <silent> <M-k> :TmuxNavigateUp<CR>
+noremap <silent> <M-l> :TmuxNavigateRight<CR>
+noremap <silent> <M-\> :TmuxNavigatePrevious<CR>
 
 nn <localleader><localleader> :Startify<CR>
 
