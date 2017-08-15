@@ -99,7 +99,7 @@
 	smudge = git lfs smudge %f
 	required = true
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/retina/.gitignore
 	attributesfile = ~/.gitattributes
 	fileMode = false
 [status]
@@ -168,3 +168,11 @@
 [gitchangelog]
 	rc-path = ~/.gitchangelog.rc
 
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/retina/.stCommitMsg

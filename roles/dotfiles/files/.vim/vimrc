@@ -222,8 +222,6 @@ if !has('nvim')
     set ttymouse=xterm2
   endif
 else
-  " no mouse interaction, mouse is evil
-  " set mouse=
 
   set mouse=a
 endif
@@ -241,10 +239,6 @@ set backupskip+=/private/tmp/*      " ┘ for certain files.
 if exists('&belloff')
   set belloff=all                     " never ring the bell for any reason
 endif
-
-" if (executable('pbcopy') || executable('xclip') || executable('xsel')) && has('clipboard') && exists('$DISPLAY')
-"   set clipboard=unnamed,unnamedplus     "  Use the system clipboard as the default register.
-" endif
 
 if has('clipboard')
   "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
@@ -330,7 +324,7 @@ set number                     " Show line number.
 set numberwidth=4              " Increase the minimal number of
                                " columns used for the `line number`.
 
-set report=0                   " Report the number of lines changed.
+set report=100                 " Report the number of lines changed.
 set ruler                      " Show cursor position.
 
 set scrolloff=1                " When scrolling, keep the cursor
@@ -420,44 +414,44 @@ if has('folding')
     " set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
   endif
   set foldenable                      " enable folding
-  set foldmethod=syntax               " not as cool as syntax, but faster
+  set foldmethod=indent               " not as cool as syntax, but faster
   set foldlevelstart=99               " start unfolded
 
-  set foldtext=FoldText()
-  function! FoldText()
-    let l:lpadding = &fdc
-    redir => l:signs
-    execute 'silent sign place buffer='.bufnr('%')
-    redir End
-    let l:lpadding += l:signs =~ 'id=' ? 2 : 0
-
-    if exists("+relativenumber")
-      if (&number)
-        let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
-      elseif (&relativenumber)
-        let l:lpadding += max([&numberwidth, strlen(v:foldstart) + strlen(v:foldstart - line('w0')), strlen(v:foldstart) + strlen(line('w$') - v:foldstart)]) + 1
-      endif
-    else
-      if (&number)
-        let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
-      endif
-    endif
-
-    " expand tabs
-    let l:start = substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
-    let l:end = substitute(substitute(getline(v:foldend), '\t', repeat(' ', &tabstop), 'g'), '^\s*', '', 'g')
-
-    let l:info = ' (' . (v:foldend - v:foldstart) . ')'
-    let l:infolen = strlen(substitute(l:info, '.', 'x', 'g'))
-    let l:width = winwidth(0) - l:lpadding - l:infolen
-
-    let l:separator = ' … '
-    let l:separatorlen = strlen(substitute(l:separator, '.', 'x', 'g'))
-    let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
-    let l:text = l:start . ' … ' . l:end
-
-    return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
-  endfunction
+  " set foldtext=FoldText()
+  " function! FoldText()
+  "   let l:lpadding = &fdc
+  "   redir => l:signs
+  "   execute 'silent sign place buffer='.bufnr('%')
+  "   redir End
+  "   let l:lpadding += l:signs =~ 'id=' ? 2 : 0
+  "
+  "   if exists("+relativenumber")
+  "     if (&number)
+  "       let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+  "     elseif (&relativenumber)
+  "       let l:lpadding += max([&numberwidth, strlen(v:foldstart) + strlen(v:foldstart - line('w0')), strlen(v:foldstart) + strlen(line('w$') - v:foldstart)]) + 1
+  "     endif
+  "   else
+  "     if (&number)
+  "       let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+  "     endif
+  "   endif
+  "
+  "   " expand tabs
+  "   let l:start = substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
+  "   let l:end = substitute(substitute(getline(v:foldend), '\t', repeat(' ', &tabstop), 'g'), '^\s*', '', 'g')
+  "
+  "   let l:info = ' (' . (v:foldend - v:foldstart) . ')'
+  "   let l:infolen = strlen(substitute(l:info, '.', 'x', 'g'))
+  "   let l:width = winwidth(0) - l:lpadding - l:infolen
+  "
+  "   let l:separator = ' … '
+  "   let l:separatorlen = strlen(substitute(l:separator, '.', 'x', 'g'))
+  "   let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
+  "   let l:text = l:start . ' … ' . l:end
+  "
+  "   return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
+  " endfunction
 endif
 
 set pumheight=10             " Completion window max size
@@ -1301,7 +1295,7 @@ augroup amsaykUltisnips
       return "\<C-J>"
     endif
 
-    return "\<C-N>"
+    return "\<C-O>j"
   endfunction
 
   func! g:TriggerNextCK()
@@ -1309,12 +1303,12 @@ augroup amsaykUltisnips
       return "\<C-K>"
     endif
 
-    return "\<C-P>"
+    return "\<C-O>k"
   endfunction
 
-  " Navigate pum with j k
-  imap <expr> <c-j> "<C-R>=g:TriggerNextCJ()<CR>"
-  imap <expr> <c-k> "<C-R>=g:TriggerNextCK()<CR>"
+  " Navigate ultisnips with c-j, c-k
+  inoremap <expr> <c-j> "<C-R>=g:TriggerNextCJ()<CR>"
+  " inoremap <expr> <c-k> "<C-R>=g:TriggerNextCK()<CR>"
 augroup END
 
 " Navigate line with H L
@@ -1522,13 +1516,13 @@ imap <localleader>/ </<C-x><C-o>
 nn <leader>D "xyy"xp
 
 " last typed word to lower case
-" inoremap <C-w>u <esc>guawA
+inoremap <C-g>u <esc>guawA
 
 " last typed word to UPPER CASE
 inoremap <C-g>~ <esc>gUawA
 
 " entire line to lower case
-inoremap <C-g>u <esc>guuA
+" inoremap <C-g>u <esc>guuA
 
 " entire line to UPPER CASE
 inoremap <C-g>U <esc>gUUA
@@ -1698,7 +1692,7 @@ snoremap <BS> <BS>i
 
 augroup filetypedetect
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
-  autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf*,sites-available/*,sites-enabled/*,conf.d/* setf nginx
+  autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf*,sites-available/*,sites-enabled/*,conf.d/*,*/nginx/config setf nginx
 augroup END
 
 " Ensime

@@ -133,17 +133,19 @@ endsnippet
 # Flow control
 # if
 snippet if
-if (${1:true}) {
-	${0}
+if (${1}) {
+	${2}
 }
+${0}
 endsnippet
 # if ... else
 snippet ife
-if (${1:true}) {
+if (${1}) {
 	${2}
 } else {
-	${0}
+	${3}
 }
+${0}
 endsnippet
 # tertiary conditional
 snippet ter
