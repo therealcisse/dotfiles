@@ -969,10 +969,10 @@ nn <leader>s :wa<CR>
 nn <leader>S :update<CR>
 
 " Quickly quick current buffer
-nn <leader>q :q<CR>
+nn <leader>q :confirm q<CR>
 
 " Close all
-nn <leader>Q :qa<CR>
+nn <leader>Q :confirm qall<CR>
 
 " Always use vertical diffs
 set diffopt+=vertical
@@ -1398,15 +1398,15 @@ if has('nvim')
   tnoremap <C-w>l <C-\><C-n><C-w><C-l>
 
   tnoremap <C-w>w <C-\><C-n><C-w><C-w>
+
+  " Prefer Neovim terminal insert mode to normal mode.
+  autocmd BufEnter term://* startinsert
 endif
 
-"select pasted text
+" Select pasted text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-"stay same position on insert mode exit
-" inoremap <silent> <Esc> <Esc>`^
-
-"mixed indent
+" Fix mixed indent
 nnoremap <c-s>i :%retab!<CR>
 
 " Toggle quickfix list
