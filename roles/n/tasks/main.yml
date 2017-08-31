@@ -1,0 +1,17 @@
+---
+# file: tasks/main.yml
+# Top-level installer for N & Node.js.
+#
+# @see https://github.com/tj/n
+#
+
+- name: download N
+  git: repo={{n_repo}} dest=/tmp/n
+
+- name: install N
+  command: make -C /tmp/n
+  become: true
+
+- name: install Node.js
+  command: n {{node_version}}
+

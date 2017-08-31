@@ -1,7 +1,7 @@
 let s:INT = { 'MAX': 2147483647 }
 
-let g:AmsaykNumberBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'startify', 'help', 'vim-plug', 'terminal']
-let g:AmsaykColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf']
+let g:AmsaykNumberBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'startify', 'help', 'vim-plug', 'terminal', 'neoterm']
+let g:AmsaykColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'terminal', 'neoterm']
 let g:AmsaykCursorlineBlacklist = ['ctrlp']
 let g:AmsaykMkviewFiletypeBlacklist = ['diff', 'gitcommit']
 

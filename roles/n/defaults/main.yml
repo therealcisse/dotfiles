@@ -1,0 +1,12 @@
+---
+
+#
+# variables needed to be defined in user's playbook
+#
+
+# use "n ls" to see all available versions
+node_version: latest
+
+# N github repo
+n_repo: https://github.com/visionmedia/n
+

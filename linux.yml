@@ -1,10 +1,11 @@
 ---
 - hosts: localhost
   roles:
-    - { role: dotfiles,  tags: ['dotfiles'] }
-    - { role: terminfo,  tags: ['terminfo'] }
-    - { role: shell,     tags: ['shell'] }
-    - { role: vim,       tags: ['vim', 'neovim'] }
+    - { role: dotfiles, tags: ['dotfiles'] }
+    - { role: terminfo, tags: ['terminfo'] }
+    - { role: shell,    tags: ['shell'] }
+    - { role: vim,      tags: ['vim', 'neovim'] }
+    - { role: n,        tags: ['n', 'node'] }
   vars:
     terminfo_path: ~/share/terminfo
 

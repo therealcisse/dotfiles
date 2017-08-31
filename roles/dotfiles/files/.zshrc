@@ -74,8 +74,8 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Pathogen-like loader for plugins
-find -L ~/.zsh/bundle -type f -name "*.plugin.zsh" | sort |
-while read filename; do source "$filename"; done
+# find -L ~/.zsh/bundle -type f -name "*.plugin.zsh" | sort |
+# while read filename; do source "$filename"; done
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

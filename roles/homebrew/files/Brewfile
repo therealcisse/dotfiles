@@ -27,7 +27,9 @@ cask 'font-hasklig-nerd-font'
 cask 'android-platform-tools'
 cask 'android-sdk'
 cask 'androidtool'
+cask 'hyper'
 
+brew 'plantuml'
 brew 'n'
 brew 'coursier/formulas/coursier'
 brew 'docker-compose', service_restart: true

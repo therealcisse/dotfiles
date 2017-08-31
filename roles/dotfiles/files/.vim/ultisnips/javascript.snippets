@@ -93,6 +93,11 @@ snippet cl
 console.log($1)$0
 endsnippet
 
+# Snippets for Console Debug Output
+snippet ce
+console.error($1)$0
+endsnippet
+
 snippet react
 import React from 'react';
 
@@ -100,8 +105,7 @@ export default class $1 extends React.Component {
 	render() {
 		$2
 	}
-}
-$0
+}$0
 endsnippet
 
 snippet icx "Import classnames" b
@@ -135,8 +139,7 @@ endsnippet
 snippet if
 if (${1}) {
 	${2}
-}
-${0}
+}${0}
 endsnippet
 # if ... else
 snippet ife
@@ -144,8 +147,7 @@ if (${1}) {
 	${2}
 } else {
 	${3}
-}
-${0}
+}${0}
 endsnippet
 # tertiary conditional
 snippet ter

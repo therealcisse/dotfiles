@@ -14,6 +14,8 @@ let g:loaded_matchparen = 1
 call plug#begin('~/.vim/plugged')
   Plug 'duggiefresh/vim-easydir'
 
+  " Plug 'deuiore/vim-indentblank'
+
   " Plug 'sbdchd/neoformat'
   Plug 'Chiel92/vim-autoformat'
 
@@ -77,7 +79,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'Shougo/echodoc.vim'
   endif
 
-  " Plug 'wakatime/vim-wakatime'
+  Plug 'wakatime/vim-wakatime'
 
   Plug 'tommcdo/vim-lion' " Align: gl, gL
 
@@ -125,13 +127,13 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'kewah/vim-stylefmt', { 'for': [ 'sass', 'scss', 'css' ] }
 
-  Plug 'christoomey/vim-sort-motion'
+  Plug 'christoomey/vim-sort-motion' " gs, gss
 
   Plug 'zah/nim.vim', { 'for': [ 'nim' ] }
 
   Plug 'kepbod/quick-scope'
 
-  Plug 'tommcdo/vim-exchange'
+  Plug 'tommcdo/vim-exchange' " cx
 
   " fzf greatness (fuzzy finding)
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin --no-update-rc --64 --key-bindings --completion' }
@@ -143,7 +145,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'ensime/ensime-vim', { 'for': [ 'scala' ], 'do': ':UpdateRemotePlugins' }
 
-  Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] }
+  Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] } " M-+, M--
 
   Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious', 'TmuxNavigateUp', 'TmuxNavigateDown' ] }
 
@@ -152,6 +154,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'coderifous/textobj-word-column.vim' " ic, ac, iC, and aC or vic, cic, and daC
 
   Plug 'tpope/vim-projectionist', { 'on': ['A', 'AS', 'AV', 'AT'] }
+
+  Plug 'aklt/plantuml-syntax', { 'for': ['plantuml'] }
+
+  Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -366,6 +372,8 @@ set spelllang=en_us            " Set the spellchecking language.
 set smartcase                  " Override `ignorecase` option
                                " if the search pattern contains
                                " uppercase characters.
+
+set infercase                   " Smarter case during autocompletion.
 
 set synmaxcol=2500             " Limit syntax highlighting (this
                                " avoids the very slow redrawing
@@ -1401,6 +1409,9 @@ if has('nvim')
 
   " Prefer Neovim terminal insert mode to normal mode.
   autocmd BufEnter term://* startinsert
+
+  " Don't close terminal on :q
+  autocmd TermOpen * set bufhidden=hide
 endif
 
 " Select pasted text
@@ -1546,12 +1557,34 @@ nnoremap <C-g>c :Commands<CR>
 nnoremap <C-f>l :BLines<CR>
 vnoremap <C-f>l :<C-u>BLines <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
 nnoremap <C-p> :Files<CR>
-nnoremap <leader><C-p> :Buffers<CR>
+nnoremap <leader><C-p> :History<CR>
 nnoremap <leader>M :Marks<CR>
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 inoremap <c-c> <ESC>
+
+function! s:yank_list()
+  return reverse(['0 ' . @0, '1 ' . @1, '2 ' . @2, '3 ' . @3, '4 ' . @4, '5 ' . @5, '6 ' . @6, '7 ' . @7, '8 ' . @8, '9 ' . @9])
+endfunction
+
+function! s:yank_handler(reg)
+  if empty(a:reg)
+    echo "aborted register paste"
+  else
+    let token = split(a:reg, ' ')
+    execute 'normal! "' . token[0] . 'p'
+  endif
+endfunction
+
+command! FZFYank call fzf#run({
+      \ 'source': <sid>yank_list(),
+      \ 'sink': function('<sid>yank_handler'),
+      \ 'options': '-m',
+      \ 'down': 12
+      \ })
+
+nmap <C-y> :FZFYank<CR>
 
 " Insert Mode:
 imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -1580,8 +1613,10 @@ let g:airline#extensions#cm_call_signature#enabled = 1
 " Language server
 
 let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ }
+      \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+      \ 'javascript': ['flow-language-server', '--stdio'],
+      \ 'javascript.jsx': ['flow-language-server', '--stdio'],
+      \ }
 
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
@@ -1601,13 +1636,18 @@ augroup MyAutoformatCmds
   autocmd FileType scala noremap <buffer> <leader>f :Autoformat <BAR> update<CR>
 
   " Prettier for js, typescript, flow and css
-  let g:formatdef_prettier  = "'prettier --stdin --parser flow --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+  let g:formatdef_prettier          = "'prettier --stdin --parser flow    --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+  " let g:formatdef_prettier_json     = "'prettier --stdin --parser json    --tab-width 2 --print-width 81'"
+  " let g:formatdef_prettier_postcss  = "'prettier --stdin --parser postcss --tab-width 2 --print-width 81 --single-quote'"
+  " let g:formatdef_prettier_graphql  = "'prettier --stdin --parser graphql --tab-width 2 --print-width 81'"
 
   let g:formatters_javascript = ['prettier']
   let g:formatters_typescript = ['prettier']
-  let g:formatters_css        = ['prettier']
-  let g:formatters_scss       = ['prettier']
-  let g:formatters_sass       = ['prettier']
+  " let g:formatters_json       = ['prettier_json']
+  " let g:formatters_css        = ['prettier_postcss']
+  " let g:formatters_scss       = ['prettier_postcss']
+  " let g:formatters_sass       = ['prettier_postcss']
+  " let g:formatters_graphql    = ['prettier_graphql']
 
   function! DoFormatAndCleanHL()
     let l:pos=getcurpos()
@@ -1622,8 +1662,8 @@ augroup MyAutoformatCmds
   autocmd FileType javascript,javascript.jsx,typescript noremap <buffer> <leader>f :call DoFormatAndCleanHL()<CR>
   autocmd BufWritePre *.{js,ts} call DoFormatAndCleanHL() " Autoformat on save
 
-  autocmd FileType css,scss,sass noremap <buffer> <leader>f :keepjumps Autoformat<CR>
-  autocmd BufWritePre *.{css,scss} :keepjumps Autoformat " Autoformat on save
+  " autocmd FileType css,scss,sass,json,graphql noremap <buffer> <leader>f :keepjumps Autoformat<CR>
+  " autocmd BufWritePre *.{css,scss,json,graphql} :keepjumps Autoformat " Autoformat on save
 augroup END
 
 if has('gui')
@@ -1643,13 +1683,6 @@ let &guicursor = &guicursor . ",a:blinkon0"
 " A black background would be better for remote terminal
 " due to the low FPS
 hi Normal ctermbg=none
-
-if exists('##TextYankPost') && exists("$SSH_CONNECTION")
-  augroup globalYank
-    autocmd!
-    autocmd TextYankPost * :Clip
-  augroup END
-endif
 
 let g:paste_char_threshold = 3
 

@@ -8,7 +8,6 @@
     - { role: shell,    tags: ['shell'] }
     - { role: vim,      tags: ['vim', 'neovim'] }
     - { role: ssh,      tags: ['ssh'] }
-    # - { role: fonts,    tags: ['fonts'] }
-    # - { role: nvm,      tags: ['nvm', 'node'] }
-    - { role: keyboard,      tags: ['keyboard', 'karabiner'] }
+    - { role: n,        tags: ['n', 'node'] }
+    - { role: keyboard, tags: ['keyboard', 'karabiner'] }
 
