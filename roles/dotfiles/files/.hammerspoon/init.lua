@@ -26,15 +26,15 @@ local screenCount = #hs.screen.allScreens()
 
 local grid = {
   topHalf = '0,0 12x6',
-  topThird = '0,0 12x4',
-  topTwoThirds = '0,0 12x8',
-  topThreeThirds = '0,0 12x12',
+  topThird = '0,0 12x3',
+  topTwoThirds = '0,0 12x6',
+  topThreeThirds = '0,0 12x9',
   rightHalf = '6,0 6x12',
   rightThird = '8,0 4x12',
   rightTwoThirds = '4,0 8x12',
   bottomHalf = '0,6 12x6',
-  bottomThird = '0,8 12x4',
-  bottomTwoThirds = '0,4 12x8',
+  bottomThird = '0,8 12x3',
+  bottomTwoThirds = '0,4 12x6',
   leftHalf = '0,0 6x12',
   leftThird = '0,0 4x12',
   leftTwoThirds = '0,0 8x12',
@@ -106,15 +106,15 @@ local layoutConfig = {
   --   end
   -- end),
 
-  -- ['com.googlecode.iterm2'] = (function(window, forceScreenCount)
-  --   local count = forceScreenCount or screenCount
-  --   if count == 1 then
-  --     -- hs.grid.set(window, grid.fullScreen)
-  --     hs.grid.set(window, grid.topThreeThirds)
-  --   else
-  --     hs.grid.set(window, grid.leftHalf, hs.screen.primaryScreen())
-  --   end
-  -- end),
+  ['com.googlecode.iterm2'] = (function(window, forceScreenCount)
+    local count = forceScreenCount or screenCount
+    if count == 1 then
+      -- hs.grid.set(window, grid.fullScreen)
+      hs.grid.set(window, '0,0 12x11')
+    else
+      hs.grid.set(window, grid.leftHalf, hs.screen.primaryScreen())
+    end
+  end),
 
   ['com.skype.skype'] = (function(window)
     hs.grid.set(window, grid.rightHalf, internalDisplay())

@@ -28,3 +28,6 @@
 [submodule "roles/dotfiles/files/.zsh/oh-my-zsh/plugins/fast-syntax-highlighting"]
 	path = roles/dotfiles/files/.zsh/oh-my-zsh/plugins/fast-syntax-highlighting
 	url = https://github.com/zdharma/fast-syntax-highlighting.git
+[submodule "roles/dotfiles/files/.emacs.d"]
+	path = roles/dotfiles/files/.emacs.d
+	url = https://github.com/syl20bnr/spacemacs

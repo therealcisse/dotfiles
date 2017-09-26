@@ -11,6 +11,7 @@ tap 'Goles/battery'
 tap 'homebrew/dupes'
 tap 'caskroom/fonts'
 tap 'paulp/extras'
+tap 'd12frosted/emacs-plus'
 
 cask 'redis-app'
 cask 'launchcontrol'
@@ -76,7 +77,7 @@ brew 'cscope'
 brew 'ctags'
 brew 'dirmngr'
 brew 'elinks'
-brew 'emacs', args: ['with-cocoa'] # to link to /Applications, `brew linkapps emacs`
+brew 'emacs-plus', args:[], service_restart: true # to link to /Applications, `brew linkapps emacs-plus`
 brew 'ffmpeg'
 brew 'fontconfig'
 brew 'freetype'

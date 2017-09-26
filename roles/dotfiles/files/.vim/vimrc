@@ -75,6 +75,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'roxma/nvim-completion-manager'
     " Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
+    " Java completion
+    " Plug 'sassanh/nvim-cm-eclim', { 'for': [ 'java' ] }
+
     Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
     Plug 'Shougo/echodoc.vim'
   endif
@@ -149,7 +152,8 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious', 'TmuxNavigateUp', 'TmuxNavigateDown' ] }
 
-  Plug 'w0ng/vim-hybrid'
+  " Plug 'w0ng/vim-hybrid'
+  Plug 'chriskempson/base16-vim'
 
   Plug 'coderifous/textobj-word-column.vim' " ic, ac, iC, and aC or vic, cic, and daC
 
@@ -158,6 +162,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'aklt/plantuml-syntax', { 'for': ['plantuml'] }
 
   Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
+
+  " Plug 'w0rp/ale'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -259,7 +265,7 @@ set cpoptions+=$               " When making a change, don't
 
 if exists('+colorcolumn')
   " Highlight at textwidth and from 80 + 40 columns (this is the current Vim max) beyond 'textwidth'
-  let &l:colorcolumn="80," . join(map(range(40,999), '"+" . v:val'), ',')
+  " let &l:colorcolumn="80," . join(map(range(40,999), '"+" . v:val'), ',')
 endif
 
 set cursorline                 " Highlight the current line.
@@ -697,73 +703,78 @@ let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
 
 function! s:SetColorScheme()
-  " if !has('termguicolors')
-  "   let g:base16colorspace=256
-  " endif
-  "
-  " let s:config_file = expand('~/.base16')
-  "
-  " if filereadable(s:config_file)
-  "   let s:config = readfile(s:config_file, '', 2)
-  "
-  "   if s:config[1] =~# '^dark\|light$'
-  "     execute 'set background=' . s:config[1]
-  "   else
-  "     echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
-  "   endif
-  "
-  "   if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
-  "     execute 'colorscheme base16-' . s:config[0]
-  "   elseif filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
-  "     execute 'colorscheme base16-' . s:config[0] . '-' . s:config[1]
-  "   else
-  "     echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
-  "   endif
-  " else " default
-  "   set background=dark
-  "   colorscheme base16-ocean
-  " endif
+  if !has('termguicolors')
+    let g:base16colorspace=256
+  endif
 
-  let g:hybrid_custom_term_colors = 1
-  let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-  let g:airline_theme='hybridline'
-  set background=dark
-  colorscheme hybrid
+  let s:config_file = expand('~/.base16')
+
+  if filereadable(s:config_file)
+    let s:config = readfile(s:config_file, '', 2)
+
+    if s:config[1] =~# '^dark\|light$'
+      execute 'set background=' . s:config[1]
+    else
+      echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
+    endif
+
+    if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
+      execute 'colorscheme base16-' . s:config[0]
+    elseif filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
+      execute 'colorscheme base16-' . s:config[0] . '-' . s:config[1]
+    else
+      echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+    endif
+  else " default
+    set background=dark
+    colorscheme base16-ocean
+  endif
+
+  " let g:hybrid_custom_term_colors = 1
+  " let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+  " let g:airline_theme='hybridline'
+  " set background=dark
+  " colorscheme hybrid
 
   " Highlighting function
-  fun! <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
-    if a:guifg != ""
-      exec "hi " . a:group . " guifg=#" . a:guifg
-    endif
-    if a:guibg != ""
-      exec "hi " . a:group . " guibg=#" . a:guibg
-    endif
-    if a:ctermfg != ""
-      exec "hi " . a:group . " ctermfg=" . a:ctermfg
-    endif
-    if a:ctermbg != ""
-      exec "hi " . a:group . " ctermbg=" . a:ctermbg
-    endif
-    if a:attr != ""
-      exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
-    endif
-    if a:guisp != ""
-      exec "hi " . a:group . " guisp=#" . a:guisp
-    endif
-  endfun
+  " fun! <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
+  "   if a:guifg != ""
+  "     exec "hi " . a:group . " guifg=#" . a:guifg
+  "   endif
+  "   if a:guibg != ""
+  "     exec "hi " . a:group . " guibg=#" . a:guibg
+  "   endif
+  "   if a:ctermfg != ""
+  "     exec "hi " . a:group . " ctermfg=" . a:ctermfg
+  "   endif
+  "   if a:ctermbg != ""
+  "     exec "hi " . a:group . " ctermbg=" . a:ctermbg
+  "   endif
+  "   if a:attr != ""
+  "     exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
+  "   endif
+  "   if a:guisp != ""
+  "     exec "hi " . a:group . " guisp=#" . a:guisp
+  "   endif
+  " endfun
 
-  call <sid>hi("ColorColumn", "", "282a2e", "", "282a2e", "none", "")
+  " call <sid>hi("ColorColumn", "", "282a2e", "", "282a2e", "none", "")
 
   " highlight link ColorColumn CursorLine
-  highlight link EndOfBuffer ColorColumn
-  highlight link CursorLineNr ColorColumn
+  " highlight link EndOfBuffer ColorColumn
+  " highlight link CursorLineNr ColorColumn
+  highlight LineNr guibg=#000
+  highlight GitGutterAdd guibg=#000
+  highlight GitGutterChange guibg=#000
+  highlight GitGutterDelete guibg=#000
+  highlight GitGutterChangeDelete guibg=#000
 
   " Make tildes at EndOfBuffer less obvious.
-  let l:prefix=has('gui') || has('termguicolors') ? 'gui' : 'cterm'
-  let l:bg=synIDattr(synIDtrans(hlID('ColorColumn')), 'bg', l:prefix)
-  let l:fg=l:bg
-  execute 'highlight EndOfBuffer ' . l:prefix . 'fg=' . l:fg . ' ' . l:prefix . 'bg=' . l:bg
-  execute 'highlight CursorLineNr ' . l:prefix . 'bg=' . l:bg . ' '. l:prefix.'=bold'
+  " let l:prefix=has('gui') || has('termguicolors') ? 'gui' : 'cterm'
+  " let l:bg=synIDattr(synIDtrans(hlID('ColorColumn')), 'bg', l:prefix)
+  " let l:fg=l:bg
+  " execute 'highlight EndOfBuffer ' . l:prefix . 'fg=' . l:fg . ' ' . l:prefix . 'bg=' . l:bg
+  " execute 'highlight CursorLineNr ' . l:prefix . 'bg=' . l:bg . ' '. l:prefix.'=bold'
 
   " make the highlighting of tabs and other non-text less annoying
   " highlight SpecialKey ctermbg=none ctermfg=8
@@ -895,7 +906,8 @@ if has('autocmd')
     " Make current window more obvious by turning off/adjusting some features in non-current
     " windows.
     if exists('+colorcolumn')
-      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
+      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80' | endif
+      " autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
       " autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
     endif
 
@@ -1157,10 +1169,15 @@ nnoremap <c-g>l :GitGutterLineHighlightsToggle<cr>
 nnoremap [h :GitGutterPrevHunk<cr>
 nnoremap ]h :GitGutterNextHunk<cr>
 
-let g:gitgutter_sign_added = '↪'
-let g:gitgutter_sign_removed = '↩'
-let g:gitgutter_sign_modified = '↬'
-let g:gitgutter_sign_modified_removed = '↫'
+" let g:gitgutter_sign_added = '↪'
+" let g:gitgutter_sign_removed = '↩'
+" let g:gitgutter_sign_modified = '↬'
+" let g:gitgutter_sign_modified_removed = '↫'
+
+let g:gitgutter_sign_added = '┃'
+let g:gitgutter_sign_removed = '┃'
+let g:gitgutter_sign_modified = '┃'
+let g:gitgutter_sign_modified_removed = '┃'
 
 if has('virtualedit')
   set virtualedit=insert    " allow the cursor to go everywhere (insert)
@@ -1421,15 +1438,15 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <c-s>i :%retab!<CR>
 
 " Toggle quickfix list
-fun! s:QuickfixToggle()
-  let nr = winnr("$")
-  copen
-  let nr2 = winnr("$")
-  if nr == nr2
-    cclose
-  endif
-endfunction
-nnoremap <localleader>q :call <SID>QuickfixToggle()<cr>
+" fun! s:QuickfixToggle()
+"   let nr = winnr("$")
+"   copen
+"   let nr2 = winnr("$")
+"   if nr == nr2
+"     cclose
+"   endif
+" endfunction
+" nnoremap <localleader>q :call <SID>QuickfixToggle()<cr>
 
 " Vim-signiture
 let g:SignatureMarkTextHLDynamic = 1
@@ -1597,7 +1614,7 @@ let g:rustfmt_autosave = 1
 
 " NVIM completion manager
 
-imap <c-g>r <Plug>(cm_force_refresh)
+imap <c-space> <Plug>(cm_force_refresh)
 
 let g:cm_refresh_length = 2 " [[1,2], [7,2]]
 
@@ -1621,6 +1638,8 @@ let g:LanguageClient_serverCommands = {
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
 
+let g:LanguageClient_diagnosticsList = 'location'
+
 au FileType javascript,javascript.jsx nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 au FileType javascript,javascript.jsx nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 au FileType javascript,javascript.jsx nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
@@ -1635,35 +1654,43 @@ augroup MyAutoformatCmds
   let g:formatters_scala = ['scalafmt']
   autocmd FileType scala noremap <buffer> <leader>f :Autoformat <BAR> update<CR>
 
-  " Prettier for js, typescript, flow and css
-  let g:formatdef_prettier          = "'prettier --stdin --parser flow    --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
-  " let g:formatdef_prettier_json     = "'prettier --stdin --parser json    --tab-width 2 --print-width 81'"
-  " let g:formatdef_prettier_postcss  = "'prettier --stdin --parser postcss --tab-width 2 --print-width 81 --single-quote'"
-  " let g:formatdef_prettier_graphql  = "'prettier --stdin --parser graphql --tab-width 2 --print-width 81'"
+  " Prettier for js, typescript and flow
+  let g:formatdef_prettier = "'prettier --stdin --parser flow --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+  let g:formatdef_prettierjson = "'prettier --stdin --parser json --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+  let g:formatdef_prettiergraphql = "'prettier --stdin --parser graphql --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+  let g:formatdef_prettierscss = "'prettier --stdin --parser postcss --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
 
   let g:formatters_javascript = ['prettier']
   let g:formatters_typescript = ['prettier']
-  " let g:formatters_json       = ['prettier_json']
-  " let g:formatters_css        = ['prettier_postcss']
-  " let g:formatters_scss       = ['prettier_postcss']
-  " let g:formatters_sass       = ['prettier_postcss']
-  " let g:formatters_graphql    = ['prettier_graphql']
+  let g:formatters_json = ['prettierjson']
+  let g:formatters_graphql = ['prettiergraphql']
+  let g:formatters_scss = ['prettierscss']
 
   function! DoFormatAndCleanHL()
     let l:pos=getcurpos()
     let l:search=@/
     :keepjumps Autoformat
-    :keepjumps %s/\V\"/'/e  " Undo prettier using double quotes on jsx attributes
+    " :keepjumps %s/\V\"/'/e  " Undo prettier using double quotes on jsx attributes
     let @/=l:search
-    nohlsearch
+    " nohlsearch
     call setpos('.', l:pos)
   endfunction
 
-  autocmd FileType javascript,javascript.jsx,typescript noremap <buffer> <leader>f :call DoFormatAndCleanHL()<CR>
-  autocmd BufWritePre *.{js,ts} call DoFormatAndCleanHL() " Autoformat on save
+  " autocmd FileType javascript,javascript.jsx,typescript noremap <buffer> <leader>f :call DoFormatAndCleanHL()<CR>
+  " autocmd BufWritePre *.{js,ts} call DoFormatAndCleanHL() " Autoformat on save
 
   " autocmd FileType css,scss,sass,json,graphql noremap <buffer> <leader>f :keepjumps Autoformat<CR>
   " autocmd BufWritePre *.{css,scss,json,graphql} :keepjumps Autoformat " Autoformat on save
+
+  " let g:ale_fixers = {
+  "       \  'javascript': ['prettier_standard'],
+  "       \ 'javascript.jsx': ['prettier_standard']
+  "       \ }
+  " let g:ale_linters = {
+  "       \ 'javascript': [''],
+  "       \ 'javascript.jsx': ['']
+  "       \ }
+  " let g:ale_fix_on_save = 1
 augroup END
 
 if has('gui')
@@ -1806,6 +1833,30 @@ if $TERM_PROGRAM == 'iTerm.app'
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
   endif
 endif
+
+" if exists('+winhighlight')
+"   function! s:configure_winhighlight()
+"     let ft = &filetype
+"     let bt = &buftype
+"     " Check white/blacklist.
+"     if index(['dirvish'], ft) == -1
+"           \ && (index(['nofile', 'nowrite', 'acwrite', 'quickfix', 'help'], bt) != -1
+"           \     || index(['startify'], ft) != -1)
+"       set winhighlight=Normal:MyNormalWin,NormalNC:MyNormalWin
+"       " echom "normal" winnr() &winhighlight 'ft:'.&ft 'bt:'.&bt
+"     else
+"       set winhighlight=Normal:MyNormalWin,NormalNC:MyInactiveWin
+"       " echom "inactive" winnr() &winhighlight 'ft:'.&ft 'bt:'.&bt
+"     endif
+"   endfunction
+"   augroup inactive_win
+"     au!
+"     au ColorScheme * hi link MyInactiveWin ColorColumn | hi link MyNormalWin Normal
+"     au FileType,BufWinEnter * call s:configure_winhighlight()
+"     au FocusGained * hi link MyNormalWin Normal
+"     au FocusLost * hi link MyNormalWin MyInactiveWin
+"   augroup END
+" endif
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
