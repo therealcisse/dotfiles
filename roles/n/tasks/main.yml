@@ -13,6 +13,6 @@
   become: true
 
 - name: install Node.js
-  command: n {{node_version}}
+  command: /usr/local/bin/n {{node_version}}
   become: true
 
