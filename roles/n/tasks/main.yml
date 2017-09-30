@@ -16,3 +16,8 @@
   command: /usr/local/bin/n {{node_version}}
   become: true
 
+- name: install packages
+  command: /usr/local/bin/npm install {{item}} --global
+  with_items: '{{packages}}'
+  become: true
+

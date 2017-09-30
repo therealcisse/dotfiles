@@ -10,3 +10,17 @@ node_version: latest
 # N github repo
 n_repo: https://github.com/visionmedia/n
 
+# packages to install
+packages:
+  - \@std/esm
+  - assemblyscript
+  - create-react-app
+  - create-react-native-app
+  - flow-language-server
+  - http-server
+  - lighthouse
+  - pm2
+  - prettier
+  - react-native-cli
+  - statik
+  - yarn
