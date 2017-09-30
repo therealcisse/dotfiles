@@ -14,6 +14,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AppleWindowTabbingMode</key>
+	<string>manual</string>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>base16-tomorrow.dark.256</key>
@@ -1005,6 +1007,8 @@
 	<string>322 112 701 337 0 0 1440 878 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
 	<string>0 5 1440 873 0 0 1440 900 </string>
+	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
+	<string>0 704 616 174 0 0 1440 878 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>0 749 400 129 0 0 1440 878 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
@@ -3052,7 +3056,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-09-20T22:28:28Z</date>
+	<date>2017-09-28T21:25:33Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
@@ -3079,7 +3083,7 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.1.0</string>
+	<string>3.1.2</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

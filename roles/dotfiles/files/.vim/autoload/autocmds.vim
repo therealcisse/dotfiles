@@ -1,9 +1,10 @@
 let s:INT = { 'MAX': 2147483647 }
 
-let g:AmsaykNumberBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'startify', 'help', 'vim-plug', 'terminal', 'neoterm']
-let g:AmsaykColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'terminal', 'neoterm']
+let g:AmsaykBlacklistBufType = ['nofile', 'nowrite', 'acwrite', 'quickfix', 'help']
+let g:AmsaykNumberBlacklist = ['diff', 'fugitiveblame', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'startify', 'help', 'vim-plug', 'terminal', 'neoterm']
+let g:AmsaykColorColumnBlacklist = ['diff', 'fugitiveblame', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'terminal', 'neoterm']
 let g:AmsaykCursorlineBlacklist = ['ctrlp']
-let g:AmsaykMkviewFiletypeBlacklist = ['diff', 'gitcommit']
+let g:AmsaykMkviewFiletypeBlacklist = ['diff', 'gitcommit', 'hgcommit']
 
 function! autocmds#escape_pattern(str) abort
   return escape(a:str, '~"\.^$[]*')
@@ -20,7 +21,7 @@ function! autocmds#get_visual_selection()
 endfunction
 
 function! autocmds#should_number() abort
-  return index(g:AmsaykNumberBlacklist, &filetype) == -1 && index(g:AmsaykNumberBlacklist, &buftype) == -1
+  return index(g:AmsaykNumberBlacklist, &filetype) == -1 && index(g:AmsaykBlacklistBufType, &buftype) == -1
 endfunction
 
 function! autocmds#should_colorcolumn() abort
@@ -60,6 +61,7 @@ endfunction
 
 function! autocmds#blur_window() abort
   if autocmds#should_colorcolumn()
+    " ownsyntax off
     if !exists('w:amsayk_matches')
       " Instead of unconditionally resetting, append to existing array.
       " This allows us to gracefully handle duplicate autocmds.
@@ -84,6 +86,7 @@ endfunction
 
 function! autocmds#focus_window() abort
   if autocmds#should_colorcolumn()
+    " ownsyntax on
     if exists('w:amsayk_matches')
       for l:match in w:amsayk_matches
         try
@@ -96,6 +99,7 @@ function! autocmds#focus_window() abort
     endif
   endif
 endfunction
+
 " Directories where we want to perform auto-encryption on save.
 let s:encrypted={}
 let s:encrypted[expand('~/dotfiles')]='vendor/git-cipher/bin/git-cipher'

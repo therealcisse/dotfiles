@@ -582,13 +582,13 @@ set hidden
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-try
-  set highlight+=@:ColorColumn          " ~/@ at end of window, 'showbreak'
-  " set highlight+=N:DiffText             " make current line number stand out a little
+if !has('nvim')
   set highlight+=c:LineNr               " blend vertical separators with line numbers
-catch
-
-endtry
+  " Sync with corresponding nvim settings in ~/.vim/plugin/autocmds.vim:
+  set highlight+=@:ColorColumn        " ~/@ at end of window, 'showbreak'
+  set highlight+=N:DiffText           " make current line number stand out a little
+  set highlight+=c:LineNr             " blend vertical separators with line numbers
+endif
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -905,8 +905,12 @@ if has('autocmd')
 
     " Make current window more obvious by turning off/adjusting some features in non-current
     " windows.
-    if exists('+colorcolumn')
-      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80' | endif
+    if exists('+winhighlight')
+      autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | set winhighlight= | endif
+      autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | set winhighlight=CursorLineNr:LineNr,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn | endif
+    elseif exists('+colorcolumn')
+      autocmd BufEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80' | endif
+      " autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80' | endif
       " autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80,'.join(map(range(40,999), '"+" . v:val'), ',') | endif
       " autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | let &l:colorcolumn=join(range(1, 999), ',') | endif
     endif
@@ -914,7 +918,7 @@ if has('autocmd')
     autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
     autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
 
-    if exists('*matchaddpos')
+    if exists("*matchaddpos")
       autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
       autocmd FocusLost,WinLeave * call autocmds#blur_window()
     endif
@@ -932,6 +936,13 @@ if has('autocmd')
       autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | execute 'silent! ' . line("'\"") . 'foldopen!' | endif
     else
       autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | endif
+    endif
+
+    if has('nvim')
+      " Sync with corresponding non-nvim settings in ~/.vim/plugin/settings.vim:
+      autocmd ColorScheme * highlight! link NonText ColorColumn
+      autocmd ColorScheme * highlight! link CursorLineNr DiffText
+      autocmd ColorScheme * highlight! link VertSplit LineNr
     endif
 
     autocmd BufWritePost */spell/*.add silent! :mkspell! %
@@ -1148,6 +1159,8 @@ nnoremap <leader>* *<C-O>:%s///gn<CR>
 "" Git
 "no mappings by gitgutter
 let g:gitgutter_map_keys = 0
+
+let g:gitgutter_max_signs = 1200
 
 "focus window of last created buffer
 function! JumpLastBufferWindow()
@@ -1601,7 +1614,7 @@ command! FZFYank call fzf#run({
       \ 'down': 12
       \ })
 
-nmap <C-y> :FZFYank<CR>
+nmap <localleader>y :FZFYank<CR>
 
 " Insert Mode:
 imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -1756,7 +1769,7 @@ augroup filetypedetect
 augroup END
 
 " Ensime
-let ensime_server_v2=1
+let g:ensime_server_v2=1
 
 " Same when moving up and down
 noremap <C-d> <C-d>zz
