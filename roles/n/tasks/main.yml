@@ -12,9 +12,27 @@
   command: make -C /tmp/n
   become: true
 
+- name: N | link n
+  become: true
+  file:
+    src: "/usr/local/bin/n"
+    dest: "/usr/bin/n"
+    state: link
+
 - name: install Node.js
   command: /usr/local/bin/n {{node_version}}
   become: true
+
+- name: N | link node & npm
+  become: true
+  file:
+    src: "/usr/local/bin/node"
+    dest: "/usr/bin/node"
+    state: link
+  file:
+    src: "/usr/local/bin/npm"
+    dest: "/usr/bin/npm"
+    state: link
 
 - name: install packages
   command: /usr/local/bin/npm install {{item}} --global

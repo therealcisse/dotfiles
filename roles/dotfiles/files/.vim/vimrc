@@ -121,7 +121,10 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'vim-scripts/ReplaceWithRegister' "replace <motion> with register
 
-  Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript' ] }
+  " Plug 'mhartington/nvim-typescript', { 'for': ['typescript'] }
+  Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
+  " Plug 'leafgarland/typescript-vim', { 'for': [ 'typescript' ] }
+
   Plug 'Quramy/vim-js-pretty-template', { 'for': [ 'javascript', 'javascript.jsx' ] }
 
   " Plug 'flowtype/vim-flow', { 'for': [ 'javascript', 'javascript.jsx' ] }
@@ -148,7 +151,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'ensime/ensime-vim', { 'for': [ 'scala' ], 'do': ':UpdateRemotePlugins' }
 
-  Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] } " M-+, M--
+  " Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] } " M-+, M--
 
   Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious', 'TmuxNavigateUp', 'TmuxNavigateDown' ] }
 
@@ -1028,19 +1031,23 @@ vnoremap Y myY`y
 
 vnoremap <BS> "_xi
 
+nn _ "_dd
+
 " gf
 
 set suffixesadd=.js
 set suffixesadd=.ts
 set suffixesadd+=.json
 
-if isdirectory(expand($PWD.'/node_modules'))
-  set path+=$PWD/node_modules
-endif
+" if isdirectory(expand($PWD.'/node_modules'))
+"   set path+=$PWD/node_modules
+" endif
 
-if isdirectory(expand($PWD.'/js'))
-  set path+=$PWD/js
-endif
+" if isdirectory(expand($PWD.'/js'))
+"   set path+=$PWD/js
+" endif
+
+set path+=*/**
 
 set shell=/bin/sh
 
@@ -1218,14 +1225,14 @@ augroup ArrowKeys
   function! s:ToggleArrowKeys() abort
     nn <buffer> <leader>= :execute "wincmd ="<CR>
 
-    map <expr> <M-+> "<Plug>(expand_region_expand)" " a-+
-    map <expr> <M--> "<Plug>(expand_region_shrink)" " a--
+    " map <expr> <M-+> "<Plug>(expand_region_expand)" " a-+
+    " map <expr> <M--> "<Plug>(expand_region_shrink)" " a--
   endfunction
 
   autocmd BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
 augroup end
 
-set pastetoggle=<F2>
+set pastetoggle=<F3>
 
 vnoremap . :norm.<CR>
 
@@ -1358,10 +1365,10 @@ hi! NonText cterm=NONE ctermfg=NONE
 
 " Typescript
 
-let g:typescript_compiler_binary  = 'tsc'
-let g:typescript_compiler_options = ''
+" let g:typescript_compiler_binary  = 'tsc'
+" let g:typescript_compiler_options = ''
 
-let g:typescript_indent_disable = 1
+" let g:typescript_indent_disable = 1
 
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
@@ -1581,8 +1588,6 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 nnoremap <leader>. :Tags<CR>
 nnoremap <leader>b :Buffers<CR>
-nnoremap <C-g>/ :Ag<CR>
-vnoremap <C-g>/ :<C-u>Ag <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
 nnoremap <C-g>c :Commands<CR>
 nnoremap <C-f>l :BLines<CR>
 vnoremap <C-f>l :<C-u>BLines <c-r>=autocmds#escape_pattern(autocmds#get_visual_selection())<CR>
@@ -1595,7 +1600,18 @@ autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 inoremap <c-c> <ESC>
 
 function! s:yank_list()
-  return reverse(['0 ' . @0, '1 ' . @1, '2 ' . @2, '3 ' . @3, '4 ' . @4, '5 ' . @5, '6 ' . @6, '7 ' . @7, '8 ' . @8, '9 ' . @9])
+  return reverse([
+    '0 ' . @0,
+    '1 ' . @1,
+    '2 ' . @2,
+    '3 ' . @3,
+    '4 ' . @4,
+    '5 ' . @5,
+    '6 ' . @6,
+    '7 ' . @7,
+    '8 ' . @8,
+    '9 ' . @9
+  ])
 endfunction
 
 function! s:yank_handler(reg)
@@ -1615,6 +1631,17 @@ command! FZFYank call fzf#run({
       \ })
 
 nmap <localleader>y :FZFYank<CR>
+
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always"
+  \ -g "*.{js,json,php,md,styl,css,scss,less,jade,html,config,py,cpp,c,go,hs,rb,conf,java,scala,rs,nim,swift}"
+  \ -g "!.git/*"
+  \ -g "!node_modules/*"
+  \ -g "!vendor/*" '
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
+nnoremap <C-g>/ :F<CR>
 
 " Insert Mode:
 imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -1644,6 +1671,7 @@ let g:airline#extensions#cm_call_signature#enabled = 1
 
 let g:LanguageClient_serverCommands = {
       \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+      \ 'typescript': ['typescript-language-server', '--stdio'],
       \ 'javascript': ['flow-language-server', '--stdio'],
       \ 'javascript.jsx': ['flow-language-server', '--stdio'],
       \ }
@@ -1653,9 +1681,17 @@ let g:LanguageClient_autoStart = 1
 
 let g:LanguageClient_diagnosticsList = 'location'
 
-au FileType javascript,javascript.jsx nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-au FileType javascript,javascript.jsx nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-au FileType javascript,javascript.jsx nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
+  \ <localleader>ld :call LanguageClient_textDocument_definition()<cr>
+
+autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
+  \ <localleader>lh :call LanguageClient_textDocument_hover()<cr>
+
+autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
+  \ <localleader>lr :call LanguageClient_textDocument_rename()<cr>
+
+autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
+  \ <localleader>lf :call LanguageClient_textDocument_documentSymbol()<cr>
 
 " Formatting
 
@@ -1846,6 +1882,22 @@ if $TERM_PROGRAM == 'iTerm.app'
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
   endif
 endif
+
+" let g:timer = timer_start(300000, 'Pomodoro', {'repeat':-1})
+" let g:value = 0
+" function! Pomodoro(timer)
+"   let g:value += 1
+"   if g:value == 5
+"     call Beep()
+"     echo 'take a break!'
+"   endif
+" endfunction
+" function! Beep()
+"   let [l:vb, l:eb]  = [&vb, &eb]
+"   set vb eb
+"   call feedkeys("\<esc>", 'x')
+"   let [&vb, &eb] = [l:vb, l:eb]
+" endfunction
 
 " if exists('+winhighlight')
 "   function! s:configure_winhighlight()

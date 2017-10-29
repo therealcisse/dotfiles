@@ -10,7 +10,9 @@
 
 # Install git
 sudo yum groupinstall -y "Development Tools"
-sudo yum install -y gettext-devel curl-devel openssl-devel perl-CPAN perl-devel zlib-devel nc libevent-devel ssl-devel ffi-devel python-devel python3 python python-pip python3-devel python3-pip zsh xclip xsel ncurses-devel cscope tree vim silversearcher-ag ack git-extras epel-release git-extras ruby python34-setuptools python34-devel libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip gcc-c++ patch readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison iconv-devel lsof telnet strace mosquitto
+sudo yum install -y libXScrnSaver gettext-devel curl-devel openssl-devel perl-CPAN perl-devel zlib-devel nc libevent-devel ssl-devel ffi-devel python-devel python3 python python-pip python3-devel python3-pip zsh xclip xsel ncurses-devel cscope tree vim silversearcher-ag ack git-extras epel-release git-extras ruby python34-setuptools python34-devel libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip gcc-c++ patch readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel make bzip2 bzip2-devel autoconf automake libtool bison iconv-devel lsof telnet strace mosquitto
+
+sudo ln -s `find /usr/lib64 -type f -name "libbz2.so.1"` /usr/lib64/libbz2.so.1.0
 
 wget https://github.com/git/git/archive/v2.13.2.tar.gz -O git.tar.gz
 tar -zxf git.tar.gz

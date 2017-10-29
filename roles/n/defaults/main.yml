@@ -12,6 +12,7 @@ n_repo: https://github.com/visionmedia/n
 
 # packages to install
 packages:
+  - npm
   - \@std/esm
   - assemblyscript
   - create-react-app
@@ -24,3 +25,4 @@ packages:
   - react-native-cli
   - statik
   - yarn
+  - google-music-electron

@@ -52,9 +52,9 @@ ZSH_CUSTOM=~/.zsh/oh-my-zsh
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 if [ `uname` = 'Darwin' ]; then
-  plugins=(osx git-extras cbt)
+  # plugins=(osx git-extras cbt)
 else
-  plugins=(git-extras)
+  # plugins=(git-extras)
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -221,3 +221,6 @@ then
   # ZSH_HIGHLIGHT_STYLES[assign]=none
 fi
 
+
+# added by travis gem
+[ -f /Users/retina/.travis/travis.sh ] && source /Users/retina/.travis/travis.sh
