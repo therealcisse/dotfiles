@@ -31,3 +31,6 @@
 [submodule "roles/dotfiles/files/.emacs.d"]
 	path = roles/dotfiles/files/.emacs.d
 	url = https://github.com/syl20bnr/spacemacs
+[submodule "roles/dotfiles/files/.zsh/bundle/zsh-autopair"]
+	path = roles/dotfiles/files/.zsh/bundle/zsh-autopair
+	url = https://github.com/hlissner/zsh-autopair
