@@ -37,3 +37,4 @@ dotfiles:
   - .emacs.d
   - .hyper.js
   - ginit.vim
+  - .sqliterc

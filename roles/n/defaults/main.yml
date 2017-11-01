@@ -5,19 +5,21 @@
 #
 
 # use "n ls" to see all available versions
-node_version: latest
+node_version: lts
 
 # N github repo
 n_repo: https://github.com/visionmedia/n
 
-# packages to install
+# packages to install/upgrade
 packages:
   - npm
   - \@std/esm
   - assemblyscript
   - create-react-app
   - create-react-native-app
+  - react-native-cli
   - flow-language-server
+  - typescript-language-server
   - http-server
   - lighthouse
   - pm2
@@ -26,3 +28,4 @@ packages:
   - statik
   - yarn
   - google-music-electron
+  - git-recent
