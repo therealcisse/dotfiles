@@ -1,3 +1,7 @@
+if v:progname == 'vi'
+  set noloadplugins
+endif
+
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 " Initialize vim-plug and specify the path
@@ -12,6 +16,10 @@ let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 let g:loaded_matchparen = 1
 
 call plug#begin('~/.vim/plugged')
+  Plug 'DataWraith/auto_mkdir'
+
+  Plug 'alvan/vim-closetag'
+
   Plug 'duggiefresh/vim-easydir'
 
   " Plug 'deuiore/vim-indentblank'
@@ -75,6 +83,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'roxma/nvim-completion-manager'
     " Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
+    Plug 'fgrsnau/ncm-otherbuf'
+
     " Java completion
     " Plug 'sassanh/nvim-cm-eclim', { 'for': [ 'java' ] }
 
@@ -137,7 +147,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'zah/nim.vim', { 'for': [ 'nim' ] }
 
-  Plug 'kepbod/quick-scope'
+  " Plug 'kepbod/quick-scope'
 
   Plug 'tommcdo/vim-exchange' " cx
 
@@ -167,6 +177,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
 
   " Plug 'w0rp/ale'
+
+  Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -898,7 +910,7 @@ if has('autocmd')
     autocmd!
 
     " Disable paste mode on leaving insert mode.
-    " autocmd InsertLeave * set nopaste
+    autocmd InsertLeave * set nopaste
 
     autocmd VimResized * wincmd =
 
@@ -910,7 +922,7 @@ if has('autocmd')
     " windows.
     if exists('+winhighlight')
       autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | set winhighlight= | endif
-      autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | set winhighlight=CursorLineNr:LineNr,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn | endif
+      autocmd FocusLost,WinLeave * if autocmds#should_colorcolumn() | set winhighlight=CursorLineNr:LineNr,IncSearch:ColorColumn | endif
     elseif exists('+colorcolumn')
       autocmd BufEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80' | endif
       " autocmd BufEnter,FocusGained,VimEnter,WinEnter * if autocmds#should_colorcolumn() | let &l:colorcolumn='80' | endif
@@ -921,10 +933,10 @@ if has('autocmd')
     autocmd InsertLeave,VimEnter,WinEnter * if autocmds#should_cursorline() | setlocal cursorline | endif
     autocmd InsertEnter,WinLeave * if autocmds#should_cursorline() | setlocal nocursorline | endif
 
-    if exists("*matchaddpos")
+    " if exists("*matchaddpos")
       autocmd BufEnter,FocusGained,VimEnter,WinEnter * call autocmds#focus_window()
       autocmd FocusLost,WinLeave * call autocmds#blur_window()
-    endif
+    " endif
 
     if has('mksession')
       " Save/restore folds and cursor position.
@@ -1063,7 +1075,11 @@ let g:delimitMate_excluded_ft          = 'mail,txt'
 
 augroup DelimitMate
   autocmd!
-  au FileType html,javascript.jsx,scala,vim let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+
+  let g:closetag_filenames = "*.xml,*.html,*.html,*.tsx,*.js,*.jsx,*.config"
+  let g:closetag_emptyTags_caseSensitive = 1
+
+  au FileType html,javascript,javascript.jsx,scala,vim let b:delimitMate_matchpairs = "(:),[:],{:}"
   au FileType python,scala let b:delimitMate_nesting_quotes = ['"']
   au FileType javascript,javascript.jsx let b:delimitMate_nesting_quotes = ['`']
 
@@ -1437,18 +1453,20 @@ command! -bang Profile call s:profile(<bang>0)
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
 
-  tnoremap <C-w>h <C-\><C-n><C-w><C-h>
-  tnoremap <C-w>j <C-\><C-n><C-w><C-j>
-  tnoremap <C-w>k <C-\><C-n><C-w><C-k>
-  tnoremap <C-w>l <C-\><C-n><C-w><C-l>
-
-  tnoremap <C-w>w <C-\><C-n><C-w><C-w>
+  tnoremap <silent> <M-h> <C-\><C-n>:TmuxNavigateLeft<CR>
+  tnoremap <silent> <M-j> <C-\><C-n>:TmuxNavigateDown<CR>
+  tnoremap <silent> <M-k> <C-\><C-n>:TmuxNavigateUp<CR>
+  tnoremap <silent> <M-l> <C-\><C-n>:TmuxNavigateRight<CR>
+  tnoremap <silent> <M-\> <C-\><C-n>:TmuxNavigatePrevious<CR>
 
   " Prefer Neovim terminal insert mode to normal mode.
-  autocmd BufEnter term://* startinsert
+  autocmd BufEnter,FocusGained term://* startinsert
 
   " Don't close terminal on :q
   autocmd TermOpen * set bufhidden=hide
+
+  " Append --no-height
+  " let $FZF_DEFAULT_OPTS .= ' --no-height' " https://github.com/neovim/neovim/issues/4151
 endif
 
 " Select pasted text
@@ -1456,17 +1474,6 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Fix mixed indent
 nnoremap <c-s>i :%retab!<CR>
-
-" Toggle quickfix list
-" fun! s:QuickfixToggle()
-"   let nr = winnr("$")
-"   copen
-"   let nr2 = winnr("$")
-"   if nr == nr2
-"     cclose
-"   endif
-" endfunction
-" nnoremap <localleader>q :call <SID>QuickfixToggle()<cr>
 
 " Vim-signiture
 let g:SignatureMarkTextHLDynamic = 1
@@ -1478,12 +1485,12 @@ let g:WebDevIconsNerdTreeGitPluginForceVAlign=0
 let g:WebDevIconsOS = 'Darwin'
 
 " Tweaks for browsing
-let g:netrw_banner = 0
-let g:netrw_browse_splits = 4
-let g:netrw_altv = 1
-let g:netrw_liststyle = 3
-let g:netrw_list_hide = netrw_gitignore#Hide()
-let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
+" let g:netrw_banner = 0
+" let g:netrw_browse_splits = 4
+" let g:netrw_altv = 1
+" let g:netrw_liststyle = 3
+" let g:netrw_list_hide = netrw_gitignore#Hide()
+" let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
 
 nnoremap <silent> <c-n>e :Explore<cr>
 
@@ -1601,17 +1608,17 @@ inoremap <c-c> <ESC>
 
 function! s:yank_list()
   return reverse([
-    '0 ' . @0,
-    '1 ' . @1,
-    '2 ' . @2,
-    '3 ' . @3,
-    '4 ' . @4,
-    '5 ' . @5,
-    '6 ' . @6,
-    '7 ' . @7,
-    '8 ' . @8,
-    '9 ' . @9
-  ])
+        \ '0 ' . @0,
+        \ '1 ' . @1,
+        \ '2 ' . @2,
+        \ '3 ' . @3,
+        \ '4 ' . @4,
+        \ '5 ' . @5,
+        \ '6 ' . @6,
+        \ '7 ' . @7,
+        \ '8 ' . @8,
+        \ '9 ' . @9
+        \ ])
 endfunction
 
 function! s:yank_handler(reg)
@@ -1654,7 +1661,7 @@ let g:rustfmt_autosave = 1
 
 " NVIM completion manager
 
-imap <c-space> <Plug>(cm_force_refresh)
+imap <c-,> <Plug>(cm_force_refresh)
 
 let g:cm_refresh_length = 2 " [[1,2], [7,2]]
 
@@ -1858,6 +1865,13 @@ noremap <silent> <M-l> :TmuxNavigateRight<CR>
 noremap <silent> <M-\> :TmuxNavigatePrevious<CR>
 
 nn <localleader><localleader> :Startify<CR>
+
+" Easy motion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap f <Plug>(easymotion-overwin-f2)
 
 nnoremap <Left> :vertical resize -1<CR>
 nnoremap <Right> :vertical resize +1<CR>

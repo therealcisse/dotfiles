@@ -61,7 +61,6 @@ endfunction
 
 function! autocmds#blur_window() abort
   if autocmds#should_colorcolumn()
-    " ownsyntax off
     if !exists('w:amsayk_matches')
       " Instead of unconditionally resetting, append to existing array.
       " This allows us to gracefully handle duplicate autocmds.
@@ -86,7 +85,6 @@ endfunction
 
 function! autocmds#focus_window() abort
   if autocmds#should_colorcolumn()
-    " ownsyntax on
     if exists('w:amsayk_matches')
       for l:match in w:amsayk_matches
         try

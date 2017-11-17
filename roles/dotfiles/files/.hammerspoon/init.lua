@@ -110,7 +110,7 @@ local layoutConfig = {
     local count = forceScreenCount or screenCount
     if count == 1 then
       -- hs.grid.set(window, grid.fullScreen)
-      hs.grid.set(window, '0,0 12x11')
+      hs.grid.set(window, '0,0 12x11.5')
     else
       hs.grid.set(window, grid.leftHalf, hs.screen.primaryScreen())
     end
