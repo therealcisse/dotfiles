@@ -41,6 +41,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'kana/vim-textobj-entire' " ae, ie
   Plug 'kana/vim-textobj-indent' " ai, ii
   Plug 'kana/vim-textobj-line'   " al, il
+  Plug 'mattn/vim-textobj-url'   " au, iu
   " Plug 'glts/vim-textobj-comment' " ac, ic
 
   " Plug 'mattn/vim-textobj-url' " au, iu
@@ -146,6 +147,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'christoomey/vim-sort-motion' " gs, gss
 
   Plug 'zah/nim.vim', { 'for': [ 'nim' ] }
+
+  Plug 'dart-lang/dart-vim-plugin', { 'for': [ 'dart' ] }
 
   " Plug 'kepbod/quick-scope'
 
@@ -493,7 +496,8 @@ set formatoptions+=n                  " smart auto-indenting inside numbered lis
 
 " indentation
 set formatoptions+=w
-set smartindent
+
+set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,func,fun,fn,interface,trait " auto indent on these words
 
 if has('linebreak')
   set linebreak                       " wrap long lines at characters in 'breakat'
@@ -1897,6 +1901,10 @@ if $TERM_PROGRAM == 'iTerm.app'
   endif
 endif
 
+" Dart
+
+let g:dart_style_guide = 1
+
 " let g:timer = timer_start(300000, 'Pomodoro', {'repeat':-1})
 " let g:value = 0
 " function! Pomodoro(timer)
@@ -1912,30 +1920,6 @@ endif
 "   call feedkeys("\<esc>", 'x')
 "   let [&vb, &eb] = [l:vb, l:eb]
 " endfunction
-
-" if exists('+winhighlight')
-"   function! s:configure_winhighlight()
-"     let ft = &filetype
-"     let bt = &buftype
-"     " Check white/blacklist.
-"     if index(['dirvish'], ft) == -1
-"           \ && (index(['nofile', 'nowrite', 'acwrite', 'quickfix', 'help'], bt) != -1
-"           \     || index(['startify'], ft) != -1)
-"       set winhighlight=Normal:MyNormalWin,NormalNC:MyNormalWin
-"       " echom "normal" winnr() &winhighlight 'ft:'.&ft 'bt:'.&bt
-"     else
-"       set winhighlight=Normal:MyNormalWin,NormalNC:MyInactiveWin
-"       " echom "inactive" winnr() &winhighlight 'ft:'.&ft 'bt:'.&bt
-"     endif
-"   endfunction
-"   augroup inactive_win
-"     au!
-"     au ColorScheme * hi link MyInactiveWin ColorColumn | hi link MyNormalWin Normal
-"     au FileType,BufWinEnter * call s:configure_winhighlight()
-"     au FocusGained * hi link MyNormalWin Normal
-"     au FocusLost * hi link MyNormalWin MyInactiveWin
-"   augroup END
-" endif
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

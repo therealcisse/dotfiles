@@ -193,6 +193,11 @@ brew 'zsh'
 brew 'nailgun'
 brew 'watchman'
 brew 'gradle'
+brew 'ios-deploy'
+brew 'libimobiledevice', args: ['HEAD']
+brew 'ideviceinstaller'
+brew 'cocoapods'
+brew 'astyle'
 brew 'homebrew/devel-only/elm-format', args: ['HEAD']
 
 cask 'vimr'

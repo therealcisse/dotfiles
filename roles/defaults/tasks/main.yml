@@ -21,6 +21,10 @@
   loop_control:
     label: "{{item.0.description}}"
 
+- name: defaults | Enable devtools MacOS
+  command: DevToolsSecurity -enable
+  become: yes
+
 # Many of these settings taken (or modified) from:
 #
 #   https://github.com/mathiasbynens/dotfiles/blob/master/.macos
