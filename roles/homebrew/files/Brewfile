@@ -33,7 +33,7 @@ cask 'hyper'
 cask 'font-hack-nerd-font'
 
 brew 'plantuml'
-brew 'coursier/formulas/coursier'
+brew 'coursier/formulas/coursier', args: ["HEAD"]
 brew 'docker-compose', service_restart: true
 brew 'docker'
 brew 'findutils', args: ["--with-default-names"]

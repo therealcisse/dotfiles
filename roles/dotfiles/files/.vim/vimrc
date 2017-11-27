@@ -22,9 +22,6 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'duggiefresh/vim-easydir'
 
-  " Plug 'deuiore/vim-indentblank'
-
-  " Plug 'sbdchd/neoformat'
   Plug 'Chiel92/vim-autoformat'
 
   Plug 'itchyny/vim-parenmatch'
@@ -41,10 +38,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'kana/vim-textobj-entire' " ae, ie
   Plug 'kana/vim-textobj-indent' " ai, ii
   Plug 'kana/vim-textobj-line'   " al, il
-  Plug 'mattn/vim-textobj-url'   " au, iu
   " Plug 'glts/vim-textobj-comment' " ac, ic
 
-  " Plug 'mattn/vim-textobj-url' " au, iu
+  Plug 'coderifous/textobj-word-column.vim' " ic, ac, iC, and aC or vic, cic, and daC
+
+  Plug 'mattn/vim-textobj-url' " au, iu
   " Plug 'saihoooooooo/vim-textobj-space' " aS, iS
 
   Plug 'thinca/vim-textobj-function-javascript', { 'for': [ 'javascript', 'javascript.jsx' ] } | Plug 'kana/vim-textobj-function' " af, if
@@ -70,7 +68,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
-  " Plug 'neomake/neomake'
   Plug 'SirVer/ultisnips'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
@@ -162,7 +159,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'roxma/vim-paste-easy'
 
-  Plug 'ensime/ensime-vim', { 'for': [ 'scala' ], 'do': ':UpdateRemotePlugins' }
+  Plug 'ensime/ensime-vim', { 'for': ['scala'], 'do': ':UpdateRemotePlugins' }
 
   " Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] } " M-+, M--
 
@@ -170,8 +167,6 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'w0ng/vim-hybrid'
   Plug 'chriskempson/base16-vim'
-
-  Plug 'coderifous/textobj-word-column.vim' " ic, ac, iC, and aC or vic, cic, and daC
 
   Plug 'tpope/vim-projectionist', { 'on': ['A', 'AS', 'AV', 'AT'] }
 
@@ -653,50 +648,7 @@ let g:airline_symbols.linenr = 'ℓ'
 
 let g:airline_skip_empty_sections = 1
 
-if has('nvim')
-  " Use deoplete.
-  " let g:deoplete#enable_at_startup = 1
-  " let g:deoplete#enable_smart_case = 1
-  " let g:deoplete#auto_complete_start_length = 2
-
-  if !exists('g:deoplete#omni#input_patterns')
-    " let g:deoplete#omni#input_patterns = {}
-  endif
-
-  if !exists('g:deoplete#sources')
-    " let g:deoplete#sources = {}
-  endif
-
-  " let g:deoplete#sources._ = ['buffer', 'tag']
-
-  " Scala
-  " let g:deoplete#sources.scala = ['omni']
-  " let g:deoplete#omni#input_patterns.scala = ['[^. *\t0-9]\.\w*',': [A-Z]\w', '[\[\t\( ][A-Za-z]\w*']
-
-  " let deoplete#tag#cache_limit_size = 2000000
-endif
-
 set showtabline=0
-
-" Neomake
-
-" let g:neomake_verbose = 0
-" let g:neomake_error_sign = {'text': '❌', 'texthl': 'NeomakeErrorSign'}
-" let g:neomake_warning_sign = {'text': '❌', 'texthl': 'NeomakeWarningSign'}
-" let g:neomake_place_signs = 0
-"
-" function! Lint()
-"   if &filetype =~ 'javascript'
-"     AsyncRun Neomake eslint
-"   else
-"     AsyncRun Neomake
-"   end
-" endfunction
-"
-" augroup lint_events
-"   autocmd!
-"   autocmd BufWritePost,BufEnter,FocusLost *.js call Lint()
-" augroup end
 
 " For conceal markers.
 if has('conceal')
@@ -868,7 +820,7 @@ cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
 cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
 
 " Align current paragraph
-nmap <leader>F :call mappings#leader#format()<CR>
+nmap <leader>F :call mappings#leader#format#align()<CR>
 vmap <leader>F =
 
 " Kill double quotes
@@ -1099,16 +1051,6 @@ augroup DelimitMate
   au User delimitMate_unmap call s:delimitMate_unmap()
 augroup END
 
-" --------------------------------------------------------------------------
-" |                        Auto pairs                                      |
-" --------------------------------------------------------------------------
-
-" augroup AutoPairs
-"   autocmd!
-"   au FileType html,xml,javascript.jsx,scala let b:AutoPairsMoveCharacter = "()[]{}\"'<>"
-"   au FileType html,xml,javascript.jsx,scala let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '<':'>'}
-" augroup END
-
 if exists('&swapsync')
   set swapsync=                       " let OS sync swapfiles lazily
 endif
@@ -1321,15 +1263,6 @@ let g:startify_bookmarks = [
 
 let g:startify_custom_footer =
       \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
-
-hi StartifyBracket ctermfg=240
-hi StartifyFile    ctermfg=147
-hi StartifyFooter  ctermfg=240
-hi StartifyHeader  ctermfg=114
-hi StartifyNumber  ctermfg=215
-hi StartifyPath    ctermfg=245
-hi StartifySlash   ctermfg=240
-hi StartifySpecial ctermfg=240
 
 let g:startify_session_autoload     = 0
 let g:startify_session_persistence  = 0
@@ -1816,7 +1749,7 @@ augroup filetypedetect
 augroup END
 
 " Ensime
-let g:ensime_server_v2=1
+" let g:ensime_server_v2=1
 
 " Same when moving up and down
 noremap <C-d> <C-d>zz

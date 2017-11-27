@@ -20,7 +20,7 @@ function! mappings#leader#zap() abort
 endfunction
 
 " Zap trailing whitespace.
-function! mappings#leader#format() abort
+function! mappings#leader#align() abort
   let l:pos=getcurpos()
   let l:search=@/
   keepjumps :normal =ae

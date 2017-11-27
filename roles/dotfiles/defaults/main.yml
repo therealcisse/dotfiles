@@ -38,3 +38,4 @@ dotfiles:
   - .hyper.js
   - ginit.vim
   - .sqliterc
+  - .scalafmt.conf

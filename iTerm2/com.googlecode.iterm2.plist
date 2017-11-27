@@ -1020,13 +1020,13 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 82 1440 796 0 0 1440 878 </string>
+	<string>0 46 1440 832 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 82 1440 796 0 0 1440 878 </string>
+	<string>0 46 1440 832 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>0 82 1440 796 0 0 1440 878 </string>
+	<string>0 46 1440 832 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>53 162 969 619 0 0 1440 878 </string>
+	<string>0 46 1440 832 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
 	<string>117 153 906 571 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
@@ -3056,7 +3056,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-09-28T21:25:33Z</date>
+	<date>2017-11-25T21:13:11Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
@@ -3083,7 +3083,7 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.1.2</string>
+	<string>3.1.5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
