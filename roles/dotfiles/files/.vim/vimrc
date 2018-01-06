@@ -16,6 +16,8 @@ let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 let g:loaded_matchparen = 1
 
 call plug#begin('~/.vim/plugged')
+  Plug 'machakann/vim-highlightedyank'
+
   Plug 'DataWraith/auto_mkdir'
 
   Plug 'alvan/vim-closetag'
@@ -758,9 +760,9 @@ function! s:SetColorScheme()
   " hi Search guifg=#ffffff guibg=#1B5E20 gui=none
   " hi IncSearch guifg=#ffffff guibg=#66BB6A gui=none
 
-  hi VisualNOS gui=bold,underline
-  highlight! link Search VisualNOS
-  highlight! link IncSearch VisualNOS
+  " hi VisualNOS gui=bold,underline
+  " highlight! link Search VisualNOS
+  " highlight! link IncSearch VisualNOS
 
   " highlight! link QuickFixLine PmenuSel
 
@@ -1615,6 +1617,7 @@ let g:airline#extensions#cm_call_signature#enabled = 1
 
 let g:LanguageClient_serverCommands = {
       \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+      \ 'scala': ['sbt-server-stdio.js'],
       \ 'typescript': ['typescript-language-server', '--stdio'],
       \ 'javascript': ['flow-language-server', '--stdio'],
       \ 'javascript.jsx': ['flow-language-server', '--stdio'],
@@ -1625,17 +1628,23 @@ let g:LanguageClient_autoStart = 1
 
 let g:LanguageClient_diagnosticsList = 'location'
 
-autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
-  \ <localleader>ld :call LanguageClient_textDocument_definition()<cr>
+augroup LanguageClient_config
+  autocmd!
 
-autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
-  \ <localleader>lh :call LanguageClient_textDocument_hover()<cr>
+  autocmd User LanguageClientDiagnosticsChanged lopen
+augroup END
 
-autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
-  \ <localleader>lr :call LanguageClient_textDocument_rename()<cr>
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
+  \ <localleader>sd :call LanguageClient_textDocument_definition()<CR>
 
-autocmd FileType rust,typescript,javascript,javascript.jsx nnoremap <buffer>
-  \ <localleader>lf :call LanguageClient_textDocument_documentSymbol()<cr>
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
+  \ <localleader>sh :call LanguageClient_textDocument_hover()<CR>
+
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
+  \ <localleader>sr :call LanguageClient_textDocument_rename()<CR>
+
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
+  \ <localleader>sf :call LanguageClient_textDocument_documentSymbol()<CR>
 
 " Formatting
 
