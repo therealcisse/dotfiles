@@ -70,7 +70,7 @@ function ExpandSnippetOrCarriageReturn()
 endfunction
 
 imap <expr> <CR> pumvisible()
-      \ ? "\<C-y>\<CR>" :
+      \ ? (empty(v:completed_item)?"\<C-n>\<C-y>\<CR>":"\<C-y>\<CR>") :
       \ (delimitMate#WithinEmptyPair() ? "<Plug>delimitMateCR" : "\<CR>")
 
 let g:UltiSnipsSnippetsDir = $HOME . '/.config/nvim/ultisnips'
