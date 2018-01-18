@@ -102,9 +102,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'ryanoasis/vim-webdevicons'
 
-  " Plug 'chriskempson/base16-vim'
-
-  Plug  'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
+  Plug 'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
 
   Plug 'mhinz/vim-startify'
 
@@ -149,7 +147,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'dart-lang/dart-vim-plugin', { 'for': [ 'dart' ] }
 
-  " Plug 'kepbod/quick-scope'
+  Plug 'kepbod/quick-scope'
 
   Plug 'tommcdo/vim-exchange' " cx
 
@@ -168,7 +166,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'christoomey/vim-tmux-navigator', { 'on': [ 'TmuxNavigateLeft', 'TmuxNavigateRight', 'TmuxNavigatePrevious', 'TmuxNavigateUp', 'TmuxNavigateDown' ] }
 
   " Plug 'w0ng/vim-hybrid'
-  Plug 'chriskempson/base16-vim'
+  " Plug 'chriskempson/base16-vim'
+  Plug 'challenger-deep-theme/vim'
 
   Plug 'tpope/vim-projectionist', { 'on': ['A', 'AS', 'AV', 'AT'] }
 
@@ -178,7 +177,7 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'w0rp/ale'
 
-  Plug 'easymotion/vim-easymotion'
+  " Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -668,32 +667,39 @@ let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
 
 function! s:SetColorScheme()
-  if !has('termguicolors')
-    let g:base16colorspace=256
-  endif
+  colorscheme challenger_deep
+  set background=dark
 
-  let s:config_file = expand('~/.base16')
+  hi! Normal guibg=#000
+  hi! VertSplit guifg=#fff
+  hi! CursorLineNr gui=bold guifg=NONE guibg=NONE
 
-  if filereadable(s:config_file)
-    let s:config = readfile(s:config_file, '', 2)
-
-    if s:config[1] =~# '^dark\|light$'
-      execute 'set background=' . s:config[1]
-    else
-      echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
-    endif
-
-    if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
-      execute 'colorscheme base16-' . s:config[0]
-    elseif filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
-      execute 'colorscheme base16-' . s:config[0] . '-' . s:config[1]
-    else
-      echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
-    endif
-  else " default
-    set background=dark
-    colorscheme base16-ocean
-  endif
+  " if !has('termguicolors')
+  "   let g:base16colorspace=256
+  " endif
+  "
+  " let s:config_file = expand('~/.base16')
+  "
+  " if filereadable(s:config_file)
+  "   let s:config = readfile(s:config_file, '', 2)
+  "
+  "   if s:config[1] =~# '^dark\|light$'
+  "     execute 'set background=' . s:config[1]
+  "   else
+  "     echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
+  "   endif
+  "
+  "   if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
+  "     execute 'colorscheme base16-' . s:config[0]
+  "   elseif filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '-' . s:config[1] . '.vim'))
+  "     execute 'colorscheme base16-' . s:config[0] . '-' . s:config[1]
+  "   else
+  "     echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+  "   endif
+  " else " default
+  "   set background=dark
+  "   colorscheme base16-ocean
+  " endif
 
   " let g:hybrid_custom_term_colors = 1
   " let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
@@ -907,7 +913,7 @@ if has('autocmd')
       " Sync with corresponding non-nvim settings in ~/.vim/plugin/settings.vim:
       autocmd ColorScheme * highlight! link NonText ColorColumn
       autocmd ColorScheme * highlight! link CursorLineNr DiffText
-      autocmd ColorScheme * highlight! link VertSplit LineNr
+      " autocmd ColorScheme * highlight! link VertSplit LineNr
     endif
 
     autocmd BufWritePost */spell/*.add silent! :mkspell! %
@@ -1809,7 +1815,7 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
-nmap f <Plug>(easymotion-overwin-f2)
+" nmap f <Plug>(easymotion-overwin-f2)
 
 nnoremap <Left> :vertical resize -1<CR>
 nnoremap <Right> :vertical resize +1<CR>
