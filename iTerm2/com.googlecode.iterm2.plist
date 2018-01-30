@@ -1004,7 +1004,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>300 33 701 203 0 0 1440 878 </string>
+	<string>285 207 701 94 0 0 1440 878 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
 	<string>0 5 1440 873 0 0 1440 900 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
@@ -1020,9 +1020,9 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 46 1434 832 0 0 1440 878 </string>
+	<string>0 38 1432 840 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 46 1440 832 0 0 1440 878 </string>
+	<string>0 38 1432 840 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>0 22 1440 856 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -1035,6 +1035,8 @@
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>Ambiguous Double Width</key>
 			<false/>
@@ -1599,13 +1601,13 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>PragmataProForPowerlinePlusNerdFileTypes 14</string>
+			<string>PragmataProForPowerlinePlusNerdFileTypes 14.5</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>HasklugNerdFontC-Regular 14</string>
+			<string>HasklugNerdFontC-Regular 14.5</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -3062,7 +3064,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-01-01T00:14:16Z</date>
+	<date>2018-01-19T22:23:26Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>

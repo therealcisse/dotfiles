@@ -22,15 +22,9 @@
 [submodule "roles/dotfiles/files/.mutt/vendor/mutt-notmuch-py"]
 	path = roles/dotfiles/files/.mutt/vendor/mutt-notmuch-py
 	url = https://github.com/honza/mutt-notmuch-py
-[submodule "roles/dotfiles/files/.zsh/bundle/alias-tips"]
-	path = roles/dotfiles/files/.zsh/bundle/alias-tips
-	url = https://github.com/djui/alias-tips
 [submodule "roles/dotfiles/files/.zsh/oh-my-zsh/plugins/fast-syntax-highlighting"]
 	path = roles/dotfiles/files/.zsh/oh-my-zsh/plugins/fast-syntax-highlighting
 	url = https://github.com/zdharma/fast-syntax-highlighting.git
-[submodule "roles/dotfiles/files/.emacs.d"]
-	path = roles/dotfiles/files/.emacs.d
-	url = https://github.com/syl20bnr/spacemacs
 [submodule "roles/dotfiles/files/.zsh/bundle/zsh-autopair"]
 	path = roles/dotfiles/files/.zsh/bundle/zsh-autopair
 	url = https://github.com/hlissner/zsh-autopair

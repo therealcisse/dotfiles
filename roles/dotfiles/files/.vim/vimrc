@@ -16,6 +16,8 @@ let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 let g:loaded_matchparen = 1
 
 call plug#begin('~/.vim/plugged')
+  Plug 'vimwiki/vimwiki'
+
   Plug 'machakann/vim-highlightedyank'
 
   Plug 'DataWraith/auto_mkdir'
@@ -439,7 +441,7 @@ set winminheight=0             " Allow windows to be squashed.
 
 if has('folding')
   if has('windows')
-    " set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
+    set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
   endif
   set foldenable                      " enable folding
   set foldmethod=indent               " not as cool as syntax, but faster
@@ -673,6 +675,11 @@ function! s:SetColorScheme()
   hi! Normal guibg=#000
   hi! VertSplit guifg=#fff
   hi! CursorLineNr gui=bold guifg=NONE guibg=NONE
+
+  hi! Search guifg=#969896 guibg=#f0c674
+  hi! IncSearch guifg=#282a2e guibg=#de935f
+  hi! PMenu guifg=#c5c8c6 guibg=#282a2e
+  hi! PMenuSel guifg=#282a2e guibg=#c5c8c6
 
   " if !has('termguicolors')
   "   let g:base16colorspace=256
@@ -911,8 +918,8 @@ if has('autocmd')
 
     if has('nvim')
       " Sync with corresponding non-nvim settings in ~/.vim/plugin/settings.vim:
-      autocmd ColorScheme * highlight! link NonText ColorColumn
-      autocmd ColorScheme * highlight! link CursorLineNr DiffText
+      " autocmd ColorScheme * highlight! link NonText ColorColumn
+      " autocmd ColorScheme * highlight! link CursorLineNr DiffText
       " autocmd ColorScheme * highlight! link VertSplit LineNr
     endif
 
@@ -1035,8 +1042,10 @@ augroup DelimitMate
   let g:closetag_filenames = "*.xml,*.html,*.html,*.tsx,*.js,*.jsx,*.config"
   let g:closetag_emptyTags_caseSensitive = 1
 
-  au FileType html,javascript,javascript.jsx,scala,vim let b:delimitMate_matchpairs = "(:),[:],{:}"
+  au FileType javascript,javascript.jsx,scala,vim let b:delimitMate_matchpairs = "(:),[:],{:}"
+  au FileType html,rust let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
   au FileType python,scala let b:delimitMate_nesting_quotes = ['"']
+  au FileType rust let b:delimitMate_nesting_quotes = ['"', "|"]
   au FileType javascript,javascript.jsx let b:delimitMate_nesting_quotes = ['`']
 
   func! s:delimitMate_map() abort
@@ -1578,7 +1587,7 @@ nmap <localleader>y :FZFYank<CR>
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always"
-  \ -g "*.{js,json,php,md,styl,css,scss,less,jade,html,config,py,cpp,c,go,hs,rb,conf,java,scala,rs,nim,swift}"
+  \ -g "*.{js,ts,json,php,md,styl,css,scss,less,jade,html,xml,config,py,cpp,c,go,hs,rb,conf,java,scala,rs,nim,swift}"
   \ -g "!.git/*"
   \ -g "!node_modules/*"
   \ -g "!vendor/*" '
@@ -1614,7 +1623,7 @@ let g:airline#extensions#cm_call_signature#enabled = 1
 " Language server
 
 let g:LanguageClient_serverCommands = {
-      \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+      \ 'rust': ['rustup', 'run', 'stable', 'rls'],
       \ 'scala': ['sbt-server-stdio.js'],
       \ 'typescript': ['typescript-language-server', '--stdio'],
       \ 'javascript': ['flow-language-server', '--stdio'],
@@ -1768,21 +1777,21 @@ let g:expand_region_use_select_mode = 1
 
 " Extend the global defaul
 let g:expand_region_text_objects = {
-      \ 'iw' : 0,
-      \ 'iW' : 0,
-      \ 'i"' : 0,
-      \ 'i''': 0,
-      \ 'i]' : 1,
-      \ 'ib' : 1,
-      \ 'iB' : 1,
-      \ 'il' : 0,
-      \ 'ip' : 0,
-      \ 'ie' : 0,
-      \ 'a]' : 1,
-      \ 'ab' : 1,
-      \ 'aB' : 1,
-      \ 'ii' : 0,
-      \ 'ai' : 0,
+      \ 'iw'  : 0,
+      \ 'iW'  : 0,
+      \ 'i"'  : 0,
+      \ 'i''' : 0,
+      \ 'i]'  : 1,
+      \ 'ib'  : 1,
+      \ 'iB'  : 1,
+      \ 'il'  : 0,
+      \ 'ip'  : 0,
+      \ 'ie'  : 0,
+      \ 'a]'  : 1,
+      \ 'ab'  : 1,
+      \ 'aB'  : 1,
+      \ 'ii'  : 0,
+      \ 'ai'  : 0,
       \ }
 
 " Arg wrap
@@ -1809,9 +1818,6 @@ noremap <silent> <M-l> :TmuxNavigateRight<CR>
 noremap <silent> <M-\> :TmuxNavigatePrevious<CR>
 
 nn <localleader><localleader> :Startify<CR>
-
-" Easy motion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
@@ -1848,6 +1854,10 @@ let g:echodoc_enable_at_startup = 1
 " Dart
 
 let g:dart_style_guide = 1
+
+" Wiki
+
+let g:vimwiki_list = [{ 'path' : '~/Dropbox/Wiki' }]
 
 " let g:timer = timer_start(300000, 'Pomodoro', {'repeat':-1})
 " let g:value = 0
