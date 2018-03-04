@@ -28,3 +28,6 @@
 [submodule "roles/dotfiles/files/.zsh/bundle/zsh-autopair"]
 	path = roles/dotfiles/files/.zsh/bundle/zsh-autopair
 	url = https://github.com/hlissner/zsh-autopair
+[submodule "roles/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions"]
+	path = roles/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions

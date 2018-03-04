@@ -52,9 +52,9 @@ ZSH_CUSTOM=~/.zsh/oh-my-zsh
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 if [ `uname` = 'Darwin' ]; then
-  # plugins=(osx git-extras cbt)
+  plugins=(zsh-autosuggestions)
 else
-  # plugins=(git-extras)
+  plugins=(zsh-autosuggestions)
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -98,7 +98,7 @@ bindkey "\e[1;5C" forward-word  # Ctrl + <right>
 
 bindkey \^u backward-kill-line
 
-bindkey '^ ' autosuggest-accept
+bindkey '^i' autosuggest-accept
 
 # Switch back and forward between program faster
 
