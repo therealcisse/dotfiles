@@ -90,7 +90,11 @@ call plug#begin('~/.vim/plugged')
     " Java completion
     " Plug 'sassanh/nvim-cm-eclim', { 'for': [ 'java' ] }
 
-    Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'autozimu/LanguageClient-neovim', {
+          \ 'branch' : 'next',
+          \ 'do'     : 'bash install.sh'
+          \ }
+
     Plug 'Shougo/echodoc.vim'
   endif
 
@@ -161,7 +165,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'roxma/vim-paste-easy'
 
-  Plug 'ensime/ensime-vim', { 'for': ['scala'], 'do': ':UpdateRemotePlugins' }
+  "Plug 'ensime/ensime-vim', { 'for': ['scala'], 'do': ':UpdateRemotePlugins' }
 
   " Plug 'terryma/vim-expand-region', { 'on': [ '<Plug>(expand_region_expand)', '<Plug>(expand_region_shrink)' ] } " M-+, M--
 
@@ -180,6 +184,8 @@ call plug#begin('~/.vim/plugged')
   " Plug 'w0rp/ale'
 
   " Plug 'easymotion/vim-easymotion'
+
+  Plug 'MattesGroeger/vim-bookmarks'
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -1043,8 +1049,9 @@ augroup DelimitMate
   let g:closetag_emptyTags_caseSensitive = 1
 
   au FileType javascript,javascript.jsx,scala,vim let b:delimitMate_matchpairs = "(:),[:],{:}"
-  au FileType html,rust let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
-  au FileType python,scala let b:delimitMate_nesting_quotes = ['"']
+  au FileType html,rust,dart,java let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+  au FileType python,java,dart let b:delimitMate_nesting_quotes = ['"']
+  au FileType scala let b:delimitMate_nesting_quotes = ['"', '"""']
   au FileType rust let b:delimitMate_nesting_quotes = ['"', "|"]
   au FileType javascript,javascript.jsx let b:delimitMate_nesting_quotes = ['`']
 
@@ -1239,7 +1246,7 @@ nnoremap <c-o> <c-o>zzzv
 " NeoTerm
 
 if has('nvim')
-  let g:neoterm_position   = 'vertical'
+  " let g:neoterm_position   = 'vertical'
   let g:neoterm_shell      = $SHELL
   let g:neoterm_autoinsert = 1
   let g:neoterm_autoscroll = 1
@@ -1335,7 +1342,7 @@ hi! NonText cterm=NONE ctermfg=NONE
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-autocmd FileType typescript JsPreTmpl html
+" autocmd FileType typescript JsPreTmpl html
 " autocmd FileType typescript syn clear foldBraces  " For leafgarland/typescript-vim users only. Please see https://github.com/Quramy/vim-js-pretty-template/issues/1 for details.
 
 " Flow
@@ -1607,7 +1614,7 @@ let g:rustfmt_autosave = 1
 
 " NVIM completion manager
 
-imap <c-,> <Plug>(cm_force_refresh)
+imap <c-space> <Plug>(cm_force_refresh)
 
 let g:cm_refresh_length = 2 " [[1,2], [7,2]]
 
@@ -1623,18 +1630,24 @@ let g:airline#extensions#cm_call_signature#enabled = 1
 " Language server
 
 let g:LanguageClient_serverCommands = {
-      \ 'rust':           ['rustup', 'run', 'stable', 'rls'],
-      \ 'scala':          ['sbt-server-stdio.js'],
-      \ 'typescript':     ['typescript-language-server', '--stdio'],
-      \ 'javascript':     ['flow-language-server', '--stdio'],
-      \ 'javascript.jsx': ['flow-language-server', '--stdio'],
-      \ 'go':             ['go-langserver'],
+      \ 'cpp'            : ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
+      \ 'dart'           : ['dart_language_server'],
+      \ 'rust'           : ['rustup', 'run', 'stable', 'rls'],
+      \ 'scala'          : ['sbt-server-stdio.js'],
+      \ 'typescript'     : ['typescript-language-server', '--stdio'],
+      \ 'javascript'     : ['flow-language-server', '--stdio'],
+      \ 'javascript.jsx' : ['flow-language-server', '--stdio'],
+      \ 'go'             : ['go-langserver'],
       \ }
 
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
-
-let g:LanguageClient_diagnosticsList = 'location'
+let g:LanguageClient_diagnosticsList = 'Quickfix'
+let g:LanguageClient_changeThrottle = 0.5
+"let g:LanguageClient_settingsPath = expand('~/.config/nvim/settings.json')
+let g:LanguageClient_rootMarkers = {
+     \ 'cpp': ['.cquery', 'compile_commands.json', 'build'],
+     \ }
 
 augroup LanguageClient_config
   autocmd!
@@ -1642,17 +1655,20 @@ augroup LanguageClient_config
   autocmd User LanguageClientDiagnosticsChanged lopen
 augroup END
 
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
   \ <localleader>sd :call LanguageClient_textDocument_definition()<CR>
 
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
   \ <localleader>sh :call LanguageClient_textDocument_hover()<CR>
 
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
-  \ <localleader>sr :call LanguageClient_textDocument_rename()<CR>
-
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala nnoremap <buffer>
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
   \ <localleader>sf :call LanguageClient_textDocument_documentSymbol()<CR>
+
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
+  \ <localleader>sr :call LanguageClient_textDocument_references()<CR>
+
+autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go inoremap <buffer>
+  \ <localleader>sc :call LanguageClient_textDocument_completion()<CR>
 
 " Formatting
 
@@ -1854,11 +1870,40 @@ let g:echodoc_enable_at_startup = 1
 
 " Dart
 
-let g:dart_style_guide = 1
+let g:dart_style_guide = 2
+
+" Dirvish
+
+augroup dirvish_config
+  autocmd!
+  autocmd FileType dirvish silent! unmap <buffer> <C-p>
+  autocmd FileType dirvish silent! unmap <buffer> <C-n>
+augroup END
 
 " Wiki
 
-let g:vimwiki_list = [{ 'path' : '~/Dropbox/Wiki' }]
+let g:vimwiki_list = [
+      \ { 'path' : '~/Dropbox/Wiki' }
+      \ ]
+
+" Vim bookmarks
+let g:bookmark_no_default_key_mappings = 1
+
+nmap <localleader>mm <Plug>BookmarkToggle
+nmap <localleader>mi <Plug>BookmarkAnnotate
+nmap <localleader>ma <Plug>BookmarkShowAll
+nmap <localleader>mj <Plug>BookmarkNext
+nmap <localleader>mk <Plug>BookmarkPrev
+nmap <localleader>mc <Plug>BookmarkClear
+nmap <localleader>mx <Plug>BookmarkClearAll
+nmap <localleader>mK <Plug>BookmarkMoveUp
+nmap <localleader>mJ <Plug>BookmarkMoveDown
+nmap <localleader>mg <Plug>BookmarkMoveToLine
+
+" highlight BookmarkSign ctermbg=whatever ctermfg=whatever
+" highlight BookmarkAnnotationSign ctermbg=whatever ctermfg=whatever
+" highlight BookmarkLine ctermbg=whatever ctermfg=whatever
+" highlight BookmarkAnnotationLine ctermbg=whatever ctermfg=whatever
 
 " let g:timer = timer_start(300000, 'Pomodoro', {'repeat':-1})
 " let g:value = 0

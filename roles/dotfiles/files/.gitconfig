@@ -14,6 +14,8 @@
 
 	st = status
 
+	ci = commit
+
 	staged = diff --cached
 
 	# Show the diff between the latest commit and the current state
@@ -143,6 +145,7 @@
 
 	# Detect copies as well as renames
 	renames = copies
+	renameLimit = 25931
 
 [diff "bin"]
 
@@ -170,7 +173,7 @@
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

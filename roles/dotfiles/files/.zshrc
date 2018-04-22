@@ -98,8 +98,6 @@ bindkey "\e[1;5C" forward-word  # Ctrl + <right>
 
 bindkey \^u backward-kill-line
 
-bindkey '^i' autosuggest-accept
-
 # Switch back and forward between program faster
 
 fancy-ctrl-z () {
