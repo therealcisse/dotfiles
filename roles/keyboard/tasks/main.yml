@@ -11,12 +11,6 @@
     register: karabiner_config_path_check
     changed_when: false
 
-  - name: karabiner | check for non-symlink karabiner assets
-    command: test -e {{ karabiner_assets_path }} -a ! -L {{ karabiner_assets_path }}
-    failed_when: karabiner_assets_path_check.rc > 1
-    register: karabiner_assets_path_check
-    changed_when: false
-
 #####=== configure ===#####
 
 - name: karabiner | backup original karabiner config
@@ -26,29 +20,10 @@
     removes={{ karabiner_config_path }}
   when: karabiner_config_path_check.rc == 0 # item exists and is not a symlink
 
-- name: karabiner | backup original karabiner assets
-  command:
-    mv {{ karabiner_assets_path }} ~/.backups/
-    creates=~/.backups/{{ karabiner_assets_path | basename }}
-    removes={{ karabiner_assets_path }}
-  when: karabiner_assets_path_check.rc == 0 # item exists and is not a symlink
-
-- name: karabiner | make sure {{ karabiner_config_path | dirname }} exists
+- name: karabiner | link config
   file:
-    path="{{ karabiner_config_path | dirname }}"
-    state=directory
-
-- name: karabiner | install config
-  file:
-    src="{{ ansible_env.PWD }}/roles/keyboard/files/karabiner.json"
+    src="{{ ansible_env.PWD }}/roles/keyboard/files"
     path="{{ karabiner_config_path }}"
-    state=link
-    force=yes
-
-- name: karabiner | install assets
-  file:
-    src="{{ ansible_env.PWD }}/roles/keyboard/files/assets"
-    path="{{ karabiner_assets_path }}"
     state=link
     force=yes
 
