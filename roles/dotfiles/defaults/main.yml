@@ -39,3 +39,4 @@ dotfiles:
   - ginit.vim
   - .sqliterc
   - .scalafmt.conf
+  - .ammonite
