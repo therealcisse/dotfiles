@@ -964,9 +964,11 @@
 	<key>LoadPrefsFromCustomFolder</key>
 	<integer>1</integer>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/Desktop</string>
+	<string>~/Documents</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{1440, 873}</string>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{1440, 819}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -1016,7 +1018,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 207 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>0 366 918 512 0 0 1440 878 </string>
+	<string>0 366 1016 512 0 0 1440 878 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -1024,7 +1026,7 @@
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 41 1440 837 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>0 41 1440 837 0 0 1440 878 </string>
+	<string>0 17 1440 861 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
 	<string>0 46 1440 832 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
@@ -1294,7 +1296,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string>t 2&gt; /dev/null</string>
+			<string>t  -L `name=$PWD; echo ${name//\\//-}` 2&gt; /dev/null</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -3066,7 +3068,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-04-21T00:06:47Z</date>
+	<date>2018-05-30T09:02:52Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartCursorColorBgThreshold</key>
@@ -3093,7 +3095,7 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.1.5</string>
+	<string>3.1.6</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

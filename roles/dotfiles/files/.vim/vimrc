@@ -82,21 +82,29 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
   if has('nvim')
-    Plug 'roxma/nvim-completion-manager'
+    " Plug 'roxma/nvim-completion-manager'
     " Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
-    Plug 'fgrsnau/ncm-otherbuf'
+    " Plug 'fgrsnau/ncm-otherbuf'
 
     " Java completion
     " Plug 'sassanh/nvim-cm-eclim', { 'for': [ 'java' ] }
 
-    Plug 'autozimu/LanguageClient-neovim', {
-          \ 'branch' : 'next',
-          \ 'do'     : 'bash install.sh'
-          \ }
+    " Plug 'autozimu/LanguageClient-neovim', {
+    "       \ 'branch' : 'next',
+    "       \ 'do'     : 'bash install.sh'
+    "       \ }
 
     Plug 'Shougo/echodoc.vim'
   endif
+
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'prabirshrestha/asyncomplete-buffer.vim'
+  Plug 'prabirshrestha/asyncomplete-file.vim'
+  Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+  Plug 'prabirshrestha/async.vim'
 
   Plug 'wakatime/vim-wakatime'
 
@@ -196,12 +204,6 @@ call plug#end()
 
 let mapleader="\<Space>"
 let maplocalleader="\\"
-
-if exists("$TMUX")
-  " Disable CTRL-Space on tmux or on screen
-  nnoremap <C-Space> <NOP>
-  nnoremap <leader><C-Space> <C-Space>
-endif
 
 set termencoding=utf-8
 scriptencoding utf-8
@@ -1020,14 +1022,6 @@ set suffixesadd=.js
 set suffixesadd=.ts
 set suffixesadd+=.json
 
-" if isdirectory(expand($PWD.'/node_modules'))
-"   set path+=$PWD/node_modules
-" endif
-
-" if isdirectory(expand($PWD.'/js'))
-"   set path+=$PWD/js
-" endif
-
 set path+=*/**
 
 set shell=/bin/sh
@@ -1230,7 +1224,7 @@ if executable("rg")
   let g:ackprg = 'rg --vimgrep --smart-case'
   cnoreabbrev ag Ack!
 
-  set grepprg=rg\ --no-heading\ --vimgrep\ --no-color\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
+  set grepprg=rg\ --no-heading\ --vimgrep\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
   set grepformat=%f:%l:%c:%m
 elseif executable("ag")
   let g:ackprg = 'ag --vimgrep --smart-case'
@@ -1246,10 +1240,10 @@ nnoremap <c-o> <c-o>zzzv
 " NeoTerm
 
 if has('nvim')
-  " let g:neoterm_position   = 'vertical'
-  let g:neoterm_shell      = $SHELL
-  let g:neoterm_autoinsert = 1
-  let g:neoterm_autoscroll = 1
+  let g:neoterm_default_mod   = 'vertical'
+  let g:neoterm_shell         = $SHELL
+  let g:neoterm_autoinsert    = 1
+  let g:neoterm_autoscroll    = 1
 
   nnoremap <silent> <leader>t :Ttoggle<CR>
 endif
@@ -1612,63 +1606,28 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Format rust code after save
 let g:rustfmt_autosave = 1
 
-" NVIM completion manager
-
-imap <c-space> <Plug>(cm_force_refresh)
-
-let g:cm_refresh_length = 2 " [[1,2], [7,2]]
-
-let g:cm_multi_threading = 1
-
-let g:cm_sources_override = {
-      \ 'cm-tags': {'enable':0}
-      \ }
-
 " use this to add airline plugin if airline rtp load is disabled
 let g:airline#extensions#cm_call_signature#enabled = 1
 
-" Language server
+" let g:LanguageClient_serverCommands = {
+"       \ 'cpp'            : ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
+"       \ 'dart'           : ['dart_language_server'],
+"       \ 'rust'           : ['rustup', 'run', 'stable', 'rls'],
+"       \ 'typescript'     : ['typescript-language-server', '--stdio'],
+"       \ 'javascript'     : ['flow-language-server', '--stdio'],
+"       \ 'javascript.jsx' : ['flow-language-server', '--stdio'],
+"       \ 'go'             : ['go-langserver'],
+"       \ }
 
-let g:LanguageClient_serverCommands = {
-      \ 'cpp'            : ['cquery', '--language-server', '--log-file=/tmp/cq.log'],
-      \ 'dart'           : ['dart_language_server'],
-      \ 'rust'           : ['rustup', 'run', 'stable', 'rls'],
-      \ 'scala'          : ['sbt-server-stdio.js'],
-      \ 'typescript'     : ['typescript-language-server', '--stdio'],
-      \ 'javascript'     : ['flow-language-server', '--stdio'],
-      \ 'javascript.jsx' : ['flow-language-server', '--stdio'],
-      \ 'go'             : ['go-langserver'],
-      \ }
+" " Automatically start language servers.
+" let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_diagnosticsList = 'Quickfix'
+" let g:LanguageClient_changeThrottle = 0.5
+" "let g:LanguageClient_settingsPath = expand('~/.config/nvim/settings.json')
+" let g:LanguageClient_rootMarkers = {
+"      \ 'cpp': ['.cquery', 'compile_commands.json', 'build'],
+"      \ }
 
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_diagnosticsList = 'Quickfix'
-let g:LanguageClient_changeThrottle = 0.5
-"let g:LanguageClient_settingsPath = expand('~/.config/nvim/settings.json')
-let g:LanguageClient_rootMarkers = {
-     \ 'cpp': ['.cquery', 'compile_commands.json', 'build'],
-     \ }
-
-augroup LanguageClient_config
-  autocmd!
-
-  autocmd User LanguageClientDiagnosticsChanged lopen
-augroup END
-
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
-  \ <localleader>sd :call LanguageClient_textDocument_definition()<CR>
-
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
-  \ <localleader>sh :call LanguageClient_textDocument_hover()<CR>
-
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
-  \ <localleader>sf :call LanguageClient_textDocument_documentSymbol()<CR>
-
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go nnoremap <buffer>
-  \ <localleader>sr :call LanguageClient_textDocument_references()<CR>
-
-autocmd FileType rust,typescript,javascript,javascript.jsx,scala,dart,go inoremap <buffer>
-  \ <localleader>sc :call LanguageClient_textDocument_completion()<CR>
 
 " Formatting
 
@@ -1871,6 +1830,7 @@ let g:echodoc_enable_at_startup = 1
 " Dart
 
 let g:dart_style_guide = 2
+" let dart_format_on_save = 1
 
 " Dirvish
 
