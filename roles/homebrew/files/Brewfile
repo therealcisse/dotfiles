@@ -33,7 +33,7 @@ cask 'hyper'
 cask 'font-hack-nerd-font'
 
 brew 'plantuml'
-brew 'coursier/formulas/coursier', args: ["HEAD"]
+brew 'coursier/formulas/coursier'
 brew 'docker-compose', service_restart: true
 brew 'docker'
 brew 'findutils', args: ["--with-default-names"]
@@ -169,6 +169,7 @@ brew 'qemu'
 brew 'ragel'
 brew 'readline'
 brew 'redis', service_restart: true
+brew 'scalacenter/bloop/bloop', service_restart: true
 brew 'rhino'
 brew 'ruby-install'
 brew 's3cmd'

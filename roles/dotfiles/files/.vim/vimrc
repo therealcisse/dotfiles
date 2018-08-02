@@ -18,6 +18,10 @@ let g:loaded_matchparen = 1
 call plug#begin('~/.vim/plugged')
   Plug 'vimwiki/vimwiki'
 
+  Plug 'gilsondev/searchtasks.vim'
+
+  Plug 'brooth/far.vim'
+
   Plug 'machakann/vim-highlightedyank'
 
   Plug 'DataWraith/auto_mkdir'
@@ -1124,13 +1128,13 @@ if !has('gui_running')
 endif
 
 " Prevent tcomment from making a zillion mappings (we just want the operator).
-let g:tcommentMapLeader1=''
-let g:tcommentMapLeader2=''
-let g:tcommentMapLeaderCommentAnyway=''
-let g:tcommentTextObjectInlineComment=''
+let g:tcomment_mapleader1=''
+let g:tcomment_mapleader2=''
+let g:tcomment_mapleader_comment_anyway=''
+let g:tcomment_textobject_inlinecomment=''
 
 " The default (g<) is a bit awkward to type.
-let g:tcommentMapLeaderUncommentAnyway='gu'
+let g:tcomment_mapleader_uncomment_anyway='gu'
 
 " Count occurences of word under cursor
 nnoremap <leader>* *<C-O>:%s///gn<CR>
@@ -1224,7 +1228,7 @@ if executable("rg")
   let g:ackprg = 'rg --vimgrep --smart-case'
   cnoreabbrev ag Ack!
 
-  set grepprg=rg\ --no-heading\ --vimgrep\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
+  set grepprg=rg\ --no-heading\ --vimgrep\ --files\ --glob\ "!.git/*"\ --glob\ "!vendor/*"
   set grepformat=%f:%l:%c:%m
 elseif executable("ag")
   let g:ackprg = 'ag --vimgrep --smart-case'
@@ -1589,6 +1593,7 @@ nmap <localleader>y :FZFYank<CR>
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always"
   \ -g "*.{js,ts,json,php,md,styl,css,scss,less,jade,html,xml,config,py,cpp,c,go,hs,rb,conf,java,scala,rs,nim,swift}"
+  \ --files
   \ -g "!.git/*"
   \ -g "!node_modules/*"
   \ -g "!vendor/*" '
@@ -1859,6 +1864,10 @@ nmap <localleader>mx <Plug>BookmarkClearAll
 nmap <localleader>mK <Plug>BookmarkMoveUp
 nmap <localleader>mJ <Plug>BookmarkMoveDown
 nmap <localleader>mg <Plug>BookmarkMoveToLine
+
+" Far
+
+let g:far#source = "agnvim"
 
 " highlight BookmarkSign ctermbg=whatever ctermfg=whatever
 " highlight BookmarkAnnotationSign ctermbg=whatever ctermfg=whatever
