@@ -8,6 +8,14 @@ alias ze='nvim ~/.zshrc'
 alias za='nvim ~/.zsh/aliases'
 alias zf='nvim ~/.zsh/functions'
 
+# My root and user bashrc files are linked to be the same.  This makes sure that the
+# root rm / cp / mv commands are prompting.
+if [[ $(id -u) -eq 0 ]]; then
+    alias rm='rm -i'
+    alias cp='cp -i'
+    alias mv='mv -i'
+fi
+
 # zsh awesomeness
 autoload -U zmv
 alias mmv='noglob zmv -W'
