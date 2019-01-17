@@ -32,6 +32,7 @@ alias ll='ls -lahF'
 alias t=tmux
 alias v=nvim
 alias trash=rm
+alias kt=kubectl
 
 alias octave='/Applications/Octave-cli.app/Contents/MacOS/Octave'
 
@@ -47,6 +48,13 @@ function server() {
   statik --port "$port" .
 }
 alias serve=server
+
+# SBT debug
+function sbt-debug() {
+  local port="${1:-5005}"
+  JAVA_OPTS="-Xms2G -Xmx180G -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=${port}" sbt
+}
+alias sbt-debug=sbt-debug
 
 # tail
 alias tf='tail -F'

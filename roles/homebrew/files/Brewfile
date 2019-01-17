@@ -201,12 +201,14 @@ brew 'libimobiledevice', args: ['HEAD']
 brew 'ideviceinstaller'
 brew 'cocoapods'
 brew 'astyle'
+brew 'kubernetes-cli'
 brew 'homebrew/devel-only/elm-format', args: ['HEAD']
 
 cask 'vimr'
 cask '1password-beta'
 cask 'safeincloud-password-manager'
 cask 'arq'
+cask 'minikube'
 cask 'bartender'
 cask 'dropbox'
 cask 'firefox'

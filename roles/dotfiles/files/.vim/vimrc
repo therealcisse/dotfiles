@@ -20,9 +20,9 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'gilsondev/searchtasks.vim'
 
-  Plug 'brooth/far.vim'
+  " Plug 'brooth/far.vim'
 
-  Plug 'machakann/vim-highlightedyank'
+  " Plug 'machakann/vim-highlightedyank'
 
   Plug 'DataWraith/auto_mkdir'
 
@@ -103,12 +103,15 @@ call plug#begin('~/.vim/plugged')
   endif
 
   Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/vim-lsp'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  " Plug 'prabirshrestha/vim-lsp'
+  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'prabirshrestha/asyncomplete-buffer.vim'
   Plug 'prabirshrestha/asyncomplete-file.vim'
   Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
   Plug 'prabirshrestha/async.vim'
+
+  Plug 'derekwyatt/vim-scala'
+  Plug 'natebosch/vim-lsc'
 
   Plug 'wakatime/vim-wakatime'
 
@@ -862,16 +865,16 @@ let g:elm_setup_keybindings = 0
 " Ctags                 {{{
 """""""""""""""""""""""
 
-nn <leader>g :AsyncRun git ctags<CR>
+" nn <leader>g :AsyncRun git ctags<CR>
 
-set tags+=.git/tags
+" set tags+=.git/tags
 
 " Let me select my tags
-nnoremap <c-]> g<c-]>
-nnoremap g<c-]> <c-]>
+" nnoremap <c-]> g<c-]>
+" nnoremap g<c-]> <c-]>
 
 " Open tag for word under cursor in a new vsplit
-map <c-\> :vsp<CR>:exec("tag ".expand("<cword>"))<CR>
+" map <c-\> :vsp<CR>:exec("tag ".expand("<cword>"))<CR>
 
 augroup my_dirvish_events
   autocmd!
@@ -1219,6 +1222,13 @@ nmap <expr> <S-Tab> 'za'
 " vim-move
 
 let g:move_key_modifier = 'C'
+let g:move_map_keys = 0
+
+vmap <C-j> <Plug>MoveBlockDown
+nmap <C-j> <Plug>MoveLineDown
+
+vmap <C-k> <Plug>MoveBlockUp
+nmap <C-k> <Plug>MoveLineUp
 
 " Search word under cursor
 " nnoremap <leader>/ :Ag <C-r>=autocmds#escape_pattern(expand('<cword>'))<CR><Space> **/*.*
@@ -1590,17 +1600,17 @@ command! FZFYank call fzf#run({
 
 nmap <localleader>y :FZFYank<CR>
 
-let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always"
-  \ -g "*.{js,ts,json,php,md,styl,css,scss,less,jade,html,xml,config,py,cpp,c,go,hs,rb,conf,java,scala,rs,nim,swift}"
-  \ --files
-  \ -g "!.git/*"
-  \ -g "!node_modules/*"
-  \ -g "!vendor/*" '
+" let g:rg_command = '
+"   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always"
+"   \ -g "*.{js,ts,json,php,md,styl,css,scss,less,jade,html,xml,config,py,cpp,c,go,hs,rb,conf,java,scala,rs,nim,swift}"
+"   \ --files
+"   \ -g "!.git/*"
+"   \ -g "!node_modules/*"
+"   \ -g "!vendor/*" '
+"
+" command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
-command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
-
-nnoremap <C-g>/ :F<CR>
+nnoremap <C-g>/ :Rg<CR>
 
 " Insert Mode:
 imap <c-x><c-k> <plug>(fzf-complete-word)
@@ -1867,7 +1877,41 @@ nmap <localleader>mg <Plug>BookmarkMoveToLine
 
 " Far
 
-let g:far#source = "agnvim"
+" let g:far#source = "agnvim"
+
+" vim-scala
+au BufRead,BufNewFile *.sbt set filetype=scala
+
+" vim-lsc
+let g:lsc_reference_highlights = v:false
+let g:lsc_enable_autocomplete = v:false
+let g:lsc_server_commands = {
+  \ 'scala': 'metals-vim'
+  \}
+let g:lsc_auto_map = {
+  \ 'GoToDefinition': '<C-]>',
+  \ 'FindReferences': 'gF',
+  \ 'NextReference': 'g<C-n>',
+  \ 'PreviousReference': 'g<C-p>',
+  \ 'Rename': 'gR',
+  \ 'FindImplementations': 'gI',
+  \ 'FindCodeActions': 'ga',
+  \ 'DocumentSymbol': 'go',
+  \ 'WorkspaceSymbol': 'gS',
+  \ 'ShowHover': 'K',
+  \ 'SignatureHelp': 'g<C-m>',
+  \ 'Completion': 'completefunc',
+  \}
+
+hi lscDiagnosticError gui=underline guifg=#8b0000
+hi lscDiagnosticWarning gui=underline guifg=#ff4500
+
+nnoremap [g :set nohls<CR>/<<<<<<<<CR>:set hls<CR>
+nnoremap ]g :set nohls<CR>?<<<<<<<<CR>:set hls<CR>
+nnoremap [= :set nohls<CR>/=======<CR>:set hls<CR>
+nnoremap ]= :set nohls<CR>/=======<CR>:set hls<CR>
+nnoremap [G :set nohls<CR>?>>>>>>><CR>:set hls<CR>
+nnoremap ]G :set nohls<CR>?>>>>>>><CR>:set hls<CR>
 
 " highlight BookmarkSign ctermbg=whatever ctermfg=whatever
 " highlight BookmarkAnnotationSign ctermbg=whatever ctermfg=whatever
