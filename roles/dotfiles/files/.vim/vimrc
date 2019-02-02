@@ -1898,7 +1898,7 @@ let g:lsc_auto_map = {
   \ 'FindCodeActions': 'ga',
   \ 'DocumentSymbol': 'go',
   \ 'WorkspaceSymbol': 'gS',
-  \ 'ShowHover': 'K',
+  \ 'ShowHover': 'v:true',
   \ 'SignatureHelp': 'g<C-m>',
   \ 'Completion': 'completefunc',
   \}
