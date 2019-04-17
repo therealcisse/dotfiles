@@ -23,11 +23,11 @@ import $plugin.$ivy.`org.spire-math::kind-projector:0.9.7`
 import $ivy.`org.tpolecat::doobie-core:0.6.0-RC1`, doobie._, doobie.implicits._
 import $ivy.`org.tpolecat::doobie-postgres:0.6.0-RC1`
 
-import $ivy.`co.fs2::fs2-core:1.0.0`, fs2._, fs2.concurrent._
-import $ivy.`co.fs2::fs2-reactive-streams:1.0.0`, fs2.interop.reactivestreams._
+import $ivy.`co.fs2::fs2-core:1.0.4`, fs2._, fs2.concurrent._
+import $ivy.`co.fs2::fs2-reactive-streams:1.0.4`, fs2.interop.reactivestreams._
 
-import $ivy.`org.atnos::eff:5.2.0`, org.atnos.eff._, org.atnos.eff.all._, org.atnos.eff.syntax.all._
-import $ivy.`org.atnos::eff-cats-effect:5.2.0`, org.atnos.eff.addon.cats.effect._, IOEffect._
+// import $ivy.`org.atnos::eff:5.2.0`, org.atnos.eff._, org.atnos.eff.all._, org.atnos.eff.syntax.all._
+// import $ivy.`org.atnos::eff-cats-effect:5.2.0`, org.atnos.eff.addon.cats.effect._, IOEffect._
 
 // import $ivy.`io.chrisdavenport::linebacker:0.2.0-M1`
 
@@ -46,8 +46,8 @@ implicit val timer: Timer[IO] = IO.timer(global)
 
 // import $ivy.`org.scalatest::scalatest:3.0.1`, org.scalatest._
 
-import $ivy.`com.olegpy::meow-mtl:0.2.0`, com.olegpy.meow.hierarchy._, com.olegpy.meow.effects._
-import $ivy.`org.typelevel::cats-mtl-core:0.4.0`, _root_.cats.mtl._, _root_.cats.mtl.instances.all._
+// import $ivy.`com.olegpy::meow-mtl:0.2.0`, com.olegpy.meow.hierarchy._, com.olegpy.meow.effects._
+// import $ivy.`org.typelevel::cats-mtl-core:0.4.0`, _root_.cats.mtl._, _root_.cats.mtl.instances.all._
 
 import scala.util.Random._
 

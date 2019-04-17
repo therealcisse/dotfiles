@@ -76,7 +76,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
-  Plug 'SirVer/ultisnips'
+  " Plug 'SirVer/ultisnips'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
   Plug 'junegunn/gv.vim', { 'on': [ 'GV' ] }
@@ -102,16 +102,17 @@ call plug#begin('~/.vim/plugged')
     Plug 'Shougo/echodoc.vim'
   endif
 
-  Plug 'prabirshrestha/asyncomplete.vim'
-  " Plug 'prabirshrestha/vim-lsp'
-  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
-  Plug 'prabirshrestha/asyncomplete-buffer.vim'
-  Plug 'prabirshrestha/asyncomplete-file.vim'
-  Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-  Plug 'prabirshrestha/async.vim'
+  " Plug 'prabirshrestha/asyncomplete.vim'
+  " " Plug 'prabirshrestha/vim-lsp'
+  " " Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  " Plug 'prabirshrestha/asyncomplete-buffer.vim'
+  " Plug 'prabirshrestha/asyncomplete-file.vim'
+  " Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+  " Plug 'prabirshrestha/async.vim'
 
   Plug 'derekwyatt/vim-scala'
-  Plug 'natebosch/vim-lsc'
+  " Plug 'natebosch/vim-lsc'
+  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
   Plug 'wakatime/vim-wakatime'
 
@@ -201,6 +202,8 @@ call plug#begin('~/.vim/plugged')
   " Plug 'easymotion/vim-easymotion'
 
   Plug 'MattesGroeger/vim-bookmarks'
+
+  Plug 'alx741/vim-hindent', { 'for': ['haskell'] }
 call plug#end()
 
 " ----------------------------------------------------------------------
@@ -948,6 +951,11 @@ if has('autocmd')
       autocmd FocusGained,WinEnter,BufWinEnter,InsertLeave * if autocmds#should_number() | setlocal relativenumber | endif
     endif
 
+    " Let's close the location and the quickfix window if it's the last one
+    if exists('##QuitPre')
+      autocmd QuitPre * if &filetype != 'qf' | silent! lclose | silent! cclose | endif
+    endif
+
     " Close preview window
     if exists('##CompleteDone')
       au CompleteDone * pclose
@@ -1025,6 +1033,9 @@ nn _ "_dd
 
 " gf
 
+" Open file under the cursor in a vsplit
+nnoremap gf :rightbelow wincmd f<CR>
+
 set suffixesadd=.js
 set suffixesadd=.ts
 set suffixesadd+=.json
@@ -1034,6 +1045,12 @@ set path+=*/**
 set shell=/bin/sh
 
 set updatetime=250
+
+" always show signcolumns
+set signcolumn=yes
+
+" Better display for messages
+set cmdheight=3
 
 " ==================== delimitMate ====================
 let g:delimitMate_expand_cr            = 1
@@ -1294,44 +1311,44 @@ let g:startify_session_persistence  = 0
 " Join lines with M
 nn M J
 
-let g:ultisnips_inprogress = 0
-
-augroup amsaykUltisnips
-  autocmd!
-
-  func! s:CustomInnerKeyMapper()
-    let g:ultisnips_inprogress = 1
-  endfunc
-
-  func! s:CustomInnerKeyUnmapper()
-    let g:ultisnips_inprogress = 0
-  endfunc
-
-  autocmd! User UltiSnipsEnterFirstSnippet
-  autocmd User UltiSnipsEnterFirstSnippet call s:CustomInnerKeyMapper()
-  autocmd! User UltiSnipsExitLastSnippet
-  autocmd User UltiSnipsExitLastSnippet call s:CustomInnerKeyUnmapper()
-
-  func! g:TriggerNextCJ()
-    if g:ultisnips_inprogress
-      return "\<C-J>"
-    endif
-
-    return "\<C-O>j"
-  endfunction
-
-  func! g:TriggerNextCK()
-    if g:ultisnips_inprogress
-      return "\<C-K>"
-    endif
-
-    return "\<C-O>k"
-  endfunction
-
-  " Navigate ultisnips with c-j, c-k
-  inoremap <expr> <c-j> "<C-R>=g:TriggerNextCJ()<CR>"
-  " inoremap <expr> <c-k> "<C-R>=g:TriggerNextCK()<CR>"
-augroup END
+" let g:ultisnips_inprogress = 0
+"
+" augroup amsaykUltisnips
+"   autocmd!
+"
+"   func! s:CustomInnerKeyMapper()
+"     let g:ultisnips_inprogress = 1
+"   endfunc
+"
+"   func! s:CustomInnerKeyUnmapper()
+"     let g:ultisnips_inprogress = 0
+"   endfunc
+"
+"   autocmd! User UltiSnipsEnterFirstSnippet
+"   autocmd User UltiSnipsEnterFirstSnippet call s:CustomInnerKeyMapper()
+"   autocmd! User UltiSnipsExitLastSnippet
+"   autocmd User UltiSnipsExitLastSnippet call s:CustomInnerKeyUnmapper()
+"
+"   func! g:TriggerNextCJ()
+"     if g:ultisnips_inprogress
+"       return "\<C-J>"
+"     endif
+"
+"     return "\<C-O>j"
+"   endfunction
+"
+"   func! g:TriggerNextCK()
+"     if g:ultisnips_inprogress
+"       return "\<C-K>"
+"     endif
+"
+"     return "\<C-O>k"
+"   endfunction
+"
+"   " Navigate ultisnips with c-j, c-k
+"   inoremap <expr> <c-j> "<C-R>=g:TriggerNextCJ()<CR>"
+"   " inoremap <expr> <c-k> "<C-R>=g:TriggerNextCK()<CR>"
+" augroup END
 
 " Navigate line with H L
 nn H ^
@@ -1649,6 +1666,8 @@ let g:airline#extensions#cm_call_signature#enabled = 1
 augroup MyAutoformatCmds
   autocmd!
 
+  autocmd BufWrite *.hs :Autoformat
+
   " Scala
   let g:formatdef_scalafmt = "'ng scalafmt --stdin'"
   let g:formatters_scala = ['scalafmt']
@@ -1675,6 +1694,9 @@ augroup MyAutoformatCmds
     " nohlsearch
     call setpos('.', l:pos)
   endfunction
+
+  " Don't automatically indent on save, since vim's autoindent for haskell is buggy
+  autocmd FileType haskell let b:autoformat_autoindent=0
 
   " autocmd FileType javascript,javascript.jsx,typescript noremap <buffer> <leader>f :call DoFormatAndCleanHL()<CR>
   " autocmd BufWritePre *.{js,ts} call DoFormatAndCleanHL() " Autoformat on save
@@ -1882,29 +1904,116 @@ nmap <localleader>mg <Plug>BookmarkMoveToLine
 " vim-scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 
-" vim-lsc
-let g:lsc_reference_highlights = v:false
-let g:lsc_enable_autocomplete = v:false
-let g:lsc_server_commands = {
-  \ 'scala': 'metals-vim'
-  \}
-let g:lsc_auto_map = {
-  \ 'GoToDefinition': '<C-]>',
-  \ 'FindReferences': 'gF',
-  \ 'NextReference': 'g<C-n>',
-  \ 'PreviousReference': 'g<C-p>',
-  \ 'Rename': 'gR',
-  \ 'FindImplementations': 'gI',
-  \ 'FindCodeActions': 'ga',
-  \ 'DocumentSymbol': 'go',
-  \ 'WorkspaceSymbol': 'gS',
-  \ 'ShowHover': 'v:true',
-  \ 'SignatureHelp': 'g<C-m>',
-  \ 'Completion': 'completefunc',
-  \}
+" coc.vim
 
-hi lscDiagnosticError gui=underline guifg=#8b0000
-hi lscDiagnosticWarning gui=underline guifg=#ff4500
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> <C-]> <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Remap for do codeAction of current line
+nmap <leader>ac <Plug>(coc-codeaction)
+
+" Remap for do action format
+nnoremap <silent> gF :call CocAction('format')<CR>
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Show all diagnostics
+nnoremap <silent> <localleader>a  :<C-u>CocList diagnostics<cr>
+" Find symbol of current document
+nnoremap <silent> <localleader>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <localleader>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <localleader>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <localleader>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
+
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+" vim-lsc
+" let g:lsc_reference_highlights = v:false
+" let g:lsc_enable_autocomplete = v:false
+" let g:lsc_server_commands = {
+"   \ 'scala': 'metals-vim'
+"   \}
+" let g:lsc_auto_map = {
+"   \ 'GoToDefinition': '<C-]>',
+"   \ 'FindReferences': 'gF',
+"   \ 'NextReference': 'g<C-n>',
+"   \ 'PreviousReference': 'g<C-p>',
+"   \ 'Rename': 'gR',
+"   \ 'FindImplementations': 'gI',
+"   \ 'FindCodeActions': 'ga',
+"   \ 'DocumentSymbol': 'go',
+"   \ 'WorkspaceSymbol': 'gS',
+"   \ 'ShowHover': 'v:true',
+"   \ 'SignatureHelp': 'g<C-m>',
+"   \ 'Completion': 'completefunc',
+"   \}
+"
+" hi lscDiagnosticError gui=underline guifg=#8b0000
+" hi lscDiagnosticWarning gui=underline guifg=#ff4500
 
 nnoremap [g :set nohls<CR>/<<<<<<<<CR>:set hls<CR>
 nnoremap ]g :set nohls<CR>?<<<<<<<<CR>:set hls<CR>
@@ -1933,6 +2042,14 @@ nnoremap ]G :set nohls<CR>?>>>>>>><CR>:set hls<CR>
 "   call feedkeys("\<esc>", 'x')
 "   let [&vb, &eb] = [l:vb, l:eb]
 " endfunction
+
+" Let's have some fun with the QuickFix window
+autocmd BufReadPost quickfix setlocal foldmethod=expr
+autocmd BufReadPost quickfix setlocal foldexpr=or(getline(v:lnum)[0:1]=='\|\|')
+autocmd BufReadPost quickfix setlocal foldlevel=0
+
+" Haskell - hident
+let g:hindent_on_save = 1
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

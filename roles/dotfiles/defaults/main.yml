@@ -40,3 +40,8 @@ dotfiles:
   - .sqliterc
   - .scalafmt.conf
   - .ammonite
+  - .stack
+  - .ghci
+  - .haskeline
+  - .hident.yaml
+  - .stylish-haskell.yaml

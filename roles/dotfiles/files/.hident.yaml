@@ -1,0 +1,8 @@
+line-length: 80
+indent-size: 2
+
+force-trailing-newline: true
+sort-imports: false
+line-breaks:
+  - "<$>"
+  - "<*>"
