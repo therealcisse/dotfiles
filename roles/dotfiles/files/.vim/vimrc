@@ -1953,6 +1953,16 @@ nnoremap <silent> <localleader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <localleader>p  :<C-u>CocListResume<CR>
 
+" call CocRequest('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
+" call CocRequest('metals', 'workspace/executeCommand', { 'command': 'build-connect' })
+" call CocRequest('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
+
+augroup MyCocSetup
+  autocmd!
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " use <c-space>for trigger completion
@@ -1978,7 +1988,7 @@ endfunction
 let g:coc_snippet_next = '<tab>'
 
 " coc.nvim color changes
-hi! link CocErrorSign WarningMsg
+hi! link CocErrorSign ErrorMsg
 hi! link CocWarningSign Number
 hi! link CocInfoSign Type
 
@@ -2019,9 +2029,6 @@ let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 " Configure error/warning section to use coc.nvim
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
-" Hide the Nerdtree status line to avoid clutter
-let g:NERDTreeStatusline = ''
 
 " Disable vim-airline in preview mode
 let g:airline_exclude_preview = 1
