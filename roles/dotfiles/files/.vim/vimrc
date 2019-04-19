@@ -644,23 +644,6 @@ set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtab
 
 set textwidth=80               " automatically hard wrap at 80 columns
 
-" Airline
-
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-
-let g:airline#extensions#whitespace#enabled = 1
-
-let g:airline_symbols.maxlinenr = ''
-
-let g:airline_symbols.linenr = 'ℓ'
-
-let g:airline_skip_empty_sections = 1
-
 set showtabline=0
 
 " For conceal markers.
@@ -1862,7 +1845,10 @@ endif
 
 " Echodoc
 set noshowmode
-let g:echodoc_enable_at_startup = 1
+
+" === echodoc === "
+" Enable echodoc on startup
+let g:echodoc#enable_at_startup = 1
 
 " Dart
 
@@ -1991,6 +1977,91 @@ endfunction
 
 let g:coc_snippet_next = '<tab>'
 
+" coc.nvim color changes
+hi! link CocErrorSign WarningMsg
+hi! link CocWarningSign Number
+hi! link CocInfoSign Type
+
+" Make background transparent for many things
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE
+hi! LineNr ctermfg=NONE guibg=NONE
+hi! SignColumn ctermfg=NONE guibg=NONE
+hi! StatusLine guifg=#16252b guibg=#6699CC
+hi! StatusLineNC guifg=#16252b guibg=#16252b
+
+" Wrap in try/catch to avoid errors on initial install before plugin is available
+try
+
+" Vim airline theme
+let g:airline_theme='space'
+
+" === Vim airline ==== "
+" Enable extensions
+let g:airline_extensions = ['branch', 'hunks', 'coc']
+
+" Update section z to just have line number
+let g:airline_section_z = airline#section#create(['linenr'])
+
+" Do not draw separators for empty sections (only for the active window) >
+let g:airline_skip_empty_sections = 1
+
+" Smartly uniquify buffers names with similar filename, suppressing common parts of paths.
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+" Custom setup that removes filetype/whitespace from default vim airline bar
+let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
+
+let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+
+let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+
+" Configure error/warning section to use coc.nvim
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+" Hide the Nerdtree status line to avoid clutter
+let g:NERDTreeStatusline = ''
+
+" Disable vim-airline in preview mode
+let g:airline_exclude_preview = 1
+
+" let g:airline_symbols.space = "\ua0"
+
+" let g:airline#extensions#whitespace#enabled = 1
+
+" let g:airline_symbols.maxlinenr = ''
+
+" let g:airline_symbols.linenr = 'ℓ'
+
+" let g:airline_skip_empty_sections = 1
+
+" Enable powerline fonts
+let g:airline_powerline_fonts = 1
+
+" Enable caching of syntax highlighting groups
+let g:airline_highlighting_cache = 1
+
+" Define custom airline symbols
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '❮'
+let g:airline_right_sep = '❯'
+
+" Don't show git changes to current file in airline
+let g:airline#extensions#hunks#enabled=0
+
+catch
+  echo 'Airline not installed. It should work after running :PlugInstall'
+endtry
+
+" Try to hide vertical spit and end of buffer symbol
+" hi! VertSplit gui=NONE guifg=#17252c guibg=#17252c
+" hi! EndOfBuffer ctermbg=NONE ctermfg=NONE guibg=#17252c guifg=#17252c
+
 " vim-lsc
 " let g:lsc_reference_highlights = v:false
 " let g:lsc_enable_autocomplete = v:false
@@ -2050,6 +2121,30 @@ autocmd BufReadPost quickfix setlocal foldlevel=0
 
 " Haskell - hident
 let g:hindent_on_save = 1
+
+" highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#002931
+"
+" let $FZF_DEFAULT_OPTS='--layout=reverse'
+" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+"
+" function! FloatingFZF()
+"   let buf = nvim_create_buf(v:false, v:true)
+"   call setbufvar(buf, '&signcolumn', 'no')
+"
+"   let height = &lines - 3
+"   let width = float2nr(&columns - (&columns * 2 / 10))
+"   let col = float2nr((&columns - width) / 2)
+"
+"   let opts = {
+"         \ 'relative': 'editor',
+"         \ 'row': 1,
+"         \ 'col': col,
+"         \ 'width': width,
+"         \ 'height': height
+"         \ }
+"
+"   call nvim_open_win(buf, v:true, opts)
+" endfunction
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
