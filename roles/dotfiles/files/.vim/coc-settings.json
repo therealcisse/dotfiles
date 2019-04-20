@@ -1,4 +1,5 @@
 {
+  "suggest.noselect": false,
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
   "diagnostic.errorSign": "•",
