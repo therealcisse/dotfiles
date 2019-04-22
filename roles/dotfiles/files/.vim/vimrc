@@ -1900,7 +1900,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 nmap <silent> <C-]> <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <localleader>gr <Plug>(coc-references)
 
 " Remap for do codeAction of current line
 nmap <leader>ac <Plug>(coc-codeaction)
@@ -1938,7 +1938,7 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+nmap <localleader>rn <Plug>(coc-rename)
 
 " Show all diagnostics
 nnoremap <silent> <localleader>a  :<C-u>CocList diagnostics<cr>
