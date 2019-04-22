@@ -76,7 +76,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'plasticboy/vim-markdown', { 'for': [ 'markdown' ] }
   Plug 'raimondi/delimitmate'
   Plug 'airblade/vim-gitgutter'
-  " Plug 'SirVer/ultisnips'
+  Plug 'SirVer/ultisnips'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-fugitive'
   Plug 'junegunn/gv.vim', { 'on': [ 'GV' ] }
@@ -1984,8 +1984,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-let g:coc_snippet_next = '<tab>'
 
 " coc.nvim color changes
 hi! link CocErrorSign ErrorMsg

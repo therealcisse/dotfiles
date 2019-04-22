@@ -1,4 +1,13 @@
-" " ==================== UltiSnips ====================
+" ==================== UltiSnips ====================
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<cr>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
 "
 " " List all snippets
 " let g:UltiSnipsListSnippets = '<c-.>'
@@ -73,9 +82,9 @@
 "       \ ? (empty(v:completed_item)?"\<C-n>\<C-y>\<CR>":"\<C-y>") :
 "       \ (delimitMate#WithinEmptyPair() ? "<Plug>delimitMateCR" : "\<CR>")
 
-imap <expr> <CR> pumvisible()
+inoremap <expr> <CR> pumvisible()
       \ ? coc#_select_confirm() :
-      \ (delimitMate#WithinEmptyPair() ? "<Plug>delimitMateCR" : "\<CR>")
+      \ (delimitMate#WithinEmptyPair() ? "<Plug>delimitMateCR" : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>")
 
 " let g:UltiSnipsSnippetsDir = $HOME . '/.config/nvim/ultisnips'
 " let g:UltiSnipsSnippetDirectories = [
