@@ -120,8 +120,9 @@
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
 [pull]
+	rebase = false
 
-	rebase = true
+	# rebase = true
 [color "branch"]
 
 	current = yellow reverse
@@ -162,7 +163,7 @@
 
 [log]
 
-	decorate = short
+	# decorate = short
 
 [merge]
 

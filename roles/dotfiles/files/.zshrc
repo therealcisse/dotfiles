@@ -221,6 +221,14 @@ then
   # ZSH_HIGHLIGHT_STYLES[assign]=none
 fi
 
+# export PATH=/usr/local/opt/sbt@0.13/bin/:$PATH
 
-# added by travis gem
-[ -f /Users/retina/.travis/travis.sh ] && source /Users/retina/.travis/travis.sh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# export PATH="$PATH:$HOME/.rvm/bin"
+
+
+# export SBT_OPTS="-Xmx4096M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xss2M"
+
+unsetopt inc_append_history
+unsetopt share_history

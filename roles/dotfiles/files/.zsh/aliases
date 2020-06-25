@@ -44,8 +44,8 @@ alias kt=kubectl
 
 alias octave='/Applications/Octave-cli.app/Contents/MacOS/Octave'
 
-alias chrome='open -n -a Google\ Chrome --args --user-data-dir="/tmp/chrome-`uuid`" --disable-web-security'
-alias chrome-canary='open -n -a Google\ Chrome\ Canary --args --user-data-dir="/tmp/chrome-`uuid`" --disable-web-security'
+alias chrome='open -n -a Google\ Chrome --args --user-data-dir="/tmp/chrome-`uuidgen`"'
+alias chrome-canary='open -n -a Google\ Chrome\ Canary --args --user-data-dir="/tmp/chrome-`uuidgen`"'
 
 # Simple Static Server (for current directory), stolen from paulirish/dotfiles
 function server() {

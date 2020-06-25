@@ -82,9 +82,18 @@ let g:UltiSnipsEditSplit="vertical"
 "       \ ? (empty(v:completed_item)?"\<C-n>\<C-y>\<CR>":"\<C-y>") :
 "       \ (delimitMate#WithinEmptyPair() ? "<Plug>delimitMateCR" : "\<CR>")
 
+function! s:TriggerAbb() "{{{
+  if v:version < 703
+        \ || ( v:version == 703 && !has('patch489') )
+        \ || pumvisible()
+    return ''
+  endif
+  return "\<C-]>"
+endfunction "}}}
+
 inoremap <expr> <CR> pumvisible()
       \ ? coc#_select_confirm() :
-      \ (delimitMate#WithinEmptyPair() ? "<Plug>delimitMateCR" : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>")
+      \ (delimitMate#WithinEmptyPair() ? <SID>TriggerAbb()."\<C-R>=delimitMate#ExpandReturn()\<CR>" : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>")
 
 " let g:UltiSnipsSnippetsDir = $HOME . '/.config/nvim/ultisnips'
 " let g:UltiSnipsSnippetDirectories = [

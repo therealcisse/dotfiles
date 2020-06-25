@@ -1,10 +1,44 @@
 let s:INT = { 'MAX': 2147483647 }
 
-let g:AmsaykBlacklistBufType = ['nofile', 'nowrite', 'acwrite', 'quickfix', 'help']
-let g:AmsaykNumberBlacklist = ['diff', 'fugitiveblame', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'startify', 'help', 'vim-plug', 'terminal', 'neoterm']
-let g:AmsaykColorColumnBlacklist = ['diff', 'fugitiveblame', 'undotree', 'nerdtree', 'ctrlp', 'qf', 'terminal', 'neoterm']
+let g:AmsaykBlacklistBufType = [
+      \ 'nofil|e',
+      \ 'nowrite',
+      \ 'acwrite',
+      \ 'quickfix',
+      \ 'help'
+      \ ]
+let g:AmsaykNumberBlacklist = [
+      \ 'diff',
+      \ 'fugitiveblame',
+      \ 'undotree',
+      \ 'nerdtree',
+      \ 'ctrlp',
+      \ 'qf',
+      \ 'startify',
+      \ 'help',
+      \ 'vim-plug',
+      \ 'terminal',
+      \ 'neoterm',
+      \ 'list'
+      \ ]
+let g:AmsaykColorColumnBlacklist = [
+      \ 'diff',
+      \ 'fugitiveblame',
+      \ 'undotree',
+      \ 'nerdtree',
+      \ 'ctrlp',
+      \ 'qf',
+      \ 'terminal',
+      \ 'neoterm',
+      \ 'list'
+      \ ]
 let g:AmsaykCursorlineBlacklist = ['ctrlp']
-let g:AmsaykMkviewFiletypeBlacklist = ['diff', 'gitcommit', 'hgcommit']
+let g:AmsaykMkviewFiletypeBlacklist = [
+  \ 'diff',
+  \ 'gitcommit',
+  \ 'hgcommit',
+  \ 'list'
+  \ ]
 
 function! autocmds#escape_pattern(str) abort
   return escape(a:str, '~"\.^$[]*')

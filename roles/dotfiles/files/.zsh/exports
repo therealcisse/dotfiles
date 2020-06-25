@@ -60,3 +60,4 @@ export GOPATH=~/Code/go
 
 export RUSTPATH=~/.cargo
 
+export LC_ALL=en_US.UTF-8

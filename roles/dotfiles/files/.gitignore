@@ -52,3 +52,6 @@ Desktop.ini
 ehthumbs.db
 Thumbs.db
 
+
+local.sbt
+.scalafix.conf

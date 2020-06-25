@@ -1,4 +1,6 @@
 {
+  "codeLens.enable": true,
+  "metals.serverVersion": "0.9.0",
   "suggest.snippetIndicator": "►",
   "suggest.noselect": false,
   "suggest.echodocSupport": true,
@@ -7,15 +9,8 @@
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "languageserver": {
-    "metals": {
-      "command": "metals-vim",
-      "rootPatterns": [
-        "build.sbt"
-      ],
-      "filetypes": [
-        "scala",
-        "sbt"
-      ]
-    }
-  }
+  },
+  // Needed for type formatting on multiline strings
+  "coc.preferences.formatOnSaveFiletypes": ["scala"],
+  "coc.preferences.formatOnType": true
 }
