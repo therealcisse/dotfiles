@@ -225,3 +225,6 @@ function k() {
   fi
 }
 
+prettyjson_w() {
+  curl "$1" | python -m json.tool
+}

@@ -1,15 +1,45 @@
-interp.load.ivy(
-  "com.lihaoyi" %
-  s"ammonite-shell_${scala.util.Properties.versionNumberString}" %
-  ammonite.Constants.version
-)
-@
-val shellSession = ammonite.shell.ShellSession()
+
+package ammonite
+package $file.roles.dotfiles.files.`.ammonite`
+import _root_.ammonite.interp.api.InterpBridge.{
+  value => interp
+}
+import _root_.ammonite.interp.api.InterpBridge.value.{
+  exit
+}
+import _root_.ammonite.interp.api.IvyConstructor.{
+  ArtifactIdExt,
+  GroupIdExt
+}
+import _root_.ammonite.runtime.tools.{
+  browse,
+  grep,
+  time,
+  tail
+}
+import _root_.ammonite.repl.tools.{
+  desugar,
+  source
+}
+import _root_.mainargs.{
+  arg,
+  main
+}
+import _root_.ammonite.repl.tools.Util.{
+  PathRead
+}
+import .{
+  res
+}
+
+
+object predef_2{
+/*<script>*/val shellSession = ammonite.shell.ShellSession()
 import shellSession._
 import ammonite.ops._
 import ammonite.shell._
-ammonite.shell.Configure(interp, repl, wd)
-repl.prompt() = "scala>"
+/*<amm>*/val res_4 = /*</amm>*/ammonite.shell.Configure(interp, repl, wd)
+/*<amm>*/val res_5 = /*</amm>*/repl.prompt() = "scala>"
 
 
 // interp.configureCompiler(_.settings.YpartialUnification.value = true)
@@ -97,3 +127,8 @@ repl.prompt() = "scala>"
 //
 // import $ivy.`com.typesafe.play::play-ahc-ws-standalone:2.0.7`, play.api.libs.ws._, play.api.libs.ws.ahc._
 // import $ivy.`com.typesafe.play::play-ws-standalone-json:2.0.7`
+/*</script>*/ /*<generated>*/
+def $main() = { scala.Iterator[String]() }
+  override def toString = "predef_2"
+  /*</generated>*/
+}

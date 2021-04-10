@@ -1,7 +1,7 @@
 [alias]
 
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	# l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
 	# %C(auto) requires Git 1.8.3 or later
 	one = log --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %s %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset'
@@ -90,7 +90,7 @@
 	smudge = git media smudge %f
 	required = true
 [user]
-	name = Amadou CISSE
+	name = Amadou Cisse
 	email = cisse.amadou.9@gmail.com
 [filter "hawser"]
 	clean = git hawser clean %f
@@ -183,3 +183,5 @@
 	trustExitCode = true
 [commit]
 	template = ~/.stCommitMsg
+[credential]
+  useHttpPath = true

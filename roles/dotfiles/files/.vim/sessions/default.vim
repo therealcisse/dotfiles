@@ -8,6 +8,7 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
+$argadd ~/dotfiles/roles/dotfiles/files/.gitignore
 set splitbelow splitright
 wincmd t
 set winminheight=0
@@ -20,7 +21,7 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20 winminheight=0 winminwidth=1 shortmess=filnxFAOTWaotcIs
 let s:sx = expand("<sfile>:p:r")."x.vim"
-if filereadable(s:sx)
+if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save

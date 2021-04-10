@@ -34,7 +34,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'duggiefresh/vim-easydir'
 
-  Plug 'Chiel92/vim-autoformat'
+  " Plug 'Chiel92/vim-autoformat'
 
   Plug 'itchyny/vim-parenmatch'
 
@@ -120,6 +120,7 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'natebosch/vim-lsc'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
   " Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 
   " Plug 'wakatime/vim-wakatime'
@@ -132,7 +133,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'ryanoasis/vim-webdevicons'
 
-  Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+  " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
   Plug 'pearofducks/ansible-vim', { 'for': [ 'yaml', 'ansible' ] }
 
@@ -204,7 +205,7 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'w0ng/vim-hybrid'
   " Plug 'chriskempson/base16-vim'
-  Plug 'challenger-deep-theme/vim'
+  " Plug 'challenger-deep-theme/vim'
 
   " Plug 'tpope/vim-projectionist', { 'on': ['A', 'AS', 'AV', 'AT'] }
 
@@ -732,7 +733,7 @@ function! s:SetColorScheme()
 
   " let g:hybrid_custom_term_colors = 1
   " let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-  " let g:airline_theme='hybridline'
+  let g:airline_theme='hybridline'
   " set background=dark
   " colorscheme hybrid
 
@@ -963,6 +964,10 @@ if has('autocmd')
       au CompleteDone * pclose
     else
       au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
+    endif
+
+    if exists('##TextYankPost')
+      autocmd TextYankPost * silent! lua return (not vim.v.event.visual) and require'vim.highlight'.on_yank('Substitute', 200)
     endif
   augroup END
 
@@ -1665,62 +1670,62 @@ let g:airline#extensions#cm_call_signature#enabled = 1
 
 " Formatting
 
-augroup MyAutoformatCmds
-  autocmd!
-
-  autocmd BufWrite *.hs :Autoformat
-
-  " Scala
-  let g:formatdef_scalafmt = "'scalafmt_ng --config ~/Code/deviceident/.scalafmt.conf --stdin'"
-  let g:formatters_scala = ['scalafmt']
-  autocmd FileType scala noremap <buffer> <leader>f :Autoformat <BAR> update<CR>
-  autocmd BufWritePre *.{scala,sbt} :keepjumps Autoformat <BAR> update<CR> " Autoformat scala and sbt on save
-
-  " Prettier for js, typescript and flow
-  let g:formatdef_prettier = "'prettier --stdin --parser flow --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
-  let g:formatdef_prettierjson = "'prettier --stdin --parser json --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
-  let g:formatdef_prettiergraphql = "'prettier --stdin --parser graphql --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
-  let g:formatdef_prettierscss = "'prettier --stdin --parser postcss --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
-
-  let g:formatters_javascript = ['prettier']
-  " let g:formatters_typescript = ['prettier']
-  let g:formatters_json = ['prettierjson']
-  let g:formatters_graphql = ['prettiergraphql']
-  let g:formatters_scss = ['prettierscss']
-
-  function! DoFormatAndCleanHL()
-    let l:pos=getcurpos()
-    let l:search=@/
-    :keepjumps Autoformat
-    " :keepjumps %s/\V\"/'/e  " Undo prettier using double quotes on jsx attributes
-    let @/=l:search
-    " nohlsearch
-    call setpos('.', l:pos)
-  endfunction
-
-  " Don't automatically indent on save, since vim's autoindent for haskell is buggy
-  autocmd FileType haskell let b:autoformat_autoindent=0
-
-  " autocmd FileType javascript,javascript.jsx,typescript noremap <buffer> <leader>f :call DoFormatAndCleanHL()<CR>
-  " autocmd BufWritePre *.{js,ts} call DoFormatAndCleanHL()  --config $PWD/.scalafmt.conf" Autoformat on save
-
-  " autocmd FileType css,scss,sass,json,graphql noremap <buffer> <leader>f :keepjumps Autoformat<CR>
-  " autocmd BufWritePre *.{css,scss,json,graphql} :keepjumps Autoformat " Autoformat on save
-
-  " let g:ale_fixers = {
-  "       \  'javascript': ['prettier_standard'],
-  "       \ 'javascript.jsx': ['prettier_standard']
-  "       \ }
-  " let g:ale_linters = {
-  "       \ 'javascript': [''],
-  "       \ 'javascript.jsx': ['']
-  "       \ }
-  " let g:ale_fix_on_save = 1
-
-  let g:autoformat_autoindent = 0
-  let g:autoformat_retab = 0
-  let g:autoformat_remove_trailing_spaces = 0
-augroup END
+" augroup MyAutoformatCmds
+"   autocmd!
+"
+"   autocmd BufWrite *.hs :Autoformat
+"
+"   " Scala
+"   let g:formatdef_scalafmt = "'scalafmt_ng --config ~/Code/deviceident/.scalafmt.conf --stdin'"
+"   let g:formatters_scala = ['scalafmt']
+"   autocmd FileType scala noremap <buffer> <leader>f :Autoformat <BAR> update<CR>
+"   autocmd BufWritePre *.{scala,sbt} :keepjumps Autoformat <BAR> update<CR> " Autoformat scala and sbt on save
+"
+"   " Prettier for js, typescript and flow
+"   let g:formatdef_prettier = "'prettier --stdin --parser flow --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+"   let g:formatdef_prettierjson = "'prettier --stdin --parser json --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+"   let g:formatdef_prettiergraphql = "'prettier --stdin --parser graphql --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+"   let g:formatdef_prettierscss = "'prettier --stdin --parser postcss --tab-width 2 --print-width 81 --single-quote --trailing-comma all'"
+"
+"   let g:formatters_javascript = ['prettier']
+"   " let g:formatters_typescript = ['prettier']
+"   let g:formatters_json = ['prettierjson']
+"   let g:formatters_graphql = ['prettiergraphql']
+"   let g:formatters_scss = ['prettierscss']
+"
+"   function! DoFormatAndCleanHL()
+"     let l:pos=getcurpos()
+"     let l:search=@/
+"     :keepjumps Autoformat
+"     " :keepjumps %s/\V\"/'/e  " Undo prettier using double quotes on jsx attributes
+"     let @/=l:search
+"     " nohlsearch
+"     call setpos('.', l:pos)
+"   endfunction
+"
+"   " Don't automatically indent on save, since vim's autoindent for haskell is buggy
+"   autocmd FileType haskell let b:autoformat_autoindent=0
+"
+"   " autocmd FileType javascript,javascript.jsx,typescript noremap <buffer> <leader>f :call DoFormatAndCleanHL()<CR>
+"   " autocmd BufWritePre *.{js,ts} call DoFormatAndCleanHL()  --config $PWD/.scalafmt.conf" Autoformat on save
+"
+"   " autocmd FileType css,scss,sass,json,graphql noremap <buffer> <leader>f :keepjumps Autoformat<CR>
+"   " autocmd BufWritePre *.{css,scss,json,graphql} :keepjumps Autoformat " Autoformat on save
+"
+"   " let g:ale_fixers = {
+"   "       \  'javascript': ['prettier_standard'],
+"   "       \ 'javascript.jsx': ['prettier_standard']
+"   "       \ }
+"   " let g:ale_linters = {
+"   "       \ 'javascript': [''],
+"   "       \ 'javascript.jsx': ['']
+"   "       \ }
+"   " let g:ale_fix_on_save = 1
+"
+"   let g:autoformat_autoindent = 0
+"   let g:autoformat_retab = 0
+"   let g:autoformat_remove_trailing_spaces = 0
+" augroup END
 
 if has('gui')
   set guioptions-=m  "remove menu bar
@@ -1953,7 +1958,7 @@ function! s:show_documentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 
@@ -2007,17 +2012,13 @@ nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild
 let g:coc_global_extensions = [
       \'coc-highlight',
       \'coc-yank',
-      \'coc-pairs',
       \'coc-json',
       \'coc-css',
       \'coc-html',
       \'coc-tsserver',
       \'coc-yaml',
       \'coc-lists',
-      \'coc-snippets',
-      \'coc-python',
-      \'coc-xml',
-      \'coc-syntax',
+      \'coc-syntax'
       \]
 
 " Metals specific commands
@@ -2074,7 +2075,7 @@ hi! StatusLineNC guifg=#16252b guibg=#16252b
 try
 
 " Vim airline theme
-let g:airline_theme='space'
+" let g:airline_theme='space'
 
 " === Vim airline ==== "
 " Enable extensions
