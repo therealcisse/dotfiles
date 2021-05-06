@@ -1,2 +1,2 @@
-autocmd BufNewFile,BufRead .conf set ft=conf
+autocmd BufNewFile,BufRead *.conf set ft=conf
 

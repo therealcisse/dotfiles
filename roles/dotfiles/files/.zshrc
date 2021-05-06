@@ -227,8 +227,21 @@ fi
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
 
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # export SBT_OPTS="-Xmx4096M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xss2M"
 
+export MOBILE_SDK_SITE_PASSWORD=geekdroid
+export DI_INTERNAL_API_USERNAME=deviceident
+export DI_INTERNAL_API_PASSWORD=V5PJTQmZxb4jRWbFRD-530-j
+
+export BROWSERSTACK_USERNAME=diopmon1
+export BROWSERSTACK_PASSWORD=VqV9yzXjQsAqxxyhuHpR
+
+export DEMOPAGE_CBT_TESTINGBOT_KEY=2eea7ec7f847ac885f48aa6c5f236492
+export DEMOPAGE_CBT_TESTINGBOT_SECRET=89ecaa3ee6a121385d0ac1a2bb404b89
+
 unsetopt inc_append_history
 unsetopt share_history
+
+# export SBT_OPTS="-XX:+UseG1GC $SBT_OPTS"

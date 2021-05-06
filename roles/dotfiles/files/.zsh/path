@@ -10,6 +10,7 @@ PATH=$PATH:$HOME/platform-tools
 PATH=$PATH:/usr/local/bin
 PATH=$PATH:/usr/local/sbin
 PATH=$PATH:$SYSTEM_PATH
+PATH="$PATH:/Users/amadoucisse/Library/Application Support/Coursier/bin"
 
 # add packages installed by go to the path
 test -e $GOPATH && PATH=$GOPATH/bin:$PATH

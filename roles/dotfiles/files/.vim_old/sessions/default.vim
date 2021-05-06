@@ -8,7 +8,6 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd ~/dotfiles/roles/dotfiles/files/.gitignore
 set splitbelow splitright
 wincmd t
 set winminheight=0

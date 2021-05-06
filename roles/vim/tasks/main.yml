@@ -63,18 +63,6 @@
     state=link
     force=yes
 
-- block:
-    - name: install | vim-plug
-      get_url:
-        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        dest: "{{ vim_config_dir }}/autoload/plug.vim"
-        force: yes
-
-    - name: install | plugins
-      command: "nvim '+silent! +PlugInstall!' +qall!"
-  tags:
-    - neovim-config
-
 - name: vim | create or update spell file
   command:
     vim -u NONE -N -c 'mkspell! {{ spellfile }} | quit'

@@ -171,7 +171,7 @@
 	# Include summaries of merged commits in newly created merge commit messages
 	log = 1000
 [cipher]
-	gpguser = cisse.amadou.9@gmail.com
+	gpguser = amadou.cisse@riskident.com
 [gitchangelog]
 	rc-path = ~/.gitchangelog.rc
 
@@ -183,5 +183,5 @@
 	trustExitCode = true
 [commit]
 	template = ~/.stCommitMsg
-[credential]
-  useHttpPath = true
+# [credential]
+#   useHttpPath = true

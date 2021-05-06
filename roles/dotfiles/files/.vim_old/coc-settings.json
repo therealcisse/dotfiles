@@ -1,6 +1,6 @@
 {
   "codeLens.enable": true,
-  "metals.serverVersion": "0.10.0",
+  "metals.serverVersion": "0.10.1",
   "suggest.snippetIndicator": "►",
   "suggest.noselect": false,
   "suggest.echodocSupport": true,
