@@ -1,8 +1,8 @@
 
 function! MyHighlights() abort
-  hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightBlue
-  hi! LspReferenceText cterm=bold ctermbg=red guibg=LightBlue
-  hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightBlue
+  hi! LspReferenceRead gui=bold ctermbg=red guifg=LightYellow
+  hi! LspReferenceText gui=bold ctermbg=red guifg=LightYellow
+  hi! LspReferenceWrite gui=bold ctermbg=red guifg=LightYellow
 
   hi! SignColumn ctermfg=NONE guibg=NONE
   hi! NonText ctermbg=NONE guibg=NONE
