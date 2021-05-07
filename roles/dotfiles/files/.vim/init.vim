@@ -21,6 +21,9 @@ function! MyHighlights() abort
   hi clear Conceal
 
   hi! link CompeDocumentation NormalFloat
+
+  hi! Floaterm guibg=black
+  hi! FloatermNC guibg=gray
 endfunction
 
 augroup MyColors
@@ -28,7 +31,7 @@ augroup MyColors
     au ColorScheme * call MyHighlights()
 augroup END
 
-set background=light
+set background=dark
 colorscheme PaperColor
 
 " LSP
@@ -51,10 +54,6 @@ nnoremap <silent> <leader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR
 nnoremap <silent> [e          <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
 nnoremap <silent> ]e          <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
 nnoremap <silent><leader>cd   <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
-
-" nnoremap <silent> <A-d>       <cmd>lua require('lspsaga.floaterm').open_float_terminal()<CR>
-" nnoremap <silent> <A-g>       <cmd>lua require('lspsaga.floaterm').open_float_terminal('lazygit')<CR>
-" tnoremap <silent> <A-d>       <C-\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>
 
 if has('clipboard')
   "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
@@ -508,13 +507,13 @@ endfunction
 nnoremap <c-g>b :Git blame<cr>
 nnoremap <c-g>B :Git browse<cr>
 nnoremap <c-g>s :Git status<cr>
-" nnoremap <c-g>c :Gcommit<cr>
+" nnoremap <c-g>c :Git commit<cr>
 nnoremap <c-g>d :Gvdiff<cr>
 nnoremap <c-g>P :Gpush<cr>
 nnoremap <c-g>L :Gpull<cr>
 " nnoremap <c-g>R :!git checkout <c-r>%<cr><cr>
 nnoremap <c-g>p :GitGutterPreviewHunk<cr>:call JumpLastBufferWindow()<cr>
-" nnoremap <c-g>r :GitGutterUndoHunk<cr>
+nnoremap <c-g>r :GitGutterUndoHunk<cr>
 nnoremap <c-g>S :GitGutterStageHunk<cr>
 nnoremap <c-g>l :GitGutterLineHighlightsToggle<cr>
 nnoremap [h :GitGutterPrevHunk<cr>
@@ -642,8 +641,6 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Fix mixed indent
 nnoremap <C-s>i :%retab!<CR>
-
-nnoremap <silent> <c-n>e :Explore<cr>
 
 " Vim-signiture
 let g:SignatureMarkTextHLDynamic = 1
@@ -858,7 +855,7 @@ set cursorcolumn               " Highlight the current column.
 EOF
 
 " Float term
-let g:floaterm_keymap_new = '<leader>ft'
+let g:floaterm_keymap_new = '<leader>T'
 
 " ----------------------------------------------------------------------------
 " HL | Find out syntax group
@@ -870,9 +867,9 @@ endfunction
 command! HL call <SID>hl()
 
 " Telescope
-" nnoremap <C-\> :Telescope builtin.lsp_workspace_symbols query=Any<cr> " TODO
-nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <C-g>/ <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <C-\>    <cmd>Telescope lsp_dynamic_workspace_symbols<cr>
+nnoremap <C-p>    <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <C-g>/   <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 let g:PaperColor_Theme_Options = {
   \   'theme': {
@@ -893,9 +890,9 @@ inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
-" let g:floaterm_shell = "/usr/local/bin/zsh"
-" let g:floaterm_title = "Zsh"
-" let g:floaterm_autoclose = 2
+let g:floaterm_shell = "/usr/local/bin/zsh"
+let g:floaterm_title = "Zsh"
+let g:floaterm_autoclose = 1
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
