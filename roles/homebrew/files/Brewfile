@@ -13,6 +13,7 @@ tap 'caskroom/fonts'
 tap 'paulp/extras'
 tap 'tavianator/tap'
 tap 'caskroom/fonts'
+'jesseduffield/lazygit/lazygit'
 
 cask 'redis-app'
 cask 'launchcontrol'
@@ -203,6 +204,7 @@ brew 'cocoapods'
 brew 'astyle'
 brew 'kubernetes-cli'
 brew 'homebrew/devel-only/elm-format', args: ['HEAD']
+brew 'lazygit'
 
 cask 'vimr'
 cask '1password-beta'

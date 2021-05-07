@@ -124,6 +124,16 @@ function jump() {
   fi
 }
 
+function gitClean () {
+  if [ $# -eq 0 ]; then
+    git clean -f -d .
+    git clean -f -X .
+  else
+    git clean -f -d $1
+    git clean -f -X $1
+  fi
+}
+
 function _jump_complete() {
   emulate -L zsh
   local word completions

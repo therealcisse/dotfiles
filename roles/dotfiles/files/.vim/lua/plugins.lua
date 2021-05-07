@@ -17,14 +17,18 @@ require('packer').startup(function(use)
     use { 'wbthomason/packer.nvim', opt = true }
     use 'nvim-treesitter/nvim-treesitter'
     use 'scrooloose/nerdcommenter'
-    use 'christianchiarulli/nvcode-color-schemes.vim'
-    use 'christoomey/vim-tmux-navigator'
+    -- use 'christianchiarulli/nvcode-color-schemes.vim'
     use {'vim-airline/vim-airline', requires = {{'vim-airline/vim-airline-themes'}}}
     use 'neovim/nvim-lspconfig'
+    use 'glepnir/lspsaga.nvim'
     use 'windwp/nvim-autopairs'
     use { 'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}} }
+    use 'hrsh7th/vim-vsnip-integ'
     use 'DataWraith/auto_mkdir'
     use 'tpope/vim-unimpaired'
+
+    use 'onsails/lspkind-nvim'
+    use 'norcalli/snippets.nvim'
 
     use 'haya14busa/incsearch.vim'
     use 'junegunn/vim-slash'
@@ -81,17 +85,17 @@ require('packer').startup(function(use)
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
 
-    use {
-      "folke/lsp-trouble.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
-      config = function ()
-	require("trouble").setup {
-	  -- your configuration comes here
-	  -- or leave it empty to use the default settings
-	  -- refer to the configuration section below
-	}
-      end
-    }
+  use {
+    "folke/lsp-trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function ()
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
     use "kdav5758/NoCLC.nvim"
     use 'folke/lsp-colors.nvim'
@@ -102,4 +106,11 @@ require('packer').startup(function(use)
     use { 'folke/which-key.nvim' }
 
     use { 'NLKNguyen/papercolor-theme' }
+    use { 'cohama/lexima.vim' }
+
+    use { 'RRethy/vim-illuminate' }
+
+    -- use { 'Th3Whit3Wolf/one-nvim' }
+
+    use { 'kdheepak/lazygit.nvim' }
 end)

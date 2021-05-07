@@ -1,8 +1,8 @@
 
 function! MyHighlights() abort
-  hi! link LspReferenceText CursorColumn
-  hi! link LspReferenceRead CursorColumn
-  hi! link LspReferenceWrite CursorColumn
+  hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightBlue
+  hi! LspReferenceText cterm=bold ctermbg=red guibg=LightBlue
+  hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightBlue
 
   hi! SignColumn ctermfg=NONE guibg=NONE
   hi! NonText ctermbg=NONE guibg=NONE
@@ -19,34 +19,42 @@ function! MyHighlights() abort
   hi! Pmenu guibg='00010a' guifg=white
 
   hi clear Conceal
+
+  hi! link CompeDocumentation NormalFloat
 endfunction
 
 augroup MyColors
-    autocmd!
-    autocmd ColorScheme * call MyHighlights()
+    au!
+    au ColorScheme * call MyHighlights()
 augroup END
 
-autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
-
-set background=dark
+set background=light
 colorscheme PaperColor
 
 " LSP
 nnoremap <silent> <C-]>       <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K           <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <A-K>       <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+nnoremap <silent> K           <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <silent> gy          <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gi          <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> gr          <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gds         <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gws         <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> <leader>rn  <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> gh          :Lspsaga lsp_finder<CR>
+nnoremap <silent> gd          <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+nnoremap <silent> <leader>rn  <cmd>lua require('lspsaga.rename').rename()<CR>
 nnoremap <silent> <leader>f   <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <silent> <leader>ca  <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> <leader>ca  :Lspsaga code_action<CR>
+vnoremap <silent><leader>ca   :<C-U>Lspsaga range_code_action<CR>
 nnoremap <silent> <leader>ws  <cmd>lua require'metals'.worksheet_hover()<CR>
+
 nnoremap <silent> <leader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR>
-nnoremap <silent> <space>d    <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-nnoremap <silent> [c          <cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>
-nnoremap <silent> ]c          <cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>
+
+nnoremap <silent> [e          <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
+nnoremap <silent> ]e          <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
+nnoremap <silent><leader>cd   <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
+
+" nnoremap <silent> <A-d>       <cmd>lua require('lspsaga.floaterm').open_float_terminal()<CR>
+" nnoremap <silent> <A-g>       <cmd>lua require('lspsaga.floaterm').open_float_terminal('lazygit')<CR>
+" tnoremap <silent> <A-d>       <C-\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>
 
 if has('clipboard')
   "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
@@ -331,7 +339,7 @@ nmap <c-s>' :%s/\V\'/"<CR><C-L>
 au FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
@@ -372,7 +380,7 @@ augroup MyAutocmds
     au CompleteDone * pclose
 
     if exists('##TextYankPost')
-      au TextYankPost * silent! lua return (not vim.v.event.visual) and require'vim.highlight'.on_yank('Substitute', 200)
+      au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=250, on_visual=false}
     endif
 
 augroup end
@@ -823,11 +831,30 @@ set cursorcolumn               " Highlight the current column.
   metals_config = require'metals'.bare_config
   metals_config.settings = {showImplicitArguments = true, excludedPackages = {}}
 
-  metals_config.on_attach = function() require'completion'.on_attach(); end
+  metals_config.on_attach = function (client)
+    require 'illuminate'.on_attach(client)
+    require'completion'.on_attach(client);
+  end
 
   metals_config.handlers["textDocument/publishDiagnostics"] =
-      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-                 {virtual_text = {prefix = ''}})
+      vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics,
+        {virtual_text = {prefix = ''}}
+      )
+
+  vim.api.nvim_set_keymap(
+    'n',
+    '<a-n>',
+    '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
+    {noremap=true}
+  )
+
+  vim.api.nvim_set_keymap(
+    'n',
+    '<a-p>',
+    '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
+    {noremap=true}
+  )
 EOF
 
 " Float term
@@ -843,6 +870,7 @@ endfunction
 command! HL call <SID>hl()
 
 " Telescope
+" nnoremap <C-\> :Telescope builtin.lsp_workspace_symbols query=Any<cr> " TODO
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <C-g>/ <cmd>lua require('telescope.builtin').live_grep()<cr>
 
@@ -853,6 +881,21 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
+
+" let g:one_nvim_transparent_bg = v:true
+
+let g:lexima_no_default_rules = v:true
+let g:lexima_enable_space_rules = v:false
+call lexima#set_default_rules()
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+" let g:floaterm_shell = "/usr/local/bin/zsh"
+" let g:floaterm_title = "Zsh"
+" let g:floaterm_autoclose = 2
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
