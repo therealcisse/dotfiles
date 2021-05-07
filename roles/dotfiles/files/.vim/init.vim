@@ -689,26 +689,6 @@ noremap ' `
 " do not override the register after paste in select mode
 xnoremap <expr> p 'pgv"'.v:register.'y`>
 
-" like emacs mode shell command editing
-inoremap <C-E> <C-o>$
-inoremap <C-Q> <C-o>^
-inoremap <C-B> <left>
-inoremap <C-F> <right>
-inoremap <C-D> <Delete>
-
-" command line editing
-cnoremap <C-A>      <Home>
-cnoremap <C-B>      <Left>
-cnoremap <C-D>      <Delete>
-" <C-F>  is also used for open  normal command-line editing. So if the
-" cursor is at the end of the command-line, open normal command-line
-" editing, otherwise move the cursor one character right.
-cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":") ?  "\<Right>" : "\<C-F>"
-" already well mapped by default:
-" <C-P> <Up>
-" <C-N> <Down>
-" <C-E> <End>
-
 " not working?
 snoremap <BS> <BS>i
 
@@ -893,6 +873,26 @@ inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 let g:floaterm_shell = "/usr/local/bin/zsh"
 let g:floaterm_title = "Zsh"
 let g:floaterm_autoclose = 1
+
+" like emacs mode shell command editing
+inoremap <C-E> <C-o>$
+inoremap <C-Q> <C-o>^
+inoremap <C-B> <left>
+inoremap <C-F> <right>
+inoremap <C-D> <Delete>
+
+" command line editing
+cnoremap <C-A>      <Home>
+cnoremap <C-B>      <Left>
+cnoremap <C-D>      <Delete>
+" <C-F>  is also used for open  normal command-line editing. So if the
+" cursor is at the end of the command-line, open normal command-line
+" editing, otherwise move the cursor one character right.
+cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":") ?  "\<Right>" : "\<C-F>"
+" already well mapped by default:
+" <C-P> <Up>
+" <C-N> <Down>
+" <C-E> <End>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
