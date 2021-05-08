@@ -1,8 +1,46 @@
+:lua << EOF
+
+  local cmd = vim.cmd
+  local g = vim.g
+  local fn = vim.fn
+  local execute = vim.api.nvim_command
+
+  require('plugins')
+  require('setup')
+
+  metals_config = require'metals'.bare_config
+  metals_config.settings = {showImplicitArguments = true, excludedPackages = {}}
+
+  metals_config.on_attach = function (client)
+    require 'illuminate'.on_attach(client)
+    require'completion'.on_attach(client);
+  end
+
+  metals_config.handlers["textDocument/publishDiagnostics"] =
+      vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics,
+        {virtual_text = {prefix = ''}}
+      )
+
+  vim.api.nvim_set_keymap(
+    'n',
+    '<a-n>',
+    '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
+    {noremap=true}
+  )
+
+  vim.api.nvim_set_keymap(
+    'n',
+    '<a-p>',
+    '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
+    {noremap=true}
+  )
+EOF
 
 function! MyHighlights() abort
-  hi! LspReferenceRead gui=bold ctermbg=red guifg=LightYellow
-  hi! LspReferenceText gui=bold ctermbg=red guifg=LightYellow
-  hi! LspReferenceWrite gui=bold ctermbg=red guifg=LightYellow
+  hi! LspReferenceRead gui=bold guifg=LightYellow
+  hi! LspReferenceText gui=bold guifg=LightYellow
+  hi! LspReferenceWrite gui=bold guifg=LightYellow
 
   hi! SignColumn ctermfg=NONE guibg=NONE
   hi! NonText ctermbg=NONE guibg=NONE
@@ -31,6 +69,7 @@ augroup MyColors
     au ColorScheme * call MyHighlights()
 augroup END
 
+set t_Co=256
 set background=dark
 colorscheme PaperColor
 
@@ -41,12 +80,8 @@ nnoremap <silent> K           <cmd>lua require('lspsaga.hover').render_hover_doc
 nnoremap <silent> gy          <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gi          <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> gr          <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gh          :Lspsaga lsp_finder<CR>
+nnoremap <silent> gh          <cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> gd          <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
-nnoremap <silent> <leader>rn  <cmd>lua require('lspsaga.rename').rename()<CR>
-nnoremap <silent> <leader>f   <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <silent> <leader>ca  :Lspsaga code_action<CR>
-vnoremap <silent><leader>ca   :<C-U>Lspsaga range_code_action<CR>
 nnoremap <silent> <leader>ws  <cmd>lua require'metals'.worksheet_hover()<CR>
 
 nnoremap <silent> <leader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR>
@@ -91,6 +126,7 @@ augroup END
 let g:auto_save = 0
 let g:nvcode_termcolors=256
 let g:airline_theme='minimalist'
+let g:airline_extensions = []
 
 let mapleader="\<Space>"
 let maplocalleader="\\"
@@ -795,45 +831,6 @@ augroup end
 set cursorline                 " Highlight the current line.
 set cursorcolumn               " Highlight the current column.
 
-:lua << EOF
-
-  local cmd = vim.cmd
-  local g = vim.g
-  local fn = vim.fn
-  local execute = vim.api.nvim_command
-
-  require('plugins')
-  require('setup')
-
-  metals_config = require'metals'.bare_config
-  metals_config.settings = {showImplicitArguments = true, excludedPackages = {}}
-
-  metals_config.on_attach = function (client)
-    require 'illuminate'.on_attach(client)
-    require'completion'.on_attach(client);
-  end
-
-  metals_config.handlers["textDocument/publishDiagnostics"] =
-      vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        {virtual_text = {prefix = ''}}
-      )
-
-  vim.api.nvim_set_keymap(
-    'n',
-    '<a-n>',
-    '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
-    {noremap=true}
-  )
-
-  vim.api.nvim_set_keymap(
-    'n',
-    '<a-p>',
-    '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
-    {noremap=true}
-  )
-EOF
-
 " Float term
 let g:floaterm_keymap_new = '<leader>T'
 
@@ -893,6 +890,14 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 " <C-P> <Up>
 " <C-N> <Down>
 " <C-E> <End>
+
+" <c-k> will either expand the current snippet at the word or try to jump to
+" the next position for the snippet.
+inoremap <c-k> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
+
+" <c-j> will jump backwards to the previous field.
+" If you jump before the first field, it will cancel the snippet.
+inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

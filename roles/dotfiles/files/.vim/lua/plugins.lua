@@ -16,7 +16,7 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
   use { 'wbthomason/packer.nvim', opt = true }
   use 'nvim-treesitter/nvim-treesitter'
-  use 'scrooloose/nerdcommenter'
+  -- use 'scrooloose/nerdcommenter'
   -- use 'christianchiarulli/nvcode-color-schemes.vim'
   use {'vim-airline/vim-airline', requires = {{'vim-airline/vim-airline-themes'}}}
   use 'neovim/nvim-lspconfig'
@@ -50,7 +50,8 @@ require('packer').startup(function(use)
   use 'othree/html5.vim'
   use {'plasticboy/vim-markdown', ft = {'markdown'}}
   use 'airblade/vim-gitgutter'
-  use 'tomtom/tcomment_vim'
+  -- use 'tomtom/tcomment_vim'
+  use { 'tpope/vim-commentary' }
   use 'tpope/vim-fugitive'
   use {'junegunn/gv.vim', cmd = {'GV'}}
   use 'tpope/vim-repeat'
@@ -115,4 +116,8 @@ require('packer').startup(function(use)
   use { 'kdheepak/lazygit.nvim' }
 
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
+  use {
+    'ray-x/lsp_signature.nvim'
+  }
 end)

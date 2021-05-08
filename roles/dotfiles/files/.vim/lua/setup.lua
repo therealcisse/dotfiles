@@ -82,7 +82,11 @@ require('telescope').setup {
 
 require('telescope').load_extension('fzf')
 
+require'lsp_signature'.on_attach()
+
 require'lspsaga'.init_lsp_saga()
+
+require'snippets'.use_suggested_mappings()
 
 local remap = vim.api.nvim_set_keymap
 local npairs = require('nvim-autopairs')
