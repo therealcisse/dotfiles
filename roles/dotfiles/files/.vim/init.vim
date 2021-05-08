@@ -84,6 +84,8 @@ nnoremap <silent> gh          <cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> gd          <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
 nnoremap <silent> <leader>ws  <cmd>lua require'metals'.worksheet_hover()<CR>
 
+nnoremap <silent> <localleader>ca  <cmd>Lspsaga code_action<CR>
+
 nnoremap <silent> <leader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR>
 
 nnoremap <silent> [e          <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
