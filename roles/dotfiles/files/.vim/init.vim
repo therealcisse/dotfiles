@@ -84,13 +84,14 @@ nnoremap <silent> gh          <cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> gd          <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
 nnoremap <silent> <leader>ws  <cmd>lua require'metals'.worksheet_hover()<CR>
 
+nnoremap <silent> <localleader>rn  <cmd>Lspsaga rename<CR>
 nnoremap <silent> <localleader>ca  <cmd>Lspsaga code_action<CR>
 
-nnoremap <silent> <leader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR>
+nnoremap <silent> <localleader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR>
 
-nnoremap <silent> [e          <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
-nnoremap <silent> ]e          <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
-nnoremap <silent><leader>cd   <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
+nnoremap <silent> [e               <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
+nnoremap <silent> ]e               <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
+nnoremap <silent><localleader>cd   <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
 
 if has('clipboard')
   "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
@@ -444,6 +445,11 @@ nn <leader>Q :confirm qall<CR>
 
 " Always use vertical diffs
 set diffopt+=vertical
+
+" Relying on Karabiner-Elements to avoid collision between <Tab> and
+" <C-i> (have it send F6 instead for <C-i>).
+nnoremap <F6> <C-i>
+inoremap <F6> <Tab>
 
 " Avoid unintentional switches to Ex mode. This would be more useful.
 nnoremap Q :normal n.<CR>
@@ -834,7 +840,7 @@ set cursorline                 " Highlight the current line.
 set cursorcolumn               " Highlight the current column.
 
 " Float term
-let g:floaterm_keymap_new = '<leader>T'
+let g:floaterm_keymap_toggle = '<leader>T'
 
 " ----------------------------------------------------------------------------
 " HL | Find out syntax group
