@@ -30,6 +30,8 @@ require('packer').startup(function(use)
   use 'onsails/lspkind-nvim'
   use 'norcalli/snippets.nvim'
 
+  use { 'MTDL9/vim-log-highlighting' }
+
   use 'haya14busa/incsearch.vim'
   use 'junegunn/vim-slash'
   use { 'vim-scripts/gitignore' }
