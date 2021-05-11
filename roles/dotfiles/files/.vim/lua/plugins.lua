@@ -32,6 +32,8 @@ require('packer').startup(function(use)
 
   use { 'MTDL9/vim-log-highlighting' }
 
+  use { 'wincent/vim-clipper' }
+
   use 'haya14busa/incsearch.vim'
   use 'junegunn/vim-slash'
   use { 'vim-scripts/gitignore' }
