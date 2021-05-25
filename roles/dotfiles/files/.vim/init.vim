@@ -1,5 +1,28 @@
 :lua << EOF
 
+local on_attach = function(client)
+end
+
+require'lspconfig'.rust_analyzer.setup({
+    on_attach=on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            assist = {
+                importMergeBehavior = "last",
+                importPrefix = "by_self",
+            },
+            cargo = {
+                loadOutDirsFromCheck = true
+            },
+            procMacro = {
+                enable = true
+            },
+        }
+    }
+})
+EOF
+
+:lua << EOF
   local cmd = vim.cmd
   local g = vim.g
   local fn = vim.fn
@@ -12,8 +35,7 @@
   metals_config.settings = {showImplicitArguments = true, excludedPackages = {}}
 
   metals_config.on_attach = function (client)
-    require 'illuminate'.on_attach(client)
-    require'completion'.on_attach(client);
+    require'illuminate'.on_attach(client)
   end
 
   metals_config.handlers["textDocument/publishDiagnostics"] =
@@ -55,6 +77,8 @@ function! MyHighlights() abort
   hi! IncSearch guifg=#282a2e guibg=#de935f
   hi! PMenuSel guifg=#282a2e guibg=#c5c8c6
   hi! Pmenu guibg='00010a' guifg=white
+
+  hi! link CompeDocumentation NormalFloat
 
   hi clear Conceal
 
@@ -870,7 +894,7 @@ let g:lexima_no_default_rules = v:true
 let g:lexima_enable_space_rules = v:false
 call lexima#set_default_rules()
 inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
+inoremap <silent><expr> <CR>      compe#confirm({ 'select': v:true, 'keys': lexima#expand('<LT>CR>', 'i') })
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })

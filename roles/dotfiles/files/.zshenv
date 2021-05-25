@@ -4,3 +4,4 @@ if [ -d "$HOME/.zshenv.d" ]; then
   done
 fi
 source "$HOME/.cargo/env"
+. "$HOME/.cargo/env"
