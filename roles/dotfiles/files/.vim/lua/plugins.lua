@@ -5,7 +5,9 @@ local install_path = fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
   fn.system({
-    'git', 'clone', 'https://github.com/wbthomason/packer.nvim',
+    'git',
+    'clone',
+    'https://github.com/wbthomason/packer.nvim',
     install_path
   })
   execute 'packadd packer.nvim'
@@ -15,7 +17,6 @@ vim.cmd [[packadd packer.nvim]]
 
 require('packer').startup(function(use)
   use { 'wbthomason/packer.nvim', opt = true }
-  use 'nvim-treesitter/nvim-treesitter'
   -- use 'scrooloose/nerdcommenter'
   -- use 'christianchiarulli/nvcode-color-schemes.vim'
   use {'vim-airline/vim-airline', requires = {{'vim-airline/vim-airline-themes'}}}

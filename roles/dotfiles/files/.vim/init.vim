@@ -117,12 +117,6 @@ nnoremap <silent> [e               <cmd>lua require'lspsaga.diagnostic'.lsp_jump
 nnoremap <silent> ]e               <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
 nnoremap <silent><localleader>cd   <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
 
-if has('clipboard')
-  "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
-  set clipboard^=unnamed
-  set clipboard^=unnamedplus
-end
-
 nnoremap <silent> <localleader>w :call mappings#leader#zap()<CR>
 
 " Automatically strip the trailing
