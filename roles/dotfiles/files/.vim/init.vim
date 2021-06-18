@@ -99,6 +99,7 @@ colorscheme PaperColor
 
 " LSP
 nnoremap <silent> <C-]>       <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <C-\>       <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> <A-K>       <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
 nnoremap <silent> K           <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <silent> gy          <cmd>lua vim.lsp.buf.type_definition()<CR>
@@ -870,9 +871,9 @@ endfunction
 command! HL call <SID>hl()
 
 " Telescope
-nnoremap <C-\>    <cmd>Telescope lsp_dynamic_workspace_symbols<cr>
-nnoremap <C-p>    <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <C-g>/   <cmd>lua require('telescope.builtin').live_grep()<cr>
+" nnoremap <C-\>    <cmd>Telescope lsp_dynamic_workspace_symbols<cr>
+" nnoremap <C-p>    <cmd>lua require('telescope.builtin').find_files()<cr>
+" nnoremap <C-g>/   <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 let g:PaperColor_Theme_Options = {
   \   'theme': {

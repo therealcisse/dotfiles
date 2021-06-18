@@ -28,10 +28,14 @@ require('packer').startup(function(use)
   use 'DataWraith/auto_mkdir'
   use 'tpope/vim-unimpaired'
 
+  use 'tpope/vim-rhubarb'            -- Fugitive-companion to interact with github
+
   use 'onsails/lspkind-nvim'
   use 'norcalli/snippets.nvim'
 
   use { 'MTDL9/vim-log-highlighting' }
+
+  use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
 
   use { 'wincent/vim-clipper' }
 
@@ -55,6 +59,7 @@ require('packer').startup(function(use)
   use 'othree/html5.vim'
   use {'plasticboy/vim-markdown', ft = {'markdown'}}
   use 'airblade/vim-gitgutter'
+  -- use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
   -- use 'tomtom/tcomment_vim'
   use { 'tpope/vim-commentary' }
   use 'tpope/vim-fugitive'
@@ -86,10 +91,13 @@ require('packer').startup(function(use)
 
   use 'tommcdo/vim-exchange' -- cx
 
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-  }
+  use { 'camspiers/snap'}
+  use { 'junegunn/fzf' }
+
+  -- use {
+  --   'nvim-telescope/telescope.nvim',
+  --   requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  -- }
 
   use {
     "folke/lsp-trouble.nvim",

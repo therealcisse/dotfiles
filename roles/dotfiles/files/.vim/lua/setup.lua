@@ -3,28 +3,28 @@ require'lspconfig'.tsserver.setup {}
 require('nvim-autopairs').setup()
 
 require'compe'.setup {
-    enabled = true,
-    autocomplete = true,
-    debug = false,
-    min_length = 1,
-    preselect = 'enable',
-    throttle_time = 80,
-    source_timeout = 200,
-    incomplete_delay = 400,
-    max_abbr_width = 100,
-    max_kind_width = 100,
-    max_menu_width = 100,
-    documentation = true,
+  enabled = true,
+  autocomplete = true,
+  debug = false,
+  min_length = 1,
+  preselect = 'enable',
+  throttle_time = 80,
+  source_timeout = 200,
+  incomplete_delay = 400,
+  max_abbr_width = 100,
+  max_kind_width = 100,
+  max_menu_width = 100,
+  documentation = true,
 
-    source = {
-        path = true,
-        buffer = true,
-        calc = true,
-        nvim_lsp = true,
-        nvim_lua = true,
-        vsnip = true,
-        treesitter = true
-    }
+  source = {
+    path = true,
+    buffer = true,
+    calc = true,
+    nvim_lsp = true,
+    nvim_lua = true,
+    vsnip = true,
+    treesitter = true
+  }
 }
 
 require('lspkind').init({
@@ -53,26 +53,26 @@ require('lspkind').init({
   },
 })
 
-require('telescope').setup {
-  defaults = {
-    prompt_prefix = ' > ',
-    mappings = {
-      i = {
-        ["<C-x>"] = false,
-        ["<C-q>"] = require('telescope.actions').send_to_qflist
-      }
-    }
-  },
-  extensions = {
-    fzf = {
-      override_generic_sorter = false, -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case". The default case_mode is "smart_case"
-    }
-  }
-}
+-- require('telescope').setup {
+--   defaults = {
+--     prompt_prefix = ' > ',
+--     mappings = {
+--       i = {
+--         ["<C-x>"] = false,
+--         ["<C-q>"] = require('telescope.actions').send_to_qflist
+--       }
+--     }
+--   },
+--   extensions = {
+--     fzf = {
+--       override_generic_sorter = false, -- override the generic sorter
+--       override_file_sorter = true,     -- override the file sorter
+--       case_mode = "smart_case",        -- or "ignore_case" or "respect_case". The default case_mode is "smart_case"
+--     }
+--   }
+-- }
 
-require('telescope').load_extension('fzf')
+-- require('telescope').load_extension('fzf')
 
 require'lsp_signature'.on_attach()
 
@@ -88,56 +88,56 @@ _G.MUtils = {}
 
 vim.g.completion_confirm_key = ""
 MUtils.completion_confirm = function ()
-    if vim.fn.pumvisible() ~= 0 then
-        if vim.fn.complete_info()["selected"] ~= -1 then
-            return vim.fn["compe#confirm"](npairs.esc("<cr>"))
-        else
-            return npairs.esc("<cr>")
-        end
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info()["selected"] ~= -1 then
+      return vim.fn["compe#confirm"](npairs.esc("<cr>"))
     else
-        return npairs.autopairs_cr()
+      return npairs.esc("<cr>")
     end
+  else
+    return npairs.autopairs_cr()
+  end
 end
 
 remap('i', '<CR>', 'v:lua.MUtils.completion_confirm()',
-      {expr = true, noremap = true})
+{expr = true, noremap = true})
 
 local t = function (str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
 local check_back_space = function ()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        return true
-    else
-        return false
-    end
+  local col = vim.fn.col('.') - 1
+  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+    return true
+  else
+    return false
+  end
 end
 
 --  Use (s-)tab to:
 -- move to prev/next item in completion menuone
 -- jump to prev/next snippet's placeholder
 _G.tab_complete = function ()
-    if vim.fn.pumvisible() == 1 then
-        return t "<C-n>"
-    elseif vim.fn.call("vsnip#available", {1}) == 1 then
-        return t "<Plug>(vsnip-expand-or-jump)"
-    elseif check_back_space() then
-        return t "<Tab>"
-    else
-        return vim.fn['compe#complete']()
-    end
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif vim.fn.call("vsnip#available", {1}) == 1 then
+    return t "<Plug>(vsnip-expand-or-jump)"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
 end
 
 _G.s_tab_complete = function ()
-    if vim.fn.pumvisible() == 1 then
-        return t "<C-p>"
-    elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-        return t "<Plug>(vsnip-jump-prev)"
-    else
-        return t "<S-Tab>"
-    end
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+    return t "<Plug>(vsnip-jump-prev)"
+  else
+    return t "<S-Tab>"
+  end
 end
 
 vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
@@ -145,3 +145,24 @@ vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
+local snap = require'snap'
+
+snap.register.map({'n'}, {'<C-p>'}, function ()
+  snap.run({
+    prompt = 'Files',
+    producer = snap.get'consumer.fzf'(snap.get'producer.ripgrep.file'),
+    select = snap.get'select.file'.select,
+    multiselect = snap.get'select.file'.multiselect,
+    -- views = {snap.get'preview.file'}
+  })
+end)
+
+snap.register.map({'n'}, {'<C-g>/'}, function ()
+  snap.run({
+    prompt = 'Live Grep',
+    producer = snap.get'producer.ripgrep.vimgrep',
+    select = snap.get'select.vimgrep'.select,
+    multiselect = snap.get'select.vimgrep'.multiselect,
+    -- views = {snap.get'preview.vimgrep'}
+  })
+end)
