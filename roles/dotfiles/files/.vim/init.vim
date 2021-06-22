@@ -356,12 +356,40 @@ nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR
 
 " toggle invisible characters
 set list
-set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
-                                      " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
-set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
-set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
-set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
+" set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+" set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
+"                                       " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
+" set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+" set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+" set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
+
+:lua << EOF
+  vim.wo.listchars =
+      table.concat(
+      {
+          "eol:↴",
+          "tab:│⋅",
+          "trail:•",
+          "extends:❯",
+          "precedes:❮",
+          "nbsp:_",
+          "space:⋅"
+      },
+      ","
+  )
+
+  vim.g.floating_window_border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
+  vim.g.floating_window_border_dark = {
+    {"╭", "FloatBorderDark"},
+    {"─", "FloatBorderDark"},
+    {"╮", "FloatBorderDark"},
+    {"│", "FloatBorderDark"},
+    {"╯", "FloatBorderDark"},
+    {"─", "FloatBorderDark"},
+    {"╰", "FloatBorderDark"},
+    {"│", "FloatBorderDark"}
+    }
+EOF
 
 set completeopt-=preview    " Don't show preview window during completion.
 set complete-=i
@@ -925,6 +953,10 @@ inoremap <c-k> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
 " <c-j> will jump backwards to the previous field.
 " If you jump before the first field, it will cancel the snippet.
 inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
+
+let g:indent_blankline_space_char = '⋅'
+let g:indent_blankline_char = ' '
+
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |

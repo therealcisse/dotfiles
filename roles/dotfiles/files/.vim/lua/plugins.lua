@@ -81,6 +81,8 @@ require('packer').startup(function(use)
 
   use {'FooSoft/vim-argwrap', cmd = {'ArgWrap'}}
 
+  use 'ggandor/lightspeed.nvim'
+
   use 'matze/vim-move' -- <c-k>, <c-j>
 
   use 'voldikss/vim-floaterm'
