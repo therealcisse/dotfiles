@@ -955,7 +955,7 @@ inoremap <c-k> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
 inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
 let g:indent_blankline_space_char = '⋅'
-let g:indent_blankline_char = ' '
+let g:indent_blankline_char = '⋅'
 
 
 " ----------------------------------------------------------------------
