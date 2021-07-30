@@ -245,3 +245,5 @@ unsetopt inc_append_history
 unsetopt share_history
 
 # export SBT_OPTS="-XX:+UseG1GC $SBT_OPTS"
+
+source ~/.zshenv.d/k3d.sh

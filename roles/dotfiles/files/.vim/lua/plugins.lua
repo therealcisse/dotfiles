@@ -37,6 +37,8 @@ require('packer').startup(function(use)
 
   use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
 
+  use 'kazhala/close-buffers.nvim'
+
   use { 'wincent/vim-clipper' }
 
   use 'haya14busa/incsearch.vim'
