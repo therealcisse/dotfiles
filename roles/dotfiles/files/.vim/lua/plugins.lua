@@ -35,7 +35,7 @@ require('packer').startup(function(use)
 
   use { 'MTDL9/vim-log-highlighting' }
 
-  use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+  -- use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
 
   use { 'wincent/vim-clipper' }
 
@@ -81,7 +81,7 @@ require('packer').startup(function(use)
 
   use {'FooSoft/vim-argwrap', cmd = {'ArgWrap'}}
 
-  use 'ggandor/lightspeed.nvim'
+  -- use 'ggandor/lightspeed.nvim'
 
   use 'matze/vim-move' -- <c-k>, <c-j>
 
@@ -93,8 +93,9 @@ require('packer').startup(function(use)
 
   use 'tommcdo/vim-exchange' -- cx
 
-  use { 'camspiers/snap'}
-  use { 'junegunn/fzf' }
+  -- use { 'camspiers/snap'}
+  use {'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
+  use 'junegunn/fzf.vim'
 
   -- use {
   --   'nvim-telescope/telescope.nvim',
@@ -117,7 +118,7 @@ require('packer').startup(function(use)
   use 'folke/lsp-colors.nvim'
 
   use {'scalameta/nvim-metals'}
-  use 'mfussenegger/nvim-dap'
+  -- use 'mfussenegger/nvim-dap'
 
   use { 'folke/which-key.nvim' }
 

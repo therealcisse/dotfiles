@@ -32,7 +32,11 @@ EOF
   require('setup')
 
   metals_config = require'metals'.bare_config
-  metals_config.settings = {showImplicitArguments = true, excludedPackages = {}}
+  metals_config.settings = {
+    scalafmtConfigPath = ".scalafmt.conf",
+    showImplicitArguments = true,
+    excludedPackages = {}
+  }
 
   metals_config.on_attach = function (client)
     require'illuminate'.on_attach(client)
@@ -925,6 +929,16 @@ inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 let g:floaterm_shell = "/usr/local/bin/zsh"
 let g:floaterm_title = "Zsh"
 let g:floaterm_autoclose = 1
+
+set clipboard=unnamed
+
+let $FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --no-preview'
+let $FZF_DEFAULT_COMMAND = 'fd --type f'
+
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+
+nnoremap <C-p> <cmd>Files<CR>
+nnoremap <C-g>/ <cmd>Rg<CR>
 
 " like emacs mode shell command editing
 inoremap <C-E> <C-o>$

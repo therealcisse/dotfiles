@@ -145,34 +145,34 @@ vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
-local snap = require'snap'
+-- local snap = require'snap'
 
-snap.register.map({'n'}, {'<C-p>'}, function ()
-  snap.run({
-    prompt = 'Files',
-    producer = snap.get'consumer.fzf'(snap.get'producer.ripgrep.file'),
-    select = snap.get'select.file'.select,
-    multiselect = snap.get'select.file'.multiselect,
-    -- views = {snap.get'preview.file'}
-  })
-end)
+-- snap.register.map({'n'}, {'<C-p>'}, function ()
+--   snap.run({
+--     prompt = 'Files',
+--     producer = snap.get'consumer.fzf'(snap.get'producer.ripgrep.file'),
+--     select = snap.get'select.file'.select,
+--     multiselect = snap.get'select.file'.multiselect,
+--     -- views = {snap.get'preview.file'}
+--   })
+-- end)
 
-snap.register.map({'n'}, {'<C-g>/'}, function ()
-  snap.run({
-    prompt = 'Live Grep',
-    producer = snap.get'producer.ripgrep.vimgrep',
-    select = snap.get'select.vimgrep'.select,
-    multiselect = snap.get'select.vimgrep'.multiselect,
-    -- views = {snap.get'preview.vimgrep'}
-  })
-end)
+-- snap.register.map({'n'}, {'<C-g>/'}, function ()
+--   snap.run({
+--     prompt = 'Live Grep',
+--     producer = snap.get'producer.ripgrep.vimgrep',
+--     select = snap.get'select.file'.select,
+--     multiselect = snap.get'select.file'.multiselect,
+--     -- views = {snap.get'preview.vimgrep'}
+--   })
+-- end)
 
-require'lightspeed'.setup {
-   jump_to_first_match = true,
-   jump_on_partial_input_safety_timeout = 400,
-   highlight_unique_chars = false,
-   grey_out_search_area = true,
-   match_only_the_start_of_same_char_seqs = true,
-   limit_ft_matches = 5,
-   full_inclusive_prefix_key = '<c-x>',
-}
+-- require'lightspeed'.setup {
+--    jump_to_first_match = true,
+--    jump_on_partial_input_safety_timeout = 400,
+--    highlight_unique_chars = false,
+--    grey_out_search_area = true,
+--    match_only_the_start_of_same_char_seqs = true,
+--    limit_ft_matches = 5,
+--    full_inclusive_prefix_key = '<c-x>',
+-- }
