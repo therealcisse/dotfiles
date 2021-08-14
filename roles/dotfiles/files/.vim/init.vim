@@ -971,6 +971,7 @@ inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 let g:indent_blankline_space_char = '⋅'
 let g:indent_blankline_char = '⋅'
 
+command! CopyBuffer let @+ = expand('%:p')
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
