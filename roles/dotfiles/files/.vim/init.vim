@@ -930,7 +930,7 @@ let g:floaterm_shell = "/usr/local/bin/zsh"
 let g:floaterm_title = "Zsh"
 let g:floaterm_autoclose = 1
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 let $FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --no-preview'
 let $FZF_DEFAULT_COMMAND = 'fd --type f'
