@@ -186,3 +186,13 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 --    limit_ft_matches = 5,
 --    full_inclusive_prefix_key = '<c-x>',
 -- }
+
+require'shade'.setup({
+  overlay_opacity = 50,
+  opacity_step = 1,
+  keys = {
+    brightness_up    = '<localleader><Up>',
+    brightness_down  = '<localleader><Down>',
+    toggle           = '<localleader>d',
+  }
+})

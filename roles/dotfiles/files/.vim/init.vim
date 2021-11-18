@@ -23,6 +23,31 @@ require'lspconfig'.rust_analyzer.setup({
 EOF
 
 :lua << EOF
+
+  -- Send diagnostics to quickfix list
+  do
+      local method = "textDocument/publishDiagnostics"
+      local default_handler = vim.lsp.handlers[method]
+      vim.lsp.handlers[method] = function(err, method, result, client_id, bufnr,
+                                          config)
+          default_handler(err, method, result, client_id, bufnr, config)
+          local diagnostics = vim.lsp.diagnostic.get_all()
+          local qflist = {}
+          for bufnr, diagnostic in pairs(diagnostics) do
+              for _, d in ipairs(diagnostic) do
+                  d.bufnr = bufnr
+                  d.lnum = d.range.start.line + 1
+                  d.col = d.range.start.character + 1
+                  d.text = d.message
+                  table.insert(qflist, d)
+              end
+          end
+          vim.lsp.util.set_qflist(qflist)
+      end
+  end
+EOF
+
+:lua << EOF
   local cmd = vim.cmd
   local g = vim.g
   local fn = vim.fn
@@ -31,7 +56,8 @@ EOF
   require('plugins')
   require('setup')
 
-  metals_config = require'metals'.bare_config
+  metals_config = require'metals'.bare_config()
+  metals_config.init_options.statusBarProvider = "on"
   metals_config.settings = {
     scalafmtConfigPath = ".scalafmt.conf",
     showImplicitArguments = true,
@@ -80,7 +106,7 @@ function! MyHighlights() abort
   hi! Search guifg=#969896 guibg=#f0c674
   hi! IncSearch guifg=#282a2e guibg=#de935f
   hi! PMenuSel guifg=#282a2e guibg=#c5c8c6
-  hi! Pmenu guibg='00010a' guifg=white
+  hi! Pmenu guibg='00010a' guifg=#fff
 
   hi! link CompeDocumentation NormalFloat
 
@@ -443,6 +469,16 @@ endif
 
 augroup MyAutocmds
     au!
+
+    " autocmd ModeChanged *:[vV\x16]*
+    "       \  if &number || &relativenumber
+    "       \|  hi! link CursorLineNr Number
+    "       \| endif
+
+    " autocmd ModeChanged [vV\x16]*:*
+    "       \  if &number || &relativenumber
+    "       \|  hi! link CursorLineNr NONE
+    "       \| endif
 
     au VimResized * wincmd =
 
@@ -883,8 +919,8 @@ augroup END
 
 augroup lsp
     au!
-    au FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    au FileType scala,sbt lua require('metals').initialize_or_attach(metals_config)
+    au FileType scala,sc setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    au FileType scala,sbt,sc lua require('metals').initialize_or_attach(metals_config)
 augroup end
 
 set cursorline                 " Highlight the current line.
@@ -911,6 +947,15 @@ let g:PaperColor_Theme_Options = {
   \   'theme': {
   \     'default.dark': {
   \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
+
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.dark': {
+  \       'override' : {
+  \       }
   \     }
   \   }
   \ }
@@ -972,6 +1017,8 @@ let g:indent_blankline_space_char = '⋅'
 let g:indent_blankline_char = '⋅'
 
 command! CopyBuffer let @+ = expand('%:p')
+
+noremap <localleader>z <cmd>lua require("zen-mode").toggle({window = {width = .98}})<CR>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
