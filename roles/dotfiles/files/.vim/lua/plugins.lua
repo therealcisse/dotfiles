@@ -39,7 +39,7 @@ require('packer').startup(function(use)
 
   use 'kazhala/close-buffers.nvim'
 
-  use 'ggandor/lightspeed.nvim'
+  -- use 'ggandor/lightspeed.nvim'
 
   use { 'wincent/vim-clipper' }
 
@@ -105,7 +105,7 @@ require('packer').startup(function(use)
   -- }
 
   use {
-    "folke/lsp-trouble.nvim",
+    "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
     config = function ()
       require("trouble").setup {
@@ -117,7 +117,17 @@ require('packer').startup(function(use)
   }
 
   use "kdav5758/NoCLC.nvim"
-  use 'folke/lsp-colors.nvim'
+  use {
+    'folke/lsp-colors.nvim',
+    config = function ()
+      require("lsp-colors").setup({
+        Error = "#db4b4b",
+        Warning = "#e0af68",
+        Information = "#0db9d7",
+        Hint = "#10B981"
+      })
+    end
+  }
 
   use {'scalameta/nvim-metals', requires = {'nvim-lua/plenary.nvim'} }
   -- use 'mfussenegger/nvim-dap'
@@ -129,7 +139,18 @@ require('packer').startup(function(use)
   --   run = function() vim.fn['firenvim#install'](0) end
   -- }
 
-  use 'folke/zen-mode.nvim'
+  -- use "arnamak/stay-centered.nvim"
+
+  use {
+    'folke/zen-mode.nvim',
+    config = function()
+      require("zen-mode").setup {
+        window = {
+          width = .98
+        }
+      }
+    end
+  }
 
   use { 'folke/which-key.nvim' }
 
