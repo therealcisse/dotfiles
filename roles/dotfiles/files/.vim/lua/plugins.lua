@@ -20,8 +20,10 @@ require('packer').startup(function(use)
   -- use 'scrooloose/nerdcommenter'
   -- use 'christianchiarulli/nvcode-color-schemes.vim'
   use {'vim-airline/vim-airline', requires = {{'vim-airline/vim-airline-themes'}}}
-  use 'neovim/nvim-lspconfig'
-  use 'glepnir/lspsaga.nvim'
+  use {
+    'neovim/nvim-lspconfig',
+  }
+  -- use 'glepnir/lspsaga.nvim'
   use 'windwp/nvim-autopairs'
   use { 'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}} }
   use 'hrsh7th/vim-vsnip-integ'

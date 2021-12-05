@@ -145,15 +145,10 @@ _G.packer_plugins = {
     url = "https://github.com/cohama/lexima.vim"
   },
   ["lsp-colors.nvim"] = {
+    config = { "\27LJ\2\n~\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\fWarning\f#e0af68\nError\f#db4b4b\tHint\f#10B981\16Information\f#0db9d7\nsetup\15lsp-colors\frequire\0" },
     loaded = true,
     path = "/Users/amadou/.local/share/nvim/site/pack/packer/start/lsp-colors.nvim",
     url = "https://github.com/folke/lsp-colors.nvim"
-  },
-  ["lsp-trouble.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0" },
-    loaded = true,
-    path = "/Users/amadou/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim",
-    url = "https://github.com/folke/lsp-trouble.nvim"
   },
   ["lsp_signature.nvim"] = {
     loaded = true,
@@ -164,11 +159,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/amadou/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
     url = "https://github.com/onsails/lspkind-nvim"
-  },
-  ["lspsaga.nvim"] = {
-    loaded = true,
-    path = "/Users/amadou/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
-    url = "https://github.com/glepnir/lspsaga.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
@@ -230,6 +220,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/amadou/.local/share/nvim/site/pack/packer/start/textobj-word-column.vim",
     url = "https://github.com/coderifous/textobj-word-column.vim"
+  },
+  ["trouble.nvim"] = {
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0" },
+    loaded = true,
+    path = "/Users/amadou/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
   },
   ["vim-airline"] = {
     loaded = true,
@@ -429,14 +425,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: lsp-trouble.nvim
-time([[Config for lsp-trouble.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
-time([[Config for lsp-trouble.nvim]], false)
 -- Config for: zen-mode.nvim
 time([[Config for zen-mode.nvim]], true)
 try_loadstring("\27LJ\2\n`\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\vwindow\1\0\0\1\0\1\nwidth\4ÜžŠ®\15¨¸½ÿ\3\nsetup\rzen-mode\frequire\0", "config", "zen-mode.nvim")
 time([[Config for zen-mode.nvim]], false)
+-- Config for: lsp-colors.nvim
+time([[Config for lsp-colors.nvim]], true)
+try_loadstring("\27LJ\2\n~\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\4\fWarning\f#e0af68\nError\f#db4b4b\tHint\f#10B981\16Information\f#0db9d7\nsetup\15lsp-colors\frequire\0", "config", "lsp-colors.nvim")
+time([[Config for lsp-colors.nvim]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -448,23 +448,23 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType haml ++once lua require("packer.load")({'css.vim', 'vim-haml'}, { ft = "haml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType scss ++once lua require("packer.load")({'css.vim', 'vim-haml'}, { ft = "scss" }, _G.packer_plugins)]]
-vim.cmd [[au FileType scala ++once lua require("packer.load")({'vim-scala'}, { ft = "scala" }, _G.packer_plugins)]]
 vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType sass ++once lua require("packer.load")({'css.vim', 'vim-haml'}, { ft = "sass" }, _G.packer_plugins)]]
+vim.cmd [[au FileType haml ++once lua require("packer.load")({'vim-haml', 'css.vim'}, { ft = "haml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType scss ++once lua require("packer.load")({'vim-haml', 'css.vim'}, { ft = "scss" }, _G.packer_plugins)]]
+vim.cmd [[au FileType sass ++once lua require("packer.load")({'vim-haml', 'css.vim'}, { ft = "sass" }, _G.packer_plugins)]]
+vim.cmd [[au FileType scala ++once lua require("packer.load")({'vim-scala'}, { ft = "scala" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-haml/ftdetect/haml.vim]], true)
+vim.cmd [[source /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-haml/ftdetect/haml.vim]]
+time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-haml/ftdetect/haml.vim]], false)
 time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], true)
 vim.cmd [[source /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
 time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], false)
 time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-scala/ftdetect/scala.vim]], true)
 vim.cmd [[source /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-scala/ftdetect/scala.vim]]
 time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-scala/ftdetect/scala.vim]], false)
-time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-haml/ftdetect/haml.vim]], true)
-vim.cmd [[source /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-haml/ftdetect/haml.vim]]
-time([[Sourcing ftdetect script at: /Users/amadou/.local/share/nvim/site/pack/packer/opt/vim-haml/ftdetect/haml.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 

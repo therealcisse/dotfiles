@@ -1,4 +1,4 @@
-:lua << EOF
+lua << EOF
 
 local on_attach = function(client)
 end
@@ -22,7 +22,7 @@ require'lspconfig'.rust_analyzer.setup({
 })
 EOF
 
-:lua << EOF
+lua << EOF
 
   -- Send diagnostics to quickfix list
   do
@@ -47,7 +47,7 @@ EOF
   end
 EOF
 
-:lua << EOF
+lua << EOF
   local cmd = vim.cmd
   local g = vim.g
   local fn = vim.fn
@@ -131,17 +131,22 @@ autocmd VimEnter * nested
 " LSP
 nnoremap <silent> <C-]>       <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <C-\>       <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> <A-K>       <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
-nnoremap <silent> K           <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+nnoremap <silent> <A-K>       <cmd><cmd>lua vim.lsp.buf.signature_help()<CR><CR>
+nnoremap <silent> K           <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gy          <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gi          <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gr          <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gh          <cmd>Lspsaga lsp_finder<CR>
-nnoremap <silent> gd          <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+nnoremap <silent> gR          <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> gh          <cmd>Lspsaga lsp_finder<CR>
+" nnoremap <silent> gd          <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
 nnoremap <silent> <leader>ws  <cmd>lua require'metals'.worksheet_hover()<CR>
 
-nnoremap <silent> <localleader>rn  <cmd>Lspsaga rename<CR>
-nnoremap <silent> <localleader>ca  <cmd>Lspsaga code_action<CR>
+nnoremap <silent> <localleader>rn  <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <localleader>ca  <cmd>lua vim.lsp.buf.code_action()<CR>
+
+lua << EOF
+  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+
+EOF
 
 nnoremap <silent> <localleader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR>
 
