@@ -31,22 +31,36 @@ EOF
   require('plugins')
   require('setup')
 
-  metals_config = require'metals'.bare_config
+  metals_config = require("metals").bare_config()
+  metals_config.init_options.statusBarProvider = "on"
+
   metals_config.settings = {
-    scalafmtConfigPath = ".scalafmt.conf",
     showImplicitArguments = true,
-    excludedPackages = {}
+    excludedPackages = {
+    }
   }
 
-  metals_config.on_attach = function (client)
-    require'illuminate'.on_attach(client)
-  end
+  cmd [[augroup lsp]]
+  cmd [[au!]]
+  cmd [[au FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]]
+  cmd [[augroup end]]
 
-  metals_config.handlers["textDocument/publishDiagnostics"] =
-      vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        {virtual_text = {prefix = ''}}
-      )
+  -- metals_config = require'metals'.bare_config
+  -- metals_config.settings = {
+  --   scalafmtConfigPath = ".scalafmt.conf",
+  --   showImplicitArguments = true,
+  --   excludedPackages = {}
+  -- }
+
+  -- metals_config.on_attach = function (client)
+  --   require'illuminate'.on_attach(client)
+  -- end
+
+  -- metals_config.handlers["textDocument/publishDiagnostics"] =
+  --     vim.lsp.with(
+  --       vim.lsp.diagnostic.on_publish_diagnostics,
+  --       {virtual_text = {prefix = ''}}
+  --     )
 
   vim.api.nvim_set_keymap(
     'n',

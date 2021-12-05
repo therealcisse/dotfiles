@@ -119,7 +119,11 @@ require('packer').startup(function(use)
   use "kdav5758/NoCLC.nvim"
   use 'folke/lsp-colors.nvim'
 
-  use {'scalameta/nvim-metals'}
+  use {
+    'scalameta/nvim-metals',
+    requires = { "nvim-lua/plenary.nvim" }
+
+  }
   -- use 'mfussenegger/nvim-dap'
 
   use { 'folke/which-key.nvim' }
@@ -135,7 +139,5 @@ require('packer').startup(function(use)
 
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
-  use {
-    'ray-x/lsp_signature.nvim'
-  }
+  use {'ray-x/lsp_signature.nvim'}
 end)

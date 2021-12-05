@@ -223,6 +223,7 @@ fi
 
 # export PATH=/usr/local/opt/sbt@0.13/bin/:$PATH
 
+export DISABLE_UPDATE_PROMPT=true
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
@@ -240,6 +241,18 @@ export BROWSERSTACK_PASSWORD=VqV9yzXjQsAqxxyhuHpR
 
 export DEMOPAGE_CBT_TESTINGBOT_KEY=2eea7ec7f847ac885f48aa6c5f236492
 export DEMOPAGE_CBT_TESTINGBOT_SECRET=89ecaa3ee6a121385d0ac1a2bb404b89
+
+export SIMULATION_TO_RUN=CollectorSimulation
+export RUN_EXPORT_DATA_FOR_SIMULATION=false
+export MONGO_PORT_FOR_EXPORT=27017
+export MONGO_HOST_FOR_EXPORT=localhost
+export COUNT_OF_FINGERPRINTS_TO_EXPORT=10000
+export COUNT_OF_TOKENS_TO_EXPORT=25000
+export TEST_ENVIRONMENT_URL=http://localhost:6060
+export TEST_ENVIRONMENT_API_URL=http://localhost:6060/api
+export CONSTANT_USERS_PER_SECOND=10
+export SIMULATION_DURATION_IN_SECONDS=1200
+export ADDITIONAL_SLA_TIMEOUT_IN_MILLIS=500
 
 unsetopt inc_append_history
 unsetopt share_history
