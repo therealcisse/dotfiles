@@ -1,6 +1,6 @@
-require'lspconfig'.tsserver.setup {}
+require'lspconfig'.tsserver.setup({})
 
-require('nvim-autopairs').setup()
+require('nvim-autopairs').setup({})
 
 require'compe'.setup {
   enabled = true,
@@ -53,30 +53,9 @@ require('lspkind').init({
   },
 })
 
--- require('telescope').setup {
---   defaults = {
---     prompt_prefix = ' > ',
---     mappings = {
---       i = {
---         ["<C-x>"] = false,
---         ["<C-q>"] = require('telescope.actions').send_to_qflist
---       }
---     }
---   },
---   extensions = {
---     fzf = {
---       override_generic_sorter = false, -- override the generic sorter
---       override_file_sorter = true,     -- override the file sorter
---       case_mode = "smart_case",        -- or "ignore_case" or "respect_case". The default case_mode is "smart_case"
---     }
---   }
--- }
+require'lsp_signature'.on_attach({})
 
--- require('telescope').load_extension('fzf')
-
-require'lsp_signature'.on_attach()
-
-require'lspsaga'.init_lsp_saga()
+require'lspsaga'.init_lsp_saga({})
 
 require'snippets'.use_suggested_mappings()
 
@@ -145,44 +124,15 @@ vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
--- local snap = require'snap'
+require'shade'.setup({
+  overlay_opacity = 50,
+  opacity_step = 1,
+  keys = {
+    brightness_up    = '<localleader><Up>',
+    brightness_down  = '<localleader><Down>',
+    toggle           = '<localleader>d',
+  }
+})
 
--- snap.register.map({'n'}, {'<C-p>'}, function ()
---   snap.run({
---     prompt = 'Files',
---     producer = snap.get'consumer.fzf'(snap.get'producer.ripgrep.file'),
---     select = snap.get'select.file'.select,
---     multiselect = snap.get'select.file'.multiselect,
---     -- views = {snap.get'preview.file'}
---   })
--- end)
+-- require("stay-centered")
 
--- snap.register.map({'n'}, {'<C-g>/'}, function ()
---   snap.run({
---     prompt = 'Live Grep',
---     producer = snap.get'producer.ripgrep.vimgrep',
---     select = snap.get'select.file'.select,
---     multiselect = snap.get'select.file'.multiselect,
---     -- views = {snap.get'preview.vimgrep'}
---   })
--- end)
-
--- require'lightspeed'.setup {
---    jump_to_first_match = true,
---    jump_on_partial_input_safety_timeout = 400,
---    highlight_unique_chars = false,
---    grey_out_search_area = true,
---    match_only_the_start_of_same_char_seqs = true,
---    limit_ft_matches = 5,
---    full_inclusive_prefix_key = '<c-x>',
--- }
-
--- require'lightspeed'.setup {
---    jump_to_first_match = true,
---    jump_on_partial_input_safety_timeout = 400,
---    highlight_unique_chars = false,
---    grey_out_search_area = true,
---    match_only_the_start_of_same_char_seqs = true,
---    limit_ft_matches = 5,
---    full_inclusive_prefix_key = '<c-x>',
--- }

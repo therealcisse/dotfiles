@@ -260,3 +260,8 @@ unsetopt share_history
 # export SBT_OPTS="-XX:+UseG1GC $SBT_OPTS"
 
 # source ~/.zshenv.d/k3d.sh
+
+# >>> scala-cli completions >>>
+fpath=("/Users/amadou/Library/Application Support/ScalaCli/completions/zsh" $fpath)
+compinit
+# <<< scala-cli completions <<<
