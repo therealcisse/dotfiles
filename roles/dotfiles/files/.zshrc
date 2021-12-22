@@ -261,7 +261,10 @@ unsetopt share_history
 
 # source ~/.zshenv.d/k3d.sh
 
+
 # >>> scala-cli completions >>>
-fpath=("/Users/amadou/Library/Application Support/ScalaCli/completions/zsh" $fpath)
+fpath=("/Users/amadoucisse/Library/Application Support/ScalaCli/completions/zsh" $fpath)
 compinit
 # <<< scala-cli completions <<<
+
+export LOCAL_METRICS_ENABLED=true

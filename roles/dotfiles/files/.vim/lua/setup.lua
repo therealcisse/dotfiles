@@ -55,7 +55,7 @@ require('lspkind').init({
 
 require'lsp_signature'.on_attach({})
 
-require'lspsaga'.init_lsp_saga({})
+-- require'lspsaga'.init_lsp_saga({})
 
 require'snippets'.use_suggested_mappings()
 
@@ -135,4 +135,3 @@ require'shade'.setup({
 })
 
 -- require("stay-centered")
-
