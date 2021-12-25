@@ -19,7 +19,14 @@ require('packer').startup(function(use)
   use { 'wbthomason/packer.nvim', opt = true }
   -- use 'scrooloose/nerdcommenter'
   -- use 'christianchiarulli/nvcode-color-schemes.vim'
-  use {'vim-airline/vim-airline', requires = {{'vim-airline/vim-airline-themes'}}}
+  -- use {'vim-airline/vim-airline', requires = {{'vim-airline/vim-airline-themes'}}}
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    config = function ()
+      require'lualine'.setup()
+    end
+  }
   use {
     'neovim/nvim-lspconfig',
   }
@@ -118,6 +125,37 @@ require('packer').startup(function(use)
     end
   }
 
+  use {"haringsrob/nvim_context_vt"}
+  use { "stevearc/dressing.nvim" }
+
+  use {
+    "TimUntersberger/neogit",
+    requires = 'nvim-lua/plenary.nvim',
+    cmd = "Neogit",
+    config = function()
+      require("config.neogit").setup()
+    end,
+  }
+  use {"sindrets/diffview.nvim"}
+  use { "rhysd/git-messenger.vim" }
+  use {
+    "tanvirtin/vgit.nvim",
+    event = "BufWinEnter",
+    config = function()
+      require("vgit").setup()
+    end,
+  }
+
+  use {
+    "nacro90/numb.nvim",
+    config = function()
+      require("numb").setup()
+    end,
+  }
+
+  -- Better Start-up Time
+  use("nathom/filetype.nvim")
+
   use "kdav5758/NoCLC.nvim"
   use {
     'folke/lsp-colors.nvim',
@@ -148,6 +186,13 @@ require('packer').startup(function(use)
   -- use "arnamak/stay-centered.nvim"
 
   use {
+    "SmiteshP/nvim-gps",
+    config = function()
+      require("nvim-gps").setup()
+    end,
+  }
+
+  use {
     'folke/zen-mode.nvim',
     config = function()
       require("zen-mode").setup {
@@ -155,6 +200,28 @@ require('packer').startup(function(use)
           width = .98
         }
       }
+    end
+  }
+
+  use {
+    "folke/twilight.nvim",
+    config = function()
+      require("twilight").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {'nvim-treesitter/nvim-treesitter-textobjects'}
+  use {'nvim-treesitter/nvim-treesitter-refactor'}
+
+  use {
+    'romgrk/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context.config').setup {enable = true}
     end
   }
 
