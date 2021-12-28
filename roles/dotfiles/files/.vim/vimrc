@@ -496,20 +496,20 @@ augroup MyAutocmds
 
     au VimResized * wincmd =
 
-    if has('mksession')
-      " Save/restore folds and cursor position.
-      au BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if autocmds#should_mkview() | call autocmds#mkview() | endif
-      if has('folding')
-        au BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
-      else
-        au BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | endif
-      endif
-    elseif has('folding')
-      " Like the au described in `:h last-position-jump` but we add `:foldopen!`.
-      au BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | execute 'silent! ' . line("'\"") . 'foldopen!' | endif
-    else
-      au BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | endif
-    endif
+    " if has('mksession')
+    "   " Save/restore folds and cursor position.
+    "   au BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if autocmds#should_mkview() | call autocmds#mkview() | endif
+    "   if has('folding')
+    "     au BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
+    "   else
+    "     au BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | endif
+    "   endif
+    " elseif has('folding')
+    "   " Like the au described in `:h last-position-jump` but we add `:foldopen!`.
+    "   au BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | execute 'silent! ' . line("'\"") . 'foldopen!' | endif
+    " else
+    "   au BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | endif
+    " endif
 
     " Let's close the location and the quickfix window if it's the last one
     if exists('##QuitPre')
