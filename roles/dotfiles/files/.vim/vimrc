@@ -263,11 +263,25 @@ set numberwidth=4              " Increase the minimal number of
 set report=100                 " Report the number of lines changed.
 set ruler                      " Show cursor position.
 
-set scrolloff=1                " When scrolling, keep the cursor
+set scrolloff=8                " When scrolling, keep the cursor
                                " 5 lines below the top and 5 lines
                                " above the bottom of the screen.
 
-set sidescrolloff=5            " same as scolloff, but for columns
+set sidescrolloff=8            " same as scolloff, but for columns
+
+" Reselect visual selection after indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" Maintain the cursor position when yanking a visual selection
+" http://ddrscott.github.io/blog/2016/yank-without-jank/
+vnoremap y myy`y
+vnoremap Y myY`y
+
+" Keep it centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
 
 set display+=lastline
 
@@ -480,16 +494,6 @@ endif
 augroup MyAutocmds
     au!
 
-    " autocmd ModeChanged *:[vV\x16]*
-    "       \  if &number || &relativenumber
-    "       \|  hi! link CursorLineNr Number
-    "       \| endif
-
-    " autocmd ModeChanged [vV\x16]*:*
-    "       \  if &number || &relativenumber
-    "       \|  hi! link CursorLineNr NONE
-    "       \| endif
-
     au VimResized * wincmd =
 
     if has('mksession')
@@ -576,7 +580,7 @@ set shell=/bin/sh
 set updatetime=250
 
 " always show signcolumns
-set signcolumn=yes
+set signcolumn=yes:2
 
 " Better display for messages
 set cmdheight=3
@@ -774,7 +778,8 @@ endif
 " If i set the hidden option, i lose the line numbers for some reason. Not
 " for every file though. If i open this file, everything's fine. If i open
 " a directory and then open a js file. Boom!
-" set hidden
+set hidden
+set relativenumber
 
 
 " Select pasted text
