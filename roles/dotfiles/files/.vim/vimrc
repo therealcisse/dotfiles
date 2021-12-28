@@ -580,7 +580,7 @@ set shell=/bin/sh
 set updatetime=250
 
 " always show signcolumns
-set signcolumn=yes:2
+set signcolumn=yes
 
 " Better display for messages
 set cmdheight=3
