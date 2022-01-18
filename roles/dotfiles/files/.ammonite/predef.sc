@@ -11,6 +11,12 @@ import ammonite.shell._
 ammonite.shell.Configure(interp, repl, wd)
 repl.prompt() = "scala>"
 
+// import coursierapi.MavenRepository
+
+// interp.repositories.update(
+//   interp.repositories() ::: List(MavenRepository.of("file:///~/.ivy2/local"))
+// )
+
 
 // interp.configureCompiler(_.settings.YpartialUnification.value = true)
 

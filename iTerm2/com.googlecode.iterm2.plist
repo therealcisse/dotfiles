@@ -3124,14 +3124,20 @@
 	<real>0.5</real>
 	<key>SmartCursorColorFgThreshold</key>
 	<real>0.75</real>
+	<key>SmartPlacement</key>
+	<true/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>StatusBarPosition</key>
+	<integer>1</integer>
 	<key>SuppressShellIntegrationUpgradeAnnouncementForHost_amsayk@dev-ma</key>
 	<true/>
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
+	<key>TabViewType</key>
+	<integer>0</integer>
 	<key>ToolbeltTools</key>
 	<array>
 		<string>Profiles</string>
@@ -3143,9 +3149,13 @@
 	</dict>
 	<key>UpdateScreenParamsDelay</key>
 	<real>1</real>
-	<key>UseLionStyleFullscreen</key>
+	<key>UseBorder</key>
 	<true/>
+	<key>UseLionStyleFullscreen</key>
+	<false/>
 	<key>VisualIndicatorForEsc</key>
+	<false/>
+	<key>WindowNumber</key>
 	<false/>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>

@@ -1,92 +1,10 @@
 lua << EOF
 
-local on_attach = function(client)
-end
-
-require'lspconfig'.rust_analyzer.setup({
-    on_attach=on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            assist = {
-                importMergeBehavior = "last",
-                importPrefix = "by_self",
-            },
-            cargo = {
-                loadOutDirsFromCheck = true
-            },
-            procMacro = {
-                enable = true
-            },
-        }
-    }
-})
-EOF
-
-lua << EOF
-
-  -- Send diagnostics to quickfix list
-  do
-      local method = "textDocument/publishDiagnostics"
-      local default_handler = vim.lsp.handlers[method]
-      vim.lsp.handlers[method] = function(err, method, result, client_id, bufnr,
-                                          config)
-          default_handler(err, method, result, client_id, bufnr, config)
-          local diagnostics = vim.lsp.diagnostic.get_all()
-          local qflist = {}
-          for bufnr, diagnostic in pairs(diagnostics) do
-              for _, d in ipairs(diagnostic) do
-                  d.bufnr = bufnr
-                  d.lnum = d.range.start.line + 1
-                  d.col = d.range.start.character + 1
-                  d.text = d.message
-                  table.insert(qflist, d)
-              end
-          end
-          vim.lsp.util.set_qflist(qflist)
-      end
-  end
-EOF
-
-lua << EOF
-  local cmd = vim.cmd
-  local g = vim.g
-  local fn = vim.fn
-  local execute = vim.api.nvim_command
-
   require('plugins')
+  require('config.vgit')
+  require('config.lsp').setup()
+  require('config.diagnostics').setup()
   require('setup')
-
-  metals_config = require'metals'.bare_config()
-  metals_config.init_options.statusBarProvider = "on"
-  metals_config.settings = {
-    scalafmtConfigPath = ".scalafmt.conf",
-    showImplicitArguments = true,
-    excludedPackages = {}
-  }
-
-  metals_config.on_attach = function (client)
-    require'illuminate'.on_attach(client)
-  end
-
-  metals_config.handlers["textDocument/publishDiagnostics"] =
-      vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        {virtual_text = {prefix = ''}}
-      )
-
-  vim.api.nvim_set_keymap(
-    'n',
-    '<a-n>',
-    '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
-    {noremap=true}
-  )
-
-  vim.api.nvim_set_keymap(
-    'n',
-    '<a-p>',
-    '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
-    {noremap=true}
-  )
 EOF
 
 function! MyHighlights() abort
@@ -127,22 +45,6 @@ autocmd VimEnter * nested
       \ set t_Co=256
       \ | set background=dark
       \ | colorscheme falcon
-
-" LSP
-nnoremap <silent> <C-]>       <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <C-\>       <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> <A-K>       <cmd><cmd>lua vim.lsp.buf.signature_help()<CR><CR>
-nnoremap <silent> K           <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gy          <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gi          <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gR          <cmd>lua vim.lsp.buf.references()<CR>
-" nnoremap <silent> gh          <cmd>Lspsaga lsp_finder<CR>
-" nnoremap <silent> gd          <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
-nnoremap <silent> <leader>ws  <cmd>lua require'metals'.worksheet_hover()<CR>
-
-nnoremap <silent> <localleader>rn  <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> <localleader>ca  <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> <localleader>cd  <cmd>lua vim.diagnostic.open_float()<CR>
 
 lua << EOF
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
@@ -580,7 +482,7 @@ set shell=/bin/sh
 set updatetime=250
 
 " always show signcolumns
-set signcolumn=yes:2
+set signcolumn=yes
 
 " Better display for messages
 set cmdheight=3
@@ -932,12 +834,6 @@ augroup Idleboot
     endif
 augroup END
 
-augroup lsp
-    au!
-    au FileType scala,sc setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    au FileType scala,sbt,sc lua require('metals').initialize_or_attach(metals_config)
-augroup end
-
 set cursorline                 " Highlight the current line.
 set cursorcolumn               " Highlight the current column.
 
@@ -977,14 +873,14 @@ let g:PaperColor_Theme_Options = {
 
 " let g:one_nvim_transparent_bg = v:true
 
-let g:lexima_no_default_rules = v:true
-let g:lexima_enable_space_rules = v:false
-call lexima#set_default_rules()
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm({ 'select': v:true, 'keys': lexima#expand('<LT>CR>', 'i') })
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+"let g:lexima_no_default_rules = v:true
+"let g:lexima_enable_space_rules = v:false
+"call lexima#set_default_rules()
+"" inoremap <silent><expr> <C-Space> compe#complete()
+"" inoremap <silent><expr> <CR>      compe#confirm({ 'select': v:true, 'keys': lexima#expand('<LT>CR>', 'i') })
+" inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+" inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+" inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 let g:floaterm_shell = "/usr/local/bin/zsh"
 let g:floaterm_title = "Zsh"
@@ -997,8 +893,8 @@ let $FZF_DEFAULT_COMMAND = 'fd --type f'
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
-nnoremap <C-p> <cmd>Files<CR>
-nnoremap <C-g>/ <cmd>Rg<CR>
+" nnoremap <C-p> <cmd>Files<CR>
+" nnoremap <C-g>/ <cmd>Rg<CR>
 
 " like emacs mode shell command editing
 inoremap <C-E> <C-o>$

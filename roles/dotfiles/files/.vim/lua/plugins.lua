@@ -32,10 +32,38 @@ require('packer').startup(function(use)
   }
   -- use 'glepnir/lspsaga.nvim'
   use 'windwp/nvim-autopairs'
-  use { 'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}} }
-  use 'hrsh7th/vim-vsnip-integ'
+  -- use { 'hrsh7th/nvim-compe', requires = {{'hrsh7th/vim-vsnip'}} }
+  -- use 'hrsh7th/vim-vsnip-integ'
   use 'DataWraith/auto_mkdir'
   use 'tpope/vim-unimpaired'
+
+  use({"ckipp01/stylua-nvim"})
+
+  use({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-vsnip" },
+      { "hrsh7th/vim-vsnip" },
+    },
+    config = require("config.cmp").setup(),
+  })
+
+  use({ "ckipp01/nvim-jvmopts" })
+
+  -- use({ "lukas-reineke/indent-blankline.nvim", config = require("config.indent_blankline").setup() })
+
+  use({
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      { "nvim-lua/popup.nvim" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope-fzy-native.nvim" },
+    },
+    config = require("config.telescope").setup(),
+  })
 
   use 'tpope/vim-rhubarb'            -- Fugitive-companion to interact with github
 
@@ -43,8 +71,6 @@ require('packer').startup(function(use)
   use 'norcalli/snippets.nvim'
 
   use { 'MTDL9/vim-log-highlighting' }
-
-  -- use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
 
   use 'kazhala/close-buffers.nvim'
 
@@ -72,7 +98,7 @@ require('packer').startup(function(use)
   use 'othree/html5.vim'
   use {'plasticboy/vim-markdown', ft = {'markdown'}}
   use 'airblade/vim-gitgutter'
-  -- use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
+  use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
   -- use 'tomtom/tcomment_vim'
   use { 'tpope/vim-commentary' }
   use 'tpope/vim-fugitive'
@@ -106,12 +132,7 @@ require('packer').startup(function(use)
 
   -- use { 'camspiers/snap'}
   use {'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
-  use 'junegunn/fzf.vim'
-
-  -- use {
-  --   'nvim-telescope/telescope.nvim',
-  --   requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-  -- }
+  -- use 'junegunn/fzf.vim'
 
   use {
     "folke/trouble.nvim",
@@ -137,26 +158,27 @@ require('packer').startup(function(use)
     end,
   })
 
-  use {"haringsrob/nvim_context_vt"}
+  -- use {"haringsrob/nvim_context_vt"}
   use { "stevearc/dressing.nvim" }
 
-  use {
-    "TimUntersberger/neogit",
-    requires = 'nvim-lua/plenary.nvim',
-    cmd = "Neogit",
-    config = function()
-      require("config.neogit").setup()
-    end,
-  }
+  -- use {'kevinhwang91/nvim-bqf', ft = 'qf'}
+
+  -- use {
+  --   "TimUntersberger/neogit",
+  --   requires = 'nvim-lua/plenary.nvim',
+  --   cmd = "Neogit",
+  --   config = function()
+  --     require("config.neogit").setup()
+  --   end,
+  -- }
   use {"sindrets/diffview.nvim"}
   use { "rhysd/git-messenger.vim" }
-  use {
-    "tanvirtin/vgit.nvim",
-    event = "BufWinEnter",
-    config = function()
-      require("vgit").setup()
-    end,
-  }
+  -- use {
+  --   "tanvirtin/vgit.nvim",
+  --   event = "BufWinEnter",
+  --   config = function()
+  --   end,
+  -- }
 
   use {
     "nacro90/numb.nvim",
@@ -186,7 +208,7 @@ require('packer').startup(function(use)
     requires = { "nvim-lua/plenary.nvim" }
 
   }
-  -- use 'mfussenegger/nvim-dap'
+  use 'mfussenegger/nvim-dap'
 
   use 'sunjon/shade.nvim'
 
@@ -226,16 +248,16 @@ require('packer').startup(function(use)
     end
   }
 
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/nvim-treesitter-textobjects'}
   use {'nvim-treesitter/nvim-treesitter-refactor'}
 
-  use {
-    'romgrk/nvim-treesitter-context',
-    config = function()
-      require('treesitter-context.config').setup {enable = true}
-    end
-  }
+  -- use {
+  --   'romgrk/nvim-treesitter-context',
+  --   config = function()
+  --     require('treesitter-context.config').setup {enable = true}
+  --   end
+  -- }
 
   use { 'folke/which-key.nvim' }
 
