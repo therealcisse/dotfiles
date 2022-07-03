@@ -920,7 +920,7 @@ command! CopyBuffer let @+ = expand('%:p')
 
 " nnoremap <localleader>z <cmd>ZenMode<CR>
 
-set winbar=%f
+set winbar=%=%m\ %f
 
 map <C-M> <Enter>
 
