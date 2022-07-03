@@ -1,0 +1,35 @@
+-- local colors = require("colorbuddy.color").colors
+--
+-- local ns_trc = vim.api.nvim_create_namespace "trc_colors"
+-- local ns_trc_2 = vim.api.nvim_create_namespace "trc_colors_2"
+--
+-- vim.api.nvim_set_decoration_provider(ns_trc, {
+--   on_start = function(_, tick)
+--   end,
+--
+--   on_buf = function(_, bufnr, tick)
+--   end,
+--
+--   on_win = function(_, winid, bufnr, topline, botline)
+--   end,
+--
+--   on_line = function(_, winid, bufnr, row)
+--     if row == 10 then
+--       vim.api.nvim_set_hl_ns(ns_trc_2)
+--     else
+--       vim.api.nvim_set_hl_ns(ns_trc)
+--     end
+--   end,
+--
+--   on_end = function(_, tick)
+--   end,
+-- })
+--
+-- vim.api.nvim_set_hl(ns_trc, "LuaFunctionCall", {
+--   foreground = colors.green:to_rgb(),
+--   background = nil,
+--   reverse = false,
+--   underline = false,
+-- })
+--
+-- vim.api.nvim_set_hl_ns(ns_trc)

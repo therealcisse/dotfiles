@@ -1,13 +1,31 @@
+
 lua << EOF
 
-  require('plugins')
-  require('config.vgit')
-  require('config.lsp').setup()
-  require('config.diagnostics').setup()
-  require('setup')
+  require "trc.profile"
+  require 'trc.globals'
+  require 'trc.plugins'
+
+  if require "trc.first_load"() then
+    return
+  end
+
+  -- I set some global variables to use as configuration throughout my config.
+  -- These don't have any special meaning.
+  vim.g.snippets = "luasnip"
+
+  -- Turn off builtin plugins I do not use.
+  require "trc.disable_builtin"
+
+  -- Neovim builtin LSP configuration
+  require "trc.lsp"
+
+  -- Telescope BTW
+  require "trc.telescope.setup"
+  require "trc.telescope.mappings"
 EOF
 
 function! MyHighlights() abort
+
   hi! LspReferenceRead gui=bold guifg=LightYellow
   hi! LspReferenceText gui=bold guifg=LightYellow
   hi! LspReferenceWrite gui=bold guifg=LightYellow
@@ -34,17 +52,21 @@ function! MyHighlights() abort
 
   hi! Floaterm guibg=black
   hi! FloatermNC guibg=gray
+
+  hi! Normal guibg=#000000
 endfunction
+
+set t_Co=256
+set termguicolors
+colorscheme falcon
+set background=dark
+
 
 augroup MyColors
     au!
-    au ColorScheme * call MyHighlights()
+    au ColorScheme falcon nested call MyHighlights()
 augroup END
 
-autocmd VimEnter * nested
-      \ set t_Co=256
-      \ | set background=dark
-      \ | colorscheme falcon
 
 lua << EOF
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
@@ -87,10 +109,7 @@ augroup END
 
 let g:auto_save = 0
 let g:nvcode_termcolors=256
-let g:airline_extensions = []
 
-let g:falcon_airline = 1
-let g:airline_theme = 'falcon'
 
 let mapleader="\<Space>"
 let maplocalleader="\\"
@@ -98,8 +117,6 @@ let maplocalleader="\\"
 scriptencoding utf-8
 
 set termguicolors
-
-" set inccommand=split
 
 set ttyfast
 
@@ -398,32 +415,12 @@ augroup MyAutocmds
 
     au VimResized * wincmd =
 
-    " if has('mksession')
-    "   " Save/restore folds and cursor position.
-    "   au BufWritePost,BufWinLeave,BufLeave,WinLeave ?* if autocmds#should_mkview() | call autocmds#mkview() | endif
-    "   if has('folding')
-    "     au BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | execute 'silent! ' . line('.') . 'foldopen!' | endif
-    "   else
-    "     au BufWinEnter ?* if autocmds#should_mkview() | silent! loadview | endif
-    "   endif
-    " elseif has('folding')
-    "   " Like the au described in `:h last-position-jump` but we add `:foldopen!`.
-    "   au BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | execute 'silent! ' . line("'\"") . 'foldopen!' | endif
-    " else
-    "   au BufWinEnter * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"" | endif
-    " endif
-
     " Let's close the location and the quickfix window if it's the last one
     if exists('##QuitPre')
       au QuitPre * if &filetype != 'qf' | silent! lclose | silent! cclose | endif
     endif
 
     au CompleteDone * pclose
-
-    if exists('##TextYankPost')
-      au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=250, on_visual=false}
-    endif
-
 augroup end
 
 " Make the jk behave
@@ -580,8 +577,8 @@ endif
 vnoremap . :norm.<CR>
 
 " Folds
-nmap <expr> <Tab> 'za'
-nmap <expr> <S-Tab> 'za'
+" nmap <expr> <Tab> 'za'
+" nmap <expr> <S-Tab> 'za'
 
 " vim-move
 
@@ -916,20 +913,16 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 " <C-N> <Down>
 " <C-E> <End>
 
-" <c-k> will either expand the current snippet at the word or try to jump to
-" the next position for the snippet.
-inoremap <c-k> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
-
-" <c-j> will jump backwards to the previous field.
-" If you jump before the first field, it will cancel the snippet.
-inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
-
 let g:indent_blankline_space_char = '⋅'
 let g:indent_blankline_char = '⋅'
 
 command! CopyBuffer let @+ = expand('%:p')
 
-nnoremap <localleader>z <cmd>ZenMode<CR>
+" nnoremap <localleader>z <cmd>ZenMode<CR>
+
+set winbar=%f
+
+map <C-M> <Enter>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
@@ -944,3 +937,4 @@ nnoremap <localleader>z <cmd>ZenMode<CR>
 if filereadable(glob('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
+
