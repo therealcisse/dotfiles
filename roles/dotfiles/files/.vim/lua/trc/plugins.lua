@@ -145,7 +145,7 @@ return require("packer").startup {
     }
     use "jose-elias-alvarez/null-ls.nvim"
 
-    local_use "lsp_extensions.nvim"
+    use "nvim-lua/lsp_extensions.nvim"
     use "onsails/lspkind-nvim"
     -- use "glepnir/lspsaga.nvim"
     -- https://github.com/rmagatti/goto-preview

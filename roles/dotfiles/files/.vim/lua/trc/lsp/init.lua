@@ -114,13 +114,13 @@ local custom_attach = function(client)
   buf_nnoremap { "<leader>rn", vim.lsp.buf.rename }
   buf_nnoremap { "<leadr>ca", vim.lsp.buf.code_action }
 
-  buf_nnoremap { "gd", vim.lsp.buf.definition }
+  buf_nnoremap { "<C-]>", vim.lsp.buf.definition }
   buf_nnoremap { "gD", vim.lsp.buf.declaration }
   buf_nnoremap { "gT", vim.lsp.buf.type_definition }
 
-  buf_nnoremap { "<space>gI", handlers.implementation }
-  buf_nnoremap { "<space>lr", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
-  buf_nnoremap { "<space>rr", "LspRestart" }
+  buf_nnoremap { "gd", handlers.implementation }
+  buf_nnoremap { "<leader>lr", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
+  buf_nnoremap { "<leader>rr", "LspRestart" }
 
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
@@ -180,6 +180,7 @@ local servers = {
   -- vimls = true,
   -- yamlls = true,
   -- eslint = true,
+  metals = true,
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
   dartls = pcall(require, "flutter-tools"),

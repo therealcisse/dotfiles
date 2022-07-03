@@ -35,21 +35,21 @@ local goto_opts = {
 }
 
 nmap {
-  "<space>dn",
+  "<leader>dn",
   function()
     vim.diagnostic.goto_next(goto_opts)
   end,
 }
 
 nmap {
-  "<space>dp",
+  "<leader>dp",
   function()
     vim.diagnostic.goto_prev(goto_opts)
   end,
 }
 
 nmap {
-  "<space>sl",
+  "<leader>sl",
   function()
     vim.diagnostic.open_float(0, {
       scope = "line",

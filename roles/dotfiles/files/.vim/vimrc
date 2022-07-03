@@ -369,7 +369,7 @@ set complete-=i
 
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop
 
-set textwidth=80               " automatically hard wrap at 80 columns
+set textwidth=120               " automatically hard wrap at 120 columns
 
 set showtabline=0
 
@@ -577,8 +577,8 @@ endif
 vnoremap . :norm.<CR>
 
 " Folds
-" nmap <expr> <Tab> 'za'
-" nmap <expr> <S-Tab> 'za'
+nmap <expr> <Tab> 'za'
+nmap <expr> <S-Tab> 'za'
 
 " vim-move
 

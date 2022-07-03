@@ -40,30 +40,23 @@ require("nvim-dap-virtual-text").setup {
   all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
 }
 
--- TODO: How does terminal work?
-dap.defaults.fallback.external_terminal = {
-  command = "/home/tjdevries/.local/bin/kitty",
-  args = { "-e" },
-}
-
-dap.adapters.nlua = function(callback, config)
-  callback { type = "server", host = config.host, port = config.port }
-end
-
-dap.configurations.lua = {
+dap.configurations.scala = {
   {
-    type = "nlua",
-    request = "attach",
-    name = "Attach to running Neovim instance",
-    host = function()
-      return "127.0.0.1"
-    end,
-    port = function()
-      -- local val = tonumber(vim.fn.input('Port: '))
-      -- assert(val, "Please provide a port number")
-      local val = 54231
-      return val
-    end,
+    type = "scala",
+    request = "launch",
+    name = "RunOrTest",
+    metals = {
+      runType = "runOrTestFile",
+      --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+    },
+  },
+  {
+    type = "scala",
+    request = "launch",
+    name = "Test Target",
+    metals = {
+      runType = "testTarget",
+    },
   },
 }
 

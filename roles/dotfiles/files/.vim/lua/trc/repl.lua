@@ -24,8 +24,8 @@ M.send_to_term = function(input)
   vim.fn.chansend(_ReplCurrentJobID, { input .. "\r\n" })
 end
 
-vim.api.nvim_set_keymap("n", "<space>rs", '<cmd>lua require("trc.repl").set_job_id()<CR>', { noremap = true })
-vim.api.nvim_set_keymap("n", "<space>rc", '<cmd>lua require("trc.repl").set_job_command()<CR>', { noremap = true })
-vim.api.nvim_set_keymap("n", "<space>ri", '<cmd>lua require("trc.repl").send_to_term()<CR>', { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>rs", '<cmd>lua require("trc.repl").set_job_id()<CR>', { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>rc", '<cmd>lua require("trc.repl").set_job_command()<CR>', { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>ri", '<cmd>lua require("trc.repl").send_to_term()<CR>', { noremap = true })
 
 return M

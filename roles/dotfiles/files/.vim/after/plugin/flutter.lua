@@ -7,12 +7,12 @@ local custom_lsp = require "trc.lsp"
 
 -- local g = require('colorbuddy.group').groups
 
-local Group = require("colorbuddy.group").Group
-local c = require("colorbuddy.color").colors
-local s = require("colorbuddy.style").styles
-
-Group.new("FlutterClosingTag", c.gray3, nil, s.italic)
-Group.new("FlutterWidgetGuides", c.gray2)
+-- local Group = require("colorbuddy.group").Group
+-- local c = require("colorbuddy.color").colors
+-- local s = require("colorbuddy.style").styles
+--
+-- Group.new("FlutterClosingTag", c.gray3, nil, s.italic)
+-- Group.new("FlutterWidgetGuides", c.gray2)
 
 require("flutter-tools").setup {
   debugger = {

@@ -5,6 +5,6 @@ vim.keymap.set("n", "<F5>", function()
   if require("dap").session() then
     require("dap").continue()
   else
-    R("tj.dap").select_rust_runnable()
+    R("trc.dap").select_rust_runnable()
   end
 end)

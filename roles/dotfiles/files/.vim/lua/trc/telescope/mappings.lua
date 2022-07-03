@@ -51,7 +51,7 @@ map_tele("<C-g>/", "grep_string", {
 -- map_tele("<C-g>", "live_grep")
 -- map_tele("<space>fg", "multi_rg")
 -- map_tele("<space>fo", "oldfiles")
-map_tele("<C-p>", "fd")
+map_tele("<C-p>", "fs")
 -- map_tele("<space>fs", "fs")
 -- map_tele("<space>pp", "project_search")
 -- map_tele("<space>fv", "find_nvim_source")
