@@ -918,7 +918,7 @@ let g:indent_blankline_char = '⋅'
 
 command! CopyBuffer let @+ = expand('%:p')
 
-" nnoremap <localleader>z <cmd>ZenMode<CR>
+nnoremap <localleader>z <cmd>ZenMode<CR>
 
 set winbar=%=%m\ %f
 
