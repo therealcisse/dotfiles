@@ -22,12 +22,61 @@ end
 
 local icons = require "trc.icons"
 
--- vim.fn.sign_define('DapBreakpoint', {text=icons.ui.Bug, texthl='DiagnosticSignError', linehl='', numhl=''})
+vim.highlight.create('DapBreakpoint', {
+  guifg='#993939',
+  guibg=none,
+  ctermfg=none,
+  ctermbg=none
+})
 
-vim.fn.sign_define("DapBreakpoint", { text = "ß", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
-vim.fn.sign_define("DapBreakpointCondition", { text = "ü", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
--- Setup cool Among Us as avatar
-vim.fn.sign_define("DapStopped", { text = "ඞ", texthl = "Error" })
+vim.highlight.create('DapLogPoint', {
+  guifg='#61afef',
+  guibg=none,
+  ctermfg=none,
+  ctermbg=none
+})
+
+vim.highlight.create('DapStopped', {
+  guifg='#98c379',
+  guibg=none,
+  ctermfg=none,
+  ctermbg=none
+})
+
+vim.fn.sign_define('DapBreakpoint', {
+  text=' ',
+  texthl='DapBreakpoint',
+  linehl='',
+  numhl=''
+})
+
+vim.fn.sign_define('DapBreakpointCondition', {
+  text=' ﳁ',
+  texthl='DapBreakpoint',
+  linehl='',
+  numhl=''
+})
+
+vim.fn.sign_define('DapBreakpointRejected', {
+  text=' ',
+  texthl='DapBreakpoint',
+  linehl='',
+  numhl= ''
+})
+
+vim.fn.sign_define('DapLogPoint', {
+  text=' ',
+  texthl='DapLogPoint',
+  linehl='',
+  numhl= ''
+})
+
+vim.fn.sign_define('DapStopped', {
+  text=' ',
+  texthl='DapStopped',
+  linehl='',
+  numhl= ''
+})
 
 require("nvim-dap-virtual-text").setup {
   enabled = true,
