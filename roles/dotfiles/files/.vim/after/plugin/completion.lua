@@ -28,69 +28,84 @@ lspkind.init()
 local cmp = require "cmp"
 
 cmp.setup {
-  mapping = {
-    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<c-y>"] = cmp.mapping(
-      cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = true,
-      },
-      { "i", "c" }
-    ),
-
-    ["<c-space>"] = cmp.mapping {
-      i = cmp.mapping.complete(),
-      c = function(
-        _ --[[fallback]]
-      )
-        if cmp.visible() then
-          if not cmp.confirm { select = true } then
-            return
-          end
-        else
-          cmp.complete()
-        end
-      end,
-    },
-
-    -- ["<tab>"] = false,
-    ["<tab>"] = cmp.config.disable,
-
-    -- ["<tab>"] = cmp.mapping {
-    --   i = cmp.config.disable,
-    --   c = function(fallback)
-    --     fallback()
-    --   end,
-    -- },
-
-    -- Testing
-    ["<c-q>"] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-
-    -- If you want tab completion :'(
-    --  First you have to just promise to read `:help ins-completion`.
-    --
-    -- ["<Tab>"] = function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_next_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end,
-    -- ["<S-Tab>"] = function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_prev_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end,
-  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  -- mapping = {
+  --   ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+  --   ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+  --   -- ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+  --   -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
+  --   -- ["<C-e>"] = cmp.mapping.abort(),
+  --   ["<c-y>"] = cmp.mapping(
+  --     cmp.mapping.confirm {
+  --       behavior = cmp.ConfirmBehavior.Insert,
+  --       select = true,
+  --     },
+  --     { "i", "c" }
+  --   ),
+  --   -- ["<C-M>"] = cmp.mapping(
+  --   --   cmp.mapping.confirm {
+  --   --     behavior = cmp.ConfirmBehavior.Insert,
+  --   --     select = true,
+  --   --   },
+  --   --   { "i", "c" }
+  --   -- ),
+  --   ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  --
+  --   ["<c-space>"] = cmp.mapping {
+  --     i = cmp.mapping.complete(),
+  --     c = function(
+  --       _ --[[fallback]]
+  --     )
+  --       if cmp.visible() then
+  --         if not cmp.confirm { select = true } then
+  --           return
+  --         end
+  --       else
+  --         cmp.complete()
+  --       end
+  --     end,
+  --   },
+  --
+  --   -- ["<tab>"] = false,
+  --   ["<tab>"] = cmp.config.disable,
+  --
+  --   -- ["<tab>"] = cmp.mapping {
+  --   --   i = cmp.config.disable,
+  --   --   c = function(fallback)
+  --   --     fallback()
+  --   --   end,
+  --   -- },
+  --
+  --   -- Testing
+  --   ["<c-q>"] = cmp.mapping.confirm {
+  --     behavior = cmp.ConfirmBehavior.Replace,
+  --     select = true,
+  --   },
+  --
+  --   -- If you want tab completion :'(
+  --   --  First you have to just promise to read `:help ins-completion`.
+  --   --
+  --   -- ["<Tab>"] = function(fallback)
+  --   --   if cmp.visible() then
+  --   --     cmp.select_next_item()
+  --   --   else
+  --   --     fallback()
+  --   --   end
+  --   -- end,
+  --   -- ["<S-Tab>"] = function(fallback)
+  --   --   if cmp.visible() then
+  --   --     cmp.select_prev_item()
+  --   --   else
+  --   --     fallback()
+  --   --   end
+  --   -- end,
+  -- },
 
   -- Youtube:
   --    the order of your sources matter (by default). That gives them priority
@@ -103,7 +118,7 @@ cmp.setup {
     -- { name = "gh_issues" },
 
     -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
-    { name = "nvim_lua" },
+    -- { name = "nvim_lua" },
 
     { name = "nvim_lsp" },
     { name = "path" },

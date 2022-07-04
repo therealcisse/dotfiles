@@ -109,10 +109,11 @@ local custom_attach = function(client)
     nvim_status.on_attach(client)
   end
 
-  buf_inoremap { "<c-s>", vim.lsp.buf.signature_help }
+  buf_inoremap { "<c-s>s", vim.lsp.buf.signature_help }
 
-  buf_nnoremap { "<leader>rn", vim.lsp.buf.rename }
-  buf_nnoremap { "<leadr>ca", vim.lsp.buf.code_action }
+  buf_nnoremap { "<localleader>rn", vim.lsp.buf.rename }
+  buf_nnoremap { "<localleader>ca", vim.lsp.buf.code_action }
+  buf_nnoremap { "<localleader>cd", vim.diagnostic.open_float }
 
   buf_nnoremap { "<C-]>", vim.lsp.buf.definition }
   buf_nnoremap { "gD", vim.lsp.buf.declaration }
@@ -120,7 +121,7 @@ local custom_attach = function(client)
 
   buf_nnoremap { "gd", handlers.implementation }
   buf_nnoremap { "<leader>lr", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
-  buf_nnoremap { "<leader>rr", "LspRestart" }
+  -- buf_nnoremap { "<leader>rr", "LspRestart" }
 
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)

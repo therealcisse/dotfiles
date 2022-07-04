@@ -6,6 +6,14 @@ _ = vim.cmd [[packadd vimball]]
 --   args = { "packer.vim" },
 -- }, {})
 
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]]
+
 local has = function(x)
   return vim.fn.has(x) == 1
 end
@@ -62,11 +70,14 @@ return require("packer").startup {
     local_use("ThePrimeagen", "refactoring.nvim")
 
     -----------------------------------------------------------
+    use { "christianchiarulli/nvim-gps", branch = "text_hl" }
+    use "RRethy/vim-illuminate"
+    use 'tpope/vim-fugitive'
 
     use 'DataWraith/auto_mkdir'
     use 'tpope/vim-unimpaired'
-    use { 'justinmk/vim-dirvish'}
-    use { 'kristijanhusak/vim-dirvish-git'}
+    -- use { 'justinmk/vim-dirvish'}
+    -- use { 'kristijanhusak/vim-dirvish-git'}
     use 'tommcdo/vim-lion' -- Align = gl, gL
     use 'tpope/vim-eunuch' --  =SudoWrite, ...
 
@@ -529,8 +540,8 @@ return require("packer").startup {
 
     use "google/vim-searchindex"
 
-    -- use "tamago324/lir.nvim"
-    -- use "tamago324/lir-git-status.nvim"
+    use "tamago324/lir.nvim"
+    use "tamago324/lir-git-status.nvim"
     if executable "mmv" then
       use "tamago324/lir-mmv.nvim"
     end
@@ -553,7 +564,13 @@ return require("packer").startup {
     }
 
     -- TODO: Check out macvhakann/vim-sandwich at some point
-    use "tpope/vim-surround" -- Surround text objects easily
+    -- use "tpope/vim-surround" -- Surround text objects easily
+     use "kylechui/nvim-surround"
+
+     use "akinsho/toggleterm.nvim"
+     use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+     use "lukas-reineke/indent-blankline.nvim"
+     use "karb94/neoscroll.nvim"
 
     --
     -- GIT:

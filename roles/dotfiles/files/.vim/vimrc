@@ -1,29 +1,4 @@
 
-lua << EOF
-
-  require "trc.profile"
-  require 'trc.globals'
-  require 'trc.plugins'
-
-  if require "trc.first_load"() then
-    return
-  end
-
-  -- I set some global variables to use as configuration throughout my config.
-  -- These don't have any special meaning.
-  vim.g.snippets = "luasnip"
-
-  -- Turn off builtin plugins I do not use.
-  require "trc.disable_builtin"
-
-  -- Neovim builtin LSP configuration
-  require "trc.lsp"
-
-  -- Telescope BTW
-  require "trc.telescope.setup"
-  require "trc.telescope.mappings"
-EOF
-
 function! MyHighlights() abort
 
   hi! LspReferenceRead gui=bold guifg=LightYellow
@@ -482,7 +457,7 @@ set updatetime=250
 set signcolumn=yes
 
 " Better display for messages
-set cmdheight=3
+set cmdheight=1
 
 if exists('&swapsync')
   set swapsync=                       " let OS sync swapfiles lazily
@@ -920,8 +895,6 @@ command! CopyBuffer let @+ = expand('%:p')
 
 nnoremap <localleader>z <cmd>ZenMode<CR>
 
-set winbar=%=%m\ %f
-
 map <C-M> <Enter>
 
 " ----------------------------------------------------------------------
@@ -937,4 +910,43 @@ map <C-M> <Enter>
 if filereadable(glob('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
+
+lua << EOF
+  require "trc.impatient"
+
+  require "trc.profile"
+  require 'trc.globals'
+  require 'trc.plugins'
+
+  if require "trc.first_load"() then
+    return
+  end
+
+  -- I set some global variables to use as configuration throughout my config.
+  -- These don't have any special meaning.
+  vim.g.snippets = "luasnip"
+
+  -- Turn off builtin plugins I do not use.
+  require "trc.disable_builtin"
+
+  -- Neovim builtin LSP configuration
+  require "trc.lsp"
+
+  -- Telescope BTW
+  require "trc.telescope.setup"
+  require "trc.telescope.mappings"
+
+  require "trc.lir"
+  require "trc.winbar"
+  require "trc.colorizer"
+  require "trc.toggleterm"
+  require "trc.neoscroll"
+  require "trc.autopairs"
+  require "trc.indentline"
+  require "trc.gps"
+  require "trc.autocommands"
+  require "trc.gitsigns"
+  require "trc.surround"
+EOF
+
 

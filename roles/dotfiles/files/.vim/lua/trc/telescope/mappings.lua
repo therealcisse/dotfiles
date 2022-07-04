@@ -30,7 +30,7 @@ vim.api.nvim_set_keymap("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)"
 
 -- Dotfiles
 -- map_tele("<leader>ez", "edit_zsh")
-map_tele("<leader>cd", "diagnostics")
+-- map_tele("<localleader>cd", "diagnostics")
 
 -- Search
 -- TODO: I would like to completely remove _mock from my search results here when I'm in SG/SG

@@ -15,12 +15,14 @@ local set_prompt_to_entry_value = function(prompt_bufnr)
   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
 end
 
+local icons = require "trc.icons"
+
 require("telescope").setup {
   defaults = {
-    prompt_prefix = "> ",
-    selection_caret = "> ",
-    entry_prefix = "  ",
-    multi_icon = "<>",
+    prompt_prefix = icons.ui.Telescope .. " ",
+    selection_caret = " ",
+     path_display = { "smart" },
+     file_ignore_patterns = { ".git/", "node_modules/", "target/", "docs/", ".settings/" },
 
     -- path_display = "truncate",
 
@@ -63,6 +65,8 @@ require("telescope").setup {
 
     mappings = {
       i = {
+        ["<C-c>"] = actions.close,
+        ["<esc>"] = actions.close,
         ["<C-x>"] = false,
         ["<C-s>"] = actions.select_horizontal,
         ["<C-n>"] = "move_selection_next",
@@ -78,8 +82,9 @@ require("telescope").setup {
 
         -- ["<M-m>"] = actions.master_stack,
 
-        -- ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-        -- ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+        ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 
         -- This is nicer when used with smart-history plugin.
         ["<C-k>"] = actions.cycle_history_next,
