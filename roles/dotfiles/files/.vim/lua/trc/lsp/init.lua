@@ -181,7 +181,7 @@ local servers = {
   -- vimls = true,
   -- yamlls = true,
   -- eslint = true,
-  metals = true,
+  metals = pcall(require, "metals"),
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
   dartls = pcall(require, "flutter-tools"),
