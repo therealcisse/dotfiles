@@ -63,6 +63,38 @@ function s:HandleInactiveBackground()
   endif
 endfunction
 
+
+function! s:MyHighlights() abort
+  hi! LspReferenceRead gui=bold guifg=LightYellow
+  hi! LspReferenceText gui=bold guifg=LightYellow
+  hi! LspReferenceWrite gui=bold guifg=LightYellow
+
+  hi! SignColumn ctermfg=NONE guibg=NONE
+  hi! NonText ctermbg=NONE guibg=NONE
+  hi! LineNr ctermfg=NONE guibg=NONE
+  " hi! StatusLine guifg=#16252b guibg=#6699CC
+  " hi! StatusLineNC guifg=#16252b guibg=#16252b
+
+  hi! VertSplit guifg=#fff
+  hi! CursorLineNr gui=bold guifg=NONE guibg=NONE
+
+  hi! Search guifg=#969896 guibg=#f0c674
+  hi! IncSearch guifg=#282a2e guibg=#de935f
+  hi! PMenuSel guifg=#282a2e guibg=#c5c8c6
+  hi! Pmenu guibg='00010a' guifg=#fff
+
+  hi! link CompeDocumentation NormalFloat
+
+  hi! clear Conceal
+
+  hi! link CompeDocumentation NormalFloat
+
+  hi! Floaterm guibg=black
+  hi! FloatermNC guibg=gray
+
+  hi! link ElNormal Statusline
+endfunction
+
 function s:SetColors()
   " Guard
   if !exists('g:colors_name') || !exists('g:loaded_falcon')
@@ -74,6 +106,7 @@ function s:SetColors()
   endif
 
   call s:HandleInactiveBackground()
+  call s:MyHighlights()
 endfunction
 
 " goyo support

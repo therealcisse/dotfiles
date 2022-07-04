@@ -1,47 +1,9 @@
 
-function! MyHighlights() abort
-
-  hi! LspReferenceRead gui=bold guifg=LightYellow
-  hi! LspReferenceText gui=bold guifg=LightYellow
-  hi! LspReferenceWrite gui=bold guifg=LightYellow
-
-  hi! SignColumn ctermfg=NONE guibg=NONE
-  hi! NonText ctermbg=NONE guibg=NONE
-  hi! LineNr ctermfg=NONE guibg=NONE
-  hi! StatusLine guifg=#16252b guibg=#6699CC
-  hi! StatusLineNC guifg=#16252b guibg=#16252b
-
-  hi! VertSplit guifg=#fff
-  hi! CursorLineNr gui=bold guifg=NONE guibg=NONE
-
-  hi! Search guifg=#969896 guibg=#f0c674
-  hi! IncSearch guifg=#282a2e guibg=#de935f
-  hi! PMenuSel guifg=#282a2e guibg=#c5c8c6
-  hi! Pmenu guibg='00010a' guifg=#fff
-
-  hi! link CompeDocumentation NormalFloat
-
-  hi! clear Conceal
-
-  hi! link CompeDocumentation NormalFloat
-
-  hi! Floaterm guibg=black
-  hi! FloatermNC guibg=gray
-
-  hi! Normal guibg=#000000
-endfunction
 
 set t_Co=256
 set termguicolors
 colorscheme falcon
 set background=dark
-
-
-augroup MyColors
-    au!
-    au ColorScheme falcon nested call MyHighlights()
-augroup END
-
 
 lua << EOF
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
@@ -947,6 +909,7 @@ lua << EOF
   require "trc.autocommands"
   require "trc.gitsigns"
   require "trc.surround"
+  require "trc.dap"
 EOF
 
 
