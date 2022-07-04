@@ -471,7 +471,7 @@ return require("packer").startup {
     use "mfussenegger/nvim-dap-python"
     use "jbyuki/one-small-step-for-vimkind"
 
-    use 'airblade/vim-gitgutter'
+    -- use 'airblade/vim-gitgutter'
 
     -- use {
     --   "rcarriga/vim-ultest",

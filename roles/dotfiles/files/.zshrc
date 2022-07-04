@@ -224,7 +224,7 @@ fi
 
 # export PATH=/usr/local/opt/sbt@0.13/bin/:$PATH
 
-eyexport DISABLE_UPDATE_PROMPT=true
+export DISABLE_UPDATE_PROMPT=true
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
@@ -248,4 +248,3 @@ setopt share_history
 # <<< scala-cli completions <<<
 
 export LOCAL_METRICS_ENABLED=true
-

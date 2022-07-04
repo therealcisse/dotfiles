@@ -416,7 +416,7 @@ set shell=/bin/sh
 set updatetime=250
 
 " always show signcolumns
-set signcolumn=yes
+set signcolumn=auto
 
 " Better display for messages
 set cmdheight=1
@@ -474,12 +474,6 @@ set re=1                 " use explicit old regexpengine, seems to be more faste
 " Count occurences of word under cursor
 nnoremap <leader>* *<C-O>:%s///gn<CR>
 
-"" Git
-"no mappings by gitgutter
-let g:gitgutter_map_keys = 0
-
-let g:gitgutter_max_signs = 1200
-
 "focus window of last created buffer
 function! JumpLastBufferWindow()
   call win_gotoid(win_getid(bufwinnr(last_buffer_nr())))
@@ -489,21 +483,9 @@ nnoremap <c-g>b :Git blame<cr>
 nnoremap <c-g>B :Git browse<cr>
 nnoremap <c-g>s :Git status<cr>
 " nnoremap <c-g>c :Git commit<cr>
-nnoremap <c-g>d :Gvdiff<cr>
-nnoremap <c-g>P :Gpush<cr>
-nnoremap <c-g>L :Gpull<cr>
-" nnoremap <c-g>R :!git checkout <c-r>%<cr><cr>
-nnoremap <c-g>p :GitGutterPreviewHunk<cr>:call JumpLastBufferWindow()<cr>
-nnoremap <c-g>r :GitGutterUndoHunk<cr>
-nnoremap <c-g>S :GitGutterStageHunk<cr>
-nnoremap <c-g>l :GitGutterLineHighlightsToggle<cr>
-nnoremap [h :GitGutterPrevHunk<cr>
-nnoremap ]h :GitGutterNextHunk<cr>
-
-let g:gitgutter_sign_added = '┃'
-let g:gitgutter_sign_removed = '┃'
-let g:gitgutter_sign_modified = '┃'
-let g:gitgutter_sign_modified_removed = '┃'
+nnoremap <c-g>d :Gvdiffsplit<cr>
+nnoremap <c-g>P :Git push<cr>
+nnoremap <c-g>L :Git pull<cr>
 
 if has('virtualedit')
   set virtualedit=insert    " allow the cursor to go everywhere (insert)
