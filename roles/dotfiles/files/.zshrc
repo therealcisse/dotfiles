@@ -7,8 +7,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="amsayk"
-# ZSH_THEME="robbyrussell"
+#ZSH_THEME="amsayk"
+ ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -185,6 +185,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # add rust cargo bin to path
 test -e $RUSTPATH && source $RUSTPATH/env
+source $HOME/.cargo/env
 
 LOCAL_RC=$HOME/.zshrc.local
 test -f $LOCAL_RC && source $LOCAL_RC
@@ -223,7 +224,7 @@ fi
 
 # export PATH=/usr/local/opt/sbt@0.13/bin/:$PATH
 
-export DISABLE_UPDATE_PROMPT=true
+eyexport DISABLE_UPDATE_PROMPT=true
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
@@ -232,30 +233,9 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # export SBT_OPTS="-Xmx4096M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xss2M"
 
-export MOBILE_SDK_SITE_PASSWORD=geekdroid
-export DI_INTERNAL_API_USERNAME=deviceident
-export DI_INTERNAL_API_PASSWORD=V5PJTQmZxb4jRWbFRD-530-j
 
-export BROWSERSTACK_USERNAME=diopmon1
-export BROWSERSTACK_PASSWORD=VqV9yzXjQsAqxxyhuHpR
-
-export DEMOPAGE_CBT_TESTINGBOT_KEY=2eea7ec7f847ac885f48aa6c5f236492
-export DEMOPAGE_CBT_TESTINGBOT_SECRET=89ecaa3ee6a121385d0ac1a2bb404b89
-
-export SIMULATION_TO_RUN=CollectorSimulation
-export RUN_EXPORT_DATA_FOR_SIMULATION=false
-export MONGO_PORT_FOR_EXPORT=27017
-export MONGO_HOST_FOR_EXPORT=localhost
-export COUNT_OF_FINGERPRINTS_TO_EXPORT=10000
-export COUNT_OF_TOKENS_TO_EXPORT=25000
-export TEST_ENVIRONMENT_URL=http://localhost:6060
-export TEST_ENVIRONMENT_API_URL=http://localhost:6060/api
-export CONSTANT_USERS_PER_SECOND=2
-export SIMULATION_DURATION_IN_SECONDS=1200
-export ADDITIONAL_SLA_TIMEOUT_IN_MILLIS=500
-
-unsetopt inc_append_history
-unsetopt share_history
+setopt inc_append_history
+setopt share_history
 
 # export SBT_OPTS="-XX:+UseG1GC $SBT_OPTS"
 
@@ -263,8 +243,9 @@ unsetopt share_history
 
 
 # >>> scala-cli completions >>>
-fpath=("/Users/amadoucisse/Library/Application Support/ScalaCli/completions/zsh" $fpath)
-compinit
+#fpath=("/Users/amadoucisse/Library/Application Support/ScalaCli/completions/zsh" $fpath)
+#compinit
 # <<< scala-cli completions <<<
 
 export LOCAL_METRICS_ENABLED=true
+
