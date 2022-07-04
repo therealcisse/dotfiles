@@ -857,7 +857,9 @@ command! CopyBuffer let @+ = expand('%:p')
 
 nnoremap <localleader>z <cmd>ZenMode<CR>
 
-map <C-M> <Enter>
+map <C-M> <CR>
+
+map <C-;> :Startify<CR>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
@@ -902,7 +904,6 @@ lua << EOF
   require "trc.winbar"
   require "trc.colorizer"
   require "trc.toggleterm"
-  require "trc.neoscroll"
   require "trc.autopairs"
   require "trc.indentline"
   require "trc.gps"

@@ -3,6 +3,11 @@ local has_rust_tools, rust_tools = pcall(require, "rust-tools")
 if not has_rust_tools then
 else
   local lsp = require "trc.lsp"
+
+  local extension_path = vim.fn.expand "~/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/"
+  local codelldb_path = extension_path .. "adapter/codelldb"
+  local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
   rust_tools.setup {
     tools = { -- rust-tools options
       -- Automatically set inlay hints (type hints)
@@ -78,6 +83,10 @@ else
         -- whether the hover action window gets automatically focused
         auto_focus = false,
       },
+    },
+
+    dap = {
+      adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
     },
 
     -- all the opts to send to nvim-lspconfig

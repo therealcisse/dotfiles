@@ -471,6 +471,8 @@ return require("packer").startup {
     use "mfussenegger/nvim-dap-python"
     use "jbyuki/one-small-step-for-vimkind"
 
+    use 'airblade/vim-gitgutter'
+
     -- use {
     --   "rcarriga/vim-ultest",
 
@@ -570,7 +572,6 @@ return require("packer").startup {
      use "akinsho/toggleterm.nvim"
      use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
      use "lukas-reineke/indent-blankline.nvim"
-     use "karb94/neoscroll.nvim"
 
     --
     -- GIT:

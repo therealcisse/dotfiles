@@ -92,7 +92,11 @@ function! s:MyHighlights() abort
   hi! Floaterm guibg=black
   hi! FloatermNC guibg=gray
 
+  hi! link ElCommand Statusline
   hi! link ElNormal Statusline
+  hi! link ElVisual Statusline
+  hi! link ElVisualLine Statusline
+  hi! link ElVisualBlock Statusline
 endfunction
 
 function s:SetColors()
