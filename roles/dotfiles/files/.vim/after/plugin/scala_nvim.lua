@@ -27,7 +27,7 @@ else
 
   metals_config.on_attach = function(client, bufnr)
     metals.setup_dap()
-    lsp.on_attach()
+    lsp.on_attach(client, bufnr)
   end
 
   local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
