@@ -13,13 +13,13 @@ lir.setup {
   mappings = {
     ["Enter"] = actions.edit,
     ["<C-M>"] = actions.edit,
-    ["l"] = actions.edit,
+    -- ["l"] = actions.edit,
     ["<C-s>"] = actions.split,
     ["v"] = actions.vsplit,
     ["<C-t>"] = actions.tabedit,
 
     ["-"] = actions.up,
-    ["h"] = actions.up,
+    -- ["h"] = actions.up,
     ["q"] = actions.quit,
 
     ["A"] = actions.mkdir,

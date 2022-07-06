@@ -42,37 +42,44 @@ map_tele("<C-g>/", "grep_string", {
   sorter = sorters.get_fzy_sorter(),
 })
 
--- map_tele("<space>f/", "grep_last_search", {
+-- List git worktrees
+map_tele("<leader>,", "list_git_worktrees")
+
+-- Create worktree
+map_tele("<leader>c", "create_git_worktree")
+
+
+-- map_tele("<leader>f/", "grep_last_search", {
 --   layout_strategy = "vertical",
 -- })
 
 -- Files
 -- map_tele("<leader>ft", "git_files")
 -- map_tele("<C-g>", "live_grep")
--- map_tele("<space>fg", "multi_rg")
--- map_tele("<space>fo", "oldfiles")
+-- map_tele("<leader>fg", "multi_rg")
+-- map_tele("<leader>fo", "oldfiles")
 map_tele("<C-p>", "fs")
--- map_tele("<space>fs", "fs")
--- map_tele("<space>pp", "project_search")
--- map_tele("<space>fv", "find_nvim_source")
--- map_tele("<space>fe", "file_browser")
--- map_tele("<space>fz", "search_only_certain_files")
+-- map_tele("<leader>fs", "fs")
+-- map_tele("<leader>pp", "project_search")
+-- map_tele("<leader>fv", "find_nvim_source")
+-- map_tele("<leader>fe", "file_browser")
+-- map_tele("<leader>fz", "search_only_certain_files")
 
 -- Git
--- map_tele("<space>gs", "git_status")
--- map_tele("<space>gc", "git_commits")
+-- map_tele("<leader>gs", "git_status")
+-- map_tele("<leader>gc", "git_commits")
 
 -- Nvim
--- map_tele("<space>fb", "buffers")
--- map_tele("<space>fa", "installed_plugins")
--- map_tele("<space>fi", "search_all_files")
--- map_tele("<space>ff", "curbuf")
--- map_tele("<space>fh", "help_tags")
--- map_tele("<space>bo", "vim_options")
--- map_tele("<space>gp", "grep_prompt")
--- map_tele("<space>wt", "treesitter")
+-- map_tele("<leader>fb", "buffers")
+-- map_tele("<leader>fa", "installed_plugins")
+-- map_tele("<leader>fi", "search_all_files")
+-- map_tele("<leader>ff", "curbuf")
+-- map_tele("<leader>fh", "help_tags")
+-- map_tele("<leader>bo", "vim_options")
+-- map_tele("<leader>gp", "grep_prompt")
+-- map_tele("<leader>wt", "treesitter")
 
 -- Telescope Meta
--- map_tele("<space>fB", "builtin")
+-- map_tele("<leader>fB", "builtin")
 
 return map_tele

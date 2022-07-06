@@ -465,7 +465,7 @@ nnoremap <leader>o :only<CR>
 
 " <LocalLeader>c -- Fix (most) syntax highlighting problems in current buffer
 " (mnemonic: coloring).
-nnoremap <silent> <localleader>c :syntax sync fromstart<CR>
+" nnoremap <silent> <localleader>c :syntax sync fromstart<CR>
 
 syntax sync minlines=256 " start highlighting from 256 lines backwards
 set synmaxcol=300        " do not highlith very long lines
@@ -753,9 +753,6 @@ augroup END
 set cursorline                 " Highlight the current line.
 set cursorcolumn               " Highlight the current column.
 
-" Float term
-let g:floaterm_keymap_toggle = '<leader>T'
-
 " ----------------------------------------------------------------------------
 " HL | Find out syntax group
 " ----------------------------------------------------------------------------
@@ -786,21 +783,6 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
-
-" let g:one_nvim_transparent_bg = v:true
-
-"let g:lexima_no_default_rules = v:true
-"let g:lexima_enable_space_rules = v:false
-"call lexima#set_default_rules()
-"" inoremap <silent><expr> <C-Space> compe#complete()
-"" inoremap <silent><expr> <CR>      compe#confirm({ 'select': v:true, 'keys': lexima#expand('<LT>CR>', 'i') })
-" inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-" inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-" inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
-let g:floaterm_shell = "/usr/local/bin/zsh"
-let g:floaterm_title = "Zsh"
-let g:floaterm_autoclose = 1
 
 set clipboard=unnamedplus
 
@@ -893,6 +875,7 @@ lua << EOF
   require "trc.gitsigns"
   require "trc.surround"
   require "trc.dap"
+  require "trc.git_worktree"
 EOF
 
 

@@ -303,12 +303,12 @@ return require("packer").startup {
     }
 
     -- Make comments appear IN YO FACE
-    use {
-      "tjdevries/vim-inyoface",
-      config = function()
-        vim.api.nvim_set_keymap("n", "<leader>cc", "<Plug>(InYoFace_Toggle)", {})
-      end,
-    }
+    -- use {
+    --   "tjdevries/vim-inyoface",
+    --   config = function()
+    --     vim.api.nvim_set_keymap("n", "<leader>cc", "<Plug>(InYoFace_Toggle)", {})
+    --   end,
+    -- }
 
     -- Show only what you're searching for.
     -- STREAM: Could probably make this a bit better. Definitely needs docs
@@ -468,8 +468,8 @@ return require("packer").startup {
     use "theHamsta/nvim-dap-virtual-text"
     use "nvim-telescope/telescope-dap.nvim"
 
-    use "mfussenegger/nvim-dap-python"
-    use "jbyuki/one-small-step-for-vimkind"
+    -- use "mfussenegger/nvim-dap-python"
+    -- use "jbyuki/one-small-step-for-vimkind"
 
     -- use 'airblade/vim-gitgutter'
 
@@ -492,7 +492,7 @@ return require("packer").startup {
     use "vigoux/architext.nvim"
 
     -- TODO: YouTube Highlight
-    use "danymat/neogen"
+    -- use "danymat/neogen"
 
     -- use "nvim-treesitter/nvim-treesitter-textobjects"
     use "JoosepAlviste/nvim-ts-context-commentstring"
@@ -600,11 +600,10 @@ return require("packer").startup {
     use {
       "ThePrimeagen/git-worktree.nvim",
       config = function()
-        require("git-worktree").setup {}
       end,
     }
 
-    use "ThePrimeagen/harpoon"
+    -- use "ThePrimeagen/harpoon"
     -- use 'untitled-ai/jupyter_ascending.vim'
 
     use "tjdevries/standard.vim"
