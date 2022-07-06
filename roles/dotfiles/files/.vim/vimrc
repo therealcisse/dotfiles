@@ -580,8 +580,23 @@ command! EX if !empty(expand('%'))
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
 
+  let g:previous_window = -1
+
+  function SmartInsert()
+    if &buftype == 'terminal'
+      if g:previous_window != winnr()
+        startinsert
+      endif
+      let g:previous_window = winnr()
+    else
+      let g:previous_window = -1
+    endif
+  endfunction
+
+
   " Prefer Neovim terminal insert mode to normal mode.
-  au BufEnter,FocusGained term://* startinsert
+  au BufEnter,FocusGained * call SmartInsert()
+  au TermOpen * call SmartInsert()
 
   " Don't close terminal on :q
   au TermOpen * set bufhidden=hide
