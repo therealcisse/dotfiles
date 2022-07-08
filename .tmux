@@ -2,15 +2,15 @@
 
 set -e
 
-if tmux has-session -t dot 2> /dev/null; then
-  tmux attach -t dot
+if tmux -f ~/.tmux.conf has-session -t dot 2> /dev/null; then
+  tmux -f ~/.tmux.conf attach -t dot
   exit
 fi
 
-tmux new-session -d -s dot -n vim -x $(tput cols) -y $(tput lines)
+tmux -f ~/.tmux.conf new-session -d -s dot -n vim -x $(tput cols) -y $(tput lines)
 
-tmux send-keys -t dot:vim "nvim" Enter
-tmux split-window -t dot:vim -h
-tmux send-keys -t dot:vim.right "git status" Enter
+tmux -f ~/.tmux.conf send-keys -t dot:vim "nvim" Enter
+tmux -f ~/.tmux.conf split-window -t dot:vim -h
+tmux -f ~/.tmux.conf send-keys -t dot:vim.right "git status" Enter
 
-tmux attach -t dot:vim.left
+tmux -f ~/.tmux.conf attach -t dot:vim.left

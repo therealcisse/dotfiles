@@ -1,0 +1,10 @@
+# Note that my external keyboard has a dip switch in it so that it works
+# properly with the Mac:
+#
+# - On a Mac keyboard modifiers on left are: Control / Option (Super) / Command
+# - On a Windows keyboard modifiers are: Control / Windows (Super) / Alt
+# - On Linux the modifiers are: Control / Super / Alt
+#
+# In other words, "Alt" here means "Command (Super)", not actual "Option
+alt + space
+  dmenu_run -l 10 -fn SourceCodePro:pixelsize=34

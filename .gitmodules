@@ -1,30 +1,30 @@
-[submodule "vendor/virtualenv"]
-	path = vendor/virtualenv
-	url = https://github.com/pypa/virtualenv
-[submodule "roles/dotfiles/files/.base16-shell"]
-	path = roles/dotfiles/files/.base16-shell
-	url = https://github.com/chriskempson/base16-shell
-[submodule "roles/dotfiles/files/.oh-my-zsh"]
-	path = roles/dotfiles/files/.oh-my-zsh
-	url = https://github.com/robbyrussell/oh-my-zsh
-[submodule "vendor/ansible"]
-	path = vendor/ansible
-	url = https://github.com/ansible/ansible
-[submodule "roles/dotfiles/files/.tpm"]
-	path = roles/dotfiles/files/.tpm
-	url = https://github.com/tmux-plugins/tpm
+[submodule "vendor/base16-templates-source"]
+	path = vendor/base16-templates-source
+	url = https://github.com/chriskempson/base16-templates-source.git
+[submodule "vendor/base16-schemes-source"]
+	path = vendor/base16-schemes-source
+	url = https://github.com/chriskempson/base16-schemes-source.git
+[submodule "vendor/n"]
+	path = vendor/n
+	url = https://github.com/tj/n.git
 [submodule "vendor/git-cipher"]
 	path = vendor/git-cipher
 	url = https://github.com/wincent/git-cipher
-[submodule "vendor/base16-iterm2"]
-	path = vendor/base16-iterm2
-	url = https://github.com/chriskempson/base16-iterm2
-[submodule "roles/dotfiles/files/.mutt/vendor/mutt-notmuch-py"]
-	path = roles/dotfiles/files/.mutt/vendor/mutt-notmuch-py
-	url = https://github.com/honza/mutt-notmuch-py
-[submodule "roles/dotfiles/files/.zsh/bundle/zsh-autopair"]
-	path = roles/dotfiles/files/.zsh/bundle/zsh-autopair
+[submodule "aspects/dotfiles/files/.oh-my-zsh"]
+	path = aspects/dotfiles/files/.oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh
+[submodule "aspects/dotfiles/files/.tpm"]
+	path = aspects/dotfiles/files/.tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule "aspects/dotfiles/files/.zsh/bundle/zsh-autopair"]
+	path = aspects/dotfiles/files/.zsh/bundle/zsh-autopair
 	url = https://github.com/hlissner/zsh-autopair
-[submodule "roles/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions"]
-	path = roles/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions
+[submodule "aspects/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions"]
+	path = aspects/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "aspects/dotfiles/files/.zsh/zsh-history-substring-search"]
+	path = aspects/dotfiles/files/.zsh/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search
+[submodule "aspects/dotfiles/files/.zsh/zsh-syntax-highlighting"]
+	path = aspects/dotfiles/files/.zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

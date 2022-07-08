@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./lib",
+    "baseUrl": ".",
+    "paths": {
+      "fig": ["fig/index.js"],
+      "fig/*": ["fig/*"]
+    },
+    "strict": true,
+    "target": "ES2019"
+  },
+  "exclude": ["node_modules"],
+  "include": [
+    "aspects/**/*.ts",
+    "fig/**/*.ts",
+    "helpers.ts",
+    "project.ts",
+    "variables.ts"
+  ]
+}

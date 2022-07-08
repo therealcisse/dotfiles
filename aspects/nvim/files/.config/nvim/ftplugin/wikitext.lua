@@ -1,0 +1,1 @@
+wincent.vim.plaintext()
