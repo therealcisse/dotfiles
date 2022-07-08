@@ -69,6 +69,8 @@ return require("packer").startup {
     -- My Plugins
     local_use("ThePrimeagen", "refactoring.nvim")
 
+    use 'TovarishFin/vim-solidity'
+
     -----------------------------------------------------------
     use { "christianchiarulli/nvim-gps", branch = "text_hl" }
     use "RRethy/vim-illuminate"

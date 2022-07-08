@@ -14,7 +14,7 @@ npairs.setup {
   disable_filetype = { "TelescopePrompt", "spectre_panel" },
   fast_wrap = {
     map = "<M-e>",
-    chars = { "{", "[", "(", '"', "'" },
+    chars = { "{", "[", "(", '"', "'", "<", "|" },
     pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
     offset = 0, -- Offset from pattern match
     end_key = "$",
@@ -24,6 +24,19 @@ npairs.setup {
     highlight_grey = "LineNr",
   },
 }
+
+local cond = require('nvim-autopairs.conds')
+local Rule = require('nvim-autopairs.rule')
+
+npairs.add_rule(
+  Rule("<",">")
+    :with_pair(cond.invert(cond.not_filetypes({"rust"})))
+)
+
+npairs.add_rule(
+  Rule("|","|")
+    :with_pair(cond.invert(cond.not_filetypes({"rust"})))
+)
 
 local cmp_autopairs = require "nvim-autopairs.completion.cmp"
 local cmp_status_ok, cmp = pcall(require, "cmp")

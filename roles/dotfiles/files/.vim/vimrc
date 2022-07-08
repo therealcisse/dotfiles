@@ -306,7 +306,7 @@ set complete-=i
 
 set smarttab                " tab respects 'tabstop', 'shiftwidth', and 'softtabstop
 
-set textwidth=120               " automatically hard wrap at 120 columns
+" set textwidth=120               " automatically hard wrap at 120 columns
 
 set showtabline=0
 
@@ -859,7 +859,8 @@ lua << EOF
 
   require "trc.profile"
   require 'trc.globals'
-  require 'trc.plugins'
+
+  require 'plugins'
 
   if require "trc.first_load"() then
     return

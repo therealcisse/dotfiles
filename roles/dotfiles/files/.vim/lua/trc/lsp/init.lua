@@ -50,13 +50,21 @@ local filetype_attach = setmetatable({
     autocmd_format(false)
   end,
 
-  scss = function()
+  -- scss = function()
+  --   autocmd_format(false)
+  -- end,
+
+  metals = function()
     autocmd_format(false)
   end,
 
-  css = function()
+  dartls = function()
     autocmd_format(false)
   end,
+
+  -- css = function()
+  --   autocmd_format(false)
+  -- end,
 
   rust = function()
     -- vim.cmd [[
@@ -71,13 +79,13 @@ local filetype_attach = setmetatable({
     autocmd_format(false)
   end,
 
-  typescript = function()
-    autocmd_format(false, function(clients)
-      return vim.tbl_filter(function(client)
-        return client.name ~= "tsserver"
-      end, clients)
-    end)
-  end,
+  -- typescript = function()
+  --   autocmd_format(false, function(clients)
+  --     return vim.tbl_filter(function(client)
+  --       return client.name ~= "tsserver"
+  --     end, clients)
+  --   end)
+  -- end,
 }, {
   __index = function()
     return function() end
@@ -185,6 +193,8 @@ local servers = {
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
   dartls = pcall(require, "flutter-tools"),
+
+  solang = true,
 
   clangd = {
     cmd = {
