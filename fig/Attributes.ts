@@ -98,10 +98,10 @@ export default class Attributes {
 
   get gid(): number {
     if (typeof this.#gid !== 'number') {
-      this.#gid = process.getgid();
+      this.#gid = process.getgid!();
     }
 
-    return this.#gid;
+    return this.#gid!;
   }
 
   get group(): string {

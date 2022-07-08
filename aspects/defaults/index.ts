@@ -208,17 +208,17 @@ task('Finder -> allow text selection in Quick Look', async () => {
 });
 
 // Last tested: [10.9]
-task(
-  'Finder -> disable window animations and Get Info animations',
-  async () => {
-    await defaults({
-      domain: 'com.apple.finder',
-      key: 'DisableAllAnimations',
-      type: 'bool',
-      value: true,
-    });
-  }
-);
+// task(
+//   'Finder -> disable window animations and Get Info animations',
+//   async () => {
+//     await defaults({
+//       domain: 'com.apple.finder',
+//       key: 'DisableAllAnimations',
+//       type: 'bool',
+//       value: true,
+//     });
+//   }
+// );
 
 // Last tested: [10.9]
 task('Finder -> show all filename extensions', async () => {
@@ -297,13 +297,13 @@ task('Hammerspoon preferences -> Show dock icon', async () => {
 });
 
 // Last tested: [10.10.2]
-task('Make sheets drop down (almost) instantly', async () => {
-  await defaults({
-    key: 'NSWindowResizeTime',
-    type: 'float',
-    value: 0.001,
-  });
-});
+// task('Make sheets drop down (almost) instantly', async () => {
+//   await defaults({
+//     key: 'NSWindowResizeTime',
+//     type: 'float',
+//     value: 0.001,
+//   });
+// });
 
 // Last tested: [10.9]
 task(
@@ -351,30 +351,30 @@ task(
 );
 
 // Last tested: [10.10.2]
-task(
-  'System Preferences -> Desktop & Screen Saver -> Screen Saver -> Hot Corners -> [Bottom Left] Start Screen Saver',
-  async () => {
-    await defaults({
-      domain: 'com.apple.dock',
-      key: 'wvous-bl-corner',
-      type: 'int',
-      value: 5,
-    });
-  }
-);
+// task(
+//   'System Preferences -> Desktop & Screen Saver -> Screen Saver -> Hot Corners -> [Bottom Left] Start Screen Saver',
+//   async () => {
+//     await defaults({
+//       domain: 'com.apple.dock',
+//       key: 'wvous-bl-corner',
+//       type: 'int',
+//       value: 5,
+//     });
+//   }
+// );
 
 // Last tested: [10.10.2]
-task(
-  'System Preferences -> Desktop & Screen Saver -> Screen Saver -> Hot Corners -> [Top Right] Disable Screen Saver',
-  async () => {
-    await defaults({
-      domain: 'com.apple.dock',
-      key: 'wvous-tr-corner',
-      type: 'int',
-      value: 6,
-    });
-  }
-);
+// task(
+//   'System Preferences -> Desktop & Screen Saver -> Screen Saver -> Hot Corners -> [Top Right] Disable Screen Saver',
+//   async () => {
+//     await defaults({
+//       domain: 'com.apple.dock',
+//       key: 'wvous-tr-corner',
+//       type: 'int',
+//       value: 6,
+//     });
+//   }
+// );
 
 // Last tested: [10.10.2]
 task(
@@ -450,16 +450,16 @@ task(
 );
 
 // Last tested: 10.11
-task(
-  'System Preferences -> General -> Appearance -> Automatically hide and show the menu bar',
-  async () => {
-    await defaults({
-      key: '_HIHideMenuBar',
-      type: 'bool',
-      value: true,
-    });
-  }
-);
+// task(
+//   'System Preferences -> General -> Appearance -> Automatically hide and show the menu bar',
+//   async () => {
+//     await defaults({
+//       key: '_HIHideMenuBar',
+//       type: 'bool',
+//       value: true,
+//     });
+//   }
+// );
 
 // Last tested: 10.10
 task('System Preferences -> General -> Appearance -> Graphite', async () => {

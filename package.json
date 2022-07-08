@@ -1,11 +1,11 @@
 {
-  "name": "wincent",
+  "name": "dotfiles",
   "description": "\"dotfiles\" and system configuration",
   "version": "0.0.1",
   "main": "/dev/null",
   "private": true,
-  "repository": "https://github.com/wincent/wincent.git",
-  "author": "Greg Hurrell <greg@hurrell.net>",
+  "repository": "https://github.com/amsayk/amsayk.git",
+  "author": "Amadou Cisse <cisse.amadou.9@gmail.com>",
   "license": "Unlicense",
   "scripts": {
     "ci": "yarn format:check",
@@ -14,9 +14,9 @@
   },
   "type": "module",
   "dependencies": {
-    "typescript": "*"
   },
   "devDependencies": {
+    "typescript": "*",
     "@types/node": "*"
   }
 }

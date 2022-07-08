@@ -2,6 +2,7 @@
 
 set -e
 
+
 REPO_ROOT="${BASH_SOURCE%/*}/.."
 
 source "$REPO_ROOT/bin/common"

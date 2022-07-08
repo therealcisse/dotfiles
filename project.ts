@@ -60,19 +60,11 @@ export default {
           path: 'Vim.json',
           src: '70-Vim-4K.json',
         },
-        {
-          path: 'Wincent.json',
-          src: '10-4K.json',
-        },
       ],
       retina: [
         {
           path: 'Vim.json',
           src: '70-Vim-Retina.json',
-        },
-        {
-          path: 'Wincent.json',
-          src: '10-Retina.json',
         },
       ],
     },

@@ -31,6 +31,7 @@ task('move originals to ~/.backups', async () => {
 task('create symlinks', async () => {
   // Some overlap with "dotfiles" aspect here.
   const files = variable.paths('files');
+    console.log(files);
 
   for (const src of files) {
     await file({
@@ -98,15 +99,6 @@ task('create spell file', async () => {
       creates: `${spellfile}.spl`,
     }
   );
-});
-
-task('update bundle', async () => {
-  await skip('not yet implemented');
-  // update-bundle
-});
-
-task('update help tags', async () => {
-  await command(resource.support('update-help-tags'), []);
 });
 
 task('install gems', async () => {

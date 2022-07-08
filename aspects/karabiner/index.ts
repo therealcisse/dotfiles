@@ -52,26 +52,16 @@ task('write karabiner.json', async () => {
   });
 });
 
-// This is a bit random having this in here, but it's a dependency of our
-// Hammerspoon set-up; should possibly move the related bit of that in here?
-task('write karabiner-sudoers', async () => {
-  await template({
-    path: '/private/etc/sudoers.d/karabiner-sudoers',
-    src: resource.template('karabiner-sudoers.erb'),
-    sudo: true,
-  });
-});
-
-task('build `dry` executable', async () => {
-  await command('make', [], {
-    chdir: path.aspect.join('support/dry'),
-    creates: resource.support('dry/dry'),
-  });
-});
-
-task('install `dry` executable', async () => {
-  await command('make install', [], {
-    chdir: path.aspect.join('support/dry'),
-    creates: path.home.join('bin/dry'),
-  });
-});
+// task('build `dry` executable', async () => {
+//   await command('make', [], {
+//     chdir: path.aspect.join('support/dry'),
+//     creates: resource.support('dry/dry'),
+//   });
+// });
+//
+// task('install `dry` executable', async () => {
+//   await command('make install', [], {
+//     chdir: path.aspect.join('support/dry'),
+//     creates: path.home.join('bin/dry'),
+//   });
+// });

@@ -563,6 +563,19 @@ const DEFAULT_PROFILE = applyExemptions({
   devices: [REALFORCE, APPLE_INTERNAL_US],
   name: 'Default',
   selected: true,
+  "simple_modifications": [
+    // {
+    //   "from": {
+    //     "key_code": "non_us_backslash"
+    //   },
+    //   "to": [
+    //     {
+    //       "key_code": "grave_accent_and_tilde"
+    //     }
+    //   ]
+    // }
+  ],
+
 });
 
 const CONFIG = {

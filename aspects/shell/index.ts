@@ -20,7 +20,7 @@ task('add zsh to /etc/shells', when('darwin'), async () => {
   });
 });
 
-task('set user shell to zsh', when('wincent'), async () => {
+task('set user shell to zsh', when('amsayk'), async () => {
   if (is('darwin')) {
     await command('chsh', ['-s', homebrewPath(), attributes.username], {
       sudo: true,
