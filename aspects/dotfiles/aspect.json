@@ -30,6 +30,7 @@
       ".ghci",
       ".gitattributes",
       ".gitconfig.d",
+      ".gitconfig.local",
       ".gitignore",
       ".gitk",
       ".gnupg/gpg-agent.conf",

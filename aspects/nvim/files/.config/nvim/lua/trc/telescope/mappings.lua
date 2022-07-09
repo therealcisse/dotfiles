@@ -34,7 +34,7 @@ vim.api.nvim_set_keymap("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)"
 
 -- Search
 -- TODO: I would like to completely remove _mock from my search results here when I'm in SG/SG
-map_tele("<C-g>/", "grep_string", {
+map_tele("<C-g>/", "live_grep", {
   short_path = true,
   word_match = "-w",
   only_sort_text = true,

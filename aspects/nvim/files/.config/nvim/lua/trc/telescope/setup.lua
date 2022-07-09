@@ -111,8 +111,7 @@ require("telescope").setup {
       },
     },
 
-    -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-    -- file_ignore_patterns = nil,
+    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
