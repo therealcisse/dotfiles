@@ -249,6 +249,25 @@ function _jump_complete() {
 # Complete filenames and `hash -d` entries.
 compctl -f -K _jump_complete jump
 
+# No arguments: `git status`
+# With arguments: acts like `git`
+g() {
+  if [[ $# > 0 ]]; then
+    git $@
+  else
+    git status
+  fi
+}
+
+# Complete g like git
+compdef g=git
+
+# Make directory and change into it.
+
+function mcd() {
+  mkdir -p "$1" && cd "$1";
+}
+
 # Usage: serve [--directory DIRECTORY] [PORT]
 #
 # Defaults to port 8000, current directory (ie. will use index.html if present).
@@ -311,5 +330,16 @@ function tick() {
     echo "Bumping timestamp to: $TS $TZ"
     export GIT_AUTHOR_DATE="$TS $TZ"
     export GIT_COMMITTER_DATE="$TS $TZ"
+  fi
+}
+
+
+function gitClean () {
+  if [ $# -eq 0 ]; then
+    git clean -f -d .
+    git clean -f -X .
+  else
+    git clean -f -d $1
+    git clean -f -X $1
   fi
 }

@@ -21,7 +21,6 @@ call overlength#disable_filetypes([
       \ 'html',
       \ 'startify',
       \ 'man',
-      \ 'term',
       \ '',
       \ ])
 

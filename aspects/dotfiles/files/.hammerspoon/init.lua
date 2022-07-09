@@ -4,6 +4,7 @@ hs.grid.MARGINY = 0
 hs.window.animationDuration = 0 -- disable animations
 
 local events = require 'events'
+local iterm = require 'iterm'
 local log = require 'log'
 local reloader = require 'reloader'
 
@@ -17,8 +18,6 @@ local handleWindowEvent = nil
 local hide = nil
 local initEventHandling = nil
 local internalDisplay = nil
-local isMailMateMailViewer = nil
-local prepareScreencast = nil
 local tearDownEventHandling = nil
 local windowCount = nil
 
@@ -26,15 +25,14 @@ local screenCount = #hs.screen.allScreens()
 
 local grid = {
   topHalf = '0,0 12x6',
-  topThird = '0,0 12x3',
-  topTwoThirds = '0,0 12x6',
-  topThreeThirds = '0,0 12x9',
+  topThird = '0,0 12x4',
+  topTwoThirds = '0,0 12x8',
   rightHalf = '6,0 6x12',
   rightThird = '8,0 4x12',
   rightTwoThirds = '4,0 8x12',
   bottomHalf = '0,6 12x6',
-  bottomThird = '0,8 12x3',
-  bottomTwoThirds = '0,4 12x6',
+  bottomThird = '0,8 12x4',
+  bottomTwoThirds = '0,4 12x8',
   leftHalf = '0,0 6x12',
   leftThird = '0,0 4x12',
   leftTwoThirds = '0,0 8x12',
@@ -53,71 +51,66 @@ local layoutConfig = {
   end),
 
   _after_ = (function()
-    -- Make sure Textual appears in front of Skype, and iTerm in front of
-    -- others.
-    activate('com.codeux.irc.textual5')
-    -- activate('com.googlecode.iterm2')
-  end),
-
-  ['com.codeux.irc.textual5'] = (function(window)
-    hs.grid.set(window, grid.fullScreen, internalDisplay())
+    -- Make sure iTerm appears in front of others.
+    activate('com.googlecode.iterm2')
   end),
 
   ['com.flexibits.fantastical2.mac'] = (function(window)
     hs.grid.set(window, grid.fullScreen, internalDisplay())
   end),
 
-  ['com.freron.MailMate'] = (function(window, forceScreenCount)
+  ['com.github.atom'] = (function(window)
+    -- Leave room for simulator to the right.
+    hs.grid.set(window, grid.leftTwoThirds, internalDisplay())
+  end),
+
+  ['com.google.Chrome'] = (function(window, forceScreenCount)
     local count = forceScreenCount or screenCount
-    if isMailMateMailViewer(window) then
-      if count == 1 then
-        hs.grid.set(window, grid.fullScreen)
-      else
-        hs.grid.set(window, grid.leftHalf, hs.screen.primaryScreen())
-      end
+    if count == 1 then
+      hs.grid.set(window, grid.fullScreen)
+    else
+      hs.grid.set(window, grid.fullScreen, hs.screen.primaryScreen())
     end
   end),
 
-  -- ['com.google.Chrome'] = (function(window, forceScreenCount)
-  --   local count = forceScreenCount or screenCount
-  --   if count == 1 then
-  --     hs.grid.set(window, grid.fullScreen)
-  --   else
-  --     -- First/odd windows go on the RIGHT side of the screen.
-  --     -- Second/even windows go on the LEFT side.
-  --     -- (Note this is the opposite of what we do with Canary.)
-  --     local windows = windowCount(window:application())
-  --     local side = windows % 2 == 0 and grid.leftHalf or grid.rightHalf
-  --     hs.grid.set(window, side, hs.screen.primaryScreen())
-  --   end
-  -- end),
-
-  -- ['com.google.Chrome.canary'] = (function(window, forceScreenCount)
-  --   local count = forceScreenCount or screenCount
-  --   if count == 1 then
-  --     hs.grid.set(window, grid.fullScreen)
-  --   else
-  --     -- First/odd windows go on the LEFT side of the screen.
-  --     -- Second/even windows go on the RIGHT side.
-  --     -- (Note this is the opposite of what we do with Chrome.)
-  --     local windows = windowCount(window:application())
-  --     local side = windows % 2 == 0 and grid.rightHalf or grid.leftHalf
-  --     hs.grid.set(window, side, hs.screen.primaryScreen())
-  --   end
-  -- end),
+  ['com.google.Chrome.canary'] = (function(window, forceScreenCount)
+    local count = forceScreenCount or screenCount
+    if count == 1 then
+      hs.grid.set(window, grid.fullScreen)
+    else
+      hs.grid.set(window, grid.fullScreen, hs.screen.primaryScreen())
+    end
+  end),
 
   ['com.googlecode.iterm2'] = (function(window, forceScreenCount)
     local count = forceScreenCount or screenCount
     if count == 1 then
-      -- hs.grid.set(window, grid.fullScreen)
-      hs.grid.set(window, '0,0 12x11.5')
+      hs.grid.set(window, grid.fullScreen)
     else
-      hs.grid.set(window, grid.leftHalf, hs.screen.primaryScreen())
+      hs.grid.set(window, grid.fullScreen, hs.screen.primaryScreen())
     end
   end),
 
-  ['com.skype.skype'] = (function(window)
-    hs.grid.set(window, grid.rightHalf, internalDisplay())
+  ['com.microsoft.edgemac'] = (function(window, forceScreenCount)
+    local count = forceScreenCount or screenCount
+    if count == 1 then
+      hs.grid.set(window, grid.fullScreen)
+    else
+      hs.grid.set(window, grid.fullScreen, hs.screen.primaryScreen())
+    end
+  end),
+
+  ['com.tinyspeck.slackmacgap'] = (function(window)
+    hs.grid.set(window, grid.fullScreen, internalDisplay())
+  end),
+
+  ['net.kovidgoyal.kitty'] = (function(window, forceScreenCount)
+    local count = forceScreenCount or screenCount
+    if count == 1 then
+      hs.grid.set(window, grid.fullScreen)
+    else
+      hs.grid.set(window, grid.fullScreen, hs.screen.primaryScreen())
+    end
   end),
 }
 
@@ -155,12 +148,6 @@ activate = (function(bundleID)
   end
 end)
 
-isMailMateMailViewer = (function(window)
-  local title = window:title()
-  return title == 'No mailbox selected' or
-    string.find(title, '%(%d+ messages?%)')
-end)
-
 canManageWindow = (function(window)
   local application = window:application()
   local bundleID = application:bundleID()
@@ -171,14 +158,24 @@ canManageWindow = (function(window)
     bundleID == 'com.googlecode.iterm2'
 end)
 
+local benQPD2700U = '1920x1080'
+local macBookPro13 = '1440x900'
+local macBookPro15 = '1440x900'
+
+local samsung_S24C450 = '1920x1200'
+
+externalDisplay = (function()
+  return hs.screen.find(benQPD2700U)
+end)
+
 internalDisplay = (function()
-  -- Fun fact: this resolution matches both the 13" MacBook Air and the 15"
-  -- (Retina) MacBook Pro.
-  return hs.screen.find('1440x900')
+  return hs.screen.find(macBookPro13) or
+    hs.screen.find(macBookPro15)
 end)
 
 activateLayout = (function(forceScreenCount)
   layoutConfig._before_()
+  events.emit('layout', forceScreenCount)
 
   for bundleID, callback in pairs(layoutConfig) do
     local application = hs.application.get(bundleID)
@@ -232,9 +229,6 @@ tearDownEventHandling = (function()
   screenWatcher:stop()
   screenWatcher = nil
 end)
-
-initEventHandling()
-events.subscribe('reload', tearDownEventHandling)
 
 local lastSeenChain = nil
 local lastSeenWindow = nil
@@ -330,7 +324,8 @@ hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'f2', (function()
 end))
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'f3', (function()
-  hs.openConsole()
+  hs.console.alpha(.75)
+  hs.toggleConsole()
 end))
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'f4', (function()
@@ -342,44 +337,21 @@ hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'f4', (function()
   reloader.reload()
 end))
 
--- Launch applications
-local mash_app = {"cmd", "alt", "ctrl"}
-
-hs.hotkey.bind(mash_app, 'D', function () hs.application.launchOrFocus("Dictionary") end)
--- hs.hotkey.bind(mash_app, '1', function () hs.application.launchOrFocus("iterm") end)
-hs.hotkey.bind(mash_app, '2', function () hs.application.launchOrFocus("Path Finder") end)
-hs.hotkey.bind(mash_app, '3', function () hs.application.launchOrFocus("Google Chrome") end)
-
---
--- Screencast layout
---
-
-prepareScreencast = (function()
-  local screen = 'Color LCD'
-  local top = {x=0, y=0, w=1, h=.92}
-  local bottom = {x=.4, y=.82, w=.5, h=.1}
-  local windowLayout = {
-    {'iTerm2', nil, screen, top, nil, nil},
-    {'Google Chrome', nil, screen, top, nil, nil},
-    {'KeyCastr', nil, screen, bottom, nil, nil},
-  }
-
-  hs.application.launchOrFocus('KeyCastr')
-  local chrome = hs.appfinder.appFromName('Google Chrome')
-  local iterm = hs.appfinder.appFromName('iTerm2')
-  for key, app in pairs(hs.application.runningApplications()) do
-    if app == chrome or app == iterm or app:name() == 'KeyCastr' then
-      app:unhide()
-    else
-      app:hide()
-    end
-  end
-  hs.layout.apply(windowLayout)
+hs.hotkey.bind('alt', 'v', function()
+  hs.applescript [[
+    tell application "System Events" to tell process "Finder"
+      set frontmost to true
+      tell menu bar item "Edit" of menu bar 1
+        click
+        click menu item "Show Clipboard" of menu 1
+      end tell
+    end tell
+  ]]
 end)
 
--- `open hammerspoon://screencast`
-hs.urlevent.bind('screencast', prepareScreencast)
-
+iterm.init()
 reloader.init()
+initEventHandling()
+events.subscribe('reload', tearDownEventHandling)
 
 log.i('Config loaded')
