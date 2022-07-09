@@ -39,10 +39,30 @@ alias l='ls -F'
 alias ll='ls -lahF'
 alias t=tmux
 alias v=nvim
+alias prettyjson='python -m json.tool'
 alias trash=rm
 alias kt=kubectl
 
-alias octave='/Applications/Octave-cli.app/Contents/MacOS/Octave'
+if command -v nvim &> /dev/null; then
+  alias vim=nvim # Use `\vim` or `command vim` to get the real vim.
+fi
+
+alias -s md=glow
+
+#
+# Global aliases
+# (work at any position within the command line)
+#
+
+# Mnemonic: "[C]lip"
+alias -g C="|clip"
+#
+# Mnemonic: "[D]lip"
+alias -g D="|delta"
+
+# Pretty-print JSON.
+# Mnemonic: "[J]SON"
+alias -g J="|python -m json.tool"
 
 alias chrome='open -n -a Google\ Chrome --args --user-data-dir="/tmp/chrome-`uuidgen`"'
 alias chrome-canary='open -n -a Google\ Chrome\ Canary --args --user-data-dir="/tmp/chrome-`uuidgen`"'

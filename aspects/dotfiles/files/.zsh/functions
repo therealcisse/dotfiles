@@ -3,36 +3,98 @@
 function ag() {
   emulate -L zsh
 
-  # Overwrite alias of ag btw omz debian plugin to use for silver searcher
-  if [ -e /usr/bin/ag ];
-  then
-    AG=/usr/bin/ag
+  # italic blue paths, pink line numbers, underlined purple matches
+  command ag --pager="less -iFMRSX" --color-path=34\;3 --color-line-number=35 --color-match=35\;1\;4 "$@"
+}
+
+# fd - "find directory"
+# Inspired by: https://github.com/junegunn/fzf/wiki/examples#changing-directory
+function fd() {
+  local DIR
+  DIR=$(bfs -type d 2> /dev/null | sk --no-multi --preview='test -n "{}" && ls {}' -q "$*") && cd "$DIR"
+}
+
+# fh - "find [in] history"
+# Inspired by: https://github.com/junegunn/fzf/wiki/examples#command-history
+function fh() {
+  print -z $(fc -l 1 | sk --no-multi --tac -q "$*" | sed 's/ *[0-9]*\*\{0,1\} *//')
+}
+
+
+# TODO: decide whether this is a reasonable idea
+function files() {
+  find "$@" | xargs -o $EDITOR
+}
+
+# `git` wrapper:
+#
+#     - `git` with no arguments = `git status`; run `git help` to show what
+#       vanilla `git` without arguments would normally show.
+#     - `git root` = `cd` to repo root.
+#     - `ROOT=$(git root)` = no args and stdout is not a tty; prints the root.
+#     - `git root ARG...` = evals `ARG...` from the root (eg. `git root ls`).
+#     - `git ARG...` = behaves just like normal `git` command.
+#
+function git() {
+  if [ $# -eq 0 ]; then
+    command git status
+  elif [ "$1" = root ]; then
+    shift
+    local ROOT
+    if [ "$(command git rev-parse --is-inside-git-dir 2> /dev/null)" = true ]; then
+      if [ "$(command git rev-parse --is-bare-repository)" = true ]; then
+        ROOT="$(command git rev-parse --absolute-git-dir)"
+      else
+        # Note: This is a good-enough, rough heuristic, which ignores
+        # the possibility that GIT_DIR might be outside of the worktree;
+        # see:
+        # https://stackoverflow.com/a/38852055/2103996
+        ROOT="$(command git rev-parse --git-dir)/.."
+      fi
+    else
+      # Git 2.13.0 and above:
+      ROOT="$(command git rev-parse --show-superproject-working-tree 2> /dev/null)"
+      if [ -z "$ROOT" ]; then
+        ROOT="$(command git rev-parse --show-toplevel 2> /dev/null)"
+      fi
+    fi
+    if [ -z "$ROOT" ]; then
+      ROOT="$PWD"
+    fi
+    if [ $# -eq 0 ]; then
+      if [ -t 1 ]; then
+        cd "$ROOT"
+      else
+        echo "$ROOT"
+      fi
+    else
+      (cd "$ROOT" && eval "$@")
+    fi
   else
-    # on osx brew installs ag as Ag
-    AG=Ag
+    command git "$@"
+  fi
+}
+
+# Print headers, following redirects.
+# Based on: https://stackoverflow.com/a/10060342/2103996
+function headers() {
+  emulate -L zsh
+
+  if [ $# -ne 1 ]; then
+    echo "error: a host argument is required"
+    return 1
   fi
 
-  # italic blue paths, pink line numbers, underlined purple matches
-  $AG --pager="less -iFMRSX" --color-path=34\;3 --color-line-number=35 --color-match=35\;1\;4 "$@"
+  local REMOTE=$1
+
+  curl -sSL -D - "$REMOTE" -o /dev/null
 }
 
 function history() {
   emulate -L zsh
 
   # This is a function because Zsh aliases can't take arguments.
-  local DEFAULT=-1000
-  builtin history ${1:-$DEFAULT}
-}
-
-function mvim() {
-  emulate -L zsh
-
-  # Makes user-installed fonts visible to MacVim.
-  if which reattach-to-user-namespace &> /dev/null ; then
-    reattach-to-user-namespace mvim
-  else
-    command mvim
-  fi
+  fc -l 1
 }
 
 function scratch() {
@@ -41,7 +103,29 @@ function scratch() {
   echo "  $SCRATCH"
   (cd $SCRATCH; zsh)
   echo "Removing scratch directory"
-  rm -r "$SCRATCH"
+  rm -rf "$SCRATCH"
+}
+
+function ssh() {
+  emulate -L zsh
+
+  local LOCAL_TERM=$(echo -n "$TERM" | sed -e s/tmux/screen/)
+  env TERM=$LOCAL_TERM command ssh "$@"
+}
+
+# Print information about a remote SSL certificate.
+# Based on: https://serverfault.com/a/661982/219567
+function ssl() {
+  emulate -L zsh
+
+  if [ $# -ne 1 ]; then
+    echo "error: a host argument is required"
+    return 1
+  fi
+
+  local REMOTE=$1
+
+  echo | openssl s_client -showcerts -servername "$REMOTE" -connect "$REMOTE:443" 2>/dev/null | openssl x509 -inform pem -noout -text
 }
 
 function tmux() {
@@ -56,14 +140,14 @@ function tmux() {
 
   # If provided with args, pass them through.
   if [[ -n "$@" ]]; then
-    env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux -f ~/.tmux.conf "$@"
+    env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux "$@"
     return
   fi
 
   # Check for .tmux file (poor man's Tmuxinator).
-  if [ -f .tmux -a -x .tmux ]; then
+  if [ -x .tmux ]; then
     # Prompt the first time we see a given .tmux file before running it.
-    local DIGEST="$(openssl sha -sha512 .tmux)"
+    local DIGEST="$(openssl sha512 .tmux)"
     if ! grep -q "$DIGEST" ~/..tmux.digests 2> /dev/null; then
       cat .tmux
       read -k 1 -r \
@@ -81,27 +165,58 @@ function tmux() {
   fi
 
   # Attach to existing session, or create one, based on current directory.
-  SESSION_NAME=$(basename "$(pwd)")
+  local SESSION_NAME=$(basename "${$(pwd)//[.:]/_}")
   env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
 }
 
-function mail() {
-  if ! tmux has-session -t email 2> /dev/null; then
-    # Make saved attachments go to ~/Downloads by default.
-    tmux new-session -d -s email -c ~/Downloads -n mutt
-    tmux send-keys -t email:mutt mutt Enter
-    tmux new-window -t email -c ~/.mutt -n sync
-    tmux send-keys -t email:sync '~/.mutt/scripts/control.sh home' Enter
-    # tmux split-window -t email:sync -h -c ~/.mutt
-    # tmux send-keys -t email:sync.right '~/.mutt/scripts/control.sh work' Enter
-    tmux split-window -t email:sync -v -f -l 8 -c ~/.mutt
-    tmux send-keys -t email:sync.bottom '~/.mutt/scripts/control.sh' Enter
+# Bounce the Dock icon, if iTerm does not have focus.
+function bounce() {
+  if [ -n "$ITERM_SESSION_ID" ]; then
+    if [ -n "$TMUX" ]; then
+      print -Pn "\ePtmux;\e\e]1337;RequestAttention=1\a\e\\"
+    else
+      print -Pn "\e]1337;RequestAttention=1\a"
+    fi
   fi
-  if [ -z "$TMUX" ]; then
-    tmux attach -t email:mutt
+}
+
+function gaps() {
+  if [[ $1 = "on" ]]; then
+    i3-msg gaps bottom all set 70
+  elif [[ $1 = "off" ]]; then
+    i3-msg gaps bottom all set 0
+  elif [ $# -eq 1 ]; then
+    i3-msg gaps bottom all set "$1"
   else
-    tmux switch-client -t email:mutt
+    echo "Usage: gaps [on|off|<bottom-gap>]"
   fi
+}
+
+# regmv = regex + mv (mv with regex parameter specification)
+#   example: regmv '/\.tif$/.tiff/' *
+#   replaces .tif with .tiff for all files in current dir
+#   must quote the regex otherwise "\." becomes "."
+# limitations: ? doesn't seem to work in the regex, nor *
+function regmv() {
+  emulate -L zsh
+
+  if [ $# -lt 2 ]; then
+    echo "  Usage: regmv 'regex' file(s)"
+    echo "  Where:       'regex' should be of the format '/find/replace/'"
+    echo "Example: regmv '/\.tif\$/.tiff/' *"
+    echo "   Note: Must quote/escape the regex otherwise \"\.\" becomes \".\""
+    return 1
+  fi
+  local REGEX="$1"
+  shift
+  while [ -n "$1" ]
+  do
+    local NEWNAME=$(echo "$1" | sed "s${REGEX}g")
+    if [ "${NEWNAME}" != "$1" ]; then
+      mv -i -v "$1" "$NEWNAME"
+    fi
+    shift
+  done
 }
 
 # Convenience function for jumping to hashed directory aliases
@@ -110,131 +225,91 @@ function jump() {
   emulate -L zsh
 
   if [ $# -eq 0 ]; then
-    cd -
-  elif [ $# -gt 1 ]; then
-    echo "jump: single argument required, got $#"
-    return 1
+    fd
   else
-    if [ $(hash -d|cut -d= -f1|grep -c "^$1\$") = 0 ]; then
-      # Not in `hash -d`: assume it's just a dir.
-      cd $1
-    else
-      cd ~$1
-    fi
-  fi
-}
+    local DIR="${*%%/}"
 
-function gitClean () {
-  if [ $# -eq 0 ]; then
-    git clean -f -d .
-    git clean -f -X .
-  else
-    git clean -f -d $1
-    git clean -f -X $1
+    if [ $(hash -d|cut -d= -f1|grep -c "^${DIR}\$") = 0 ]; then
+      # Not in `hash -d`: use as initial argument to fd.
+      fd "$*"
+    else
+      cd ~"$DIR"
+    fi
   fi
 }
 
 function _jump_complete() {
   emulate -L zsh
-  local word completions
-  word="$1"
-  completions="$(hash -d|cut -d= -f1)"
-  reply=( "${(ps:\n:)completions}" )
+
+  local COMPLETIONS
+  COMPLETIONS="$(hash -d|cut -d= -f1)"
+  reply=( "${(ps:\n:)COMPLETIONS}" )
 }
 
 # Complete filenames and `hash -d` entries.
 compctl -f -K _jump_complete jump
 
-# Change file extensions recursively in current directory
+# Usage: serve [--directory DIRECTORY] [PORT]
 #
-#   change-extension erb haml
-
-function change-extension() {
-  foreach f (**/*.$1)
-    mv $f $f:r.$2
-  end
-}
-
-# Load .env file into shell session for environment variables
-
-function envup() {
-  if [ -f .env ]; then
-    export `cat .env`
+# Defaults to port 8000, current directory (ie. will use index.html if present).
+function serve() {
+  if command -v python3 &> /dev/null; then
+    python3 -m http.server "$@"
   else
-    echo 'No .env file found' 1>&2
-    return 1
+    python -m SimpleHTTPServer "$@" || python -m http.server "$@"
   fi
 }
 
-# No arguments: `git status`
-# With arguments: acts like `git`
-g() {
-  if [[ $# > 0 ]]; then
-    git $@
+# Print a pruned version of a tree.
+#
+# Examples:
+#
+#   # Print all "*.js" files in src:
+#   subtree '*.js' src
+#
+#   # Print all "*.js" files in the current directory:
+#   subtree '*.js'
+#
+#   # Print all "*.js" and "*.ts" files in current directory:
+#   subtree '*.js|*.ts'
+#
+function subtree() {
+  tree -a --prune -P "$@"
+}
+
+function swallow() {
+  local ARGS=$*
+  local ID=$(xdo id)
+  xdo hide
+  eval "$*" &> /dev/null
+  xdo show "$ID"
+}
+
+# "[t]ime[w]arp" by setting GIT_AUTHOR_DATE and GIT_COMMITTER_DATE.
+function tw() {
+  emulate -L zsh
+
+  local TS=$(ts "$@")
+  echo "Spawning subshell with timestamp: $TS"
+  env GIT_AUTHOR_DATE="$TS" GIT_COMMITTER_DATE="$TS" zsh
+}
+
+# "tick" by incrementing GIT_AUTHOR_DATE and GIT_COMMITTER_DATE.
+function tick() {
+  emulate -L zsh
+
+  if [ -z "$GIT_AUTHOR_DATE" -o -z "$GIT_COMMITTER_DATE" ]; then
+    echo 'Expected $GIT_AUTHOR_DATE and $GIT_COMMITTER_DATE to be set.'
+    echo 'Did you forget to timewarp with `tw`?'
   else
-    git status
+    # Fragile assumption: dates are in format produced by `tw`/`ts`.
+    local TS=$(expr \
+      $(echo $GIT_AUTHOR_DATE | cut -d ' ' -f 1) \
+      $(parseoffset "$@") \
+    )
+    local TZ=$(date +%z)
+    echo "Bumping timestamp to: $TS $TZ"
+    export GIT_AUTHOR_DATE="$TS $TZ"
+    export GIT_COMMITTER_DATE="$TS $TZ"
   fi
-}
-
-# Complete g like git
-compdef g=git
-
-# Make directory and change into it.
-
-function mcd() {
-  mkdir -p "$1" && cd "$1";
-}
-
-# regmv = regex + mv (mv with regex parameter specification)
-#   example: regmv '/\.tif$/.tiff/' *
-#   replaces .tif with .tiff for all files in current dir
-#   must quote the regex otherwise "\." becomes "."
-# limitations: ? doesn't seem to work in the regex, nor *
-regmv()
-{
-  if [ $# -lt 2 ]; then
-    echo "  Usage: regmv 'regex' file(s)"
-    echo "  Where:       'regex' should be of the format '/find/replace/'"
-    echo "Example: regmv '/\.tif\$/.tiff/' *"
-    echo "   Note: Must quote/escape the regex otherwise \"\.\" becomes \".\""
-    return 1
-  fi
-  regex="$1"
-  shift
-  while [ -n "$1" ]
-  do
-    newname=$(echo "$1" | sed "s${regex}g")
-    if [ "${newname}" != "$1" ]; then
-      mv -i -v "$1" "$newname"
-    fi
-    shift
-  done
-}
-
-# Kill a process by name
-function k() {
-  process_name=$1
-  len=${#process_name}
-  new_process_name="[${process_name:0:1}]${process_name:1:$len}"
-  processes=$(ps -A | grep -i $new_process_name)
-  # awk '{ print "Found: "$0 }' <($processes)
-  if [[ -n $processes ]]; then
-    if [ $len = 1 ]; then
-      printf '\033[0;35m%s\033[0m\n' "Do you wish to kill these processes? (y/n) "
-    else
-      printf '\033[0;35m%s\033[0m\n' "Do you wish to kill this process? (y/n) "
-    fi
-    read resp;
-    case $resp in
-      [Yy]* ) ps -A | grep -i $new_process_name | awk '{print $1}' | xargs kill -9;;
-      [Nn]* ) printf '\033[0;35m%s\033[0m\n' "Goodbye"; return;;
-    esac
-  else
-    printf '\033[0;31m%s\033[0m\n' "No process found with the name "
-    printf '\033[1;31m%s\033[0m\n' "$1"
-  fi
-}
-
-prettyjson_w() {
-  curl "$1" | python -m json.tool
 }

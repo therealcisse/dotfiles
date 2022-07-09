@@ -103,6 +103,7 @@ function checkCondition(label: string): boolean {
     case 'personal':
       return variable('profile') === 'personal';
     case 'amsayk':
+          console.log(variable('identity'));
       return variable('identity') === 'amsayk';
     default:
       throw new Error(
