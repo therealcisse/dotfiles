@@ -165,10 +165,8 @@ return require("packer").startup {
     -- use "glepnir/lspsaga.nvim"
     -- https://github.com/rmagatti/goto-preview
 
-    use {
-      "akinsho/flutter-tools.nvim",
-      ft = { "flutter", "dart" },
-    }
+    use {'dart-lang/dart-vim-plugin'}
+    use {"akinsho/flutter-tools.nvim"}
 
     -- use "/home/tjdevries/plugins/stackmap.nvim"
     -- Plug "/home/bash/plugins/stackmap.nvim"
