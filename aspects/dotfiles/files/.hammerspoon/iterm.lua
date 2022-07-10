@@ -1,4 +1,4 @@
--- vim: set nomodifiable : DO NOT EDIT - edit template source instead (/Users/me/dotfiles/aspects/dotfiles/templates/.hammerspoon/iterm.lua.erb) or use `:set modifiable` to force.
+-- vim: set nomodifiable : DO NOT EDIT - edit template source instead or use `:set modifiable` to force.
 
 --
 -- Switches iTerm dynamic profile based on screen changes.

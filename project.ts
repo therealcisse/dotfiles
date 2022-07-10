@@ -51,7 +51,7 @@ export default {
   variables: {
     corpusNotes: '~/Documents/Corpus',
     figManaged:
-      'vim: set nomodifiable : DO NOT EDIT - edit template source instead («file») or use `:set modifiable` to force.',
+      'vim: set nomodifiable : DO NOT EDIT - edit template source instead or use `:set modifiable` to force.',
     gitCipherPath: 'vendor/git-cipher/bin/git-cipher',
     gitMergeConflictStyle: 'zdiff3',
     iTermDynamicProfiles: {
