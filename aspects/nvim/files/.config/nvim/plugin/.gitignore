@@ -1,3 +1,5 @@
-packer_compiled.vim
+*
+!falcon.vim
+!commands.vim
 !.gitignore
 

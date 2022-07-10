@@ -108,7 +108,7 @@ return require("packer").startup {
 
     }
 
-    use 'JASONews/glow-hover'
+    -- use 'JASONews/glow-hover'
 
     use { 'kana/vim-textobj-entire', requires = {{'kana/vim-textobj-user'}} } -- ae, ie
     use { 'kana/vim-textobj-indent', requires = {{'kana/vim-textobj-user'}} } -- ai, ii
