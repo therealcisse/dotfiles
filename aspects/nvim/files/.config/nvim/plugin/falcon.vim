@@ -65,6 +65,7 @@ endfunction
 
 
 function! s:MyHighlights() abort
+  hi! HoverFloatBorder ctermbg=None ctermfg=255
   hi! LspReferenceRead gui=bold guifg=LightYellow
   hi! LspReferenceText gui=bold guifg=LightYellow
   hi! LspReferenceWrite gui=bold guifg=LightYellow

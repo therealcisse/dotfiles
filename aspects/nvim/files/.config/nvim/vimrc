@@ -493,6 +493,10 @@ if has('virtualedit')
   set virtualedit+=block    " allow the cursor to go everywhere (visual block)
 endif
 
+if exists('+winblend')
+  " set winblend=10                       " psuedo-transparency for floating windows
+endif
+
 vnoremap . :norm.<CR>
 
 " Folds
@@ -614,6 +618,9 @@ endif
 set hidden
 set relativenumber
 
+if has('showcmd')
+  set noshowcmd                         " don't show extra info at end of command line
+endif
 
 " Select pasted text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -801,6 +808,28 @@ let g:PaperColor_Theme_Options = {
 
 set clipboard=unnamedplus
 
+if has('termguicolors')
+  " Don't need this in xterm-256color, but do need it inside tmux.
+  " (See `:h xterm-true-color`.)
+  if &term =~# 'tmux-256color'
+    let &t_8f="\e[38;2;%ld;%ld;%ldm"
+    let &t_8b="\e[48;2;%ld;%ld;%ldm"
+  endif
+endif
+
+" Make S-Up etc work inside tmux.
+" See: https://superuser.com/a/402084/322531
+if &term =~# 'tmux-256color'
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
+endif
+
+if exists('+pumblend')
+  " set pumblend=10                       " pseudo-transparency for popup-menu
+endif
+
 let $FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --no-preview'
 let $FZF_DEFAULT_COMMAND = 'fd --type f'
 
@@ -892,6 +921,7 @@ lua << EOF
   require "trc.surround"
   require "trc.dap"
   require "trc.git_worktree"
+  -- require "trc.glow"
 EOF
 
 

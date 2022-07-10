@@ -6,7 +6,7 @@
       ".Xresources",
       ".ackrc",
       ".agignore",
-      ".clipper.json",
+      ".gvimrc",
       ".config/Raycast",
       ".config/alacritty",
       ".config/big-sur.jpg",
@@ -41,15 +41,18 @@
       ".npmrc",
       ".pypirc",
       ".rdebugrc",
+      ".stack",
       ".rgrc",
       ".rspec",
       ".screenrc",
       ".tmux.conf",
+      ".scalafmt.conf",
       ".urlview",
       ".xinitrc",
       ".zsh",
       ".zshenv",
-      ".zshrc"
+      ".zshrc",
+      "ginit.vim"
     ],
     "templates": [
       ".corpusrc.erb",

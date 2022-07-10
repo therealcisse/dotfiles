@@ -22,7 +22,7 @@ variables(({hostHandle, identity, profile}) => {
     gitGpgSign: false,
     gitHostSpecificInclude: `.gitconfig.d/${hostHandle}`,
     gitUserEmail: 'cisse.amadou.9@gmail.com',
-    gitUserName: 'Amadou',
+    gitUserName: 'Amadou Cisse',
     gitHubUsername: 'amsayk',
   };
 });
