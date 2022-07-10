@@ -44,10 +44,6 @@ augroup strip_trailing_whitespaces
 
 augroup END
 
-let g:auto_save = 0
-let g:nvcode_termcolors=256
-
-
 let mapleader="\<Space>"
 let maplocalleader="\\"
 
@@ -599,8 +595,7 @@ if has('nvim')
 
 
   " Prefer Neovim terminal insert mode to normal mode.
-  au BufEnter,FocusGained * call SmartInsert()
-  au TermOpen * call SmartInsert()
+  " au TermOpen * call SmartInsert()
 
   " Don't close terminal on :q
   au TermOpen * set bufhidden=hide
@@ -867,7 +862,7 @@ nnoremap <localleader>z <cmd>ZenMode<CR>
 
 map <C-M> <CR>
 
-map <C-;> :Startify<CR>
+nnoremap <C-;> :Startify<CR>
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
@@ -921,7 +916,7 @@ lua << EOF
   require "trc.surround"
   require "trc.dap"
   require "trc.git_worktree"
-  -- require "trc.glow"
+  require "trc.glow"
 EOF
 
 

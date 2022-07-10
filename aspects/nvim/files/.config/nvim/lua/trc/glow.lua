@@ -5,8 +5,9 @@ end
 
 glowHover.setup {
         -- The followings are the default values
-        max_width = 50,
-        padding = 10,
-        border = 'shadow',
+        focus_id = "glow-hover",
+        max_width = 144,
+        padding = 0,
+        border = 'rounded',
         glow_path = 'glow'
     }

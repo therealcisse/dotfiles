@@ -18,6 +18,7 @@ call overlength#disable_filetypes([
       \ 'vimwiki',
       \ 'qf',
       \ 'term',
+      \ 'terminal',
       \ 'html',
       \ 'startify',
       \ 'man',

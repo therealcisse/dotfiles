@@ -27,6 +27,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 
 vim.lsp.handlers["window/showMessage"] = require "trc.lsp.show_message"
 
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers['textDocument/hover'], {
+  border = "rounded",
+})
+
 local M = {}
 
 M.implementation = function()
