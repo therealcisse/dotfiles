@@ -78,5 +78,6 @@
 
 [commit]
 	template = ~/.stCommitMsg
-# [credential]
-#   useHttpPath = true
+[credential]
+  helper = osxkeychain
+
