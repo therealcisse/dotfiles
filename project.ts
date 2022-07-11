@@ -31,20 +31,12 @@ export default {
     },
   },
   profiles: {
-    codespaces: {
-      pattern: '/codespaces/i',
-      variables: {
-        gitMergeConflictStyle: 'diff3',
-      },
-    },
     personal: {
-      pattern: '/^(?:retiro|huertas)(?:\\b|$)/i',
-      variables: {
-        corpusNotes: '~/Sync/Personal/Corpus',
-      },
+      pattern: '/^(?:amadous-mbp)(?:\\b|$)/i',
+      variables: {},
     },
     work: {
-      pattern: '/^gregorys-mbp(?:\\b|$)/i',
+      pattern: '/^QV3F6LQ19R-acisse(?:\\b|$)/i',
       variables: {},
     },
   },

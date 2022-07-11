@@ -8,10 +8,13 @@
 
 --]]
 
-local Job = require "plenary.job"
-
 local has_dap, dap = pcall(require, "dap")
 if not has_dap then
+  return
+end
+
+local has_job, Job = pcall(require, "plenary.job")
+if not has_job then
   return
 end
 
@@ -22,23 +25,23 @@ end
 
 local icons = require "trc.icons"
 
-vim.highlight.create('DapBreakpoint', {
-  guifg='#993939',
-  guibg=none,
+vim.api.nvim_set_hl(0, 'DapBreakpoint', {
+  fg='#993939',
+  bg=none,
   ctermfg=none,
   ctermbg=none
 })
 
-vim.highlight.create('DapLogPoint', {
-  guifg='#61afef',
-  guibg=none,
+vim.api.nvim_set_hl(0, 'DapLogPoint', {
+  fg='#61afef',
+  bg=none,
   ctermfg=none,
   ctermbg=none
 })
 
-vim.highlight.create('DapStopped', {
-  guifg='#98c379',
-  guibg=none,
+vim.api.nvim_set_hl(0, 'DapStopped', {
+  fg='#98c379',
+  bg=none,
   ctermfg=none,
   ctermbg=none
 })

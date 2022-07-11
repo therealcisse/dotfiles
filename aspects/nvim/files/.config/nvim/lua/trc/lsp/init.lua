@@ -6,6 +6,11 @@ if not has_lsp then
   return
 end
 
+local navic_ok, navic = pcall(require, "nvim-navic")
+if not navic_ok then
+  return
+end
+
 local is_mac = vim.fn.has "macunix" == 1
 
 local lspconfig_util = require "lspconfig.util"
@@ -29,7 +34,8 @@ if status then
   status.activate()
 end
 
-local custom_init = function(client)
+local custom_init = function(client, bufnr)
+  navic.attach(client, bufnr)
   client.config.flags = client.config.flags or {}
   client.config.flags.allow_incremental_sync = true
 end

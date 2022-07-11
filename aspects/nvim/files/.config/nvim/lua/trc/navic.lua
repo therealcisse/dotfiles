@@ -1,4 +1,4 @@
-local status_ok, gps = pcall(require, "nvim-gps")
+local status_ok, navic = pcall(require, "nvim-navic")
 if not status_ok then
   return
 end
@@ -16,7 +16,7 @@ if vim.fn.has "mac" == 1 then
 end
 
 -- Customized config
-gps.setup {
+navic.setup {
 
   disable_icons = false, -- Setting it to true will disable all icons
 
@@ -67,8 +67,8 @@ gps.setup {
   -- 	},
 
   -- Disable for particular languages
-  -- ["bash"] = false, -- disables nvim-gps for bash
-  -- ["go"] = false,   -- disables nvim-gps for golang
+  -- ["bash"] = false, -- disables nvim-navic for bash
+  -- ["go"] = false,   -- disables nvim-navic for golang
 
   -- Override default setting for particular languages
   -- ["ruby"] = {

@@ -72,7 +72,11 @@ return require("packer").startup {
     use 'TovarishFin/vim-solidity'
 
     -----------------------------------------------------------
-    use { "christianchiarulli/nvim-gps", branch = "text_hl" }
+    use {
+      "SmiteshP/nvim-navic",
+      requires = "neovim/nvim-lspconfig"
+    }
+
     use "RRethy/vim-illuminate"
     use 'tpope/vim-fugitive'
 
@@ -491,12 +495,12 @@ return require("packer").startup {
     local_use("nvim-treesitter", "nvim-treesitter")
     use "nvim-treesitter/nvim-treesitter-context"
     use "nvim-treesitter/playground"
-    use "vigoux/architext.nvim"
+    -- use "vigoux/architext.nvim"
 
     -- TODO: YouTube Highlight
     -- use "danymat/neogen"
 
-    -- use "nvim-treesitter/nvim-treesitter-textobjects"
+    use "nvim-treesitter/nvim-treesitter-textobjects"
     use "JoosepAlviste/nvim-ts-context-commentstring"
     use {
       "mfussenegger/nvim-ts-hint-textobject",

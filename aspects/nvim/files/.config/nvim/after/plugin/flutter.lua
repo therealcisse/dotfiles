@@ -1,6 +1,6 @@
 local has_flutter_tools = pcall(require, "flutter-tools")
 if not has_flutter_tools then
-  -- return
+  return
 end
 
 -- local g = require('colorbuddy.group').groups

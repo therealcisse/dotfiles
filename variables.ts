@@ -15,19 +15,13 @@ const variables = {
   get hostHandle() {
     const handle = Context.attributes.hostname.toLowerCase().split(/\./)[0];
 
-    // Kludgy special-case for Codespaces so that we can cheatingly use per-host
-    // config files without knowing the exact host name ahead of time.
-    if (/^codespaces[_-][a-f0-9]+$/.test(handle)) {
-      return 'codespaces';
-    }
-
     return handle;
   },
 
   get identity() {
     if (process.env.FIG_IDENTITY) {
       return process.env.FIG_IDENTITY;
-    } else if (Context.attributes.username === 'me' || Context.attributes.username === 'amadou') {
+    } else if (Context.attributes.username === 'me' || Context.attributes.username === 'amadou' || Context.attributes.username === 'realcisse') {
       return 'amsayk';
     } else {
       return 'unknown';

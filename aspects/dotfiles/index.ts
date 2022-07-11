@@ -21,9 +21,9 @@ variables(({hostHandle, identity, profile}) => {
   return {
     gitGpgSign: false,
     gitHostSpecificInclude: `.gitconfig.d/${hostHandle}`,
-    gitUserEmail: 'cisse.amadou.9@gmail.com',
+    gitUserEmail: profile == 'personal' ? 'cisse.amadou.9@gmail.com' : 'acisse@demystdata.com',
     gitUserName: 'Amadou Cisse',
-    gitHubUsername: 'amsayk',
+    gitHubUsername: profile == 'personal' ? 'amsayk' : 'theRealCisse',
   };
 });
 

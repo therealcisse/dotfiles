@@ -910,7 +910,7 @@ lua << EOF
   require "trc.toggleterm"
   require "trc.autopairs"
   require "trc.indentline"
-  require "trc.gps"
+  require "trc.navic"
   require "trc.autocommands"
   require "trc.gitsigns"
   require "trc.surround"
