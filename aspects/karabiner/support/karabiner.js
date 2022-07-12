@@ -490,7 +490,7 @@ const DEFAULT_PROFILE = applyExemptions({
               },
             ],
             from: {
-              key_code: 'l',
+              key_code: 'i',
               modifiers: {
                 mandatory: ['control'],
                 optional: ['any'],
