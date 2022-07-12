@@ -37,6 +37,7 @@ call overlength#set_overlength('lua', 140)
 call overlength#set_overlength('go', 200)
 call overlength#set_overlength('rust', 140)
 call overlength#set_overlength('scala', 140)
+call overlength#set_overlength('dart', 150)
 
 " call overlength#set_overlength('lsp_markdown', 0)
 " call overlength#set_overlength('markdown', 0)
