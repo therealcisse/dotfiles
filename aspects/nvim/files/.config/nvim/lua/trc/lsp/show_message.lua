@@ -25,7 +25,7 @@ local create_little_window = function(messages)
   local ui = vim.api.nvim_list_uis()[1]
   local ui_width = ui.width
 
-  local win_height = math.min(50, msg_lines)
+  local win_height = math.max(1, math.min(50, msg_lines))
   local win_width = math.min(150, msg_width) + 5
 
   return vim.api.nvim_open_win(bufnr, false, {
@@ -60,7 +60,7 @@ return function(_, result, ctx)
     error(string.format("LSP[%s] client has shut down after sending the message", client_name))
   end
   if message_type == protocol.MessageType.Error then
-    error(string.format("LSP[%s] %s", client_name, client_message))
+    -- error(string.format("LSP[%s] %s", client_name, client_message))
   else
     local message_type_name = protocol.MessageType[message_type]
     table.insert(messages, string.format("LSP %s %s", client_name, message_type_name))
