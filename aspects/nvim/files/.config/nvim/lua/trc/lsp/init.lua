@@ -137,7 +137,7 @@ local custom_attach = function(client)
   buf_nnoremap { "<leader>lr", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
   -- buf_nnoremap { "<leader>rr", "LspRestart" }
 
-  telescope_mapper("gr", "lsp_references", nil, true)
+  -- telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
   telescope_mapper("<leader>wd", "lsp_document_symbols", { ignore_filename = true }, true)
   telescope_mapper("<leader>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
