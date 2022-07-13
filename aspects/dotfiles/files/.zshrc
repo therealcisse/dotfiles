@@ -343,6 +343,8 @@ source ~/.zsh/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
+bindkey '^i' autosuggest-accept
+
 # NOTE: must come after select-word-style.
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 

@@ -5,3 +5,6 @@ stty -ixon
 #
 # https://apple.stackexchange.com/a/3255/158927
 stty discard undef
+
+# Shell only exits after 10th consecutive Ctrl-d
+set -o ignoreeof # Same as IGNOREEOF=10

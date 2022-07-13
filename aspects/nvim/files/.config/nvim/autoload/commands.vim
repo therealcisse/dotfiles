@@ -91,7 +91,7 @@ function! commands#glow(...) abort
   " Make sure LESS doesn't include the problematic `F` option, which
   " causes the pager to exit immediately if output fits on less than one
   " screen.
-  execute 'Spawn env LESS="-iMRX" glow --local --pager ' . l:file
+  execute '!glow --local --pager ' . l:file
 endfunction
 
 function! commands#lint() abort
