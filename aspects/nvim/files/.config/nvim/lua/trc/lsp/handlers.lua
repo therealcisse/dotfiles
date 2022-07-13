@@ -23,6 +23,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
       severity_limit = "Warning",
     },
     virtual_text = true,
+    update_in_insert = true,
   })
 
 vim.lsp.handlers["window/showMessage"] = require "trc.lsp.show_message"

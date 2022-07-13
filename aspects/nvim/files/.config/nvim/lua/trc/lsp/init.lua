@@ -248,6 +248,21 @@ local servers = {
 
   rust_analyzer = {
     cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+    flags = {
+      debounce_text_changes = 150,
+    },
+    settings = {
+      ["rust-analyzer"] = {
+        cargo = {
+          allFeatures = true,
+        },
+        completion = {
+          postfix = {
+            enable = false,
+          },
+        },
+      },
+    },
   },
 
   -- elmls = true,
@@ -392,6 +407,16 @@ if pcall(require, "sg.lsp") then
     on_init = custom_init,
     on_attach = custom_attach,
   }
+end
+
+if pcall(require, "lsp_signature") then
+    -- Get signatures (and _only_ signatures) when in argument lists.
+  require "lsp_signature".on_attach({
+    doc_lines = 0,
+    handler_opts = {
+      border = "none"
+    },
+  })
 end
 
 --[ An example of using functions...
