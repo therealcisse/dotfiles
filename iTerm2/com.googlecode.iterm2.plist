@@ -246,6 +246,8 @@
 			</dict>
 			<key>Guid</key>
 			<string>A46E9FA9-AAD4-4237-B893-B06B436E409E</string>
+			<key>Hide After Opening</key>
+			<false/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>
@@ -590,6 +592,8 @@
 			<string></string>
 			<key>Silence Bell</key>
 			<false/>
+			<key>Space</key>
+			<integer>0</integer>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -615,7 +619,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Working Directory</key>
 			<string>/Users/me</string>
 		</dict>
@@ -865,7 +869,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Dynamic Profile Filename</key>
-			<string>/Users/me/Library/Application Support/iTerm2/DynamicProfiles/00-Base.json</string>
+			<string>/Users/realcisse/Library/Application Support/iTerm2/DynamicProfiles/00-Base.json</string>
 			<key>Flashing Bell</key>
 			<false/>
 			<key>Foreground Color</key>
@@ -1640,7 +1644,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Dynamic Profile Filename</key>
-			<string>/Users/me/Library/Application Support/iTerm2/DynamicProfiles/60-Vim-Base.json</string>
+			<string>/Users/realcisse/Library/Application Support/iTerm2/DynamicProfiles/60-Vim-Base.json</string>
 			<key>Dynamic Profile Parent Name</key>
 			<string>Base</string>
 			<key>Flashing Bell</key>
@@ -2417,7 +2421,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Dynamic Profile Filename</key>
-			<string>/Users/me/Library/Application Support/iTerm2/DynamicProfiles/Vim.json</string>
+			<string>/Users/realcisse/Library/Application Support/iTerm2/DynamicProfiles/Vim.json</string>
 			<key>Dynamic Profile Parent Name</key>
 			<string>Vim (Base)</string>
 			<key>Flashing Bell</key>
@@ -2949,6 +2953,8 @@
 			<string>/Users/me</string>
 		</dict>
 	</array>
+	<key>OnlyWhenMoreTabs</key>
+	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
@@ -2988,6 +2994,8 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>PromptOnQuit</key>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
