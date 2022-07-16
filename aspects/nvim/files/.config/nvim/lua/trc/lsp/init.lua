@@ -198,6 +198,7 @@ local servers = {
   -- metals = pcall(require, "metals"),
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
+  zls = true,
   -- dartls = pcall(require, "flutter-tools"),
 
   solang = true,
@@ -311,91 +312,91 @@ local setup_server = function(server, config)
 end
 
 if is_mac then
-  -- local sumneko_cmd, sumneko_env = nil, nil
-  -- require("nvim-lsp-installer").setup {
-  --   automatic_installation = false,
-  --   ensure_installed = { "sumneko_lua", "gopls" },
-  -- }
-  --
-  -- sumneko_cmd = {
-  --   vim.fn.stdpath "data" .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
-  -- }
-  --
-  -- local process = require "nvim-lsp-installer.core.process"
-  -- local path = require "nvim-lsp-installer.core.path"
-  --
-  -- sumneko_env = {
-  --   cmd_env = {
-  --     PATH = process.extend_path {
-  --       path.concat { vim.fn.stdpath "data", "lsp_servers", "sumneko_lua", "extension", "server", "bin" },
-  --     },
-  --   },
-  -- }
-  --
-  -- setup_server("sumneko_lua", {
-  --   settings = {
-  --     Lua = {
-  --       diagnostics = {
-  --         globals = {
-  --           -- vim
-  --           "vim",
-  --
-  --           -- Busted
-  --           "describe",
-  --           "it",
-  --           "before_each",
-  --           "after_each",
-  --           "teardown",
-  --           "pending",
-  --           "clear",
-  --
-  --           -- Colorbuddy
-  --           "Color",
-  --           "c",
-  --           "Group",
-  --           "g",
-  --           "s",
-  --
-  --           -- Custom
-  --           "RELOAD",
-  --         },
-  --       },
-  --
-  --       workspace = {
-  --         -- Make the server aware of Neovim runtime files
-  --         library = vim.api.nvim_get_runtime_file("", true),
-  --       },
-  --     },
-  --   },
-  -- })
+  local sumneko_cmd, sumneko_env = nil, nil
+  require("nvim-lsp-installer").setup {
+    automatic_installation = false,
+    ensure_installed = { "sumneko_lua", "gopls" },
+  }
+
+  sumneko_cmd = {
+    vim.fn.stdpath "data" .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
+  }
+
+  local process = require "nvim-lsp-installer.core.process"
+  local path = require "nvim-lsp-installer.core.path"
+
+  sumneko_env = {
+    cmd_env = {
+      PATH = process.extend_path {
+        path.concat { vim.fn.stdpath "data", "lsp_servers", "sumneko_lua", "extension", "server", "bin" },
+      },
+    },
+  }
+
+  setup_server("sumneko_lua", {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = {
+            -- vim
+            "vim",
+
+            -- Busted
+            "describe",
+            "it",
+            "before_each",
+            "after_each",
+            "teardown",
+            "pending",
+            "clear",
+
+            -- Colorbuddy
+            "Color",
+            "c",
+            "Group",
+            "g",
+            "s",
+
+            -- Custom
+            "RELOAD",
+          },
+        },
+
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = vim.api.nvim_get_runtime_file("", true),
+        },
+      },
+    },
+  })
 else
   -- Load lua configuration from nlua.
-  -- _ = require("nlua.lsp.nvim").setup(lspconfig, {
-  --   on_init = custom_init,
-  --   on_attach = custom_attach,
-  --   capabilities = updated_capabilities,
-  --
-  --   root_dir = function(fname)
-  --     if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
-  --       return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
-  --     end
-  --
-  --     -- ~/git/config_manager/xdg_config/nvim/...
-  --     return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
-  --   end,
-  --
-  --   globals = {
-  --     -- Colorbuddy
-  --     "Color",
-  --     "c",
-  --     "Group",
-  --     "g",
-  --     "s",
-  --
-  --     -- Custom
-  --     "RELOAD",
-  --   },
-  -- })
+  _ = require("nlua.lsp.nvim").setup(lspconfig, {
+    on_init = custom_init,
+    on_attach = custom_attach,
+    capabilities = updated_capabilities,
+
+    root_dir = function(fname)
+      if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
+        return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
+      end
+
+      -- ~/git/config_manager/xdg_config/nvim/...
+      return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
+    end,
+
+    globals = {
+      -- Colorbuddy
+      "Color",
+      "c",
+      "Group",
+      "g",
+      "s",
+
+      -- Custom
+      "RELOAD",
+    },
+  })
 end
 
 for server, config in pairs(servers) do

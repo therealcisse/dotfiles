@@ -218,11 +218,8 @@ if has('folding')
     set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
   endif
   set foldenable                      " enable folding
-  " set foldmethod=indent               " not as cool as syntax, but faster
+  set foldmethod=indent               " not as cool as syntax, but faster
   set foldlevelstart=99               " start unfolded
-
-  set foldmethod=expr
-  set foldexpr=nvim_treesitter#foldexpr()
 
 endif
 
@@ -415,7 +412,7 @@ set shell=/bin/sh
 set updatetime=250
 
 " always show signcolumns
-set signcolumn=auto
+set signcolumn=yes:2
 
 " Better display for messages
 set cmdheight=1
@@ -867,19 +864,8 @@ map <C-M> <CR>
 
 nnoremap <C-;> :Startify<CR>
 
-" ----------------------------------------------------------------------
-"  Local Settings                                                     |
-" ----------------------------------------------------------------------
-
-" Load local settings if they exist.
-"
-" [!] The following needs to remain at the end of this file in
-"     order to allow any of the above settings to be overwritten
-"     by the local ones.
-
-if filereadable(glob('~/.vimrc.local'))
-  source ~/.vimrc.local
-endif
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 lua << EOF
   require "trc.impatient"
@@ -922,4 +908,17 @@ lua << EOF
   require "trc.glow"
 EOF
 
+" ----------------------------------------------------------------------
+"  Local Settings                                                     |
+" ----------------------------------------------------------------------
+
+" Load local settings if they exist.
+"
+" [!] The following needs to remain at the end of this file in
+"     order to allow any of the above settings to be overwritten
+"     by the local ones.
+
+if filereadable(glob('~/.vimrc.local'))
+  source ~/.vimrc.local
+endif
 

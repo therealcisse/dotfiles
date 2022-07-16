@@ -228,6 +228,8 @@ return require("packer").startup {
     -- local_use "sg.nvim"
     local_use "green_light.nvim"
 
+    use 'vimwiki/vimwiki'
+
     -- TODO: Need to figure out how to install all of this stuff on mac
     if not is_mac then
       use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
@@ -398,6 +400,10 @@ return require("packer").startup {
     -- use { 'JuliaEditorSupport/julia-vim', ft = "julia" }
 
     -- use { "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" }
+
+    use 'haya14busa/is.vim'
+    use 'osyo-manga/vim-anzu'
+    use 'haya14busa/vim-asterisk'
 
     -- Typescript
     if false then
