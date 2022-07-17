@@ -117,21 +117,23 @@ require("el").setup {
       { show_current_func },
       { lsp_statusline.server_progress },
       { ws_diagnostic_counts },
+      { " " },
       { git_changes },
-      { "[" },
+      { " [" },
       { builtin.line_with_width(3) },
       { ":" },
       { builtin.column_with_width(2) },
-      { "]" },
+      { "] " },
       {
         sections.collapse_builtin {
-          "[",
+          " [",
           builtin.help_list,
           builtin.readonly_list,
-          "]",
+          "] ",
         },
       },
       { builtin.filetype },
+      { " " },
     }
 
     local add_item = function(result, item)

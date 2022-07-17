@@ -449,6 +449,7 @@ return require("packer").startup {
     use "saadparwaiz1/cmp_luasnip"
     use "tamago324/cmp-zsh"
     use "ray-x/lsp_signature.nvim"
+    use 'hrsh7th/cmp-nvim-lsp-signature-help'
 
     -- Comparators
     use "lukas-reineke/cmp-under-comparator"

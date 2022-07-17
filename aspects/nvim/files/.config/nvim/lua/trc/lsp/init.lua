@@ -35,9 +35,22 @@ if status then
 end
 
 local custom_init = function(client, bufnr)
-  navic.attach(client, bufnr)
   client.config.flags = client.config.flags or {}
   client.config.flags.allow_incremental_sync = true
+
+  navic.attach(client, bufnr)
+
+  if pcall(require, "lsp_signature") then
+    -- Get signatures (and _only_ signatures) when in argument lists.
+    require "lsp_signature".on_attach({
+      bind = true,
+      doc_lines = 0,
+      handler_opts = {
+        border = "rounded"
+      },
+    }, bufnr)
+  end
+
 end
 
 local augroup_format = vim.api.nvim_create_augroup("my_lsp_format", { clear = true })
@@ -408,16 +421,6 @@ if pcall(require, "sg.lsp") then
     on_init = custom_init,
     on_attach = custom_attach,
   }
-end
-
-if pcall(require, "lsp_signature") then
-    -- Get signatures (and _only_ signatures) when in argument lists.
-  require "lsp_signature".on_attach({
-    doc_lines = 0,
-    handler_opts = {
-      border = "none"
-    },
-  })
 end
 
 --[ An example of using functions...
