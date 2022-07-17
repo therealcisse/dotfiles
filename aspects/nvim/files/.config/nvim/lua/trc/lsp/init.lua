@@ -147,7 +147,7 @@ local custom_attach = function(client)
   buf_nnoremap { "gT", vim.lsp.buf.type_definition }
 
   buf_nnoremap { "gd", handlers.implementation }
-  buf_nnoremap { "<leader>lr", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
+  buf_nnoremap { "<leader><Enter>", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
   -- buf_nnoremap { "<leader>rr", "LspRestart" }
 
   -- telescope_mapper("gr", "lsp_references", nil, true)

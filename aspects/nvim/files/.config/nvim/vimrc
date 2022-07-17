@@ -580,25 +580,15 @@ command! EX if !empty(expand('%'))
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
 
-  let g:previous_window = -1
+  augroup nvmim_terminal
+    au!
 
-  function SmartInsert()
-    if &buftype == 'terminal'
-      if g:previous_window != winnr()
-        startinsert
-      endif
-      let g:previous_window = winnr()
-    else
-      let g:previous_window = -1
-    endif
-  endfunction
+    " Don't close terminal on :q
+    au! TermOpen * set bufhidden=hide
 
-
-  " Prefer Neovim terminal insert mode to normal mode.
-  " au TermOpen * call SmartInsert()
-
-  " Don't close terminal on :q
-  au TermOpen * set bufhidden=hide
+    " Delete buffer after exit
+    au! TermClose * execute 'bdelete! ' . expand('<abuf>')
+  augroup END
 
   " Append --no-height
   " let $FZF_DEFAULT_OPTS .= ' --no-height' " https://github.com/neovim/neovim/issues/4151

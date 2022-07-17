@@ -92,8 +92,6 @@ function checkCondition(label: string): boolean {
       return attributes.distribution === 'arch';
     case 'arm64':
       return attributes.arch === 'arm64';
-    case 'codespaces':
-      return variable('hostHandle') === 'codespaces';
     case 'darwin':
       return attributes.platform === 'darwin';
     case 'debian':
@@ -101,9 +99,10 @@ function checkCondition(label: string): boolean {
     case 'linux':
       return attributes.platform === 'linux';
     case 'personal':
-      return variable('profile') === 'personal';
+          return variable('profile') === 'personal';
+    case 'work':
+      return variable('profile') === 'work';
     case 'amsayk':
-          console.log(variable('identity'));
       return variable('identity') === 'amsayk';
     default:
       throw new Error(
