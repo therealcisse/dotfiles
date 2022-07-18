@@ -1,13 +1,13 @@
-local status_ok, glowHover = pcall(require, "glow-hover")
-if not status_ok then
-  return
-end
-
-glowHover.setup {
-        -- The followings are the default values
-        focus_id = "glow-hover",
-        max_width = 144,
-        padding = 0,
-        border = 'rounded',
-        glow_path = 'glow'
-    }
+-- local status_ok, glowHover = pcall(require, "glow-hover")
+-- if not status_ok then
+--   return
+-- end
+--
+-- glowHover.setup {
+--         -- The followings are the default values
+--         focus_id = "glow-hover",
+--         max_width = 500,
+--         padding = 0,
+--         border = 'rounded',
+--         glow_path = 'glow'
+--     }
