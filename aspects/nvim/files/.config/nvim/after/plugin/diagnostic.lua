@@ -3,6 +3,7 @@ local nmap = require("trc.keymap").nmap
 vim.diagnostic.config {
   underline = true,
   virtual_text = {
+    prefix = '●●', -- Could be '■', '▎', 'x'
     severity = nil,
     source = "if_many",
     format = nil,
@@ -49,7 +50,7 @@ nmap {
 }
 
 nmap {
-  "<leader>sl",
+  "<localleader>cd",
   function()
     vim.diagnostic.open_float(0, {
       scope = "line",

@@ -129,6 +129,29 @@ local buf_inoremap = function(opts)
   imap(opts)
 end
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client.server_capabilities.completionProvider then
+      vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+    end
+    if client.server_capabilities.definitionProvider then
+      vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspDetach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    -- Do something with the client
+    -- vim.cmd("setlocal tagfunc< omnifunc<")
+  end,
+})
+
+require('trc.lsp.codelens').setup()
+
 local custom_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
@@ -140,7 +163,7 @@ local custom_attach = function(client)
 
   buf_nnoremap { "<localleader>rn", vim.lsp.buf.rename }
   buf_nnoremap { "<localleader>ca", vim.lsp.buf.code_action }
-  buf_nnoremap { "<localleader>cd", vim.diagnostic.open_float }
+  -- buf_nnoremap { "<localleader>cd", vim.diagnostic.open_float }
 
   buf_nnoremap { "<C-]>", vim.lsp.buf.definition }
   buf_nnoremap { "gD", vim.lsp.buf.declaration }
@@ -158,8 +181,6 @@ local custom_attach = function(client)
   if filetype ~= "lua" then
     buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
   end
-
-  vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
