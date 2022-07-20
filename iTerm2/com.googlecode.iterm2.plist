@@ -226,7 +226,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Recycle</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -869,7 +869,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Dynamic Profile Filename</key>
-			<string>/Users/realcisse/Library/Application Support/iTerm2/DynamicProfiles/00-Base.json</string>
+			<string>/Users/amadou/Library/Application Support/iTerm2/DynamicProfiles/00-Base.json</string>
 			<key>Flashing Bell</key>
 			<false/>
 			<key>Foreground Color</key>
@@ -1359,6 +1359,8 @@
 					<string>\btelnet:([a-z0-9A-Z_]+@)?([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\b</string>
 				</dict>
 			</array>
+			<key>Space</key>
+			<integer>0</integer>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -1644,7 +1646,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Dynamic Profile Filename</key>
-			<string>/Users/realcisse/Library/Application Support/iTerm2/DynamicProfiles/60-Vim-Base.json</string>
+			<string>/Users/amadou/Library/Application Support/iTerm2/DynamicProfiles/60-Vim-Base.json</string>
 			<key>Dynamic Profile Parent Name</key>
 			<string>Base</string>
 			<key>Flashing Bell</key>
@@ -2136,6 +2138,8 @@
 					<string>\btelnet:([a-z0-9A-Z_]+@)?([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\b</string>
 				</dict>
 			</array>
+			<key>Space</key>
+			<integer>0</integer>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -2421,7 +2425,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Dynamic Profile Filename</key>
-			<string>/Users/realcisse/Library/Application Support/iTerm2/DynamicProfiles/Vim.json</string>
+			<string>/Users/amadou/Library/Application Support/iTerm2/DynamicProfiles/Vim.json</string>
 			<key>Dynamic Profile Parent Name</key>
 			<string>Vim (Base)</string>
 			<key>Flashing Bell</key>
@@ -2913,6 +2917,8 @@
 					<string>\btelnet:([a-z0-9A-Z_]+@)?([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\b</string>
 				</dict>
 			</array>
+			<key>Space</key>
+			<integer>0</integer>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>

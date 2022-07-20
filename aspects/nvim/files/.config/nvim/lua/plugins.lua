@@ -229,7 +229,7 @@ return require("packer").startup {
     -- local_use "sg.nvim"
     local_use "green_light.nvim"
 
-    use 'vimwiki/vimwiki'
+    -- use 'vimwiki/vimwiki'
 
     -- TODO: Need to figure out how to install all of this stuff on mac
     if not is_mac then
