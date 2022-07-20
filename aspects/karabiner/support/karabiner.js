@@ -414,7 +414,7 @@ const DEFAULT_PROFILE = applyExemptions({
       },
       {
         description:
-          'Change Caps Lock to Control when used as modifier, Backspace when used alone',
+          'Change Caps Lock to Control when used as modifier, ESC when used alone',
         manipulators: [
           {
             from: {
@@ -431,12 +431,12 @@ const DEFAULT_PROFILE = applyExemptions({
             ],
             to_if_alone: [
               {
-                key_code: 'delete_or_backspace',
+                key_code: 'escape',
               },
             ],
             to_if_held_down: [
               {
-                key_code: 'delete_or_backspace',
+                key_code: 'escape',
               },
             ],
             type: 'basic',
