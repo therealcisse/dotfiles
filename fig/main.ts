@@ -402,8 +402,14 @@ function msToHumanReadable(ms: number): string {
 
 async function loadAspect(aspect: Aspect): Promise<void> {
   switch (aspect) {
+    case 'apt':
+      await import('../aspects/apt/index.js');
+      break;
     case 'automator':
       await import('../aspects/automator/index.js');
+      break;
+    case 'cron':
+      await import('../aspects/cron/index.js');
       break;
     case 'defaults':
       await import('../aspects/defaults/index.js');
@@ -416,6 +422,9 @@ async function loadAspect(aspect: Aspect): Promise<void> {
       break;
     case 'homebrew':
       await import('../aspects/homebrew/index.js');
+      break;
+    case 'interception':
+      await import('../aspects/interception/index.js');
       break;
     case 'iterm':
       await import('../aspects/iterm/index.js');
@@ -438,6 +447,12 @@ async function loadAspect(aspect: Aspect): Promise<void> {
     case 'ssh':
       await import('../aspects/ssh/index.js');
       break;
+    case 'sshd':
+      await import('../aspects/sshd/index.js');
+      break;
+    case 'systemd':
+      await import('../aspects/systemd/index.js');
+      break;
     case 'terminfo':
       await import('../aspects/terminfo/index.js');
       break;
@@ -449,7 +464,6 @@ async function loadAspect(aspect: Aspect): Promise<void> {
       throw new Error(`Unreachable ${unreachable}`);
   }
 }
-
 main().catch(async (error) => {
   if (error instanceof ErrorWithMetadata) {
     if (error.metadata) {

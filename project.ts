@@ -11,7 +11,7 @@ export default {
                 'launchd',
                 'shell',
                 'ssh',
-                'cron'
+                'cron',
                 'terminfo',
                 'nvim',
                 'automator',
@@ -24,12 +24,12 @@ export default {
                 'sshd',
                 'locale',
                 'systemd',
-                'interception'
+                'interception',
                 'dotfiles',
                 'fonts',
                 'node',
                 'shell',
-                'cron'
+                'cron',
                 'ssh',
                 'terminfo',
                 'nvim',
