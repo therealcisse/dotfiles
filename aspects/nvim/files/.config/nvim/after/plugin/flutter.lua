@@ -25,7 +25,6 @@ require("flutter-tools").setup {
     notification_style = 'native'
   },
 
-
   debugger = {
     enabled = false,
     run_via_dap = true, -- use dap instead of a plenary job to run flutter apps
@@ -49,6 +48,7 @@ require("flutter-tools").setup {
     settings = {
       showTodos = true,
       completeFunctionCalls = true,
+      enableSnippets = true,
       analysisExcludedFolders = {}
     }
   },
