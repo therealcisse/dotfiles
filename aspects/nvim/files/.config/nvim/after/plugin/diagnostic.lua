@@ -1,19 +1,22 @@
 local nmap = require("trc.keymap").nmap
 
 vim.diagnostic.config {
-  underline = true,
-  virtual_text = {
-    prefix = '●', -- Could be '■', '▎', 'x'
-    severity = nil,
-    source = "if_many",
-    format = nil,
-  },
+  virtual_lines = true,
+
+  virtual_text = false,
+  -- virtual_text = {
+  --   prefix = '●', -- Could be '■', '▎', 'x'
+  --   severity = nil,
+  --   source = "if_many",
+  --   format = nil,
+  -- },
+
   signs = true,
 
   -- options for floating windows:
   float = {
     show_header = true,
-    -- border = "rounded",
+    border = "rounded",
     -- source = "always",
     format = function(d)
       local t = vim.deepcopy(d)
@@ -34,6 +37,13 @@ local goto_opts = {
   wrap = true,
   float = true,
 }
+
+vim.keymap.set(
+  "",
+  "<Leader>l",
+  require("lsp_lines").toggle,
+  { desc = "Toggle lsp_lines" }
+)
 
 nmap {
   "<leader>dn",
