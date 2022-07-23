@@ -24,5 +24,4 @@ else
   log_debug "Using Node $NODE_VERSION installation"
 fi
 
-echo "$N_EXE" "$@"
 "$N_EXE" "$@"
