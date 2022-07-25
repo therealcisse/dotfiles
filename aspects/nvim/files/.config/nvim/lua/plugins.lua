@@ -192,6 +192,43 @@ return require("packer").startup {
       end,
     }
 
+    use {
+      'rmagatti/goto-preview',
+      config = function()
+        require('goto-preview').setup {}
+      end
+    }
+
+    use({
+      "gbprod/stay-in-place.nvim",
+      config = function()
+        require("stay-in-place").setup({
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+        })
+      end
+    })
+
+    use {
+      'stevearc/overseer.nvim',
+      config = function() require('overseer').setup() end
+    }
+
+    use { 'anuvyklack/fold-preview.nvim',
+      requires = 'anuvyklack/keymap-amend.nvim',
+      config = function()
+        require('fold-preview').setup()
+      end
+    }
+
+    use({
+      "zakharykaplan/nvim-retrail",
+      config = function()
+        require("retrail").setup()
+      end,
+    })
+
     use({
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
       config = function()

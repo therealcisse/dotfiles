@@ -205,6 +205,8 @@ local custom_attach = function(client)
     end
   end
 
+  -- buf_nnoremap { "<ggd>", require('goto-preview').goto_preview_definition() }
+
   -- Attach any filetype specific options to the client
   filetype_attach[filetype](client)
 end
