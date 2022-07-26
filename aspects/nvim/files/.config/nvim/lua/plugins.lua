@@ -193,6 +193,19 @@ return require("packer").startup {
     }
 
     use {
+      'monkoose/matchparen.nvim',
+      branch = 'main',
+      config = function ()
+        require('matchparen').setup({
+          on_startup = true, -- Should it be enabled by default
+          hl_group = 'MatchParen', -- highlight group for matched characters
+          augroup_name = 'matchparen',  -- almost no reason to touch this unless there is already augroup with such name
+        })
+      end,
+
+    }
+
+    use {
       'rmagatti/goto-preview',
       config = function()
         require('goto-preview').setup {}
