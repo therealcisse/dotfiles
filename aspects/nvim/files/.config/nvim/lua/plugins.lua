@@ -223,10 +223,10 @@ return require("packer").startup {
       end
     })
 
-    use {
-      'stevearc/overseer.nvim',
-      config = function() require('overseer').setup() end
-    }
+    -- use {
+    --   'stevearc/overseer.nvim',
+    --   config = function() require('overseer').setup() end
+    -- }
 
     use { 'anuvyklack/fold-preview.nvim',
       requires = 'anuvyklack/keymap-amend.nvim',
@@ -235,12 +235,12 @@ return require("packer").startup {
       end
     }
 
-    use({
-      "zakharykaplan/nvim-retrail",
-      config = function()
-        require("retrail").setup()
-      end,
-    })
+    -- use({
+    --   "zakharykaplan/nvim-retrail",
+    --   config = function()
+    --     require("retrail").setup()
+    --   end,
+    -- })
 
     use({
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",

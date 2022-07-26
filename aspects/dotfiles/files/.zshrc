@@ -342,7 +342,7 @@ select-word-style bash # only alphanumeric chars are considered WORDCHARS
 
 source ~/.zsh/oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
-ZSH_AUTOSUGGEST_STRATEGY=(completion match_prev_cmd)
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
 bindkey '^i' autosuggest-accept
 
