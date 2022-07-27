@@ -9,7 +9,7 @@ local augroup = function (name, callback)
   vim.cmd('augroup END')
 
   -- Allows us to hackily re-register the same group of autocmds in the future.
-  wincent.g.augroup_callbacks[name] = callback
+  trc.g.augroup_callbacks[name] = callback
 end
 
 return augroup
