@@ -1,0 +1,1 @@
+-- return require'trc'.autoload('trc.vim')

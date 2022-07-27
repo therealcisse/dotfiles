@@ -81,7 +81,7 @@ else
 endif
 
 set history=1000               " Increase command line history.
-set noignorecase                 " Don't ignore case in search patterns.
+set ignorecase                 " Don't ignore case in search patterns.
 
 set incsearch                  " Highlight search pattern
                                " as it is being typed.
@@ -883,6 +883,7 @@ lua << EOF
   require "trc.telescope.setup"
   require "trc.telescope.mappings"
 
+  -- require "trc.g"
   require "trc.lir"
   require "trc.winbar"
   require "trc.colorizer"
@@ -896,6 +897,7 @@ lua << EOF
   require "trc.dap"
   require "trc.git_worktree"
   require "trc.glow"
+  -- require "trc.foldtext"
 EOF
 
 " ----------------------------------------------------------------------
