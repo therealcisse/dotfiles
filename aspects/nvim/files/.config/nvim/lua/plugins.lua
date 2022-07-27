@@ -212,6 +212,8 @@ return require("packer").startup {
       end
     }
 
+    use {'wincent/pinnacle'}
+
     use({
       "gbprod/stay-in-place.nvim",
       config = function()
