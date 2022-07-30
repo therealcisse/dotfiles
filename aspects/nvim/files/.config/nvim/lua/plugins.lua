@@ -708,6 +708,76 @@ return require("packer").startup {
       cmd = "Tetris",
     }
 
+    -- use 'troydm/zoomwintab.vim'
+
+    use({
+      "Pocco81/true-zen.nvim",
+      config = function()
+        require("true-zen").setup {
+          -- your config goes here
+          -- or just leave it empty :)
+        }
+      end,
+    })
+
+    -- use {
+    --   'nyngwang/NeoNoName.lua',
+    --   config = function ()
+    --     -- vim.keymap.set('n', '<M-w>', function () vim.cmd('NeoNoName') end, {slient=true, noremap=true, nowait=true})
+    --     -- If you are using bufferline.nvim
+    --     -- vim.keymap.set('n', '<M-w>', function () vim.cmd('NeoNoNameBufferline') end, {slient=true, noremap=true, nowait=true})
+    --   end
+    -- }
+
+    -- use {
+    --   'nyngwang/NeoZoom.lua',
+    --   config = function ()
+    --     require('neo-zoom').setup { -- use the defaults or UNCOMMENT and change any one to overwrite
+    --     -- left_ratio = 0.2,
+    --     -- top_ratio = 0.03,
+    --     -- width_ratio = 0.67,
+    --     -- height_ratio = 0.9,
+    --     -- border = 'double',
+    --       exclude_filetype = {
+    --         'fzf',
+    --         'qf',
+    --         'dashboard',
+    --         'telescope'
+    --       },
+    --     }
+    --
+    --     local NOREF_NOERR_TRUNC = { silent = true, nowait = true }
+    --     vim.keymap.set('n', '<C-CR>', require("neo-zoom").neo_zoom, NOREF_NOERR_TRUNC)
+    --
+    --     -- My setup (This requires NeoNoName.lua, and optionally NeoWell.lua)
+    --     local cur_buf = nil
+    --     local cur_cur = nil
+    --     vim.keymap.set('n', '<C-CR>', function ()
+    --       -- Pop-up Effect
+    --       if vim.api.nvim_win_get_config(0).relative == '' then
+    --         cur_buf = vim.fn.bufnr()
+    --         cur_cur = vim.api.nvim_win_get_cursor(0)
+    --         if vim.fn.bufname() ~= '' then
+    --           vim.cmd('NeoNoName')
+    --         end
+    --         vim.cmd('NeoZoomToggle')
+    --         vim.api.nvim_set_current_buf(cur_buf)
+    --         vim.api.nvim_win_set_cursor(0, cur_cur)
+    --         vim.cmd("normal! zt")
+    --         vim.cmd("normal! 7k7j")
+    --         return
+    --       end
+    --       vim.cmd('NeoZoomToggle')
+    --       vim.api.nvim_set_current_buf(cur_buf)
+    --       cur_buf = nil
+    --       cur_cur = nil
+    --       -- vim.cmd('NeoWellJump') -- you can safely remove this line.
+    --     end, NOREF_NOERR_TRUNC)
+    --   end
+    -- }
+
+    use "fladson/vim-kitty"
+
     -- TODO: Figure out why this randomly popups
     --       Figure out if I want to use it later as well :)
     -- use {
