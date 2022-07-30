@@ -83,6 +83,7 @@ function! s:MyHighlights() abort
   hi! IncSearch guifg=#282a2e guibg=#de935f
   hi! PMenuSel guifg=#282a2e guibg=#c5c8c6
   hi! Pmenu guibg='00010a' guifg=#fff
+  hi! MatchParen guifg=orange gui=bold
 
   hi! link CompeDocumentation NormalFloat
 

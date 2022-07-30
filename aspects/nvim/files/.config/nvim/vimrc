@@ -81,7 +81,7 @@ else
 endif
 
 set history=1000               " Increase command line history.
-set ignorecase                 " Don't ignore case in search patterns.
+set noignorecase                 " Don't ignore case in search patterns.
 
 set incsearch                  " Highlight search pattern
                                " as it is being typed.
@@ -327,10 +327,10 @@ nmap <c-s>' :%s/\V\'/"<CR><C-L>
 " Helpful general settings
 "-----------------------------------------------------------------------------
 " Needed for compltions _only_ if you aren't using completion-nvim
-au FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc
+" au FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " Set completeopt to have a better completion experience
-set completeopt=menuone,noselect
+" set completeopt=menuone,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
@@ -383,6 +383,11 @@ set diffopt+=vertical
 " <C-i> (have it send F6 instead for <C-i>).
 nnoremap <F6> <C-i>
 inoremap <F6> <Tab>
+
+if $TERM ==# 'xterm-kitty'
+  autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif
+  autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif
+endif
 
 " Avoid unintentional switches to Ex mode. This would be more useful.
 nnoremap Q :normal n.<CR>
@@ -853,6 +858,9 @@ nnoremap <localleader>z <cmd>ZenMode<CR>
 map <C-M> <CR>
 
 nnoremap <C-;> :Startify<CR>
+
+nnoremap <C-w>o :TZAtaraxis<CR>
+nnoremap <C-Enter> :TZFocus<CR>
 
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
