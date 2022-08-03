@@ -54,6 +54,6 @@ Thumbs.db
 
 
 local.sbt
-.scalafix.conf
+# .scalafix.conf
 
 build.sc

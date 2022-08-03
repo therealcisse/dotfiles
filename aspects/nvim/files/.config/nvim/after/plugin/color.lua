@@ -83,7 +83,7 @@ local check = function ()
   -- Allow for overrides:
   -- - `lua/trc/statusline.lua` will re-set User1, User2 etc.
   -- - `after/plugin/loupe.lua` will override Search.
-  vim.cmd('doautocmd ColorScheme')
+  -- vim.cmd('doautocmd ColorScheme')
 end
 
 -- if vim.v.progname ~= 'vi' then
