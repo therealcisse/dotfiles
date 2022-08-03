@@ -225,10 +225,10 @@ return require("packer").startup {
       end
     })
 
-    -- use {
-    --   'stevearc/overseer.nvim',
-    --   config = function() require('overseer').setup() end
-    -- }
+    use {
+      'stevearc/overseer.nvim',
+      config = function() require('overseer').setup() end
+    }
 
     use { 'anuvyklack/fold-preview.nvim',
       requires = 'anuvyklack/keymap-amend.nvim',
