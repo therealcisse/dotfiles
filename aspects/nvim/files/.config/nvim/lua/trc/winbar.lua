@@ -5,6 +5,7 @@ local hasWinbar = 1
 if hasWinbar == 1 then
 
   M.winbar_filetype_exclude = {
+    "term",
     "help",
     "startify",
     "dashboard",
