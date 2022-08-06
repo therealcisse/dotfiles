@@ -77,6 +77,8 @@ return require("packer").startup {
       requires = "neovim/nvim-lspconfig"
     }
 
+    use 'ekalinin/Dockerfile.vim'
+
     use "RRethy/vim-illuminate"
     use 'tpope/vim-fugitive'
 
