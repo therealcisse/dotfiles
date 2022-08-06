@@ -642,8 +642,9 @@ return require("packer").startup {
     -- TODO: Check out macvhakann/vim-sandwich at some point
     -- use "tpope/vim-surround" -- Surround text objects easily
      use "kylechui/nvim-surround"
+    
 
-     use "akinsho/toggleterm.nvim"
+     use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
      use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
      use "lukas-reineke/indent-blankline.nvim"
 
