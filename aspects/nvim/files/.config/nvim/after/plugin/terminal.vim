@@ -1,1 +1,1 @@
-nnoremap <leader>T :ToggleTerm size=40 direction=horizontal<CR>
+nnoremap <leader>T :ToggleTerm direction=horizontal<CR>

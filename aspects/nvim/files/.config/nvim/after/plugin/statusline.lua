@@ -105,6 +105,7 @@ require("el").setup {
     end
 
     local items = {
+      { " § " },
       { mode, required = true },
       { git_branch },
       { " " },
@@ -119,11 +120,11 @@ require("el").setup {
       { ws_diagnostic_counts },
       { " " },
       { git_changes },
-      { " [" },
+      { " ℓ " },
       { builtin.line_with_width(3) },
-      { ":" },
+      { " 𝚌 " },
       { builtin.column_with_width(2) },
-      { "] " },
+      { " " },
       {
         sections.collapse_builtin {
           " [",
