@@ -28,15 +28,15 @@ npairs.setup {
 local cond = require('nvim-autopairs.conds')
 local Rule = require('nvim-autopairs.rule')
 
-npairs.add_rule(
-  Rule("<",">")
-    :with_pair(cond.invert(cond.not_filetypes({"rust", "zig"})))
-)
-
-npairs.add_rule(
-  Rule("|","|")
-    :with_pair(cond.invert(cond.not_filetypes({"rust", "zig"})))
-)
+-- npairs.add_rule(
+--   Rule("<",">")
+--     :with_pair(cond.invert(cond.not_filetypes({"rust", "zig"})))
+-- )
+--
+-- npairs.add_rule(
+--   Rule("|","|")
+--     :with_pair(cond.invert(cond.not_filetypes({"rust", "zig"})))
+-- )
 
 local cmp_autopairs = require "nvim-autopairs.completion.cmp"
 local cmp_status_ok, cmp = pcall(require, "cmp")

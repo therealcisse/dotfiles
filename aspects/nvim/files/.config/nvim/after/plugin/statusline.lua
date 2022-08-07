@@ -122,7 +122,7 @@ require("el").setup {
       { git_changes },
       { " ℓ " },
       { builtin.line_with_width(3) },
-      { " 𝚌 " },
+      { ", 𝚌 " },
       { builtin.column_with_width(2) },
       { " " },
       {
