@@ -105,12 +105,12 @@ local layoutConfig = {
   end),
 
   ['net.kovidgoyal.kitty'] = (function(window, forceScreenCount)
-    local count = forceScreenCount or screenCount
-    if count == 1 then
-      hs.grid.set(window, grid.fullScreen)
-    else
-      hs.grid.set(window, grid.fullScreen, hs.screen.primaryScreen())
-    end
+    -- local count = forceScreenCount or screenCount
+    -- if count == 1 then
+    --   hs.grid.set(window, grid.fullScreen)
+    -- else
+    --   hs.grid.set(window, grid.fullScreen, hs.screen.primaryScreen())
+    -- end
   end),
 }
 
