@@ -4,6 +4,6 @@ if not status_ok then
 end
 
 surround.setup({
-
+  move_cursor = "begin",
 })
 

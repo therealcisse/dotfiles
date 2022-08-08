@@ -110,7 +110,7 @@ end
 function M.live_grep()
   require("telescope.builtin").live_grep {
     -- shorten_path = true,
-    previewer = false,
+    -- previewer = false,
     fzf_separator = "|>",
   }
 end
