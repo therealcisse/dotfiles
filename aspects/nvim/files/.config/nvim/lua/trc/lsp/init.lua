@@ -40,16 +40,16 @@ local custom_init = function(client, bufnr)
 
   navic.attach(client, bufnr)
 
-  if pcall(require, "lsp_signature") then
-    -- Get signatures (and _only_ signatures) when in argument lists.
-    require "lsp_signature".on_attach({
-      bind = true,
-      doc_lines = 0,
-      handler_opts = {
-        border = "rounded"
-      },
-    }, bufnr)
-  end
+  -- if pcall(require, "lsp_signature") then
+  --   -- Get signatures (and _only_ signatures) when in argument lists.
+  --   require "lsp_signature".on_attach({
+  --     bind = true,
+  --     doc_lines = 0,
+  --     handler_opts = {
+  --       border = "rounded"
+  --     },
+  --   }, bufnr)
+  -- end
 
 end
 
@@ -150,7 +150,7 @@ vim.api.nvim_create_autocmd("LspDetach", {
   end,
 })
 
-require('trc.lsp.codelens').setup()
+-- require('trc.lsp.codelens').setup()
 
 local custom_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
