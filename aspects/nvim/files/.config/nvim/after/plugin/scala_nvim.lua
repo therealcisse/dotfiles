@@ -30,7 +30,7 @@ metals_config.capabilities = require("cmp_nvim_lsp").update_capabilities(lsp.cap
 
 metals_config.on_attach = function(client, bufnr)
   metals.setup_dap()
-  lsp.on_attach(client, bufnr)
+  lsp.on_attach(client)
 end
 
 metals_config.on_init = function(client)

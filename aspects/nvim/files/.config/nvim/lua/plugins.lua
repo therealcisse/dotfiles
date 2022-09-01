@@ -680,7 +680,10 @@ return require("packer").startup {
       end,
     }
 
-    -- use "ThePrimeagen/harpoon"
+    use {
+      "ThePrimeagen/harpoon",
+      requires = { "nvim-lua/plenary.nvim" }
+    }
     -- use 'untitled-ai/jupyter_ascending.vim'
 
     use "tjdevries/standard.vim"
