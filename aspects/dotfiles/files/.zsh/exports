@@ -11,23 +11,19 @@ elif [ -x "$HOME/nvim-macos/bin/nvim" ]; then
   # instead of a simple `export EDITOR=$(which vim)`:
   export EDITOR=$HOME/nvim-macos/bin/nvim
 else
-  export EDITOR=vim
+  export EDITOR=nvim
 fi
 
 case "$(uname)" in
   Darwin*)
     if [ -x /usr/libexec/java_home ]; then
       if /usr/libexec/java_home &> /dev/null ; then
-        if /usr/libexec/java_home -v1.8.0 &> /dev/null; then
-          export JAVA_HOME=$(/usr/libexec/java_home -v1.8.0)
-        else
-          export JAVA_HOME=$(/usr/libexec/java_home)
-        fi
+        export JAVA_HOME=$(/usr/libexec/java_home)
       fi
     fi
     ;;
   Linux*)
-    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
     ;;
 esac
 

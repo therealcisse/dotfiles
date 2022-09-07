@@ -713,6 +713,8 @@ return require("packer").startup {
 
     -- use 'troydm/zoomwintab.vim'
 
+    use 'levouh/tint.nvim'
+
     use({
       "Pocco81/true-zen.nvim",
       config = function()
