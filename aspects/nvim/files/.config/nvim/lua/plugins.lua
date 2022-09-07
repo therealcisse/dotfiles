@@ -662,7 +662,6 @@ return require("packer").startup {
 
     -- Sweet message committer
     use "rhysd/committia.vim"
-    use "sindrets/diffview.nvim"
 
     -- Floating windows are awesome :)
     use {
@@ -680,7 +679,12 @@ return require("packer").startup {
       end,
     }
 
-    -- use "ThePrimeagen/harpoon"
+    use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+
+    use {
+      "ThePrimeagen/harpoon",
+      requires = { "nvim-lua/plenary.nvim" }
+    }
     -- use 'untitled-ai/jupyter_ascending.vim'
 
     use "tjdevries/standard.vim"
