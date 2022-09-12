@@ -851,6 +851,7 @@ let g:indent_blankline_space_char = '⋅'
 let g:indent_blankline_char = '⋅'
 
 command! CopyBuffer let @+ = expand('%:p')
+command! Jq :%!jq '.'
 
 nnoremap <localleader>z <cmd>ZenMode<CR>
 
