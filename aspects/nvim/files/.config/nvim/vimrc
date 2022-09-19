@@ -6,6 +6,7 @@ colorscheme falcon
 set background=dark
 
 lua << EOF
+  vim.g.ts_highlight_lua = false
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 
 EOF
@@ -55,7 +56,7 @@ set ttyfast
 
 set mouse=a
 
-au BufWritePost plugins.lua PackerCompile
+au BufWritePost *.lua PackerCompile
 
 if exists('$SUDO_USER')
   set nobackup                        " don't create root-owned files
@@ -223,7 +224,7 @@ if has('folding')
 
 endif
 
-set pumheight=10             " Completion window max size
+" set pumheight=10             " Completion window max size
 
 if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j                " remove comment leader when joining comment lines
@@ -273,6 +274,8 @@ set list
   vim.wo.listchars =
       table.concat(
       {
+          "multispace:---+",
+          "leadmultispace:---+",
           "eol:↴",
           "tab:│⋅",
           "trail:•",

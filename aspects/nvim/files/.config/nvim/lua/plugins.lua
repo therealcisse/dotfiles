@@ -79,7 +79,20 @@ return require("packer").startup {
 
     use 'ekalinin/Dockerfile.vim'
 
-    use "RRethy/vim-illuminate"
+    use { "anuvyklack/windows.nvim",
+    requires = {
+      "anuvyklack/middleclass",
+      "anuvyklack/animation.nvim"
+    },
+    config = function()
+      vim.o.winwidth = 15
+      vim.o.winminwidth = 15
+      vim.o.equalalways = false
+      require('windows').setup()
+    end
+  }
+
+    -- use "RRethy/vim-illuminate"
     use 'tpope/vim-fugitive'
 
     use 'DataWraith/auto_mkdir'
