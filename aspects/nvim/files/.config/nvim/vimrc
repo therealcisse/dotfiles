@@ -11,6 +11,8 @@ lua << EOF
 
 EOF
 
+set noequalalways
+
 nnoremap <silent> <localleader>a   <cmd>lua require'metals'.open_all_diagnostics()<CR>
 
 nnoremap <silent> [e               <cmd>lua vim.diagnostic.goto_prev()<CR>
@@ -349,7 +351,7 @@ endif
 augroup MyAutocmds
     au!
 
-    au VimResized * wincmd =
+    " au VimResized * wincmd =
 
     " Let's close the location and the quickfix window if it's the last one
     if exists('##QuitPre')

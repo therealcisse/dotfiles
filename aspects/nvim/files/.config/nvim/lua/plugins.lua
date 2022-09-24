@@ -85,9 +85,10 @@ return require("packer").startup {
       "anuvyklack/animation.nvim"
     },
     config = function()
-      vim.o.winwidth = 15
-      vim.o.winminwidth = 15
+      vim.o.winwidth = 5
+      vim.o.winminwidth = 5
       vim.o.equalalways = false
+
       require('windows').setup()
     end
   }
@@ -286,6 +287,8 @@ return require("packer").startup {
     use { "nvim-telescope/telescope-hop.nvim" }
     use { "nvim-telescope/telescope-file-browser.nvim" }
     use { "nvim-telescope/telescope-ui-select.nvim" }
+
+    use { "nvim-telescope/telescope-live-grep-args.nvim" }
 
     -- local_use("nvim-telescope", "telescope-async-sorter-test.nvim")
 
