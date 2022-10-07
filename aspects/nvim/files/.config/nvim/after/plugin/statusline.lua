@@ -9,7 +9,7 @@ RELOAD "el"
 require("el").reset_windows()
 
 vim.opt.laststatus = 0
-vim.opt.ch = 0
+vim.opt.ch = 2
 
 -- local builtin = require "el.builtin"
 -- local extensions = require "el.extensions"

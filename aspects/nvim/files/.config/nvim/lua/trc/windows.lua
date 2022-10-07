@@ -1,2 +1,2 @@
-vim.keymap.set('n', '<C-w>z', '<Cmd>WindowsMaximaze<CR>')
+vim.keymap.set('n', '<C-Enter>', '<Cmd>WindowsMaximize<CR>')
 

@@ -6,10 +6,10 @@ if not has_lsp then
   return
 end
 
-local navic_ok, navic = pcall(require, "nvim-navic")
-if not navic_ok then
-  return
-end
+-- local navic_ok, navic = pcall(require, "nvim-navic")
+-- if not navic_ok then
+--   return
+-- end
 
 local is_mac = vim.fn.has "macunix" == 1
 
@@ -38,7 +38,7 @@ local custom_init = function(client, bufnr)
   client.config.flags = client.config.flags or {}
   client.config.flags.allow_incremental_sync = true
 
-  navic.attach(client, bufnr)
+  -- navic.attach(client, bufnr)
 
   -- if pcall(require, "lsp_signature") then
   --   -- Get signatures (and _only_ signatures) when in argument lists.

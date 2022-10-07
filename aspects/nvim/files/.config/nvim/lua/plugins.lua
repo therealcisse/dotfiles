@@ -72,10 +72,10 @@ return require("packer").startup {
     use 'TovarishFin/vim-solidity'
 
     -----------------------------------------------------------
-    use {
-      "SmiteshP/nvim-navic",
-      requires = "neovim/nvim-lspconfig"
-    }
+    -- use {
+    --   "SmiteshP/nvim-navic",
+    --   requires = "neovim/nvim-lspconfig"
+    -- }
 
     use 'ekalinin/Dockerfile.vim'
 
@@ -109,6 +109,7 @@ return require("packer").startup {
     use 'vim-scripts/ReplaceWithRegister' -- replace <motion> with register
 
     -- use { 'fenetikm/falcon' }
+    use 'folke/tokyonight.nvim'
 
     use({
       "ethanholz/nvim-lastplace",
@@ -326,12 +327,12 @@ return require("packer").startup {
       }
     end
 
-    use {
-      "antoinemadec/FixCursorHold.nvim",
-      run = function()
-        vim.g.curshold_updatime = 1000
-      end,
-    }
+    -- use {
+    --   "antoinemadec/FixCursorHold.nvim",
+    --   run = function()
+    --     vim.g.curshold_updatime = 1000
+    --   end,
+    -- }
 
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
@@ -442,23 +443,23 @@ return require("packer").startup {
     use "monaqa/dial.nvim"
 
     --   FOCUSING:
-    local use_folke = true
-    if use_folke then
-      use "folke/zen-mode.nvim"
-      use "folke/twilight.nvim"
-    else
-      use {
-        "junegunn/goyo.vim",
-        cmd = "Goyo",
-        disable = use_folke,
-      }
-
-      use {
-        "junegunn/limelight.vim",
-        after = "goyo.vim",
-        disable = use_folke,
-      }
-    end
+    -- local use_folke = true
+    -- if use_folke then
+    --   use "folke/zen-mode.nvim"
+    --   use "folke/twilight.nvim"
+    -- else
+    --   use {
+    --     "junegunn/goyo.vim",
+    --     cmd = "Goyo",
+    --     disable = use_folke,
+    --   }
+    --
+    --   use {
+    --     "junegunn/limelight.vim",
+    --     after = "goyo.vim",
+    --     disable = use_folke,
+    --   }
+    -- end
 
     --
     --
@@ -662,7 +663,7 @@ return require("packer").startup {
      use "kylechui/nvim-surround"
 
 
-     use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
+     -- use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
      use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
      use "lukas-reineke/indent-blankline.nvim"
 
@@ -735,30 +736,30 @@ return require("packer").startup {
 
     use 'levouh/tint.nvim'
 
-    use({
-      "Pocco81/true-zen.nvim",
-      config = function()
-        require("true-zen").setup {
-          -- your config goes here
-          -- or just leave it empty :)
-          callbacks = {
-            open_pre = nil,
-            open_pos = nil,
-            close_pre = nil,
-            close_pos = nil
-          },
-          integrations = {
-            tmux = false, -- hide tmux status bar in (minimalist, ataraxis)
-            kitty = { -- increment font size in Kitty. Note: you must set `allow_remote_control socket-only` and `listen_on unix:/tmp/kitty` in your personal config (ataraxis)
-              enabled = true,
-              font = "+3"
-            },
-            twilight = false, -- enable twilight (ataraxis)
-            lualine = false -- hide nvim-lualine (ataraxis)
-          },
-        }
-      end,
-    })
+    -- use({
+    --   "Pocco81/true-zen.nvim",
+    --   config = function()
+    --     require("true-zen").setup {
+    --       -- your config goes here
+    --       -- or just leave it empty :)
+    --       callbacks = {
+    --         open_pre = nil,
+    --         open_pos = nil,
+    --         close_pre = nil,
+    --         close_pos = nil
+    --       },
+    --       integrations = {
+    --         tmux = false, -- hide tmux status bar in (minimalist, ataraxis)
+    --         kitty = { -- increment font size in Kitty. Note: you must set `allow_remote_control socket-only` and `listen_on unix:/tmp/kitty` in your personal config (ataraxis)
+    --           enabled = true,
+    --           font = "+3"
+    --         },
+    --         twilight = false, -- enable twilight (ataraxis)
+    --         lualine = false -- hide nvim-lualine (ataraxis)
+    --       },
+    --     }
+    --   end,
+    -- })
 
     -- use {
     --   'nyngwang/NeoNoName.lua',
@@ -816,7 +817,7 @@ return require("packer").startup {
     --   end
     -- }
 
-    use "fladson/vim-kitty"
+    -- use "fladson/vim-kitty"
 
     -- TODO: Figure out why this randomly popups
     --       Figure out if I want to use it later as well :)
@@ -840,6 +841,21 @@ return require("packer").startup {
       "Vhyrro/neorg",
       -- branch = "unstable"
     }
+
+    -- use({
+    --   "folke/noice.nvim",
+    --   event = "VimEnter",
+    --   config = function()
+    --     require("noice").setup()
+    --   end,
+    --   requires = {
+    --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+    --     "MunifTanjim/nui.nvim",
+    --     "rcarriga/nvim-notify",
+    --     "hrsh7th/nvim-cmp",
+    --     "nvim-treesitter/nvim-treesitter",
+    --   }
+    -- })
 
     -- pretty sure I'm done w/ these
     -- local_use 'vlog.nvim'

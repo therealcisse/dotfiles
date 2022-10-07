@@ -2,7 +2,7 @@
 
 set t_Co=256
 set termguicolors
-colorscheme falcon
+colorscheme tokyonight-night
 set background=dark
 
 lua << EOF
@@ -153,6 +153,7 @@ set shortmess+=W                 " don't echo "[w]"/"[written]" when writing
 set shortmess+=a                 " use abbreviations in messages eg. `[RO]` instead of `[readonly]`
 set shortmess+=o                 " overwrite file-written messages
 set shortmess+=t                 " truncate file messages at start
+set shortmess+=a                 " truncate file messages at start
 
 " don't give |ins-completion-menu| messages.  For example,
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
@@ -613,7 +614,7 @@ set hidden
 set relativenumber
 
 if has('showcmd')
-  set noshowcmd                         " don't show extra info at end of command line
+  set noshowcmd " don't show extra info at end of command line
 endif
 
 " Select pasted text
@@ -865,7 +866,7 @@ map <C-M> <CR>
 nnoremap <C-;> :Startify<CR>
 
 nnoremap <C-w>o :TZAtaraxis<CR>
-nnoremap <C-Enter> :TZFocus<CR>
+nnoremap <C-Enter> :WindowsMaximizeHorizontally<CR>
 
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
@@ -896,6 +897,7 @@ lua << EOF
   require "trc.telescope.setup"
   require "trc.telescope.mappings"
 
+  require "trc.colorscheme"
   -- require "trc.g"
   require "trc.lir"
   require "trc.winbar"

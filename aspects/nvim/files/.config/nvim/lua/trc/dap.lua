@@ -23,27 +23,25 @@ if not dap_ui_status_ok then
 	return
 end
 
-local icons = require "trc.icons"
-
 vim.api.nvim_set_hl(0, 'DapBreakpoint', {
   fg='#993939',
-  bg=none,
-  ctermfg=none,
-  ctermbg=none
+  bg=nil,
+  ctermfg=nil,
+  ctermbg=nil
 })
 
 vim.api.nvim_set_hl(0, 'DapLogPoint', {
   fg='#61afef',
-  bg=none,
-  ctermfg=none,
-  ctermbg=none
+  bg=nil,
+  ctermfg=nil,
+  ctermbg=nil
 })
 
 vim.api.nvim_set_hl(0, 'DapStopped', {
   fg='#98c379',
-  bg=none,
-  ctermfg=none,
-  ctermbg=none
+  bg=nil,
+  ctermfg=nil,
+  ctermbg=nil
 })
 
 vim.fn.sign_define('DapBreakpoint', {

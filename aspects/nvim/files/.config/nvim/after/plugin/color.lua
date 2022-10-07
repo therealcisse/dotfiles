@@ -18,7 +18,7 @@ local check = function ()
   vim.cmd('highlight Comment ' .. pinnacle.italicize('Comment'))
 
   -- Hide (or at least make less obvious) the EndOfBuffer region
-  vim.cmd('highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg')
+  -- vim.cmd('highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg')
 
   -- Grey, just like we used to get with https://github.com/Yggdroot/indentLine
   vim.cmd('highlight clear Conceal')
