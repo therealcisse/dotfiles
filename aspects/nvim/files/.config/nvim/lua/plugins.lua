@@ -76,8 +76,20 @@ return require("packer").startup {
     --   "SmiteshP/nvim-navic",
     --   requires = "neovim/nvim-lspconfig"
     -- }
+    use({
+      "SmiteshP/nvim-navic",
+      module = "nvim-navic",
+      config = function()
+        vim.g.navic_silence = true
+        require("nvim-navic").setup({ separator = " ", highlight = true, depth_limit = 5 })
+      end,
+    })
+
+    use({ "famiu/bufdelete.nvim", cmd = "Bdelete" })
 
     use 'ekalinin/Dockerfile.vim'
+
+    use("petertriho/nvim-scrollbar")
 
     use { "anuvyklack/windows.nvim",
     requires = {
@@ -172,7 +184,20 @@ return require("packer").startup {
       use "williamboman/nvim-lsp-installer"
     end
     -- use "wbthomason/lsp-status.nvim"
-    use "j-hui/fidget.nvim"
+    use({
+      "j-hui/fidget.nvim",
+      module = "fidget",
+      config = function()
+        require("fidget").setup({
+          window = {
+            relative = "editor",
+          },
+        })
+        -- HACK: prevent error when exiting Neovim
+        vim.api.nvim_create_autocmd("VimLeavePre", { command = [[silent! FidgetClose]] })
+      end,
+    })
+
     use {
       "ericpubu/lsp_codelens_extensions.nvim",
       config = function()
@@ -197,17 +222,18 @@ return require("packer").startup {
     -- use "ray-x/guihua.lua"
     use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
-    use {
-      "folke/lsp-trouble.nvim",
-      cmd = "Trouble",
+    use({
+      "folke/trouble.nvim",
+      event = "BufReadPre",
+      module = "trouble",
+      cmd = { "TroubleToggle", "Trouble" },
       config = function()
-        -- Can use P to toggle auto movement
-        require("trouble").setup {
-          auto_preview = false,
-          auto_fold = true,
-        }
+        require("trouble").setup({
+          auto_open = false,
+          use_diagnostic_signs = true, -- en
+        })
       end,
-    }
+    })
 
     use {
       'monkoose/matchparen.nvim',
@@ -268,8 +294,25 @@ return require("packer").startup {
       end,
     })
 
-    use "rcarriga/nvim-notify"
+    use({ "stevearc/dressing.nvim", event = "User PackerDefered" })
 
+    use({
+      "rcarriga/nvim-notify",
+      -- event = "User PackerDefered",
+      config = function()
+        require("notify").setup({ level = vim.log.levels.INFO, fps = 20 })
+        vim.notify = require("notify")
+      end,
+    })
+
+    use {
+      "vigoux/notifier.nvim",
+      config = function()
+        require'notifier'.setup {
+          -- You configuration here
+        }
+      end
+    }
     -- TODO: Investigate
     -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
@@ -427,8 +470,6 @@ return require("packer").startup {
 
     -- TODO: Eventually statusline should consume this.
     use "mkitt/tabline.vim"
-
-    use "kyazdani42/nvim-web-devicons"
 
     -- TODO: This would be cool to add back, but it breaks sg.nvim for now.
     -- use "lambdalisue/vim-protocol"
@@ -658,10 +699,35 @@ return require("packer").startup {
       keys = { "gJ", "gS" },
     }
 
+    use({
+      "m-demare/hlargs.nvim",
+      event = "User PackerDefered",
+      config = function()
+        require("hlargs").setup({
+          color = require("tokyonight.colors").setup().yellow,
+        })
+      end,
+    })
+
+    use({
+      "simrat39/symbols-outline.nvim",
+      cmd = { "SymbolsOutline" },
+      config = function()
+        require("symbols-outline").setup()
+      end,
+      setup = function()
+        vim.keymap.set("n", "<leader>cs", "<cmd>SymbolsOutline<cr>", { desc = "Symbols Outline" })
+      end,
+    })
+
     -- TODO: Check out macvhakann/vim-sandwich at some point
     -- use "tpope/vim-surround" -- Surround text objects easily
-     use "kylechui/nvim-surround"
-
+     use({
+       "kylechui/nvim-surround",
+       event = "BufReadPre",
+       config = function()
+       end,
+     })
 
      -- use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
      use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
@@ -854,8 +920,18 @@ return require("packer").startup {
     --     "rcarriga/nvim-notify",
     --     "hrsh7th/nvim-cmp",
     --     "nvim-treesitter/nvim-treesitter",
+    --     "kyazdani42/nvim-web-devicons",
     --   }
     -- })
+
+    -- Theme: icons
+    use({
+      "kyazdani42/nvim-web-devicons",
+      module = "nvim-web-devicons",
+      config = function()
+        require("nvim-web-devicons").setup({ default = true })
+      end,
+    })
 
     -- pretty sure I'm done w/ these
     -- local_use 'vlog.nvim'
