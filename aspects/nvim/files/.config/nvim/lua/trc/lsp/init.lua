@@ -152,12 +152,14 @@ vim.api.nvim_create_autocmd("LspDetach", {
 
 -- require('trc.lsp.codelens').setup()
 
-local custom_attach = function(client)
+local custom_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
   if nvim_status then
     nvim_status.on_attach(client)
   end
+
+  require("lsp-inlayhints").on_attach(client, bufnr)
 
   buf_inoremap { "<c-s>s", vim.lsp.buf.signature_help }
 
