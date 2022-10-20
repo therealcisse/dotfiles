@@ -151,7 +151,9 @@ const DEVICE_DEFAULTS = {
   fn_function_keys: [],
   ignore: false,
   manipulate_caps_lock_led: true,
-  simple_modifications: [],
+  simple_modifications: [
+
+  ],
 };
 
 const IDENTIFIER_DEFAULTS = {
@@ -176,7 +178,6 @@ const REALFORCE = {
     vendor_id: 2131,
   },
   simple_modifications: [
-    ...swap('left_command', 'left_option'),
     ...swap('right_command', 'right_option'),
     ...fromTo('application', 'fn'),
     ...fromTo('pause', 'power'),
@@ -443,6 +444,32 @@ const DEFAULT_PROFILE = applyExemptions({
           },
         ],
       },
+      // {
+      //   description:
+      //     'Change Command to Control',
+      //   manipulators: [
+      //     {
+      //       from: {
+      //         key_code: 'left_command',
+      //         modifiers: {
+      //           optional: ['any'],
+      //         },
+      //       },
+      //       to: [
+      //         {
+      //           key_code: 'left_control',
+      //           lazy: true,
+      //         },
+      //       ],
+      //       to_if_held_down: [
+      //         {
+      //           key_code: 'left_control',
+      //         },
+      //       ],
+      //       type: 'basic',
+      //     },
+      //   ],
+      // },
       {
         description:
           'Change Return to Control when used as modifier, Return when used alone',
@@ -485,6 +512,7 @@ const DEFAULT_PROFILE = applyExemptions({
                   // needed in Kitty.
                   bundleIdentifier('com.apple.Terminal'),
                   bundleIdentifier('com.googlecode.iterm2'),
+                  bundleIdentifier('io.Alacritty'),
                 ],
                 type: 'frontmost_application_if',
               },
@@ -564,6 +592,7 @@ const DEFAULT_PROFILE = applyExemptions({
   name: 'Default',
   selected: true,
   "simple_modifications": [
+    ...fromTo('left_command', 'left_control'),
     // {
     //   "from": {
     //     "key_code": "non_us_backslash"

@@ -742,6 +742,7 @@ return require("packer").startup {
      use({
        "kylechui/nvim-surround",
        -- event = "BufReadPre",
+       tag = '*',
        config = function()
        end,
      })

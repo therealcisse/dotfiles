@@ -912,6 +912,7 @@ lua << EOF
   require "trc.dap"
   require "trc.git_worktree"
   require "trc.glow"
+  require "trc.scrollbar"
   -- require "trc.foldtext"
 EOF
 

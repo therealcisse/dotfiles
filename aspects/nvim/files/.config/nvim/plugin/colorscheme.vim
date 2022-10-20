@@ -94,6 +94,9 @@ function! s:MyHighlights() abort
 
   hi! Floaterm guibg=black
   " hi! FloatermNC guibg=gray
+
+  " highlight Comment cterm=italic gui=italic
+
   hi! FloatermNC guibg=black
 
   hi! link ElCommand Statusline
