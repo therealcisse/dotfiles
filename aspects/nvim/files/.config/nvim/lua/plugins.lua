@@ -724,7 +724,8 @@ return require("packer").startup {
     -- use "tpope/vim-surround" -- Surround text objects easily
      use({
        "kylechui/nvim-surround",
-       event = "BufReadPre",
+       -- event = "BufReadPre",
+       tag = '*',
        config = function()
        end,
      })
