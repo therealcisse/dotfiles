@@ -132,6 +132,7 @@ return require("packer").startup {
     use 'tommcdo/vim-lion' -- Align = gl, gL
     use 'tpope/vim-eunuch' --  =SudoWrite, ...
 
+    -- J
     use {'FooSoft/vim-argwrap', cmd = {'ArgWrap'}}
 
     use 'matze/vim-move' -- <c-k>, <c-j>

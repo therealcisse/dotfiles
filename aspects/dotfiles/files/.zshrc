@@ -1,3 +1,5 @@
+export TERM=alacritty
+
 # # Create a hash table for globally stashing variables without polluting main
 # scope with a bunch of identifiers.
 typeset -A __WINCENT
