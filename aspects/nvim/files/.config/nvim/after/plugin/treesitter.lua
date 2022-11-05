@@ -34,7 +34,7 @@ local custom_captures = {
   ["namespace.type"] = "TSNamespaceType",
 }
 
-require("nvim-treesitter.highlight").set_custom_captures(custom_captures)
+-- require("nvim-treesitter.highlight").set_custom_captures(custom_captures)
 
 -- alt+<space>, alt+p -> swap next
 -- alt+<backspace>, alt+p -> swap previous
@@ -64,6 +64,7 @@ end)()
 local _ = require("nvim-treesitter.configs").setup {
   ensure_installed = {
     "scala",
+    "zig",
     "dart",
     "go",
     "html",
@@ -72,18 +73,18 @@ local _ = require("nvim-treesitter.configs").setup {
     "markdown",
     "python",
     "query",
-    "rust",
+    -- "rust",
     "toml",
     "tsx",
     "typescript",
   },
 
-  highlight = {
-    enable = true,
-    use_languagetree = false,
-    -- disable = { "json" },
-    custom_captures = custom_captures,
-  },
+  -- highlight = {
+  --   enable = true,
+  --   use_languagetree = false,
+  --   -- disable = { "json" },
+  --   custom_captures = custom_captures,
+  -- },
 
   refactor = {
     highlight_definitions = { enable = true },
@@ -209,6 +210,6 @@ end
 
 vim.cmd [[highlight IncludedC guibg=#373b41]]
 
-vim.cmd [[nnoremap <space>tp :TSPlaygroundToggle<CR>]]
-vim.cmd [[nnoremap <space>th :TSHighlightCapturesUnderCursor<CR>]]
+vim.cmd [[nnoremap <leader>tp :TSPlaygroundToggle<CR>]]
+vim.cmd [[nnoremap <leader>th :TSHighlightCapturesUnderCursor<CR>]]
 

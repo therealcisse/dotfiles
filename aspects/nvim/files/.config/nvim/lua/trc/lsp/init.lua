@@ -85,18 +85,18 @@ local filetype_attach = setmetatable({
   --   autocmd_format(false)
   -- end,
 
-  rust = function()
-    -- vim.cmd [[
-    --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
-    -- ]]
-
-    telescope_mapper("<leader>wf", "lsp_workspace_symbols", {
-      ignore_filename = true,
-      query = "#",
-    }, true)
-
-    autocmd_format(false)
-  end,
+  -- rust = function()
+  --   -- vim.cmd [[
+  --   --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
+  --   -- ]]
+  --
+  --   telescope_mapper("<leader>wf", "lsp_workspace_symbols", {
+  --     ignore_filename = true,
+  --     query = "#",
+  --   }, true)
+  --
+  --   autocmd_format(false)
+  -- end,
 
   -- typescript = function()
   --   autocmd_format(false, function(clients)
@@ -216,7 +216,7 @@ if nvim_status then
   updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
 end
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
 
 -- TODO: check if this is the problem.
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
