@@ -92,18 +92,35 @@ return require("packer").startup {
     use("petertriho/nvim-scrollbar")
 
     use { "anuvyklack/windows.nvim",
-    requires = {
-      "anuvyklack/middleclass",
-      "anuvyklack/animation.nvim"
-    },
-    config = function()
-      vim.o.winwidth = 5
-      vim.o.winminwidth = 5
-      vim.o.equalalways = false
+      requires = {
+        "anuvyklack/middleclass",
+        "anuvyklack/animation.nvim"
+      },
+      config = function()
+        vim.o.winwidth = 5
+        vim.o.winminwidth = 5
+        vim.o.equalalways = false
 
-      require('windows').setup()
-    end
-  }
+        require('windows').setup()
+      end
+    }
+
+    use {
+      'ggandor/leap.nvim',
+      config = function()
+        require('leap').add_default_mappings()
+      end
+
+
+    }
+
+    use {
+      'lvimuser/lsp-inlayhints.nvim',
+      config = function()
+        require('lsp-inlayhints').setup()
+      end
+
+    }
 
     -- use "RRethy/vim-illuminate"
     use 'tpope/vim-fugitive'
@@ -115,6 +132,7 @@ return require("packer").startup {
     use 'tommcdo/vim-lion' -- Align = gl, gL
     use 'tpope/vim-eunuch' --  =SudoWrite, ...
 
+    -- J
     use {'FooSoft/vim-argwrap', cmd = {'ArgWrap'}}
 
     use 'matze/vim-move' -- <c-k>, <c-j>
@@ -928,7 +946,7 @@ return require("packer").startup {
     -- Theme: icons
     use({
       "kyazdani42/nvim-web-devicons",
-      module = "nvim-web-devicons",
+      -- module = "nvim-web-devicons",
       config = function()
         require("nvim-web-devicons").setup({ default = true })
       end,
