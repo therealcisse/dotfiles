@@ -13,13 +13,13 @@ lir.setup {
   mappings = {
     ["Enter"] = actions.edit,
     ["<C-M>"] = actions.edit,
-    -- ["l"] = actions.edit,
+    ["l"] = actions.edit,
     ["<C-s>"] = actions.split,
     ["v"] = actions.vsplit,
     ["<C-t>"] = actions.tabedit,
 
     ["-"] = actions.up,
-    -- ["h"] = actions.up,
+    ["h"] = actions.up,
     ["q"] = actions.quit,
 
     ["A"] = actions.mkdir,
@@ -70,20 +70,29 @@ lir.setup {
       { noremap = true, silent = true }
     )
 
+    vim.cmd([[
+    setlocal number
+    setlocal ro
+    ]])
+
     -- echo cwd
     -- vim.api.nvim_echo({ { vim.fn.expand "%:p", "Normal" } }, false, {})
   end,
 }
 
+require'lir.git_status'.setup({
+  show_ignored = false
+})
+
 -- custom folder icon
-require("nvim-web-devicons").set_icon {
-  lir_folder_icon = {
-    icon = "",
-    -- color = "#7ebae4",
-    color = "#569CD6",
-    name = "LirFolderNode",
-  },
-}
+-- require("nvim-web-devicons").set_icon {
+--   lir_folder_icon = {
+--     icon = "",
+--     -- color = "#7ebae4",
+--     color = "#569CD6",
+--     name = "LirFolderNode",
+--   },
+-- }
 
 vim.api.nvim_set_keymap(
       'n',

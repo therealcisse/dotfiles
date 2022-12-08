@@ -371,7 +371,7 @@ nnoremap gj j
 nnoremap gk k
 
 " Save all
-nn <leader>s :wa<CR>
+nn <leader>s :wa<CR> | echo 'Saved!'
 
 " Save current buffer
 nn <leader>S :update<CR>
@@ -915,6 +915,13 @@ lua << EOF
   require "trc.scrollbar"
   -- require "trc.foldtext"
 EOF
+
+highlight link LirGitStatusBracket Comment
+highlight link LirGitStatusIndex Special
+highlight link LirGitStatusWorktree WarningMsg
+highlight link LirGitStatusUnmerged ErrorMsg
+highlight link LirGitStatusUntracked Comment
+highlight link LirGitStatusIgnored Comment
 
 " ----------------------------------------------------------------------
 "  Local Settings                                                     |
