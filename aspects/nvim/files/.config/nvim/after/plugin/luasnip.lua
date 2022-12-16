@@ -264,7 +264,7 @@ ls.add_snippets(
   }
 )
 
-for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/tj/snips/ft/*.lua", true)) do
+for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/trc/snips/ft/*.lua", true)) do
   loadfile(ft_path)()
 end
 

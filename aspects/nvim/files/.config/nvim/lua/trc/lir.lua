@@ -72,7 +72,7 @@ lir.setup {
 
     vim.cmd([[
     setlocal number
-    setlocal ro
+    setlocal relativenumber
     ]])
 
     -- echo cwd
@@ -97,6 +97,13 @@ require'lir.git_status'.setup({
 vim.api.nvim_set_keymap(
       'n',
       '-',
+      [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]],
+      { noremap = true }
+    )
+
+vim.api.nvim_set_keymap(
+      'n',
+      '<leader>n',
       [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]],
       { noremap = true }
     )

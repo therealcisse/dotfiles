@@ -40,20 +40,20 @@ local goto_opts = {
 
 vim.keymap.set(
   "",
-  "<Leader>l",
+  "<leader>l",
   require("lsp_lines").toggle,
   { desc = "Toggle lsp_lines" }
 )
 
 nmap {
-  "<leader>dn",
+  "<leader>gn",
   function()
     vim.diagnostic.goto_next(goto_opts)
   end,
 }
 
 nmap {
-  "<leader>dp",
+  "<leader>gp",
   function()
     vim.diagnostic.goto_prev(goto_opts)
   end,

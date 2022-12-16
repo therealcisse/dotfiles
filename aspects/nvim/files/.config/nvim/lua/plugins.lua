@@ -91,48 +91,62 @@ return require("packer").startup {
 
     use("petertriho/nvim-scrollbar")
 
-    use { "anuvyklack/windows.nvim",
+    -- use { "anuvyklack/windows.nvim",
+    --   requires = {
+    --     "anuvyklack/middleclass",
+    --     "anuvyklack/animation.nvim"
+    --   },
+    --   config = function()
+    --     vim.o.winwidth = 5
+    --     vim.o.winminwidth = 5
+    --     vim.o.equalalways = false
+    --
+    --     require('windows').setup()
+    --   end
+    -- }
+
+    -- use {
+    --   'ggandor/leap.nvim',
+    --   config = function()
+    --     for _, _1_ in ipairs(
+    --       {
+    --         {{"n", "x", "o"}, "f", "<Plug>(leap-forward-to)"},
+    --         {{"n", "x", "o"}, "F", "<Plug>(leap-backward-to)"},
+    --         {{"x", "o"}, "x", "<Plug>(leap-forward-till)"},
+    --         {{"x", "o"}, "X", "<Plug>(leap-backward-till)"},
+    --         {{"n", "x", "o"}, "gs", "<Plug>(leap-cross-window)"}
+    --       }
+    --     ) do
+    --       local _each_2_ = _1_
+    --       local modes = _each_2_[1]
+    --       local lhs = _each_2_[2]
+    --       local rhs = _each_2_[3]
+    --       for _0, mode in ipairs(modes) do
+    --         if (force_3f or ((vim.fn.mapcheck(lhs, mode) == "") and (vim.fn.hasmapto(rhs, mode) == 0))) then
+    --           vim.keymap.set(mode, lhs, rhs, {silent = true})
+    --         else
+    --         end
+    --       end
+    --     end
+    --     -- require('leap').add_default_mappings()
+    --   end
+    --
+    --
+    -- }
+
+    use({
+      "jackMort/ChatGPT.nvim",
+      config = function()
+        require("chatgpt").setup({
+          -- optional configuration
+        })
+      end,
       requires = {
-        "anuvyklack/middleclass",
-        "anuvyklack/animation.nvim"
-      },
-      config = function()
-        vim.o.winwidth = 5
-        vim.o.winminwidth = 5
-        vim.o.equalalways = false
-
-        require('windows').setup()
-      end
-    }
-
-    use {
-      'ggandor/leap.nvim',
-      config = function()
-        for _, _1_ in ipairs(
-          {
-            {{"n", "x", "o"}, "f", "<Plug>(leap-forward-to)"},
-            {{"n", "x", "o"}, "F", "<Plug>(leap-backward-to)"},
-            {{"x", "o"}, "x", "<Plug>(leap-forward-till)"},
-            {{"x", "o"}, "X", "<Plug>(leap-backward-till)"},
-            {{"n", "x", "o"}, "gs", "<Plug>(leap-cross-window)"}
-          }
-        ) do
-          local _each_2_ = _1_
-          local modes = _each_2_[1]
-          local lhs = _each_2_[2]
-          local rhs = _each_2_[3]
-          for _0, mode in ipairs(modes) do
-            if (force_3f or ((vim.fn.mapcheck(lhs, mode) == "") and (vim.fn.hasmapto(rhs, mode) == 0))) then
-              vim.keymap.set(mode, lhs, rhs, {silent = true})
-            else
-            end
-          end
-        end
-        -- require('leap').add_default_mappings()
-      end
-
-
-    }
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+      }
+    })
 
     use {
       'lvimuser/lsp-inlayhints.nvim',

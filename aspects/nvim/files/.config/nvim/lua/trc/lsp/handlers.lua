@@ -23,7 +23,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
       severity_limit = "Warning",
     },
     virtual_text = false,
-    virtual_lines = true,
+    virtual_lines = false,
     update_in_insert = true,
   })
 

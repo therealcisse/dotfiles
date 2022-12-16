@@ -371,7 +371,9 @@ nnoremap gj j
 nnoremap gk k
 
 " Save all
-nn <leader>s :wa<CR> | echo 'Saved!'
+nn <leader>s :wa<CR>
+
+inoremap <c-delete> <c-w>
 
 " Save current buffer
 nn <leader>S :update<CR>
@@ -692,10 +694,10 @@ nnoremap <Right> :vertical resize +1<CR>
 nnoremap <Up> :resize -1<CR>
 nnoremap <Down> :resize +1<CR>
 " Disable arrow keys completely in Insert Mode
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+" imap <up> <nop>
+" imap <down> <nop>
+" imap <left> <nop>
+" imap <right> <nop>
 
 " Echodoc
 set noshowmode
@@ -862,6 +864,21 @@ command! Jq :%!jq '.'
 nnoremap <localleader>z <cmd>ZenMode<CR>
 
 map <C-M> <CR>
+
+nnoremap <leader>o <C-O>
+nnoremap <leader>i <C-I>
+
+nnoremap <leader>d <C-D>
+vnoremap <leader>d <C-D>
+
+nnoremap <leader>u <C-U>
+vnoremap <leader>u <C-U>
+
+nnoremap <leader>k :ChatGPT<CR>
+nnoremap yp Yp
+
+inoremap jj <ESC>
+inoremap kk <ESC>
 
 nnoremap <C-;> :Startify<CR>
 

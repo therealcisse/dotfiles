@@ -42,6 +42,14 @@ map_tele("<C-g>/", "live_grep_args", {
   sorter = sorters.get_fzy_sorter(),
 })
 
+map_tele("<leader>/", "live_grep_args", {
+  short_path = true,
+  word_match = "-w",
+  only_sort_text = true,
+  layout_strategy = "vertical",
+  sorter = sorters.get_fzy_sorter(),
+})
+
 -- List git worktrees
 map_tele("<leader>,", "list_git_worktrees")
 
@@ -59,6 +67,9 @@ map_tele("<leader>c", "create_git_worktree")
 -- map_tele("<leader>fg", "multi_rg")
 -- map_tele("<leader>fo", "oldfiles")
 map_tele("<C-p>", "fs")
+map_tele("<leader>p", "fs")
+map_tele("<leader><backspace>", "fs")
+map_tele("<leader>f", "fs")
 -- map_tele("<leader>fs", "fs")
 -- map_tele("<leader>pp", "project_search")
 -- map_tele("<leader>fv", "find_nvim_source")
