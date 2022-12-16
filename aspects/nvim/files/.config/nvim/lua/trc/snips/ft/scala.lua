@@ -11,6 +11,7 @@ local t = ls.text_node
 local c = ls.choice_node
 -- local f = ls.function_node
 local fmt = require("luasnip.extras.fmt").fmt
+local fmta = require("luasnip.extras.fmt").fmta
 
 local shared = R "trc.snips"
 local same = shared.same
@@ -111,5 +112,14 @@ ls.add_snippets("scala", {
     t { "", ")" },
   }),
 
+  s({trig="hr", dscr="The hyperref package's href{}{} command (for url links)"},
+  fmta(
+  [[\href{<>}{<>}]],
+  {
+    i(1, "url"),
+    i(2, "display name"),
+  }
+  )
+  )
 })
 
