@@ -69,8 +69,7 @@ map_tele("<leader>c", "create_git_worktree")
 map_tele("<C-p>", "fs")
 map_tele("<leader>p", "fs")
 map_tele("<leader><backspace>", "fs")
-map_tele("<leader>f", "fs")
--- map_tele("<leader>fs", "fs")
+map_tele("<leader>fs", "fs")
 -- map_tele("<leader>pp", "project_search")
 -- map_tele("<leader>fv", "find_nvim_source")
 -- map_tele("<leader>fe", "file_browser")
@@ -81,7 +80,9 @@ map_tele("<leader>f", "fs")
 -- map_tele("<leader>gc", "git_commits")
 
 -- Nvim
--- map_tele("<leader>fb", "buffers")
+map_tele("<leader>fd", "buffers", {
+  initial_mode = 'normal',
+})
 -- map_tele("<leader>fa", "installed_plugins")
 -- map_tele("<leader>fi", "search_all_files")
 -- map_tele("<leader>ff", "curbuf")

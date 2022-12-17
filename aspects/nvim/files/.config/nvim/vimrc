@@ -57,6 +57,7 @@ set termguicolors
 set ttyfast
 
 set mouse=a
+set mousemodel=extend
 
 au BufWritePost *.lua PackerCompile
 
@@ -876,6 +877,8 @@ vnoremap <leader>u <C-U>
 
 nnoremap <leader>k :ChatGPT<CR>
 nnoremap yp Yp
+
+nnoremap <localleader>r :so %<CR>
 
 inoremap jj <ESC>
 inoremap kk <ESC>

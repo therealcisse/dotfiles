@@ -21,13 +21,13 @@ snippet_collection.clear_snippets "scala"
 ls.add_snippets("scala", {
   s(
     "main",
-    fmt(
+    fmta(
       [[
-    def main(args: Array[String]): Unit = {{
-      <>
-    }}
+      def main(args: Array[String]): Unit = <>
     ]],
-      {}
+      {
+        i(1),
+      }
     )
   ),
 
@@ -43,8 +43,19 @@ ls.add_snippets("scala", {
     t { "val " },
     i(1),
     t { ": " },
-    t { " = " },
     i(2),
+    t { " = " },
+    i(3),
+    i(0),
+  }),
+
+  s("ift", {
+    t { "if " },
+    i(1),
+    t { " then " },
+    i(2),
+    t { " else " },
+    i(3),
     i(0),
   }),
 
@@ -53,7 +64,7 @@ ls.add_snippets("scala", {
     i(1, "Name"),
     t { "(" },
     i(2),
-    t { "):" },
+    t { "): " },
     i(3),
     t { " = " },
     i(0),
@@ -105,11 +116,25 @@ ls.add_snippets("scala", {
     i(0),
   }),
 
+  s("fory", {
+    t { "for {" },
+    i(1),
+    t { "} yield " },
+    i(0),
+  }),
+
+  s("forp", {
+    i(1),
+    t { " <- " },
+    i(2),
+    i(0),
+  }),
+
   s("pd", {
     t { "println" },
-    t { "", "(" },
+    t { "(" },
     i(0),
-    t { "", ")" },
+    t { ")" },
   }),
 
   s({trig="hr", dscr="The hyperref package's href{}{} command (for url links)"},
