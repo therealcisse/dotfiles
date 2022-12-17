@@ -109,6 +109,14 @@ ls.add_snippets("scala", {
     t { "", "}" },
   }),
 
+  s("object", {
+    t { "object " },
+    i(1, "Name"),
+    t { " {", "    " },
+    i(0),
+    t { "", "}" },
+  }),
+
   s("cs", {
     t { "case " },
     i(1),
