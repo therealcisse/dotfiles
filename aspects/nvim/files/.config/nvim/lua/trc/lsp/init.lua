@@ -172,13 +172,25 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap { "gT", vim.lsp.buf.type_definition }
 
   buf_nnoremap { "gi", handlers.implementation }
-  buf_nnoremap { "<localleader><Enter>", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
+  buf_nnoremap { "<localleader><enter>", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
   -- buf_nnoremap { "<leader>rr", "LspRestart" }
 
-  -- telescope_mapper("gr", "lsp_references", nil, true)
+  telescope_mapper("<localleader>gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
-  telescope_mapper("<localleader>wd", "lsp_document_symbols", { ignore_filename = true }, true)
-  telescope_mapper("<localleader>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
+
+  telescope_mapper(
+    "<localleader>wd",
+    "lsp_document_symbols",
+    { ignore_filename = true },
+    true
+  )
+
+  telescope_mapper(
+    "<localleader>ww",
+    "lsp_dynamic_workspace_symbols",
+    { ignore_filename = true },
+    true
+  )
 
   if filetype ~= "lua" then
     buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }

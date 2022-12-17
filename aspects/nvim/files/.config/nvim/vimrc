@@ -888,6 +888,11 @@ nnoremap <C-;> :Startify<CR>
 nnoremap <C-w>o :TZAtaraxis<CR>
 nnoremap <C-Enter> :WindowsMaximizeHorizontally<CR>
 
+nnoremap <leader><Up> <C-W>K
+nnoremap <leader><Left> <C-W>H
+nnoremap <leader><Right> <C-W>L
+nnoremap <leader><Down> <C-W>J
+
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 

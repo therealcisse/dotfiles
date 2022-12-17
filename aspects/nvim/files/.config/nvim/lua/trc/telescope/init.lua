@@ -301,6 +301,28 @@ function M.lsp_implementations()
   }
 end
 
+function M.lsp_document_symbols ()
+  require("telescope.builtin").lsp_document_symbols{
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+end
+
+function M.lsp_dynamic_workspace_symbols()
+  require("telescope.builtin").lsp_dynamic_workspace_symbols{
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+end
+
 function M.vim_options()
   require("telescope.builtin").vim_options {
     layout_config = {
