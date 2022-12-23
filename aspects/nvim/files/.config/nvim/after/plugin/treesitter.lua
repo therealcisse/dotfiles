@@ -17,6 +17,17 @@ list.sql = {
   },
 }
 
+list.scala = {
+  install_info = {
+    -- url can be Git repo or a local directory:
+    -- url = "~/work/tree-sitter-scala",
+    url = "https://github.com/eed3si9n/tree-sitter-scala.git",
+    branch = "fork-integration",
+    files = {"src/parser.c", "src/scanner.c"},
+    requires_generate_from_grammar = false,
+  },
+}
+
 -- list.rsx = {
 --   install_info = {
 --     url = "https://github.com/tjdevries/tree-sitter-rsx",
@@ -63,7 +74,7 @@ end)()
 
 local _ = require("nvim-treesitter.configs").setup {
   ensure_installed = {
-    "scala",
+    -- "scala",
     "zig",
     "dart",
     "go",

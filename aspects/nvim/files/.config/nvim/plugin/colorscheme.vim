@@ -52,7 +52,7 @@ function s:HandleInactiveBackground()
 
     "TODO normalfloat background settings to not use PMenu
     set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
-    return
+    " return
   " endif
 
   " if g:falcon_background == 1

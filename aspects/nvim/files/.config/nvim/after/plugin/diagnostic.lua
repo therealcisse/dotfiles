@@ -46,14 +46,14 @@ vim.keymap.set(
 )
 
 nmap {
-  "<leader>gn",
+  "<leader>gj",
   function()
     vim.diagnostic.goto_next(goto_opts)
   end,
 }
 
 nmap {
-  "<leader>gp",
+  "<leader>gk",
   function()
     vim.diagnostic.goto_prev(goto_opts)
   end,

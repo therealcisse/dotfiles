@@ -91,19 +91,19 @@ return require("packer").startup {
 
     use("petertriho/nvim-scrollbar")
 
-    -- use { "anuvyklack/windows.nvim",
-    --   requires = {
-    --     "anuvyklack/middleclass",
-    --     "anuvyklack/animation.nvim"
-    --   },
-    --   config = function()
-    --     vim.o.winwidth = 5
-    --     vim.o.winminwidth = 5
-    --     vim.o.equalalways = false
-    --
-    --     require('windows').setup()
-    --   end
-    -- }
+    use { "anuvyklack/windows.nvim",
+      requires = {
+        "anuvyklack/middleclass",
+        "anuvyklack/animation.nvim"
+      },
+      config = function()
+        -- vim.o.winwidth = 5
+        -- vim.o.winminwidth = 5
+        -- vim.o.equalalways = false
+
+        require('windows').setup()
+      end
+    }
 
     -- use {
     --   'ggandor/leap.nvim',
@@ -173,7 +173,9 @@ return require("packer").startup {
     use 'vim-scripts/ReplaceWithRegister' -- replace <motion> with register
 
     -- use { 'fenetikm/falcon' }
-    use 'folke/tokyonight.nvim'
+    -- use 'folke/tokyonight.nvim'
+
+    use { 'EdenEast/nightfox.nvim' }
 
     use({
       "ethanholz/nvim-lastplace",
@@ -734,7 +736,7 @@ return require("packer").startup {
       use "tamago324/lir-mmv.nvim"
     end
 
-    use "pechorin/any-jump.vim"
+    -- use "pechorin/any-jump.vim"
 
     --
     -- TEXT MANIUPLATION

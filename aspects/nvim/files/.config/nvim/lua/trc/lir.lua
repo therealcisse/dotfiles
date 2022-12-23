@@ -85,14 +85,14 @@ require'lir.git_status'.setup({
 })
 
 -- custom folder icon
--- require("nvim-web-devicons").set_icon {
---   lir_folder_icon = {
---     icon = "",
---     -- color = "#7ebae4",
---     color = "#569CD6",
---     name = "LirFolderNode",
---   },
--- }
+require("nvim-web-devicons").set_icon {
+  lir_folder_icon = {
+    icon = "",
+    -- color = "#7ebae4",
+    color = "#569CD6",
+    name = "LirFolderNode",
+  },
+}
 
 vim.api.nvim_set_keymap(
       'n',
@@ -101,9 +101,3 @@ vim.api.nvim_set_keymap(
       { noremap = true }
     )
 
-vim.api.nvim_set_keymap(
-      'n',
-      '<leader>n',
-      [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]],
-      { noremap = true }
-    )

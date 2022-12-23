@@ -2,8 +2,9 @@
 
 set t_Co=256
 set termguicolors
-colorscheme tokyonight-night
-set background=dark
+colorscheme carbonfox
+" colorscheme tokyonight-night
+" set background=dark
 
 lua << EOF
   vim.g.ts_highlight_lua = false
@@ -51,8 +52,6 @@ let mapleader="\<Space>"
 let maplocalleader="\\"
 
 scriptencoding utf-8
-
-set termguicolors
 
 set ttyfast
 
@@ -176,9 +175,10 @@ set smartcase                  " Override `ignorecase` option
 
 set infercase                   " Smarter case during autocompletion.
 
-set synmaxcol=2500             " Limit syntax highlighting (this
+set synmaxcol=128             " Limit syntax highlighting (this
                                " avoids the very slow redrawing
                                " when files contain long lines).
+syntax sync minlines=256
 
 set tabstop=2                  " ┐
 set shiftround                 " │ Set global <TAB> settings.
@@ -469,17 +469,13 @@ endif
 
 
 " <Leader><Leader> -- Open last buffer.
-nnoremap <leader><leader> <C-^>
+nnoremap <leader><enter> <C-^>
 
 nnoremap <leader>o :only<CR>
 
 " <LocalLeader>c -- Fix (most) syntax highlighting problems in current buffer
 " (mnemonic: coloring).
 " nnoremap <silent> <localleader>c :syntax sync fromstart<CR>
-
-syntax sync minlines=256 " start highlighting from 256 lines backwards
-set synmaxcol=300        " do not highlith very long lines
-set re=1                 " use explicit old regexpengine, seems to be more faster
 
 " Count occurences of word under cursor
 nnoremap <leader>* *<C-O>:%s///gn<CR>
@@ -866,32 +862,29 @@ nnoremap <localleader>z <cmd>ZenMode<CR>
 
 map <C-M> <CR>
 
-nnoremap <leader>o <C-O>
-nnoremap <leader>i <C-I>
+nnoremap <leader>j <C-D>
+vnoremap <leader>j <C-D>
 
-nnoremap <leader>d <C-D>
-vnoremap <leader>d <C-D>
+nnoremap <leader>k <C-U>
+vnoremap <leader>k <C-U>
 
-nnoremap <leader>u <C-U>
-vnoremap <leader>u <C-U>
-
-nnoremap <leader>k :ChatGPT<CR>
+nnoremap <leader>y :ChatGPT<CR>
 nnoremap yp Yp
 
 nnoremap <localleader>r :so %<CR>
-
-inoremap jj <ESC>
-inoremap kk <ESC>
 
 nnoremap <C-;> :Startify<CR>
 
 nnoremap <C-w>o :TZAtaraxis<CR>
 nnoremap <C-Enter> :WindowsMaximizeHorizontally<CR>
 
-nnoremap <leader><Up> <C-W>K
-nnoremap <leader><Left> <C-W>H
-nnoremap <leader><Right> <C-W>L
-nnoremap <leader><Down> <C-W>J
+nnoremap <leader><Up> <C-W><Up>
+nnoremap <leader><Left> <C-W><Left>
+nnoremap <leader><Right> <C-W><Right>
+nnoremap <leader><Down> <C-W><Down>
+
+nnoremap <localleader>wd <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
+nnoremap <localleader>ww <cmd>Telescope lsp_document_symbols<CR>
 
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
