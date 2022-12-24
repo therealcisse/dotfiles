@@ -178,7 +178,7 @@ set infercase                   " Smarter case during autocompletion.
 set synmaxcol=128             " Limit syntax highlighting (this
                                " avoids the very slow redrawing
                                " when files contain long lines).
-syntax sync minlines=256
+syntax sync minlines=1024
 
 set tabstop=2                  " ┐
 set shiftround                 " │ Set global <TAB> settings.
@@ -698,14 +698,6 @@ nnoremap <Down> :resize +1<CR>
 
 " Echodoc
 set noshowmode
-
-" === echodoc === "
-" Enable echodoc on startup
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'floating'
-" To use a custom highlight for the float window,
-" change Pmenu to your highlight group
-highlight link EchoDocFloat Pmenu
 
 augroup dirvish_config
   au!

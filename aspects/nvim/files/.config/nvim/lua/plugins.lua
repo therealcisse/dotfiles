@@ -810,6 +810,25 @@ return require("packer").startup {
     -- Async signs!
     use "lewis6991/gitsigns.nvim"
 
+    use({
+      'dense-analysis/neural',
+      config = function()
+        require('neural').setup({
+          mappings = {
+            swift = '<C-.>', -- Context completion
+            prompt = '<C-space>', -- Open prompt
+          },
+          open_ai = {
+            api_key = os.getenv('OPENAI_API_KEY'),
+          }
+        })
+      end,
+      requires = {
+        'MunifTanjim/nui.nvim',
+        'ElPiloto/significant.nvim'
+      },
+    })
+
     -- Git worktree utility
     use {
       "ThePrimeagen/git-worktree.nvim",
