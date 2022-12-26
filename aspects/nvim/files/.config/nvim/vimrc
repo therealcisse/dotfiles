@@ -1,10 +1,6 @@
-
-
 set t_Co=256
 set termguicolors
 colorscheme carbonfox
-" colorscheme tokyonight-night
-" set background=dark
 
 lua << EOF
   vim.g.ts_highlight_lua = false
@@ -83,7 +79,7 @@ else
   set directory=~/.vim/tmp/swap//  " Set directory for swap files.
 endif
 
-set history=1000               " Increase command line history.
+set history=10000               " Increase command line history.
 set noignorecase                 " Don't ignore case in search patterns.
 
 set incsearch                  " Highlight search pattern
@@ -260,7 +256,7 @@ endif
 " Make the opening of the `.vimrc` file easier.
 
 nnoremap <localleader>e :e $MYVIMRC<CR>
-nnoremap <localleader>r :source $MYVIMRC<CR>
+nnoremap <localleader>r :so %<CR>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
@@ -770,28 +766,6 @@ function! s:hl()
 endfunction
 command! HL call <SID>hl()
 
-" Telescope
-" nnoremap <C-\>    <cmd>Telescope lsp_dynamic_workspace_symbols<cr>
-" nnoremap <C-p>    <cmd>lua require('telescope.builtin').find_files()<cr>
-" nnoremap <C-g>/   <cmd>lua require('telescope.builtin').live_grep()<cr>
-
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default.dark': {
-  \       'transparent_background': 1
-  \     }
-  \   }
-  \ }
-
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default.dark': {
-  \       'override' : {
-  \       }
-  \     }
-  \   }
-  \ }
-
 set clipboard=unnamedplus
 
 if has('termguicolors')
@@ -813,16 +787,13 @@ if &term =~# 'tmux-256color'
 endif
 
 if exists('+pumblend')
-  " set pumblend=10                       " pseudo-transparency for popup-menu
+  set pumblend=10                       " pseudo-transparency for popup-menu
 endif
 
 let $FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --no-preview'
 let $FZF_DEFAULT_COMMAND = 'fd --type f'
 
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-
-" nnoremap <C-p> <cmd>Files<CR>
-" nnoremap <C-g>/ <cmd>Rg<CR>
 
 " like emacs mode shell command editing
 inoremap <C-E> <C-o>$
@@ -843,9 +814,6 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 " <C-P> <Up>
 " <C-N> <Down>
 " <C-E> <End>
-
-let g:indent_blankline_space_char = '⋅'
-let g:indent_blankline_char = '⋅'
 
 command! CopyBuffer let @+ = expand('%:p')
 command! Jq :%!jq '.'
@@ -877,9 +845,6 @@ nnoremap <leader><Down> <C-W><Down>
 
 nnoremap <localleader>wd <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
 nnoremap <localleader>ww <cmd>Telescope lsp_document_symbols<CR>
-
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 lua << EOF
   require "trc.impatient"

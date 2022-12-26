@@ -35,8 +35,8 @@ local luasnip = require("luasnip")
 
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
-    -- ['<C-e>'] = cmp.mapping.confirm({ select = true }),
-    -- ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-e>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping.confirm({ select = true }),
     ["<C-J>"] = cmp.mapping(function(fallback)
       if luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
       elseif cmp.visible() then cmp.select_next_item()
@@ -61,77 +61,6 @@ cmp.setup {
 
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
-  -- mapping = {
-  --   ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-  --   ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-  --   -- ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-  --   -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
-  --   -- ["<C-e>"] = cmp.mapping.abort(),
-  --   ["<c-y>"] = cmp.mapping(
-  --     cmp.mapping.confirm {
-  --       behavior = cmp.ConfirmBehavior.Insert,
-  --       select = true,
-  --     },
-  --     { "i", "c" }
-  --   ),
-  --   -- ["<C-M>"] = cmp.mapping(
-  --   --   cmp.mapping.confirm {
-  --   --     behavior = cmp.ConfirmBehavior.Insert,
-  --   --     select = true,
-  --   --   },
-  --   --   { "i", "c" }
-  --   -- ),
-  --   ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  --
-  --   ["<c-space>"] = cmp.mapping {
-  --     i = cmp.mapping.complete(),
-  --     c = function(
-  --       _ --[[fallback]]
-  --     )
-  --       if cmp.visible() then
-  --         if not cmp.confirm { select = true } then
-  --           return
-  --         end
-  --       else
-  --         cmp.complete()
-  --       end
-  --     end,
-  --   },
-  --
-  --   -- ["<tab>"] = false,
-  --   ["<tab>"] = cmp.config.disable,
-  --
-  --   -- ["<tab>"] = cmp.mapping {
-  --   --   i = cmp.config.disable,
-  --   --   c = function(fallback)
-  --   --     fallback()
-  --   --   end,
-  --   -- },
-  --
-  --   -- Testing
-  --   ["<c-q>"] = cmp.mapping.confirm {
-  --     behavior = cmp.ConfirmBehavior.Replace,
-  --     select = true,
-  --   },
-  --
-  --   -- If you want tab completion :'(
-  --   --  First you have to just promise to read `:help ins-completion`.
-  --   --
-  --   -- ["<Tab>"] = function(fallback)
-  --   --   if cmp.visible() then
-  --   --     cmp.select_next_item()
-  --   --   else
-  --   --     fallback()
-  --   --   end
-  --   -- end,
-  --   -- ["<S-Tab>"] = function(fallback)
-  --   --   if cmp.visible() then
-  --   --     cmp.select_prev_item()
-  --   --   else
-  --   --     fallback()
-  --   --   end
-  --   -- end,
-  -- },
 
   -- Youtube:
   --    the order of your sources matter (by default). That gives them priority
@@ -214,38 +143,38 @@ cmp.setup {
   },
 }
 
--- cmp.setup.cmdline("/", {
---   completion = {
---     -- Might allow this later, but I don't like it right now really.
---     -- Although, perhaps if it just triggers w/ @ then we could.
---     --
---     -- I will have to come back to this.
---     autocomplete = false,
---   },
---   sources = cmp.config.sources({
---     { name = "nvim_lsp_document_symbol" },
---   }, {
---     -- { name = "buffer", keyword_length = 5 },
---   }),
--- })
+cmp.setup.cmdline("/", {
+  completion = {
+    -- Might allow this later, but I don't like it right now really.
+    -- Although, perhaps if it just triggers w/ @ then we could.
+    --
+    -- I will have to come back to this.
+    autocomplete = false,
+  },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp_document_symbol" },
+  }, {
+    { name = "buffer", keyword_length = 5 },
+  }),
+})
 
--- cmp.setup.cmdline(":", {
---   completion = {
---     autocomplete = false,
---   },
---
---   sources = cmp.config.sources({
---     {
---       name = "path",
---     },
---   }, {
---     {
---       name = "cmdline",
---       max_item_count = 20,
---       keyword_length = 4,
---     },
---   }),
--- })
+cmp.setup.cmdline(":", {
+  completion = {
+    autocomplete = false,
+  },
+
+  sources = cmp.config.sources({
+    {
+      name = "path",
+    },
+  }, {
+    {
+      name = "cmdline",
+      max_item_count = 20,
+      keyword_length = 4,
+    },
+  }),
+})
 
 --[[
 " Setup buffer configuration (nvim-lua source only enables in Lua filetype).

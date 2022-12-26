@@ -20,7 +20,7 @@ local same = shared.same
 snippet_collection.clear_snippets "scala"
 ls.add_snippets("scala", {
   s(
-    "main",
+    "mn",
     fmta(
       [[
       def main(args: Array[String]): Unit = <>
@@ -31,11 +31,17 @@ ls.add_snippets("scala", {
     )
   ),
 
-  s("arg", {
+  s("farg", {
     i(1),
     t { ": " },
     i(2),
-    t { "," },
+    t { ", " },
+    i(0),
+  }),
+
+  s("arg", {
+    i(1),
+    t { ": " },
     i(0),
   }),
 
@@ -61,7 +67,7 @@ ls.add_snippets("scala", {
 
   s("def", {
     t { "def " },
-    i(1, "Name"),
+    i(1),
     t { "(" },
     i(2),
     t { "): " },
@@ -70,9 +76,18 @@ ls.add_snippets("scala", {
     i(0),
   }),
 
+  s("tdef", {
+    t { "def " },
+    i(1),
+    t { "(" },
+    i(2),
+    t { "): " },
+    i(0),
+  }),
+
   s("enum", {
     t { "enum " },
-    i(1, "Name"),
+    i(1),
     t { " {", "  " },
     i(0),
     t { "", "}" },
@@ -80,7 +95,7 @@ ls.add_snippets("scala", {
 
   s("trait", {
     t { "trait " },
-    i(1, "Name"),
+    i(1),
     t { " {", "  " },
     i(0),
     t { "", "}" },
@@ -88,7 +103,7 @@ ls.add_snippets("scala", {
 
   s("strait", {
     t { "sealed trait " },
-    i(1, "Name"),
+    i(1),
     t { " {", "  " },
     i(0),
     t { "", "}" },
@@ -96,7 +111,7 @@ ls.add_snippets("scala", {
 
   s("cclass", {
     t { "final case class " },
-    i(1, "Name"),
+    i(1),
     t { " (", "    " },
     i(0),
     t { "", ")" },
@@ -111,7 +126,7 @@ ls.add_snippets("scala", {
 
   s("object", {
     t { "object " },
-    i(1, "Name"),
+    i(1),
     t { " {", "    " },
     i(0),
     t { "", "}" },
@@ -143,6 +158,11 @@ ls.add_snippets("scala", {
     t { "(" },
     i(0),
     t { ")" },
+  }),
+
+  s("pk", {
+    t { "package " },
+    i(0),
   }),
 
   s({trig="hr", dscr="The hyperref package's href{}{} command (for url links)"},
