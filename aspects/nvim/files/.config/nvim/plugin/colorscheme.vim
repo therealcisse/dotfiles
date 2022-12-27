@@ -104,6 +104,8 @@ function! s:MyHighlights() abort
   hi! link ElVisual Statusline
   hi! link ElVisualLine Statusline
   hi! link ElVisualBlock Statusline
+
+  hi! Visual guibg=#3a3a3a cterm=italic gui=italic
 endfunction
 
 function s:SetColors()

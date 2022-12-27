@@ -45,7 +45,7 @@ augroup strip_trailing_whitespaces
 augroup END
 
 let mapleader="\<Space>"
-let maplocalleader="\\"
+let maplocalleader=";"
 
 scriptencoding utf-8
 

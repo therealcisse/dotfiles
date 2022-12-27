@@ -165,6 +165,77 @@ ls.add_snippets("scala", {
     i(0),
   }),
 
+  s("wim", {
+    t { "import " },
+    i(1),
+    t { ".*" },
+    i(0),
+  }),
+
+  s("im", {
+    t { "import " },
+    i(0),
+  }),
+
+  s("cz", {
+    t { "ZIO." },
+    i(0),
+  }),
+
+  s("dq", {
+    t { "\"" },
+    i(1),
+    t { "\"" },
+    i(0),
+  }),
+
+  s("dp", {
+    t { "(" },
+    i(1),
+    t { ")" },
+    i(0),
+  }),
+
+  s("db", {
+    t { "{" },
+    i(1),
+    t { "}" },
+    i(0),
+  }),
+
+  s("sq", {
+    t { "\'" },
+    i(1),
+    t { "\'" },
+    i(0),
+  }),
+
+  s("gt", {
+    i(1),
+    t { "[" },
+    i(2),
+    t { "]" },
+    i(0),
+  }),
+
+  s("tsk", {
+    t { "Task[" },
+    i(1),
+    t { "]" },
+    i(0),
+  }),
+
+  s("zo", {
+    t { "ZIO[" },
+    i(1),
+    t { ", " },
+    i(2, "Throwable"),
+    t { ", " },
+    i(3),
+    t { "]" },
+    i(0),
+  }),
+
   s({trig="hr", dscr="The hyperref package's href{}{} command (for url links)"},
   fmta(
   [[\href{<>}{<>}]],
