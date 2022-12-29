@@ -421,32 +421,32 @@ if is_mac then
   })
 else
   -- Load lua configuration from nlua.
-  _ = require("nlua.lsp.nvim").setup(lspconfig, {
-    on_init = custom_init,
-    on_attach = custom_attach,
-    capabilities = updated_capabilities,
-
-    root_dir = function(fname)
-      if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
-        return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
-      end
-
-      -- ~/git/config_manager/xdg_config/nvim/...
-      return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
-    end,
-
-    globals = {
-      -- Colorbuddy
-      "Color",
-      "c",
-      "Group",
-      "g",
-      "s",
-
-      -- Custom
-      "RELOAD",
-    },
-  })
+  -- _ = require("nlua.lsp.nvim").setup(lspconfig, {
+  --   on_init = custom_init,
+  --   on_attach = custom_attach,
+  --   capabilities = updated_capabilities,
+  --
+  --   root_dir = function(fname)
+  --     if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
+  --       return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
+  --     end
+  --
+  --     -- ~/git/config_manager/xdg_config/nvim/...
+  --     return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
+  --   end,
+  --
+  --   globals = {
+  --     -- Colorbuddy
+  --     "Color",
+  --     "c",
+  --     "Group",
+  --     "g",
+  --     "s",
+  --
+  --     -- Custom
+  --     "RELOAD",
+  --   },
+  -- })
 end
 
 for server, config in pairs(servers) do
