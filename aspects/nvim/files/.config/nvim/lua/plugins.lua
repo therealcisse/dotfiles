@@ -217,7 +217,7 @@ return require("packer").startup {
     -- local_use "overlength.vim"
     local_use "pastery.vim"
     local_use "complextras.nvim"
-    local_use "lazy.nvim"
+    -- local_use "lazy.nvim"
     -- local_use("tjdevries", "astronauta.nvim")
     local_use "diff-therapy.nvim"
 
@@ -810,24 +810,24 @@ return require("packer").startup {
     -- Async signs!
     use "lewis6991/gitsigns.nvim"
 
-    use({
-      'dense-analysis/neural',
-      config = function()
-        require('neural').setup({
-          mappings = {
-            swift = '<C-.>', -- Context completion
-            prompt = '<C-space>', -- Open prompt
-          },
-          open_ai = {
-            api_key = os.getenv('OPENAI_API_KEY'),
-          }
-        })
-      end,
-      requires = {
-        'MunifTanjim/nui.nvim',
-        'ElPiloto/significant.nvim'
-      },
-    })
+    -- use({
+    --   'dense-analysis/neural',
+    --   config = function()
+    --     require('neural').setup({
+    --       mappings = {
+    --         swift = '<C-.>', -- Context completion
+    --         prompt = '<C-space>', -- Open prompt
+    --       },
+    --       open_ai = {
+    --         api_key = os.getenv('OPENAI_API_KEY'),
+    --       }
+    --     })
+    --   end,
+    --   requires = {
+    --     'MunifTanjim/nui.nvim',
+    --     'ElPiloto/significant.nvim'
+    --   },
+    -- })
 
     -- Git worktree utility
     use {
