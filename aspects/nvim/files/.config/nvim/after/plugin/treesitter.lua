@@ -17,16 +17,16 @@ list.sql = {
   },
 }
 
-list.scala = {
-  install_info = {
-    -- url can be Git repo or a local directory:
-    -- url = "~/work/tree-sitter-scala",
-    url = "https://github.com/eed3si9n/tree-sitter-scala.git",
-    branch = "fork-integration",
-    files = {"src/parser.c", "src/scanner.c"},
-    requires_generate_from_grammar = false,
-  },
-}
+-- list.scala = {
+--   install_info = {
+--     -- url can be Git repo or a local directory:
+--     -- url = "~/work/tree-sitter-scala",
+--     url = "https://github.com/eed3si9n/tree-sitter-scala.git",
+--     branch = "fork-integration",
+--     files = {"src/parser.c", "src/scanner.c"},
+--     requires_generate_from_grammar = false,
+--   },
+-- }
 
 -- list.rsx = {
 --   install_info = {
@@ -76,7 +76,7 @@ local _ = require("nvim-treesitter.configs").setup {
   ensure_installed = {
     "regex",
     "markdown_inline",
-    -- "scala",
+    "scala",
     "zig",
     "dart",
     "go",
@@ -85,9 +85,9 @@ local _ = require("nvim-treesitter.configs").setup {
     "json",
     "markdown",
     "python",
-    "query",
+    -- "query",
     -- "rust",
-    "toml",
+    -- "toml",
     "tsx",
     "typescript",
   },

@@ -91,6 +91,14 @@ return require("packer").startup {
 
     use("petertriho/nvim-scrollbar")
 
+    use {
+      "anuvyklack/animation.nvim"
+    }
+
+    use({
+      "luukvbaal/statuscol.nvim",
+    })
+
     use { "anuvyklack/windows.nvim",
       requires = {
         "anuvyklack/middleclass",
@@ -133,6 +141,8 @@ return require("packer").startup {
     --
     --
     -- }
+
+    use 'mustache/vim-mustache-handlebars'
 
     use({
       "jackMort/ChatGPT.nvim",
@@ -982,12 +992,17 @@ return require("packer").startup {
       -- branch = "unstable"
     }
 
+    -- use {
+    --   'smithbm2316/centerpad.nvim'
+    -- }
+
     use({
       "folke/noice.nvim",
       event = "VimEnter",
       config = function()
         require("noice").setup({
           cmdline = {
+            enabled = false,
             format = {
               cmdline = { icon = ">" },
               search_down = { icon = "🔍⌄" },
@@ -1004,6 +1019,9 @@ return require("packer").startup {
               ["vim.lsp.util.stylize_markdown"] = true,
               ["cmp.entry.get_documentation"] = true,
             },
+          },
+          messages = {
+            enabled = false,
           },
           -- you can enable a preset for easier configuration
           presets = {

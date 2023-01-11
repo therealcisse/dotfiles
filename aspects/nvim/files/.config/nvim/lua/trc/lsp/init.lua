@@ -65,9 +65,9 @@ local autocmd_format = function(async, filter)
 end
 
 local filetype_attach = setmetatable({
-  go = function()
-    autocmd_format(false)
-  end,
+  -- go = function()
+  --   autocmd_format(false)
+  -- end,
 
   -- scss = function()
   --   autocmd_format(false)

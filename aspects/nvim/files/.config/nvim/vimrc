@@ -85,7 +85,7 @@ set noignorecase                 " Don't ignore case in search patterns.
 set incsearch                  " Highlight search pattern
                                " as it is being typed.
 
-set lazyredraw                 " Do not redraw the screen while
+" set lazyredraw                 " Do not redraw the screen while
                                " executing macros, registers
                                " and other commands that have
                                " not been typed.
@@ -171,7 +171,7 @@ set smartcase                  " Override `ignorecase` option
 
 set infercase                   " Smarter case during autocompletion.
 
-set synmaxcol=128             " Limit syntax highlighting (this
+set synmaxcol=512             " Limit syntax highlighting (this
                                " avoids the very slow redrawing
                                " when files contain long lines).
 syntax sync minlines=1024
@@ -255,8 +255,8 @@ endif
 
 " Make the opening of the `.vimrc` file easier.
 
-nnoremap <localleader>e :e $MYVIMRC<CR>
-nnoremap <localleader>r :so %<CR>
+nnoremap <silent> <localleader>e :e $MYVIMRC<CR>
+nnoremap <silent> <localleader>r :so %<CR>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
@@ -368,12 +368,15 @@ nnoremap gj j
 nnoremap gk k
 
 " Save all
-nn <leader>s :wa<CR>
+imap <silent> <C-s> <ESC>:wa<CR>
+nn <silent> <C-s> :wa<CR>
+nn <silent> <leader>s :wa<CR>
+nn <silent> <leader>d :wa<CR>
 
 inoremap <c-delete> <c-w>
 
 " Save current buffer
-nn <leader>S :update<CR>
+nn <silent> <leader>S :update<CR>
 
 " Quickly quick current buffer
 nn <leader>q :confirm q<CR>
@@ -616,7 +619,7 @@ endif
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Fix mixed indent
-nnoremap <C-s>i :%retab!<CR>
+nnoremap <leader>i :%retab!<CR>
 
 " Vim-signiture
 let g:SignatureMarkTextHLDynamic = 1
@@ -771,11 +774,18 @@ set clipboard=unnamedplus
 if has('termguicolors')
   " Don't need this in xterm-256color, but do need it inside tmux.
   " (See `:h xterm-true-color`.)
-  if &term =~# 'tmux-256color'
-    let &t_8f="\e[38;2;%ld;%ld;%ldm"
-    let &t_8b="\e[48;2;%ld;%ld;%ldm"
+  " if &term =~# 'tmux-256color'
+  "   let &t_8f="\e[38;2;%ld;%ld;%ldm"
+  "   let &t_8b="\e[48;2;%ld;%ld;%ldm"
+  " endif
+
+  if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   endif
 endif
+
+
 
 " Make S-Up etc work inside tmux.
 " See: https://superuser.com/a/402084/322531
@@ -818,20 +828,17 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 command! CopyBuffer let @+ = expand('%:p')
 command! Jq :%!jq '.'
 
-nnoremap <localleader>z <cmd>ZenMode<CR>
+nnoremap <localleader>z <cmd>Centerpad 24 24<CR>
 
 map <C-M> <CR>
 
-nnoremap <leader>j <C-D>
-vnoremap <leader>j <C-D>
-
-nnoremap <leader>k <C-U>
-vnoremap <leader>k <C-U>
+nnoremap <leader><leader> <C-D>
+nnoremap <leader><backspace> <C-U>
 
 nnoremap <leader>y :ChatGPT<CR>
 nnoremap yp Yp
 
-nnoremap <localleader>r :so %<CR>
+nnoremap <silent> <localleader>r :so %<CR>
 
 nnoremap <C-;> :Startify<CR>
 
@@ -845,6 +852,8 @@ nnoremap <leader><Down> <C-W><Down>
 
 nnoremap <localleader>wd <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
 nnoremap <localleader>ww <cmd>Telescope lsp_document_symbols<CR>
+
+" let &stc='%#NonText#%{&nu?v:lnum:""}%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}'
 
 lua << EOF
   require "trc.impatient"
@@ -888,6 +897,7 @@ lua << EOF
   require "trc.git_worktree"
   require "trc.glow"
   require "trc.scrollbar"
+  require "trc.statuscol"
   -- require "trc.foldtext"
 EOF
 
