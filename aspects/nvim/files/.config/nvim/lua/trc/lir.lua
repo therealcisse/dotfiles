@@ -8,8 +8,9 @@ local mark_actions = require "lir.mark.actions"
 local clipboard_actions = require "lir.clipboard.actions"
 
 lir.setup {
-  show_hidden_files = false,
+  show_hidden_files = true,
   devicons_enable = true,
+  ignore = { ".DS_Store", "node_modules" },
   mappings = {
     ["Enter"] = actions.edit,
     ["<C-M>"] = actions.edit,

@@ -368,8 +368,7 @@ nnoremap gj j
 nnoremap gk k
 
 " Save all
-imap <silent> <C-s> <ESC>:wa<CR>
-nn <silent> <C-s> :wa<CR>
+autocmd InsertLeave * silent! update
 nn <silent> <leader>s :wa<CR>
 nn <silent> <leader>d :wa<CR>
 
@@ -409,7 +408,7 @@ vnoremap Y myY`y
 
 vnoremap <BS> "_xi
 
-nn _ "_dd
+" nn _ "_dd
 
 " Open file under the cursor in a vsplit
 nnoremap gf :rightbelow wincmd f<CR>

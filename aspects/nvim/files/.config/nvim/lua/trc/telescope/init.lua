@@ -52,7 +52,21 @@ function M.fd()
 end
 
 function M.fs()
-  local opts = themes.get_ivy { hidden = false, sorting_strategy = "descending" }
+  local opts = themes.get_ivy {
+    hidden = false,
+    sorting_strategy = "descending",
+    -- layout_config = {
+    --   prompt_position = 'top',
+    -- },
+  }
+  -- local opts = themes.get_dropdown {
+  --   cwd = vim.fn.expand "%:p:h",
+  --   winblend = 10,
+  --   border = true,
+  --   previewer = false,
+  --   shorten_path = false,
+  -- }
+
   require("telescope.builtin").fd(opts)
 end
 
