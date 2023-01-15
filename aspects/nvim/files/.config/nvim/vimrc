@@ -852,6 +852,8 @@ nnoremap <leader><Down> <C-W><Down>
 nnoremap <localleader>wd <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
 nnoremap <localleader>ww <cmd>Telescope lsp_document_symbols<CR>
 
+let g:completion_enable_auto_popup = 1
+
 " let &stc='%#NonText#%{&nu?v:lnum:""}%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}'
 
 lua << EOF
@@ -897,6 +899,7 @@ lua << EOF
   require "trc.glow"
   require "trc.scrollbar"
   require "trc.statuscol"
+  require "trc.autoclose"
   -- require "trc.foldtext"
 EOF
 
