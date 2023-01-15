@@ -795,8 +795,10 @@ return require("packer").startup {
      })
 
      use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
-     use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+     -- use "windwp/nvim-autopairs" -- Auto } }pairs, integrates with both cmp and treesitter
      use "lukas-reineke/indent-blankline.nvim"
+
+     use { 'm4xshen/autoclose.nvim' }
 
     --
     -- GIT:
