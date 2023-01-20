@@ -99,6 +99,25 @@ return require("packer").startup {
       "luukvbaal/statuscol.nvim",
     })
 
+    use {
+      'theHamsta/nvim-semantic-tokens',
+      config = function()
+        -- vim.o.winwidth = 5
+        -- vim.o.winminwidth = 5
+        -- vim.o.equalalways = false
+
+        require('nvim-semantic-tokens').setup {
+          preset = "default",
+          -- highlighters is a list of modules following the interface of nvim-semantic-tokens.table-highlighter or
+          -- function with the signature: highlight_token(ctx, token, highlight) where
+          --        ctx (as defined in :h lsp-handler)
+          --        token  (as defined in :h vim.lsp.semantic_tokens.on_full())
+          --        highlight (a helper function that you can call (also multiple times) with the determined highlight group(s) as the only parameter)
+          highlighters = { require 'nvim-semantic-tokens.table-highlighter'}
+        }
+      end
+    }
+
     use { "anuvyklack/windows.nvim",
       requires = {
         "anuvyklack/middleclass",
@@ -109,7 +128,30 @@ return require("packer").startup {
         -- vim.o.winminwidth = 5
         -- vim.o.equalalways = false
 
-        require('windows').setup()
+        require('windows').setup {
+          autowidth = {
+            enable = false, -- false
+            winwidth = 5,
+            filetype = {
+              help = 2,
+            },
+          },
+          ignore = {
+            buftype = { 'quickfix' },
+            filetype = {
+              'undotree', 'gundo',
+              'NvimTree', 'neo-tree',
+              'Outline' -- simrat39/symbols-outline.nvim
+
+            }
+          },
+          animation = {
+            enable = true,
+            duration = 300,
+            fps = 30,
+            easing = 'in_out_sine' ---@diagnostic disable-line
+          }
+        }
       end
     }
 
@@ -795,10 +837,10 @@ return require("packer").startup {
      })
 
      use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
-     -- use "windwp/nvim-autopairs" -- Auto } }pairs, integrates with both cmp and treesitter
+     use "windwp/nvim-autopairs" -- Auto } }pairs, integrates with both cmp and treesitter
      use "lukas-reineke/indent-blankline.nvim"
 
-     use { 'm4xshen/autoclose.nvim' }
+     -- use { 'm4xshen/autoclose.nvim' }
 
     --
     -- GIT:

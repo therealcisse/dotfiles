@@ -827,7 +827,7 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 command! CopyBuffer let @+ = expand('%:p')
 command! Jq :%!jq '.'
 
-nnoremap <localleader>z <cmd>Centerpad 24 24<CR>
+" nnoremap <localleader>z <cmd>Centerpad 24 24<CR>
 
 map <C-M> <CR>
 
@@ -852,7 +852,7 @@ nnoremap <leader><Down> <C-W><Down>
 nnoremap <localleader>wd <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
 nnoremap <localleader>ww <cmd>Telescope lsp_document_symbols<CR>
 
-let g:completion_enable_auto_popup = 1
+" let g:completion_enable_auto_popup = 1
 
 " let &stc='%#NonText#%{&nu?v:lnum:""}%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}'
 
@@ -898,8 +898,8 @@ lua << EOF
   require "trc.git_worktree"
   require "trc.glow"
   require "trc.scrollbar"
-  require "trc.statuscol"
-  require "trc.autoclose"
+  -- -- require "trc.statuscol"
+  -- require "trc.autoclose"
   -- require "trc.foldtext"
 EOF
 

@@ -20,6 +20,9 @@ function fh() {
   print -z $(fc -l 1 | sk --no-multi --tac -q "$*" | sed 's/ *[0-9]*\*\{0,1\} *//')
 }
 
+function rmDS_Store() {
+    find . -name '.DS_Store' -type f -delete
+  }
 
 # TODO: decide whether this is a reasonable idea
 function files() {
