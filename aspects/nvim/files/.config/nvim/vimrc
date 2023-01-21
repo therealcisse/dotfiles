@@ -218,9 +218,15 @@ if has('folding')
   if has('windows')
     set fillchars=vert:┃              " BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
   endif
+  set foldlevel=99
   set foldenable                      " enable folding
   set foldmethod=indent               " not as cool as syntax, but faster
   set foldlevelstart=99               " start unfolded
+  set foldexpr=nvim_treesitter#foldexpr() " Use TreeSitter for folding.
+
+  " set foldenable                      " enable folding
+  " set foldmethod=indent               " not as cool as syntax, but faster
+  " set foldlevelstart=99               " start unfolded
 
 endif
 
@@ -748,6 +754,8 @@ augroup ArrowKeys
   au BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
 augroup end
 
+set splitkeep = "screen"
+
 " Wait until idle to run additional "boot" commands.
 augroup Idleboot
     au!
@@ -898,7 +906,7 @@ lua << EOF
   require "trc.git_worktree"
   require "trc.glow"
   require "trc.scrollbar"
-  -- -- require "trc.statuscol"
+  require "trc.statuscolumn"
   -- require "trc.autoclose"
   -- require "trc.foldtext"
 EOF

@@ -219,20 +219,20 @@ local custom_attach = function(client, bufnr)
     end
   end
 
-  local caps = client.server_capabilities
-  if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-    local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})
-    vim.api.nvim_create_autocmd("TextChanged", {
-      group = augroup,
-      buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.semantic_tokens_full()
-      end,
-    })
-
-    -- fire it first time on load as well
-    vim.lsp.buf.semantic_tokens_full()
-  end
+  -- local caps = client.server_capabilities
+  -- if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
+  --   local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})
+  --   vim.api.nvim_create_autocmd("TextChanged", {
+  --     group = augroup,
+  --     buffer = bufnr,
+  --     callback = function()
+  --       vim.lsp.buf.semantic_tokens_full()
+  --     end,
+  --   })
+  --
+  --   -- fire it first time on load as well
+  --   vim.lsp.buf.semantic_tokens_full()
+  -- end
   -- buf_nnoremap { "<ggd>", require('goto-preview').goto_preview_definition() }
 
   -- Attach any filetype specific options to the client

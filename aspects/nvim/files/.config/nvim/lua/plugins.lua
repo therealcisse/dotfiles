@@ -6,6 +6,31 @@ _ = vim.cmd [[packadd vimball]]
 --   args = { "packer.vim" },
 -- }, {})
 
+local lsp_filetypes = {
+  "c",
+  "cpp",
+  "html",
+  "css",
+  "json",
+  "python",
+  "rust",
+  "solidity",
+  "lua",
+  "javascript",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "yaml",
+  "sql",
+  "sh",
+  "scala",
+  "go",
+  "gomod",
+  "java",
+  "r",
+  "bib",
+}
+
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd [[
   augroup packer_user_config
@@ -95,9 +120,33 @@ return require("packer").startup {
       "anuvyklack/animation.nvim"
     }
 
-    use({
-      "luukvbaal/statuscol.nvim",
-    })
+    use {
+      "nvim-zh/colorful-winsep.nvim",
+      config = function ()
+        require('colorful-winsep').setup()
+      end
+    }
+
+    use {
+    "glepnir/lspsaga.nvim",
+    after = "nvim-lspconfig",
+    config = function()
+      require("lspsaga").setup({
+        border_style = "rounded",
+        lightbulb = {
+          enable = false,
+          enable_in_insert = false,
+          sign = false,
+          sign_priority = 40,
+          virtual_text = false,
+        },
+        symbol_in_winbar = {
+          enable = true,
+        },
+      })
+    end,
+    ft = lsp_filetypes,
+  }
 
     use {
       'theHamsta/nvim-semantic-tokens',
@@ -203,7 +252,30 @@ return require("packer").startup {
     use {
       'lvimuser/lsp-inlayhints.nvim',
       config = function()
-        require('lsp-inlayhints').setup()
+        local config = {
+          inlay_hints = {
+            parameter_hints = {
+              show = true,
+              separator = ", ",
+            },
+            type_hints = {
+              show = true,
+              prefix = "",
+              separator = ", ",
+              remove_colon_end = false,
+              remove_colon_start = false,
+            },
+            labels_separator = "  ",
+            max_len_align = false,
+            max_len_align_padding = 1,
+            right_align = false,
+            right_align_padding = 7,
+            highlight = "Comment",
+          },
+          debug_mode = false,
+        }
+
+        require('lsp-inlayhints').setup(config)
       end
 
     }
@@ -275,6 +347,7 @@ return require("packer").startup {
 
     -- Contributor Plugins
     local_use("L3MON4D3", "LuaSnip")
+    use {'saadparwaiz1/cmp_luasnip'}
 
     -- When I have some extra time...
     local_use "train.vim"
