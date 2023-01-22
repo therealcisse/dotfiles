@@ -75,6 +75,7 @@ cmp.setup {
     -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
     -- { name = "nvim_lua" },
 
+    {name = "nvim_lsp_signature_help"},
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = "buffer" },
@@ -143,39 +144,40 @@ cmp.setup {
   },
 }
 
--- cmp.setup.cmdline("/", {
---   completion = {
---     -- Might allow this later, but I don't like it right now really.
---     -- Although, perhaps if it just triggers w/ @ then we could.
---     --
---     -- I will have to come back to this.
---     autocomplete = false,
---   },
---   sources = cmp.config.sources({
---     { name = "nvim_lsp_document_symbol" },
---   }, {
---     { name = "buffer", keyword_length = 5 },
---   }),
--- })
---
--- cmp.setup.cmdline(":", {
---   completion = {
---     autocomplete = false,
---   },
---
---   sources = cmp.config.sources({
---     {
---       name = "path",
---     },
---   }, {
---     {
---       name = "cmdline",
---       max_item_count = 20,
---       keyword_length = 4,
---     },
---   }),
--- })
---
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  -- completion = {
+  --   -- Might allow this later, but I don't like it right now really.
+  --   -- Although, perhaps if it just triggers w/ @ then we could.
+  --   --
+  --   -- I will have to come back to this.
+  --   autocomplete = false,
+  -- },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp_document_symbol" },
+  }, {
+    { name = "buffer", keyword_length = 5 },
+  }),
+})
+
+cmp.setup.cmdline(":", {
+  -- completion = {
+  --   autocomplete = false,
+  -- },
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    {
+      name = "path",
+    },
+  }, {
+    {
+      name = "cmdline",
+      max_item_count = 20,
+      keyword_length = 4,
+    },
+  }),
+})
+
 --[[
 " Setup buffer configuration (nvim-lua source only enables in Lua filetype).
 "
