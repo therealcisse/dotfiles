@@ -22,7 +22,7 @@ function M.column()
     sign and ("%#" .. sign.texthl .. "#" .. sign.text .. "%*") or " ",
     [[%=]],
     [[%{&nu?(&rnu&&v:relnum?v:relnum:v:lnum):''} ]],
-    git_sign and ("%#" .. git_sign.texthl .. "#" .. git_sign.text .. "%*") or "  ",
+    git_sign and git_sign.text and git_sign.texthl and ("%#" .. git_sign.texthl .. "#" .. git_sign.text .. "%*") or "  ",
   }
   return table.concat(components, "")
 end
