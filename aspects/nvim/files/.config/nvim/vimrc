@@ -375,8 +375,8 @@ nnoremap gk k
 
 " Save all
 autocmd InsertLeave * silent! update
-nn <silent> <leader>s :wa<CR>
-nn <silent> <leader>d :wa<CR>
+nn <silent> <leader>s :Wa<CR>
+nn <silent> <leader>d :Wa<CR>
 
 inoremap <c-delete> <c-w>
 
