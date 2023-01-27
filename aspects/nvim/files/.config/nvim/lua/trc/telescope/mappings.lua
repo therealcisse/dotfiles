@@ -80,9 +80,7 @@ map_tele("<leader>fs", "fs")
 -- map_tele("<leader>gc", "git_commits")
 
 -- Nvim
-map_tele("<leader>fd", "buffers", {
-  initial_mode = 'normal',
-})
+map_tele("<leader>fd", "fs")
 -- map_tele("<leader>fa", "installed_plugins")
 -- map_tele("<leader>fi", "search_all_files")
 -- map_tele("<leader>ff", "curbuf")
