@@ -27,40 +27,44 @@ if !exists('g:fzf_colors')
 endif
 
 function s:HandleInactiveBackground()
-  " NeoVim has support for changing background colour depending on active or not
-  if !exists('g:falcon_inactive')
-    let g:falcon_inactive=1
-  endif
 
-  " Put in a background colour for gui
-  if !exists('g:falcon_background')
-    let g:falcon_background=1
-  endif
+  if !exists('$TMUX')
+    " NeoVim has support for changing background colour depending on active or not
+    if !exists('g:falcon_inactive')
+      let g:falcon_inactive=1
+    endif
 
-  if !has("gui_running") || g:falcon_background == 0
-    hi NonText guifg=#36363a ctermfg=237 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-    hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
-  else
-    hi NonText guifg=#36363a ctermfg=237 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
-    hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
-  endif
+    " Put in a background colour for gui
+    if !exists('g:falcon_background')
+      let g:falcon_background=1
+    endif
 
-  " if exists('+winhighlight') && g:falcon_inactive == 1
-    hi! ActiveWindow guibg=NONE
-    " hi! InactiveWindow guibg=#151521
-    hi! InactiveWindow guibg=NONE
+    if !has("gui_running") || g:falcon_background == 0
+      hi NonText guifg=#36363a ctermfg=237 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+      hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
+    else
+      hi NonText guifg=#36363a ctermfg=237 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
+      hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
+    endif
 
-    "TODO normalfloat background settings to not use PMenu
-    set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
-    " return
-  " endif
+    " if exists('+winhighlight') && g:falcon_inactive == 1
+      hi! ActiveWindow guibg=NONE
+      " hi! InactiveWindow guibg=#151521
+      hi! InactiveWindow guibg=NONE
 
-  " if g:falcon_background == 1
-  "   hi ActiveWindow guibg=#020221
-  "   hi InactiveWindow guibg=#151521
-  " else
-    hi! ActiveWindow guibg=#000000
-    hi! InactiveWindow guibg=#000000
+      "TODO normalfloat background settings to not use PMenu
+      set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
+      " return
+    " endif
+
+    " if g:falcon_background == 1
+    "   hi ActiveWindow guibg=#020221
+    "   hi InactiveWindow guibg=#151521
+    " else
+
+      hi! ActiveWindow guibg=#000000
+      hi! InactiveWindow guibg=#000000
+    endif
   " endif
 endfunction
 

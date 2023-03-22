@@ -376,63 +376,63 @@ local setup_server = function(server, config)
 end
 
 if is_mac then
-  local sumneko_cmd, sumneko_env = nil, nil
+  local lua_cmd, lua_env = nil, nil
   require("nvim-lsp-installer").setup {
     automatic_installation = false,
-    ensure_installed = { "sumneko_lua", "gopls" },
+    ensure_installed = { "lua_ls", "gopls" },
   }
 
-  sumneko_cmd = {
-    vim.fn.stdpath "data" .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
-  }
+  -- lua_cmd = {
+  --   vim.fn.stdpath "data" .. "/lsp_servers/lua_ls/extension/server/bin/lua-language-server",
+  -- }
+  --
+  -- local process = require "nvim-lsp-installer.core.process"
+  -- local path = require "nvim-lsp-installer.core.path"
+  --
+  -- lua_env = {
+  --   cmd_env = {
+  --     PATH = process.extend_path {
+  --       path.concat { vim.fn.stdpath "data", "lsp_servers", "lua_ls", "extension", "server", "bin" },
+  --     },
+  --   },
+  -- }
 
-  local process = require "nvim-lsp-installer.core.process"
-  local path = require "nvim-lsp-installer.core.path"
-
-  sumneko_env = {
-    cmd_env = {
-      PATH = process.extend_path {
-        path.concat { vim.fn.stdpath "data", "lsp_servers", "sumneko_lua", "extension", "server", "bin" },
-      },
-    },
-  }
-
-  setup_server("sumneko_lua", {
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = {
-            -- vim
-            "vim",
-
-            -- Busted
-            "describe",
-            "it",
-            "before_each",
-            "after_each",
-            "teardown",
-            "pending",
-            "clear",
-
-            -- Colorbuddy
-            "Color",
-            "c",
-            "Group",
-            "g",
-            "s",
-
-            -- Custom
-            "RELOAD",
-          },
-        },
-
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = vim.api.nvim_get_runtime_file("", true),
-        },
-      },
-    },
-  })
+  -- setup_server("lua_ls", {
+  --   settings = {
+  --     Lua = {
+  --       diagnostics = {
+  --         globals = {
+  --           -- vim
+  --           "vim",
+  --
+  --           -- Busted
+  --           "describe",
+  --           "it",
+  --           "before_each",
+  --           "after_each",
+  --           "teardown",
+  --           "pending",
+  --           "clear",
+  --
+  --           -- Colorbuddy
+  --           "Color",
+  --           "c",
+  --           "Group",
+  --           "g",
+  --           "s",
+  --
+  --           -- Custom
+  --           "RELOAD",
+  --         },
+  --       },
+  --
+  --       workspace = {
+  --         -- Make the server aware of Neovim runtime files
+  --         library = vim.api.nvim_get_runtime_file("", true),
+  --       },
+  --     },
+  --   },
+  -- })
 else
   -- Load lua configuration from nlua.
   -- _ = require("nlua.lsp.nvim").setup(lspconfig, {
