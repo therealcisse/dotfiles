@@ -1166,7 +1166,7 @@ return require("packer").startup {
                     require("noice").setup(
                         {
                             cmdline = {
-                                enabled = false,
+                                enabled = true,
                                 format = {
                                     cmdline = {icon = ">"},
                                     search_down = {icon = "🔍⌄"},
@@ -1183,6 +1183,9 @@ return require("packer").startup {
                                     ["vim.lsp.util.stylize_markdown"] = true,
                                     ["cmp.entry.get_documentation"] = true
                                 }
+                            },
+                            notify = {
+                              enabled = false
                             },
                             messages = {
                                 enabled = false
