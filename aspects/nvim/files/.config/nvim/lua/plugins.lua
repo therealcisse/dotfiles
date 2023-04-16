@@ -1199,7 +1199,6 @@ return require("packer").startup {
                                 }
                             },
                             notify = {
-                              enabled = false
                             },
                             messages = {
                                 enabled = false
