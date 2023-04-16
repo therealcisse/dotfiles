@@ -76,6 +76,7 @@ cmp.setup {
     -- { name = "nvim_lua" },
 
     {name = "nvim_lsp_signature_help"},
+    { name = "codeium" },
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = "buffer" },
