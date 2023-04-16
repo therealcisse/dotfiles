@@ -95,6 +95,7 @@ return require("packer").startup {
         local_use("ThePrimeagen", "refactoring.nvim")
 
         use "TovarishFin/vim-solidity"
+        -- use { 'tomlion/vim-solidity' }
 
         -----------------------------------------------------------
         -- use {
