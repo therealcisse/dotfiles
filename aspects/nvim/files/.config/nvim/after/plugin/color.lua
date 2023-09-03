@@ -87,7 +87,7 @@ local check = function ()
 end
 
 -- if vim.v.progname ~= 'vi' then
---   augroup('AmsaykAutocolor', function ()
+--   augroup('MyAutocolor', function ()
 --     autocmd('FocusGained', '*', check)
 --   end)
 --
@@ -101,7 +101,7 @@ end
 --   end
 -- end
 
-vim.cmd('augroup AmsaykAutocolor')
+vim.cmd('augroup MyAutocolor')
 vim.cmd('autocmd!')
 check()
 vim.cmd('augroup END')

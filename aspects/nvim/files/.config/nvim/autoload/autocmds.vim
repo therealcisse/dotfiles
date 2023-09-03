@@ -1,4 +1,4 @@
-let g:AmsaykMkviewFiletypeBlacklist = [
+let g:MyMkviewFiletypeBlacklist = [
   \ 'diff',
   \ 'gitcommit',
   \ 'hgcommit',
@@ -9,7 +9,7 @@ let g:AmsaykMkviewFiletypeBlacklist = [
 function! autocmds#should_mkview() abort
   return
         \ &buftype == '' &&
-        \ index(g:AmsaykMkviewFiletypeBlacklist, &filetype) == -1 &&
+        \ index(g:MyMkviewFiletypeBlacklist, &filetype) == -1 &&
         \ !exists('$SUDO_USER') " Don't create root-owned files.
 endfunction
 
@@ -46,6 +46,6 @@ function! autocmds#idleboot() abort
   augroup END
 
   " Make sure we run deferred tasks exactly once.
-  doautocmd User AmsaykDefer
-  au! User AmsaykDefer
+  doautocmd User MyDefer
+  au! User MyDefer
 endfunction

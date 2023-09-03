@@ -22,7 +22,7 @@ const variables = {
     if (process.env.FIG_IDENTITY) {
       return process.env.FIG_IDENTITY;
     } else if (Context.attributes.username === 'me' || Context.attributes.username === 'amadou' || Context.attributes.username === 'realcisse') {
-      return 'amsayk';
+      return 'therealcisse';
     } else {
       return 'unknown';
     }

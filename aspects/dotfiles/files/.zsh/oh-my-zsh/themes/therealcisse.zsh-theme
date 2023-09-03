@@ -1,4 +1,4 @@
- Based on the great ys theme (http://ysmood.org/wp/2013/03/my-ys-terminal-theme/)
+# Based on the great ys theme (http://ysmood.org/wp/2013/03/my-ys-terminal-theme/)
 
 # Machine name.
 function box_name {

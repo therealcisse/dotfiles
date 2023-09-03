@@ -1,4 +1,4 @@
-local inlay_hints = require "lsp_extensions.inlay_hints"
+-- local inlay_hints = require "lsp_extensions.inlay_hints"
 
 local M = {}
 
@@ -13,6 +13,7 @@ local M = {}
 --   vim.cmd [[augroup ShowLineHints]]
 --   vim.cmd [[  au!]]
 --   vim.cmd [[  autocmd CursorHold,CursorHoldI,CursorMoved *.rs :lua require('trc.lsp.extensions').show_line_hints()]]
+--   vim.cmd [[ vim.lsp.buf.inlay_hint(0) ]]
 --   vim.cmd [[augroup END]]
 -- end
 
