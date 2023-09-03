@@ -42,6 +42,14 @@ map_tele("<C-g>/", "live_grep_args", {
   sorter = sorters.get_fzy_sorter(),
 })
 
+map_tele("<C-g>]", "ast_grep", {
+  short_path = true,
+  word_match = "-w",
+  only_sort_text = true,
+  layout_strategy = "vertical",
+  sorter = sorters.get_fzy_sorter(),
+})
+
 map_tele("<leader>/", "live_grep_args", {
   short_path = true,
   word_match = "-w",

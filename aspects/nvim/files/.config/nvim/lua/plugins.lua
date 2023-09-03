@@ -1,5 +1,5 @@
 _ = vim.cmd [[packadd packer.nvim]]
-_ = vim.cmd [[packadd vimball]]
+-- _ = vim.cmd [[packadd vimball]]
 
 -- vim.api.nvim_cmd({
 --   cmd = "packadd",
@@ -12,6 +12,7 @@ local lsp_filetypes = {
     "html",
     "css",
     "json",
+    "zig",
     "python",
     "rust",
     "solidity",
@@ -287,35 +288,35 @@ return require("packer").startup {
             }
         )
 
-        use {
-            "lvimuser/lsp-inlayhints.nvim",
-            config = function()
-                local config = {
-                    inlay_hints = {
-                        parameter_hints = {
-                            show = true,
-                            separator = ", "
-                        },
-                        type_hints = {
-                            show = true,
-                            prefix = "",
-                            separator = ", ",
-                            remove_colon_end = false,
-                            remove_colon_start = false
-                        },
-                        labels_separator = "  ",
-                        max_len_align = false,
-                        max_len_align_padding = 1,
-                        right_align = false,
-                        right_align_padding = 7,
-                        highlight = "Comment"
-                    },
-                    debug_mode = false
-                }
-
-                require("lsp-inlayhints").setup(config)
-            end
-        }
+        -- use {
+        --     "lvimuser/lsp-inlayhints.nvim",
+        --     config = function()
+        --         local config = {
+        --             inlay_hints = {
+        --                 parameter_hints = {
+        --                     show = true,
+        --                     separator = ", "
+        --                 },
+        --                 type_hints = {
+        --                     show = true,
+        --                     prefix = "",
+        --                     separator = ", ",
+        --                     remove_colon_end = false,
+        --                     remove_colon_start = false
+        --                 },
+        --                 labels_separator = "  ",
+        --                 max_len_align = false,
+        --                 max_len_align_padding = 1,
+        --                 right_align = false,
+        --                 right_align_padding = 7,
+        --                 highlight = "Comment"
+        --             },
+        --             debug_mode = false
+        --         }
+        --
+        --         require("lsp-inlayhints").setup(config)
+        --     end
+        -- }
 
         -- use "RRethy/vim-illuminate"
         use "tpope/vim-fugitive"
@@ -556,11 +557,22 @@ return require("packer").startup {
         local_use("nvim-telescope", "telescope-fzy-native.nvim")
         local_use("nvim-telescope", "telescope-github.nvim")
         local_use("nvim-telescope", "telescope-symbols.nvim")
+        local_use("Marskey", "telescope-sg")
 
         use {"nvim-telescope/telescope-fzf-native.nvim", run = "make"}
         use {"nvim-telescope/telescope-hop.nvim"}
         use {"nvim-telescope/telescope-file-browser.nvim"}
         use {"nvim-telescope/telescope-ui-select.nvim"}
+
+        use {
+          "Shatur/neovim-ayu",
+          config = function()
+            require("ayu").setup {
+              overrides = {},
+
+            }
+          end,
+        }
 
         use {"nvim-telescope/telescope-live-grep-args.nvim"}
 
@@ -1172,6 +1184,19 @@ return require("packer").startup {
         --   'smithbm2316/centerpad.nvim'
         -- }
 
+        use { 'xiyaowong/transparent.nvim' }
+
+        use {
+          "tiagovla/tokyodark.nvim",
+          opts = {
+            -- custom options here
+          },
+          config = function(_, opts)
+            require("tokyodark").setup(opts) -- calling setup is optional
+            vim.cmd [[colorscheme tokyodark]]
+          end,
+        }
+
         use(
             {
                 "folke/noice.nvim",
@@ -1199,6 +1224,7 @@ return require("packer").startup {
                                 }
                             },
                             notify = {
+                              enabled = false,
                             },
                             messages = {
                                 enabled = false
@@ -1220,7 +1246,7 @@ return require("packer").startup {
                     "rcarriga/nvim-notify",
                     "hrsh7th/nvim-cmp",
                     "nvim-treesitter/nvim-treesitter",
-                    "kyazdani42/nvim-web-devicons"
+                    "nvim-tree/nvim-web-devicons"
                 }
             }
         )
@@ -1228,16 +1254,16 @@ return require("packer").startup {
         -- Theme: icons
         use(
             {
-                "kyazdani42/nvim-web-devicons",
+                "nvim-tree/nvim-web-devicons",
                 -- module = "nvim-web-devicons",
                 config = function()
-                    require("nvim-web-devicons").setup({default = true})
+                    require("nvim-web-devicons").setup{
+                      -- default = true
+                    }
                 end
             }
         )
 
-        -- pretty sure I'm done w/ these
-        -- local_use 'vlog.nvim'
     end,
     config = {
         max_jobs = max_jobs,
@@ -1248,29 +1274,3 @@ return require("packer").startup {
     }
 }
 
---[[ Replacements Needed
-" Plug 'https://github.com/AndrewRadev/linediff.vim'
-" Plug 'https://github.com/AndrewRadev/switch.vim'
-
-Plu 'plasticboy/vim-markdown', { 'for': 'markdown' }
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_fenced_languages = [
-\ 'python=python',
-\ 'json=json',
-\ ]
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
-
--- Should get a test helper.
-Plug 'alfredodeza/pytest.vim'
-
--- completes issue names in commit messages
-Plug 'tpope/vim-rhubarb'
-
--- Create menus easily.
-Plug 'skywind3000/quickmenu.vim'
-
--- Indentation guides
-Plug 'nathanaelkane/vim-indent-guides'                       " See indentation guides
-
---]]

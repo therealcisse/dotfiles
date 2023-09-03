@@ -40,10 +40,10 @@ function s:HandleInactiveBackground()
     endif
 
     if !has("gui_running") || g:falcon_background == 0
-      hi NonText guifg=#36363a ctermfg=237 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+      hi NonText guifg=#000000 ctermfg=NONE guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
       hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
     else
-      hi NonText guifg=#36363a ctermfg=237 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
+      hi NonText guifg=#000000 ctermfg=NONE guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
       hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
     endif
 

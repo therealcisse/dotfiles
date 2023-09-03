@@ -91,7 +91,7 @@ prepend_to PATH $HOME/.zsh/bin
 prepend_to PATH $HOME/bin
 prepend_to PATH $HOME/flutter/bin
 prepend_to PATH $HOME/nvim-macos/bin
-prepend_to PATH $HOME/.zig
+prepend_to PATH $HOME/zig/bin
 prepend_to PATH "$HOME/Library/Application Support/Coursier/bin"
 
 # If you ever want to see this in easy-to-read form: `echo $PATH | tr : '\n'`

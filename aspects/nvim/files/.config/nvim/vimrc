@@ -1,6 +1,7 @@
 set t_Co=256
 set termguicolors
-colorscheme carbonfox
+" colorscheme ayu-dark
+" colorscheme carbonfox
 
 lua << EOF
   vim.g.ts_highlight_lua = false
@@ -755,7 +756,7 @@ augroup ArrowKeys
   au BufWinEnter,WinEnter,BufLeave * call s:ToggleArrowKeys()
 augroup end
 
-set splitkeep = "screen"
+" set splitkeep = "screen"
 
 " Wait until idle to run additional "boot" commands.
 augroup Idleboot

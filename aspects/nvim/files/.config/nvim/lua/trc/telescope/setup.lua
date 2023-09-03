@@ -152,6 +152,15 @@ require("telescope").setup {
       minimum_grep_characters = 6,
     },
 
+    ast_grep = {
+      command = {
+        "sg",
+        "--json=stream",
+      }, -- must have --json and -p
+      grep_open_files = false, -- search in opened files
+      lang = nil, -- string value, specify language for ast-grep `nil` for default
+    },
+
     hop = {
       -- keys define your hop keys in order; defaults to roughly lower- and uppercased home row
       keys = { "a", "s", "d", "f", "g", "h", "j", "k", "l", ";" }, -- ... and more
@@ -201,6 +210,7 @@ _ = require("telescope").load_extension "git_worktree"
 _ = require("telescope").load_extension "neoclip"
 _ = require("telescope").load_extension "live_grep_args"
 _ = require("telescope").load_extension "notify"
+_ = require("telescope").load_extension "ast_grep"
 
 pcall(require("telescope").load_extension, "smart_history")
 pcall(require("telescope").load_extension, "frecency")

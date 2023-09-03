@@ -262,7 +262,7 @@ local servers = {
   -- metals = pcall(require, "metals"),
 
   cmake = (1 == vim.fn.executable "cmake-language-server"),
-  zls = true,
+  zls = (1 == vim.fn.executable "zig"),
   -- dartls = pcall(require, "flutter-tools"),
 
   solang = true,
