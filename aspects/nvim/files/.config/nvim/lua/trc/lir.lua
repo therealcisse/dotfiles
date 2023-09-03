@@ -16,7 +16,7 @@ lir.setup {
   mappings = {
     ["Enter"] = actions.edit,
     ["<C-M>"] = actions.edit,
-    ["l"] = actions.edit,
+    -- ["l"] = actions.edit,
     ["<C-s>"] = actions.split,
     ["v"] = actions.vsplit,
     ["<C-t>"] = actions.tabedit,
@@ -83,9 +83,9 @@ lir.setup {
   end,
 }
 
-require'lir.git_status'.setup({
+require'lir.git_status'.setup {
   show_ignored = false
-})
+}
 
 -- custom folder icon
 require("nvim-web-devicons").set_icon {

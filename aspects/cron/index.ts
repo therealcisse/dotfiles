@@ -11,14 +11,14 @@ import {
 
 const {when} = helpers;
 
-task('create ~/Library/Cron', when('amsayk', 'personal'), async () => {
+task('create ~/Library/Cron', when('therealcisse', 'personal'), async () => {
   await file({
     path: '~/Library/Cron',
     state: 'directory',
   });
 });
 
-task('fill templates', when('amsayk', 'personal'), async () => {
+task('fill templates', when('therealcisse', 'personal'), async () => {
   for (const src of resource.templates('*.erb')) {
     await template({
       mode: '0755',

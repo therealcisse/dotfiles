@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "main": "/dev/null",
   "private": true,
-  "repository": "https://github.com/amsayk/amsayk.git",
+  "repository": "https://github.com/therealcisse/dotfiles.git",
   "author": "Amadou Cisse <cisse.amadou.9@gmail.com>",
   "license": "Unlicense",
   "scripts": {

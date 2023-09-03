@@ -19,6 +19,8 @@ nnoremap <silent> <leader>e        <cmd>lua vim.diagnostic.setloclist()<CR>
 
 nnoremap <silent> <localleader>w :call mappings#leader#zap()<CR>
 
+nnoremap <silent> <Backspace>n <cmd>lua require("notify").dismiss()<CR>
+
 " Automatically strip the trailing
 " whitespaces when files are saved.
 
@@ -428,7 +430,7 @@ set path+=*/**
 
 set shell=/bin/sh
 
-set updatetime=250
+" set updatetime=250
 
 " always show signcolumns
 set signcolumn=yes:2

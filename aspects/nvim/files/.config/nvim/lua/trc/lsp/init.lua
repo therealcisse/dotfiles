@@ -133,9 +133,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+    if client.server_capabilities.inlayHintProvider then
+      vim.lsp.buf.inlay_hint(0, true)
+      vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = 'red' })
+    end
+
     if client.server_capabilities.completionProvider then
       vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
     end
+
     if client.server_capabilities.definitionProvider then
       vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
@@ -159,7 +166,7 @@ local custom_attach = function(client, bufnr)
     nvim_status.on_attach(client)
   end
 
-  require("lsp-inlayhints").on_attach(client, bufnr)
+  -- require("lsp-inlayhints").on_attach(client, bufnr)
 
   buf_inoremap { "<c-s>s", vim.lsp.buf.signature_help }
 
@@ -369,6 +376,11 @@ local setup_server = function(server, config)
     capabilities = updated_capabilities,
     flags = {
       debounce_text_changes = nil,
+    },
+    hint = {
+      enable = true,
+      arrayIndex = 'Enable',
+      setType = true,
     },
   }, config)
 

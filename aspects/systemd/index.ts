@@ -10,7 +10,7 @@ task('set up hostname', when('arch'), async () => {
   const result = await command('hostname', []);
 
   if (
-    variable('identity') === 'amsayk' &&
+    variable('identity') === 'therealcisse' &&
     result!.stdout.trim() !== hostname
   ) {
     await command('hostnamectl', ['set-hostname', hostname], {sudo: true});

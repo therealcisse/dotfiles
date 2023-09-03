@@ -78,7 +78,7 @@ local _ = require("nvim-treesitter.configs").setup {
     "markdown_inline",
     "scala",
     "zig",
-    "dart",
+    -- "dart",
     "go",
     "html",
     "javascript",

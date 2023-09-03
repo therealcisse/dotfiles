@@ -21,13 +21,13 @@ variables(({hostHandle, identity, profile}) => {
   return {
     gitGpgSign: false,
     gitHostSpecificInclude: `.gitconfig.d/${hostHandle}`,
-    gitUserEmail: profile == 'personal' ? 'cisse.amadou.9@gmail.com' : 'acisse@demystdata.com',
+    gitUserEmail: 'cisse.amadou.9@gmail.com',
     gitUserName: 'Amadou Cisse',
-    gitHubUsername: profile == 'personal' ? 'amsayk' : 'theRealCisse',
+    gitHubUsername: 'therealcisse',
   };
 });
 
-task('check for decrypted files', when('amsayk'), async () => {
+task('check for decrypted files', when('therealcisse'), async () => {
   const result = await command('vendor/git-cipher/bin/git-cipher', ['status'], {
     failedWhen: () => false,
   });
@@ -48,7 +48,7 @@ task('make directories', async () => {
   await file({path: '~/.config', state: 'directory'});
   await file({mode: '0700', path: '~/.gnupg', state: 'directory'});
 
-  if (is('amsayk')) {
+  if (is('therealcisse')) {
     await file({path: '~/code', state: 'directory'});
   }
 });
@@ -90,7 +90,7 @@ task('fill templates', async () => {
   }
 });
 
-task('create ~/code/.editorconfig', when('amsayk'), async () => {
+task('create ~/code/.editorconfig', when('therealcisse'), async () => {
   await template({
     path: '~/code/.editorconfig',
     src: resource.template('code/.editorconfig'),

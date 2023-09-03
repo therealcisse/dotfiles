@@ -1,5 +1,5 @@
 _ = vim.cmd [[packadd packer.nvim]]
-_ = vim.cmd [[packadd vimball]]
+-- _ = vim.cmd [[packadd vimball]]
 
 -- vim.api.nvim_cmd({
 --   cmd = "packadd",

@@ -94,7 +94,7 @@ zstyle ':completion:*' menu select
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="amsayk"
+# ZSH_THEME="therealcisse"
 # ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -641,3 +641,5 @@ if [ -e /etc/motd ]; then
     tee $HOME/.hushlogin < /etc/motd
   fi
 fi
+
+source /Users/amadou/.docker/init-zsh.sh || true # Added by Docker Desktop

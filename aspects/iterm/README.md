@@ -3,7 +3,7 @@ iTerm2 has a "[Dynamic Profiles feature](https://www.iterm2.com/documentation-dy
 This is nice for version control purposes, but our principal motivation here is to have the ability to apply different configs depending on whether an external monitor is plugged in (because an external 4K display and the internal Retina display on the laptop require different font sizes in order to produce the same physical size on the screen). We [use Hammerspoon](https://github.com/wincent/wincent/tree/main/aspects/dotfiles/files/.hammerspoon) to watch for screen layout changes and when they occur, overwrite the symlinks at:
 
 - `$HOME/Library/Application Support/iTerm2/DynamicProfiles/Vim.json` (this is the profile used for `vim://` windows).
-- `$HOME/Library/Application Support/iTerm2/DynamicProfiles/Amsayk.json` (this is the profile used for other windows).
+- `$HOME/Library/Application Support/iTerm2/DynamicProfiles/therealcisse.json` (this is the profile used for other windows).
 
 Overwriting the targets that the symlinks point to causes iTerm to read them and pick up the changes. The link targets are all stored in the "Sources" directory here:
 
@@ -26,17 +26,17 @@ The number prefixes are there because dynamic profiles are loaded in alphabetica
 - `70-Vim-4K.json`
 - `70-Vim-Retina.json`
 - `Vim.json`
-- `Amsayk.json`
+- `therealcisse.json`
 
 The "base" parent profiles never (or rarely) actually change, and we never need to swap one of them for another by changing a symlink target, so those ones live in this dotfiles repo and we have symlinks from `$HOME/Library/Application Support/iTerm2/DynamicProfiles` directly to them in `aspects/iterm/files/DynamicProfiles`.
 
-The "Amsayk.json" profile is just a symlink to the "real" profile, which lives in `$HOME/Library/Application Support/iTerm2/Sources`, and from there link to the originals in `aspects/iterm/files/Sources`.
+The "therealcisse.json" profile is just a symlink to the "real" profile, which lives in `$HOME/Library/Application Support/iTerm2/Sources`, and from there link to the originals in `aspects/iterm/files/Sources`.
 
 ## Summary
 
 - Just symlinks; changing what these points at causes iTerm2 to switch to a different profile:
   - `Vim.json`
-  - `Amsayk.json`
+  - `therealcisse.json`
 - Actual profiles; originals live in this repo and get symlinked to from the "Sources" directory in "Application Support":
   - `10-4K.json`
   - `10-Retina.json`

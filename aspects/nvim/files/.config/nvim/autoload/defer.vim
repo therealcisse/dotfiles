@@ -4,7 +4,7 @@ function! defer#defer(evalable) abort
     " Note that these commands are not defined in a group, so that we can call
     " this function multiple times. We rely on autocmds#idleboot to ensure that
     " this event is only fired once.
-    execute 'autocmd User AmsaykDefer ' . a:evalable
+    execute 'autocmd User MyDefer ' . a:evalable
   else
     execute a:evalable
   endif
