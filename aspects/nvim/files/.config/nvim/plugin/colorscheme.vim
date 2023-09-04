@@ -62,6 +62,8 @@ function s:HandleInactiveBackground()
     "   hi InactiveWindow guibg=#151521
     " else
 
+      hi! EndOfBuffer guibg=#000000 guifg=#000000
+
       hi! ActiveWindow guibg=#000000
       hi! InactiveWindow guibg=#000000
     endif
