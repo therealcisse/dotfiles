@@ -862,7 +862,12 @@ return require("packer").startup {
         -- }
 
         -- TREE SITTER:
-        local_use("nvim-treesitter", "nvim-treesitter")
+        use{
+          "nvim-treesitter/nvim-treesitter",
+          run = ':TSUpdate',
+          commit = "f2778bd",
+        }
+
         use "nvim-treesitter/nvim-treesitter-context"
         use "nvim-treesitter/playground"
         -- use "vigoux/architext.nvim"
