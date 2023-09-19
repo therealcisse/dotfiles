@@ -9,27 +9,27 @@ end)
 
 return {
   window_decorations = "RESIZE",
-  -- font = wezterm.font('Space Mono for Powerline'),
-  -- font_size = 10.5,
-  -- line_height = 1.2,
+  font = wezterm.font('Iosevka Nerd Font'),
+  font_size = 13.5,
+  line_height = 1.2,
   hide_tab_bar_if_only_one_tab = true,
   keys = {
     -- { key = 'l', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
-    {
-      key = 'R',
-      mods = 'CMD|SHIFT',
-      action = act.PromptInputLine {
-        description = 'Enter new name for tab',
-        action = wezterm.action_callback(function(window, _, line)
-          -- line will be `nil` if they hit escape without entering anything
-          -- An empty string if they just hit enter
-          -- Or the actual line of text they wrote
-          if line then
-            window:active_tab():set_title(line)
-          end
-        end),
-      },
-    },
+    -- {
+    --   key = 'R',
+    --   mods = 'CMD|SHIFT',
+    --   action = act.PromptInputLine {
+    --     description = 'Enter new name for tab',
+    --     action = wezterm.action_callback(function(window, _, line)
+    --       -- line will be `nil` if they hit escape without entering anything
+    --       -- An empty string if they just hit enter
+    --       -- Or the actual line of text they wrote
+    --       if line then
+    --         window:active_tab():set_title(line)
+    --       end
+    --     end),
+    --   },
+    -- },
     {
       key = ',',
       mods = 'CMD',
