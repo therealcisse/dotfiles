@@ -4,7 +4,7 @@ local act = wezterm.action
 
 wezterm.on('gui-startup', function(cmd)
   local tab, pane, window = mux.spawn_window(cmd or {})
-  window:gui_window():maximize()
+  window:gui_window():toggle_fullscreen()
 end)
 
 return {
