@@ -27,6 +27,7 @@
       ".config/screenkey.json",
       ".config/sxhkd",
       ".config/xkeysnail.py",
+      ".config/wezterm",
       ".ghci",
       ".gitattributes",
       ".gitconfig.d",
