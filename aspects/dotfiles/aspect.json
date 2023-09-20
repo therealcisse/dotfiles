@@ -52,6 +52,7 @@
       ".xinitrc",
       ".zsh",
       ".zshenv",
+      ".zshenv.d",
       ".zshrc",
       "ginit.vim"
     ],

@@ -10,10 +10,15 @@ end)
 return {
   window_decorations = "RESIZE",
   font = wezterm.font('Iosevka Nerd Font'),
-  font_size = 13.5,
-  line_height = 1.2,
+  -- font_size = 11.5,
+  -- line_height = 1.2,
   hide_tab_bar_if_only_one_tab = true,
   keys = {
+    {
+      key = 'r',
+      mods = 'CMD|SHIFT',
+      action = wezterm.action.ReloadConfiguration,
+    },
     -- { key = 'l', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
     -- {
     --   key = 'R',
@@ -30,20 +35,20 @@ return {
     --     end),
     --   },
     -- },
-    {
-      key = ',',
-      mods = 'CMD',
-      action = act.SpawnCommandInNewTab {
-        cwd = os.getenv('WEZTERM_CONFIG_DIR'),
-        set_environment_variables = {
-          TERM = 'screen-256color',
-        },
-        args = {
-          'nvim',
-          os.getenv('WEZTERM_CONFIG_FILE'),
-        },
-      },
-    },
+    -- {
+    --   key = ',',
+    --   mods = 'CMD',
+    --   action = act.SpawnCommandInNewTab {
+    --     cwd = os.getenv('WEZTERM_CONFIG_DIR'),
+    --     set_environment_variables = {
+    --       TERM = 'screen-256color',
+    --     },
+    --     args = {
+    --       'nvim',
+    --       os.getenv('WEZTERM_CONFIG_FILE'),
+    --     },
+    --   },
+    -- },
     {
       key = 't',
       mods = 'CMD|SHIFT',

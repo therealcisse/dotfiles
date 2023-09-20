@@ -66,6 +66,8 @@ function s:HandleInactiveBackground()
 
       hi! ActiveWindow guibg=#000000
       hi! InactiveWindow guibg=#000000
+
+      hi! LspInlayHint guifg=#AAAAAA gui=italic,bold
     endif
   " endif
 endfunction
