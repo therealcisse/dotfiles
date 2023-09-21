@@ -19,6 +19,11 @@ return {
       mods = 'CMD|SHIFT',
       action = wezterm.action.ReloadConfiguration,
     },
+    {
+      key = 'n',
+      mods = 'CMD|SHIFT',
+      action = wezterm.action.ToggleFullScreen,
+    },
     -- { key = 'l', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
     -- {
     --   key = 'R',
@@ -92,6 +97,12 @@ return {
   },
   window_frame = {
     font = wezterm.font { family = 'Noto Sans', weight = 'Regular' },
+  },
+  window_padding = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
   },
   window_background_opacity = 0.8,
 }
