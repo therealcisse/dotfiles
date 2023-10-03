@@ -643,3 +643,5 @@ if [ -e /etc/motd ]; then
 fi
 
 # source /Users/amadou/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+source /Users/amadou/.docker/init-zsh.sh || true # Added by Docker Desktop

@@ -57,7 +57,7 @@ set ttyfast
 set mouse=a
 set mousemodel=extend
 
-au BufWritePost *.lua PackerCompile
+" au BufWritePost *.lua PackerCompile
 
 if exists('$SUDO_USER')
   set nobackup                        " don't create root-owned files

@@ -89,7 +89,7 @@ local _ = require("nvim-treesitter.configs").setup {
     -- "zig",
     "go",
     "html",
-    "javascript",
+    -- "javascript",
     "json",
     "markdown",
     "python",
@@ -97,7 +97,7 @@ local _ = require("nvim-treesitter.configs").setup {
     -- "rust",
     -- "toml",
     "tsx",
-    "typescript",
+    -- "typescript",
   },
 
   -- highlight = {
@@ -106,6 +106,8 @@ local _ = require("nvim-treesitter.configs").setup {
   --   -- disable = { "json" },
   --   custom_captures = custom_captures,
   -- },
+
+  -- indent = { enable = true, disable = { "python", "css", "html", "gdscript", "gdscript3", "gd" } },
 
   refactor = {
     highlight_definitions = { enable = true },
