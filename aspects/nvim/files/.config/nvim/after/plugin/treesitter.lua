@@ -107,7 +107,7 @@ local _ = require("nvim-treesitter.configs").setup {
   --   custom_captures = custom_captures,
   -- },
 
-  -- indent = { enable = true, disable = { "python", "css", "html", "gdscript", "gdscript3", "gd" } },
+  indent = { enable = true, disable = { "dart", "python", "css", "html", "gdscript", "gdscript3", "gd" } },
 
   refactor = {
     highlight_definitions = { enable = true },

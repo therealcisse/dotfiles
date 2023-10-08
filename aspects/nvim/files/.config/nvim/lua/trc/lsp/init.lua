@@ -171,15 +171,15 @@ local custom_attach = function(client, bufnr)
 
   buf_nnoremap { "<localleader>rn", vim.lsp.buf.rename }
   buf_nnoremap { "<localleader>ca", vim.lsp.buf.code_action }
-  buf_nnoremap { "<localleader>cd", vim.diagnostic.open_float }
+  buf_nnoremap { "<leader>e", vim.diagnostic.open_float }
 
   buf_nnoremap { "gd", vim.lsp.buf.definition }
   buf_nnoremap { "gD", vim.lsp.buf.declaration }
   buf_nnoremap { "gT", vim.lsp.buf.type_definition }
 
   buf_nnoremap { "gi", handlers.implementation }
-  buf_nnoremap { "<localleader><enter>", "<cmd>lua R('trc.lsp.codelens').run()<CR>" }
-  -- buf_nnoremap { "<leader>rr", "LspRestart" }
+
+  buf_nnoremap { "<leader><enter>", "LspRestart" }
 
   telescope_mapper("<localleader>gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
