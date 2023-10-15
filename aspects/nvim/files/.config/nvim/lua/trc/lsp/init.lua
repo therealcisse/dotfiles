@@ -179,7 +179,7 @@ local custom_attach = function(client, bufnr)
 
   buf_nnoremap { "gi", handlers.implementation }
 
-  buf_nnoremap { "<leader><enter>", "LspRestart" }
+  -- buf_nnoremap { "<leader><enter>", "LspRestart" }
 
   telescope_mapper("<localleader>gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)

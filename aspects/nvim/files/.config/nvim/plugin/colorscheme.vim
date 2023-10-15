@@ -41,16 +41,16 @@ function s:HandleInactiveBackground()
 
     if !has("gui_running") || g:falcon_background == 0
       hi NonText guifg=#000000 ctermfg=NONE guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
-      hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
+      " hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
     else
       hi NonText guifg=#000000 ctermfg=NONE guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
-      hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
+      " hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
     endif
 
     " if exists('+winhighlight') && g:falcon_inactive == 1
-      hi! ActiveWindow guibg=NONE
+      " hi! ActiveWindow guibg=NONE
       " hi! InactiveWindow guibg=#151521
-      hi! InactiveWindow guibg=NONE
+      " hi! InactiveWindow guibg=NONE
 
       "TODO normalfloat background settings to not use PMenu
       set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
@@ -62,10 +62,10 @@ function s:HandleInactiveBackground()
     "   hi InactiveWindow guibg=#151521
     " else
 
-      hi! EndOfBuffer guibg=#000000 guifg=#000000
+      " hi! EndOfBuffer guibg=#000000 guifg=#000000
 
-      hi! ActiveWindow guibg=#000000
-      hi! InactiveWindow guibg=#000000
+      " hi! ActiveWindow guibg=#000000
+      " hi! InactiveWindow guibg=#000000
 
       hi! LspInlayHint guifg=#AAAAAA gui=italic,bold
     endif
