@@ -47,13 +47,15 @@ function s:HandleInactiveBackground()
       " hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
     endif
 
+    " hi! Normal ctermbg=none guibg=none
+
     " if exists('+winhighlight') && g:falcon_inactive == 1
       " hi! ActiveWindow guibg=NONE
       " hi! InactiveWindow guibg=#151521
       " hi! InactiveWindow guibg=NONE
 
       "TODO normalfloat background settings to not use PMenu
-      set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
+      " set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
       " return
     " endif
 

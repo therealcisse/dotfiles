@@ -105,4 +105,5 @@ return {
     -- bottom = 0,
   },
   window_background_opacity = 0.8,
+  scrollback_lines = 100000,
 }

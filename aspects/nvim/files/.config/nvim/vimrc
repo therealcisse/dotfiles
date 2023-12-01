@@ -4,6 +4,7 @@ set termguicolors
 " colorscheme carbonfox
 
 lua << EOF
+
   vim.g.ts_highlight_lua = false
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 
@@ -225,7 +226,7 @@ if has('folding')
   set foldenable                      " enable folding
   set foldmethod=indent               " not as cool as syntax, but faster
   set foldlevelstart=99               " start unfolded
-  set foldexpr=nvim_treesitter#foldexpr() " Use TreeSitter for folding.
+  " set foldexpr=nvim_treesitter#foldexpr() " Use TreeSitter for folding.
 
   " set foldenable                      " enable folding
   " set foldmethod=indent               " not as cool as syntax, but faster
@@ -602,6 +603,8 @@ if has('nvim')
 
     " Don't close terminal on :q
     au! TermOpen * set bufhidden=hide
+    au! TermOpen * set winhighlight=Normal:Normal
+    au! BufHidden term://* :set winhighlight=Normal:Normal
 
     " Delete buffer after exit
     au! TermClose * execute 'bdelete! ' . expand('<abuf>')
@@ -911,8 +914,14 @@ lua << EOF
   require "trc.glow"
   require "trc.scrollbar"
   require "trc.statuscolumn"
+  require "trc.tint"
   -- require "trc.autoclose"
   -- require "trc.foldtext"
+
+  if vim.loader then
+    -- vim.loader.enable()
+  end
+
 EOF
 
 highlight link LirGitStatusBracket Comment
