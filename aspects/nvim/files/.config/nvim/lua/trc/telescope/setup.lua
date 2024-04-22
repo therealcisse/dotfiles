@@ -170,7 +170,10 @@ require("telescope").setup {
       sign_hl = { "WarningMsg", "Title" },
 
       -- optional, typically a table of two highlight groups that are alternated between
-      line_hl = { "CursorLine", "Normal" },
+      line_hl = {
+        "CursorLine",
+        "Normal"
+      },
 
       -- options specific to `hop_loop`
       -- true temporarily disables Telescope selection highlighting

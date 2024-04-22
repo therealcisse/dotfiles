@@ -9,22 +9,22 @@ endif
 let g:loaded_falcon=1
 
 " Required as colors will come from terminal without
-if !exists('g:fzf_colors')
-  let g:fzf_colors=
-    \ { 'fg':      ['fg', 'Comment'],
-      \ 'bg':      ['bg', 'PMenu'],
-      \ 'hl':      ['fg', 'Normal'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'PMenu', 'PMenu'],
-      \ 'hl+':     ['fg', 'Keyword'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Question'],
-      \ 'marker':  ['fg', 'Directory'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
-endif
+" if !exists('g:fzf_colors')
+"   let g:fzf_colors=
+"     \ { 'fg':      ['fg', 'Comment'],
+"       \ 'bg':      ['bg', 'PMenu'],
+"       \ 'hl':      ['fg', 'Normal'],
+"       \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"       \ 'bg+':     ['bg', 'PMenu', 'PMenu'],
+"       \ 'hl+':     ['fg', 'Keyword'],
+"       \ 'info':    ['fg', 'PreProc'],
+"       \ 'border':  ['fg', 'Ignore'],
+"       \ 'prompt':  ['fg', 'Conditional'],
+"       \ 'pointer': ['fg', 'Question'],
+"       \ 'marker':  ['fg', 'Directory'],
+"       \ 'spinner': ['fg', 'Label'],
+"       \ 'header':  ['fg', 'Comment'] }
+" endif
 
 function s:HandleInactiveBackground()
 
@@ -95,6 +95,8 @@ function! s:MyHighlights() abort
   hi! PMenuSel guifg=#282a2e guibg=#c5c8c6
   hi! Pmenu guibg='00010a' guifg=#fff
   hi! MatchParen guifg=orange gui=bold
+
+  hi! CursorLine gui=bold
 
   hi! link CompeDocumentation NormalFloat
 

@@ -879,6 +879,15 @@ lua << EOF
 
   require 'plugins'
 
+  require "trc.colorscheme"
+  require "trc.statuscolumn"
+  require "trc.lir"
+  require "trc.autopairs"
+  require "trc.gitsigns"
+  require "trc.winbar"
+  require "trc.indentline"
+  require "trc.toggleterm"
+
   if require "trc.first_load"() then
     return
   end
@@ -897,26 +906,19 @@ lua << EOF
   require "trc.telescope.setup"
   require "trc.telescope.mappings"
 
-  require "trc.colorscheme"
   -- require "trc.g"
-  require "trc.lir"
-  require "trc.winbar"
-  require "trc.colorizer"
-  require "trc.toggleterm"
-  require "trc.autopairs"
-  require "trc.indentline"
+  -- require "trc.colorizer"
   require "trc.navic"
   require "trc.autocommands"
-  require "trc.gitsigns"
   require "trc.surround"
   require "trc.dap"
   require "trc.git_worktree"
   require "trc.glow"
   require "trc.scrollbar"
-  require "trc.statuscolumn"
   require "trc.tint"
   -- require "trc.autoclose"
   -- require "trc.foldtext"
+
 
   if vim.loader then
     -- vim.loader.enable()

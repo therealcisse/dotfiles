@@ -15,7 +15,7 @@ local reloader = function()
     RELOAD "plenary"
     RELOAD "telescope"
     RELOAD "trc.telescope.setup"
-    RELOAD "trc.telescope.custom"
+    -- RELOAD "trc.telescope.custom"
   end
 end
 

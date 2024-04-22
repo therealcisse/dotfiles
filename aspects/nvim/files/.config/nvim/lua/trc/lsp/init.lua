@@ -77,9 +77,9 @@ local filetype_attach = setmetatable({
     autocmd_format(false)
   end,
 
-  dartls = function()
-    autocmd_format(true)
-  end,
+  -- dartls = function()
+  --   autocmd_format(true)
+  -- end,
 
   -- css = function()
   --   autocmd_format(false)

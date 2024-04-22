@@ -103,6 +103,6 @@ end
 
 vim.cmd('augroup MyAutocolor')
 vim.cmd('autocmd!')
-check()
+--check()
 vim.cmd('augroup END')
 

@@ -643,3 +643,7 @@ if [ -e /etc/motd ]; then
 fi
 
 source /Users/amadou/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+alias java-21="export JAVA_HOME=`/usr/libexec/java_home -v 21`"
+alias java11="export JAVA_HOME=`/usr/libexec/java_home -v 11`"
+

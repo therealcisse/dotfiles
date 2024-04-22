@@ -58,6 +58,6 @@ M.implementation = function()
   end)
 end
 
-vim.lsp.codelens.display = require("gl.codelens").display
+-- vim.lsp.codelens.display = require("gl.codelens").display
 
 return M

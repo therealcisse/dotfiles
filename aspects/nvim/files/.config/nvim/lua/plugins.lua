@@ -1,11 +1,3 @@
--- _ = vim.cmd [[packadd packer.nvim]]
--- _ = vim.cmd [[packadd vimball]]
-
--- vim.api.nvim_cmd({
---   cmd = "packadd",
---   args = { "packer.vim" },
--- }, {})
-
 local setup = {
     "c",
     "cpp",
@@ -34,7 +26,7 @@ local setup = {
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd [[
-  augroup packer_user_config
+  augroup lazy_user_config
     autocmd!
     autocmd BufWritePost plugins.lua source <afile> | Lazy sync
   augroup end
@@ -584,7 +576,7 @@ return require("lazy").setup {
         ("nvim-telescope/telescope.nvim"),
         ("nvim-telescope/telescope-rs.nvim"),
         ("nvim-telescope/telescope-fzf-writer.nvim"),
-        ("nvim-telescope/telescope-packer.nvim"),
+        -- ("nvim-telescope/telescope-packer.nvim"),
         ("nvim-telescope/telescope-fzy-native.nvim"),
         ("nvim-telescope/telescope-github.nvim"),
         ("nvim-telescope/telescope-symbols.nvim"),
