@@ -6,9 +6,9 @@ end
 
 local lsp = require "trc.lsp"
 
-local extension_path = vim.fn.expand "~/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/"
+local extension_path = vim.fn.expand "~/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/"
 local codelldb_path = extension_path .. "adapter/codelldb"
-local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
 
 rust_tools.setup {
   tools = { -- rust-tools options
@@ -88,7 +88,7 @@ rust_tools.setup {
   },
 
   dap = {
-    -- adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
+    adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
   },
 
   -- all the opts to send to nvim-lspconfig

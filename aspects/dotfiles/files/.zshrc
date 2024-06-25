@@ -2,10 +2,10 @@ export TERM=alacritty
 
 # # Create a hash table for globally stashing variables without polluting main
 # scope with a bunch of identifiers.
-typeset -A __WINCENT
+typeset -A __TRC
 
-__WINCENT[ITALIC_ON]=$'\e[3m'
-__WINCENT[ITALIC_OFF]=$'\e[23m'
+__TRC[ITALIC_ON]=$'\e[3m'
+__TRC[ITALIC_OFF]=$'\e[23m'
 
 #
 # Teh H4xx
@@ -82,7 +82,7 @@ zstyle ':completion:*:complete:(cd|pushd):*' tag-order 'local-directories named-
 
 # Categorize completion suggestions with headings:
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*:descriptions' format %F{default}%B%{$__WINCENT[ITALIC_ON]%}--- %d ---%{$__WINCENT[ITALIC_OFF]%}%b%f
+zstyle ':completion:*:descriptions' format %F{default}%B%{$__TRC[ITALIC_ON]%}--- %d ---%{$__TRC[ITALIC_OFF]%}%b%f
 
 # Enable keyboard navigation of completions in menu
 # (not just tab/shift-tab but cursor keys as well):
@@ -96,6 +96,7 @@ zstyle ':completion:*' menu select
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="therealcisse"
 # ZSH_THEME="robbyrussell"
+# ZSH_THEME="powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -158,8 +159,6 @@ zstyle ':completion:*' menu select
 
 # Pathogen-like loader for plugins
 find -L ~/.zsh/bundle -type f -name "*.plugin.zsh" | sort | while read filename; do source "$filename"; done
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export DISABLE_AUTO_TITLE='true'
 
@@ -540,7 +539,7 @@ function -report-start-time() {
       SECS="$((~~$SECS))s"
     fi
     ELAPSED="${ELAPSED}${SECS}"
-    export RPROMPT="%F{cyan}%{$__WINCENT[ITALIC_ON]%}${ELAPSED}%{$__WINCENT[ITALIC_OFF]%}%f $RPROMPT_BASE"
+    export RPROMPT="%F{cyan}%{$__TRC[ITALIC_ON]%}${ELAPSED}%{$__TRC[ITALIC_OFF]%}%f $RPROMPT_BASE"
     unset ZSH_START_TIME
   else
     export RPROMPT="$RPROMPT_BASE"
@@ -562,17 +561,17 @@ add-zsh-hook chpwd -auto-ls-after-cd
 
 # Remember each command we run.
 function -record-command() {
-  __WINCENT[LAST_COMMAND]="$2"
+  __TRC[LAST_COMMAND]="$2"
 }
 add-zsh-hook preexec -record-command
 
 # Update vcs_info (slow) after any command that probably changed it.
 function -maybe-show-vcs-info() {
-  local LAST="$__WINCENT[LAST_COMMAND]"
+  local LAST="$__TRC[LAST_COMMAND]"
 
   # In case user just hit enter, overwrite LAST_COMMAND, because preexec
-  # won't run and it will otherwise linger.
-  __WINCENT[LAST_COMMAND]="<unset>"
+  # will not run and it will otherwise linger.
+  __TRC[LAST_COMMAND]="<unset>"
 
   # Check first word; via:
   # http://tim.vanwerkhoven.org/post/2012/10/28/ZSH/Bash-string-manipulation
@@ -580,6 +579,7 @@ function -maybe-show-vcs-info() {
     cd|cp|git|rm|touch|mv)
       vcs_info
       ;;
+
     *)
       ;;
   esac
@@ -613,24 +613,12 @@ source $HOME/.cargo/env
 LOCAL_RC=$HOME/.zshrc.local
 test -f $LOCAL_RC && source $LOCAL_RC
 
-# export PATH=/usr/local/opt/sbt@0.13/bin/:$PATH
-
 export DISABLE_UPDATE_PROMPT=true
 
 setopt inc_append_history
 setopt share_history
 
-# export SBT_OPTS="-XX:+UseG1GC $SBT_OPTS"
-
-# source ~/.zshenv.d/k3d.sh
-
-
-# >>> scala-cli completions >>>
-#fpath=("/Users/amadoucisse/Library/Application Support/ScalaCli/completions/zsh" $fpath)
-# <<< scala-cli completions <<<
-
 export LOCAL_METRICS_ENABLED=true
-
 
 #
 # /etc/motd
@@ -642,8 +630,11 @@ if [ -e /etc/motd ]; then
   fi
 fi
 
-source /Users/amadou/.docker/init-zsh.sh || true # Added by Docker Desktop
-
-alias java-21="export JAVA_HOME=`/usr/libexec/java_home -v 21`"
+alias java21="export JAVA_HOME=`/usr/libexec/java_home -v 21`"
 alias java11="export JAVA_HOME=`/usr/libexec/java_home -v 11`"
+alias java17="export JAVA_HOME=`/usr/libexec/java_home -v 17`"
+
+export NODE_OPTIONS=--openssl-legacy-provider
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

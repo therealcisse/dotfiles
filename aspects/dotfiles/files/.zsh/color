@@ -2,7 +2,7 @@
 # Colors
 #
 
-__WINCENT[BASE16_CONFIG]=~/.zsh/.base16
+__TRC[BASE16_CONFIG]=~/.zsh/.base16
 
 # Takes a hex color in the form of "RRGGBB" and outputs its luma (0-255, where
 # 0 is black and 255 is white).
@@ -45,7 +45,7 @@ color() {
 
   local SCHEME
   local BASE16_DIR=~/.zsh/colors
-  local BASE16_CONFIG_PREVIOUS="${__WINCENT[BASE16_CONFIG]}.previous"
+  local BASE16_CONFIG_PREVIOUS="${__TRC[BASE16_CONFIG]}.previous"
   local STATUS=0
 
   __color() {
@@ -60,12 +60,12 @@ color() {
         BACKGROUND=light
       fi
 
-      if [ -e "$__WINCENT[BASE16_CONFIG]" ]; then
-        cp "$__WINCENT[BASE16_CONFIG]" "$BASE16_CONFIG_PREVIOUS"
+      if [ -e "$__TRC[BASE16_CONFIG]" ]; then
+        cp "$__TRC[BASE16_CONFIG]" "$BASE16_CONFIG_PREVIOUS"
       fi
 
-      echo "$SCHEME" >! "$__WINCENT[BASE16_CONFIG]"
-      echo "$BACKGROUND" >> "$__WINCENT[BASE16_CONFIG]"
+      echo "$SCHEME" >! "$__TRC[BASE16_CONFIG]"
+      echo "$BACKGROUND" >> "$__TRC[BASE16_CONFIG]"
       sh "$FILE"
 
       # When running a `.tmux` script we may have a race where multiple `ln -sf`
@@ -94,9 +94,9 @@ color() {
   zparseopts -D -E -- q=QUIET -quiet=QUIET
 
   if [ $# -eq 0 ]; then
-    if [ -s "$__WINCENT[BASE16_CONFIG]" ]; then
-      cat "$__WINCENT[BASE16_CONFIG]"
-      SCHEME=$(head -1 "$__WINCENT[BASE16_CONFIG]")
+    if [ -s "$__TRC[BASE16_CONFIG]" ]; then
+      cat "$__TRC[BASE16_CONFIG]"
+      SCHEME=$(head -1 "$__TRC[BASE16_CONFIG]")
       __color "$SCHEME"
       return
     else
@@ -154,11 +154,11 @@ color() {
 function () {
   emulate -L zsh
 
-  if [[ -s "$__WINCENT[BASE16_CONFIG]" ]]; then
-    local SCHEME=$(head -1 "$__WINCENT[BASE16_CONFIG]")
-    local BACKGROUND=$(sed -n -e '2 p' "$__WINCENT[BASE16_CONFIG]")
+  if [[ -s "$__TRC[BASE16_CONFIG]" ]]; then
+    local SCHEME=$(head -1 "$__TRC[BASE16_CONFIG]")
+    local BACKGROUND=$(sed -n -e '2 p' "$__TRC[BASE16_CONFIG]")
     if [ "$BACKGROUND" != 'dark' -a "$BACKGROUND" != 'light' ]; then
-      echo "warning: unknown background type in $__WINCENT[BASE16_CONFIG]"
+      echo "warning: unknown background type in $__TRC[BASE16_CONFIG]"
     fi
     color "$SCHEME"
   else

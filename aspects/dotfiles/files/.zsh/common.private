@@ -2,8 +2,5 @@
 # (eg. cd ~rn or `jump rn`/`j rn`)
 # For a full list, run  `hash -d` (alias `d`).
 
-hash -d r=~/code/dory/
-hash -d ra=~/code/dory/app
 hash -d d=~/dotfiles
-hash -d s=~/code/schoolyear/app
 

@@ -14,6 +14,15 @@ end
 local is_mac = vim.fn.has "macunix" == 1
 
 local lspconfig_util = require "lspconfig.util"
+local util = require 'trc.lsp.lsp_util'
+
+local typescript_installer = util.npm_installer {
+  server_name = "tsserver",
+  packages = { "typescript-language-server" },
+  binaries = { "typescript-language-server"},
+}
+
+local package_json_root_pattern = util.root_pattern("package.json");
 
 local ok, nvim_status = pcall(require, "lsp-status")
 if not ok then
@@ -73,6 +82,12 @@ local filetype_attach = setmetatable({
   --   autocmd_format(false)
   -- end,
 
+  sqls = function()
+  end,
+
+  -- jdtls = function()
+  -- end,
+
   metals = function()
     autocmd_format(false)
   end,
@@ -81,9 +96,9 @@ local filetype_attach = setmetatable({
   --   autocmd_format(true)
   -- end,
 
-  -- css = function()
-  --   autocmd_format(false)
-  -- end,
+  css = function()
+    autocmd_format(false)
+  end,
 
   -- rust = function()
   --   -- vim.cmd [[
@@ -98,13 +113,13 @@ local filetype_attach = setmetatable({
   --   autocmd_format(false)
   -- end,
 
-  -- typescript = function()
-  --   autocmd_format(false, function(clients)
-  --     return vim.tbl_filter(function(client)
-  --       return client.name ~= "tsserver"
-  --     end, clients)
-  --   end)
-  -- end,
+  typescript = function()
+    autocmd_format(false, function(clients)
+      return vim.tbl_filter(function(client)
+        return client.name ~= "tsserver"
+      end, clients)
+    end)
+  end,
 }, {
   __index = function()
     return function() end
@@ -135,7 +150,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
     if client.server_capabilities.inlayHintProvider then
-      vim.lsp.inlay_hint(bufnr, true)
+      -- vim.lsp.inlay_hint.enable(true, bufnr)
     end
 
     if client.server_capabilities.completionProvider then
@@ -156,7 +171,19 @@ vim.api.nvim_create_autocmd("LspDetach", {
   end,
 })
 
--- require('trc.lsp.codelens').setup()
+require('trc.lsp.codelens').setup()
+
+vim.keymap.set("n", "<leader>h", function () vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
+
+vim.keymap.set("n", "<leader>k", function () vim.lsp.codelens.run() end)
+
+vim.keymap.set("n", "<leader>b", function () require("dap").toggle_breakpoint() end, {noremap=true})
+vim.keymap.set("n", "<leader>dt", function () require("dapui").toggle() end, {noremap=true})
+vim.keymap.set("n", "<leader>dr", function () require("dapui").open({reset = true}) end, {noremap=true})
+
+vim.keymap.set("n", "<leader>dE", function()
+  require("dapui").eval(vim.fn.input "[DAP] Expression > ")
+end)
 
 local custom_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
@@ -199,7 +226,7 @@ local custom_attach = function(client, bufnr)
   -- )
 
   if filetype ~= "lua" then
-    buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
+    -- buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -218,7 +245,7 @@ local custom_attach = function(client, bufnr)
       vim.cmd [[
         augroup lsp_document_codelens
           au! * <buffer>
-          autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
+          autocmd BufEnter ++once <buffer> lua require"vim.lsp.codelens".refresh()
           autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
         augroup END
       ]]
@@ -259,8 +286,9 @@ updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport
 
 local servers = {
   -- gdscript = true,
-  -- graphql = true,
-  -- html = true,
+  graphql = true,
+  sqls = true,
+  -- jdtls = true,
   -- pyright = true,
   -- vimls = true,
   -- yamlls = true,
@@ -314,6 +342,17 @@ local servers = {
     settings = {
       gopls = {
         codelenses = { test = true },
+        completeUnimported = true,
+        usePlaceholders = true,
+        analyses = {
+          unusedparams = true,
+        },
+        hints = {
+          parameterNames = true,
+          constantValues = true,
+          compositeLiteralTypes = true,
+          assignVariableTypes = true,
+        },
       },
     },
 
@@ -346,27 +385,42 @@ local servers = {
   },
 
   -- elmls = true,
-  -- cssls = true,
 
-  -- tsserver = {
-  --   init_options = ts_util.init_options,
-  --   cmd = { "typescript-language-server", "--stdio" },
-  --   filetypes = {
-  --     "javascript",
-  --     "javascriptreact",
-  --     "javascript.jsx",
-  --     "typescript",
-  --     "typescriptreact",
-  --     "typescript.tsx",
-  --   },
-  --
-  --   on_attach = function(client)
-  --     custom_attach(client)
-  --
-  --     ts_util.setup { auto_inlay_hints = false }
-  --     ts_util.setup_client(client)
-  --   end,
-  -- },
+  tsserver = {
+    init_options = ts_util.init_options,
+    cmd = { "typescript-language-server", "--stdio" },
+    install = typescript_installer.install,
+    install_info = typescript_installer.info,
+    on_new_config = function(new_config)
+      local install_info = typescript_installer.info()
+      if install_info.is_installed then
+        if type(new_config.cmd) == 'table' then
+          -- Try to preserve any additional args from upstream changes.
+          new_config.cmd[1] = install_info.binaries[ "typescript-language-server"]
+        else
+          new_config.cmd = {install_info.binaries[ "typescript-language-server"]}
+        end
+      end
+    end,
+    filetypes = {
+      "js",
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    root_dir = util.root_pattern("package.json"),
+
+    on_attach = function(client)
+      custom_attach(client)
+
+      ts_util.setup { auto_inlay_hints = false }
+      ts_util.setup_client(client)
+    end,
+  },
+
 }
 
 local setup_server = function(server, config)

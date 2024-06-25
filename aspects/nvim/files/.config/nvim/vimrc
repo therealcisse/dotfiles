@@ -274,29 +274,36 @@ nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR
 
 " toggle invisible characters
 set list
-" set listchars=nbsp:⦸                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-" set listchars+=tab:▷┅                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
+" set listchars=nbsp:+                  " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+" set listchars+=tab:\+\                 " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
 "                                       " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
 " set listchars+=extends:»              " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
 " set listchars+=precedes:«             " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
 " set listchars+=trail:•                " BULLET (U+2022, UTF-8: E2 80 A2)
+" set listchars+=multispace:---+
+" set listchars+=leadmultispace:---+
+" set listchars+=eol:↴
+" set listchars+=space:⋅
+" set listchars+=trail:•
+
+set listchars=tab:·┈,trail:￮,multispace:￮,lead:\ ,extends:▶,precedes:◀,nbsp:‿
 
 :lua << EOF
-  vim.wo.listchars =
-      table.concat(
-      {
-          "multispace:---+",
-          "leadmultispace:---+",
-          "eol:↴",
-          "tab:│⋅",
-          "trail:•",
-          "extends:❯",
-          "precedes:❮",
-          "nbsp:_",
-          "space:⋅"
-      },
-      ","
-  )
+  -- vim.wo.listchars =
+  --     table.concat(
+  --     {
+  --         "multispace:---+",
+  --         "leadmultispace:---+",
+  --         "eol:↴",
+  --         "tab:│⋅",
+  --         "trail:•",
+  --         -- "extends:❯",
+  --         -- "precedes:❮",
+  --         "nbsp:_",
+  --         "space:⋅"
+  --     },
+  --     ","
+  -- )
 
   vim.g.floating_window_border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
   vim.g.floating_window_border_dark = {
@@ -381,7 +388,6 @@ nnoremap gk k
 " Save all
 autocmd InsertLeave * silent! update
 nn <silent> <leader>s :wa<CR>
-nn <silent> <leader>d :wa<CR>
 
 inoremap <c-delete> <c-w>
 
@@ -438,7 +444,7 @@ set shell=/bin/sh
 set signcolumn=yes:2
 
 " Better display for messages
-set cmdheight=0
+set cmdheight=1
 
 if exists('&swapsync')
   set swapsync=                       " let OS sync swapfiles lazily
@@ -710,25 +716,6 @@ nnoremap <Down> :resize +1<CR>
 " Echodoc
 set noshowmode
 
-augroup dirvish_config
-  au!
-  au FileType dirvish silent! unmap <buffer> <C-p>
-  au FileType dirvish silent! unmap <buffer> <C-n>
-
-  au FileType dirvish
-        \ nnoremap <silent><buffer> t ddO<Esc>:let @"=substitute(@", '\n', '', 'g')<CR>:r ! find "<C-R>"" -maxdepth 1 -print0 \| xargs -0 ls -Fd<CR>:silent! keeppatterns %s/\/\//\//g<CR>:silent! keeppatterns %s/[^a-zA-Z0-9\/]$//g<CR>:silent! keeppatterns g/^$/d<CR>:noh<CR>
-augroup END
-
-let g:dirvish_git_indicators = {
-      \ 'Modified'  : '✹',
-      \ 'Staged'    : '✚',
-      \ 'Untracked' : '✭',
-      \ 'Renamed'   : '➜',
-      \ 'Unmerged'  : '═',
-      \ 'Ignored'   : '☒',
-      \ 'Unknown'   : '?'
-      \ }
-
 " vim-scala
 au BufRead,BufNewFile *.sbt setlocal filetype=scala
 
@@ -882,11 +869,14 @@ lua << EOF
   require "trc.colorscheme"
   require "trc.statuscolumn"
   require "trc.lir"
+  -- require "trc.oil"
   require "trc.autopairs"
   require "trc.gitsigns"
   require "trc.winbar"
   require "trc.indentline"
   require "trc.toggleterm"
+  require "trc.java"
+  require "trc.tsc"
 
   if require "trc.first_load"() then
     return
@@ -918,6 +908,7 @@ lua << EOF
   require "trc.tint"
   -- require "trc.autoclose"
   -- require "trc.foldtext"
+  require "trc.dap"
 
 
   if vim.loader then

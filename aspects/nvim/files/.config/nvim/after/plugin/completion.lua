@@ -35,7 +35,7 @@ local luasnip = require("luasnip")
 
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
-    ['<C-e>'] = cmp.mapping.confirm({ select = true }),
+    -- ['<C-e>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = cmp.mapping.confirm({ select = true }),
     ["<C-J>"] = cmp.mapping(function(fallback)
       if luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
@@ -141,7 +141,7 @@ cmp.setup {
     native_menu = false,
 
     -- Let's play with this for a day or two
-    ghost_text = true,
+    -- ghost_text = true,
   },
 }
 

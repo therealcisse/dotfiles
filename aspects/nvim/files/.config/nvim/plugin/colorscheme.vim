@@ -111,6 +111,8 @@ function! s:MyHighlights() abort
 
   hi! FloatermNC guibg=black
 
+  hi! link javaConceptKind javaTypeDef
+
   hi! link ElCommand Statusline
   hi! link ElNormal Statusline
   hi! link ElVisual Statusline
@@ -118,6 +120,7 @@ function! s:MyHighlights() abort
   hi! link ElVisualBlock Statusline
 
   hi! Visual guibg=#3a3a3a cterm=italic gui=italic
+  hi! SpecialKey guifg=#333333 guibg=#111111
 endfunction
 
 function s:SetColors()

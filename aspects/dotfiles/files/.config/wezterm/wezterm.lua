@@ -10,7 +10,7 @@ end)
 return {
   window_decorations = "RESIZE",
   font = wezterm.font('Iosevka Nerd Font'),
-  -- font_size = 11.5,
+  font_size = 12.5,
   -- line_height = 1.2,
   hide_tab_bar_if_only_one_tab = true,
   keys = {

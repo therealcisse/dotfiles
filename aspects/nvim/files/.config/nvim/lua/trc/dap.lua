@@ -1,124 +1,89 @@
--- --[[
---
---       enrich_config = function(config, on_config)
---         local final_config = vim.deepcopy(config)
---         final_config.extra_property = 'This got injected by the adapter'
---         on_config(final_config)
---       end;
---
--- --]]
---
--- local has_dap, dap = pcall(require, "dap")
--- if not has_dap then
---   return
--- end
---
--- local has_job, Job = pcall(require, "plenary.job")
--- if not has_job then
---   return
--- end
---
--- local dap_ui_status_ok, dapui = pcall(require, "dapui")
--- if not dap_ui_status_ok then
--- 	return
--- end
---
--- vim.api.nvim_set_hl(0, 'DapBreakpoint', {
---   fg='#993939',
---   bg=nil,
---   ctermfg=nil,
---   ctermbg=nil
--- })
---
--- vim.api.nvim_set_hl(0, 'DapLogPoint', {
---   fg='#61afef',
---   bg=nil,
---   ctermfg=nil,
---   ctermbg=nil
--- })
---
--- vim.api.nvim_set_hl(0, 'DapStopped', {
---   fg='#98c379',
---   bg=nil,
---   ctermfg=nil,
---   ctermbg=nil
--- })
---
--- vim.fn.sign_define('DapBreakpoint', {
---   text=' ',
---   texthl='DapBreakpoint',
---   linehl='',
---   numhl=''
--- })
---
--- vim.fn.sign_define('DapBreakpointCondition', {
---   text=' ﳁ',
---   texthl='DapBreakpoint',
---   linehl='',
---   numhl=''
--- })
---
--- vim.fn.sign_define('DapBreakpointRejected', {
---   text=' ',
---   texthl='DapBreakpoint',
---   linehl='',
---   numhl= ''
--- })
---
--- vim.fn.sign_define('DapLogPoint', {
---   text=' ',
---   texthl='DapLogPoint',
---   linehl='',
---   numhl= ''
--- })
---
--- vim.fn.sign_define('DapStopped', {
---   text=' ',
---   texthl='DapStopped',
---   linehl='',
---   numhl= ''
--- })
---
--- require("nvim-dap-virtual-text").setup {
---   enabled = true,
---
---   -- DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
---   enabled_commands = false,
---
---   -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
---   highlight_changed_variables = true,
---   highlight_new_as_changed = true,
---
---   -- prefix virtual text with comment string
---   commented = false,
---
---   show_stop_reason = true,
---
---   -- experimental features:
---   virt_text_pos = "eol", -- position of virtual text, see `:h nvim_buf_set_extmark()`
---   all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
--- }
---
--- dap.configurations.scala = {
---   {
---     type = "scala",
---     request = "launch",
---     name = "RunOrTest",
---     metals = {
---       runType = "runOrTestFile",
---       --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
---     },
---   },
---   {
---     type = "scala",
---     request = "launch",
---     name = "Test Target",
---     metals = {
---       runType = "testTarget",
---     },
---   },
--- }
---
+-- Explore:
+-- - External terminal
+-- - make the virt lines thing available if ppl want it
+-- - find the nearest codelens above cursor
+
+-- Must Show:
+-- - Connect to an existing neovim instance, and step through some plugin
+-- - Connect using configuration from VS **** json file (see if VS **** is actually just "it works" LUL)
+-- - Completion in the repl, very cool for exploring objects / data
+
+-- - Generating your own config w/ dap.run (can show rust example) (rust BTW)
+
+local has_dap, dap = pcall(require, "dap")
+if not has_dap then
+  return
+end
+
+local dap_ui_status_ok, dapui = pcall(require, "dapui")
+if not dap_ui_status_ok then
+	return
+end
+
+local icons = require "trc.icons"
+
+-- vim.fn.sign_define('DapBreakpoint', {text=icons.ui.Bug, texthl='DiagnosticSignError', linehl='', numhl=''})
+
+vim.fn.sign_define("DapBreakpoint", { text = "ß", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "ü", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+-- Setup cool Among Us as avatar
+vim.fn.sign_define("DapStopped", { text = "ඞ", texthl = "Error" })
+
+require("nvim-dap-virtual-text").setup {
+  enabled = true,
+
+  -- DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
+  enabled_commands = false,
+
+  -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+  highlight_changed_variables = true,
+  highlight_new_as_changed = true,
+
+  -- prefix virtual text with comment string
+  commented = false,
+
+  show_stop_reason = true,
+
+  -- experimental features:
+  virt_text_pos = "eol", -- position of virtual text, see `:h nvim_buf_set_extmark()`
+  all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+}
+
+dap.configurations.scala = {
+  {
+    type = "scala",
+    request = "launch",
+    name = "RunOrTest",
+    metals = {
+      runType = "runOrTestFile",
+      --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+    },
+  },
+  {
+    type = "scala",
+    request = "launch",
+    name = "Test Target",
+    metals = {
+      runType = "testTarget",
+    },
+  },
+}
+
+dap.adapters.zig = {
+  name = "lldb",
+
+  type = "executable",
+  attach = {
+    pidProperty = "pid",
+    pidSelect = "ask",
+  },
+  command = "~/.vscode/extensions/lanza.lldb-vscode-0.2.3/bin/darwin/bin/lldb-vscode",
+  env = {
+    LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES",
+  },
+}
+
+
 -- dap.adapters.c = {
 --   name = "lldb",
 --
@@ -127,13 +92,13 @@
 --     pidProperty = "pid",
 --     pidSelect = "ask",
 --   },
---   command = "/usr/local/Cellar/llvm/14.0.6/bin/lldb-vscode",
+--   command = "lldb-vscode-11",
 --   env = {
 --     LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES",
 --   },
 -- }
---
--- --  https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#go-using-delve-directly
+
+--  https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#go-using-delve-directly
 -- dap.adapters.go = function(callback, _)
 --   local stdout = vim.loop.new_pipe(false)
 --   local handle, pid_or_err
@@ -168,7 +133,7 @@
 --     callback { type = "server", host = "127.0.0.1", port = port }
 --   end, 100)
 -- end
---
+
 -- dap.configurations.go = {
 --   {
 --     type = "go",
@@ -203,30 +168,23 @@
 --     dlvToolPath = vim.fn.exepath "dlv",
 --   },
 -- }
---
+
 -- dap.adapters.lldb = {
 --   type = "executable",
---   command = "/usr/local/Cellar/llvm/14.0.6/bin/lldb-vscode",
+--   command = "/usr/bin/lldb-vscode-11",
 --   name = "lldb",
---   env = function()
---     local variables = {}
---     for k, v in pairs(vim.fn.environ()) do
---       table.insert(variables, string.format("%s=%s", k, v))
---     end
---     return variables
---   end,
 -- }
---
+
 -- local extension_path = vim.fn.expand "~/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/"
 -- local codelldb_path = extension_path .. "adapter/codelldb"
 -- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
---
--- -- dap.adapters.rt_lldb = {
--- --   type = "executable",
--- --   command = codelldb_path,
--- --   name = "rt_lldb",
--- -- }
---
+
+-- dap.adapters.rt_lldb = {
+--   type = "executable",
+--   command = codelldb_path,
+--   name = "rt_lldb",
+-- }
+
 -- dap.adapters.rt_lldb = function(callback, _)
 --   local stdout = vim.loop.new_pipe(false)
 --   local stderr = vim.loop.new_pipe(false)
@@ -286,7 +244,7 @@
 --     end
 --   end)
 -- end
---
+
 -- dap.configurations.rust = {
 --   {
 --     name = "Launch",
@@ -312,268 +270,14 @@
 --     runInTerminal = false,
 --   },
 -- }
---
--- local map = function(lhs, rhs, desc)
---   if desc then
---     desc = "[DAP] " .. desc
---   end
---
---   vim.keymap.set("n", lhs, rhs, { silent = true, desc = desc })
--- end
---
--- map("<leader><F5>", function()
---   if vim.bo.filetype ~= "rust" then
---     vim.notify "This wasn't rust. I don't know what to do"
---     return
---   end
---
---   R("trc.dap").select_rust_runnable()
--- end)
---
--- map("<F1>", require("dap").step_back, "step_back")
--- map("<F2>", require("dap").step_into, "step_into")
--- map("<F3>", require("dap").step_over, "step_over")
--- map("<F4>", require("dap").step_out, "step_out")
--- map("<F5>", require("dap").continue, "continue")
---
--- -- TODO:
--- -- disconnect vs. terminate
---
--- map("<leader>dr", require("dap").repl.open)
---
--- map("<leader>db", require("dap").toggle_breakpoint)
--- map("<leader>dB", function()
---   require("dap").set_breakpoint(vim.fn.input "[DAP] Condition > ")
--- end)
---
--- map("<leader>de", require("dapui").eval)
--- map("<leader>dE", function()
---   require("dapui").eval(vim.fn.input "[DAP] Expression > ")
--- end)
---
--- -- You can set trigger characters OR it will default to '.'
--- -- You can also trigger with the omnifunc, <c-x><c-o>
--- vim.cmd [[
--- augroup DapRepl
---   au!
---   au FileType dap-repl lua require('dap.ext.autocompl').attach()
--- augroup END
--- ]]
---
---
--- require("dapui").setup({
---   icons = { expanded = "▾", collapsed = "▸" },
---   mappings = {
---     -- Use a table to apply multiple mappings
---     expand = { "<CR>", "<2-LeftMouse>" },
---     open = "o",
---     remove = "d",
---     edit = "e",
---     repl = "r",
---     toggle = "t",
---   },
---   -- Expand lines larger than the window
---   -- Requires >= 0.7
---   expand_lines = vim.fn.has("nvim-0.7"),
---   -- Layouts define sections of the screen to place windows.
---   -- The position can be "left", "right", "top" or "bottom".
---   -- The size specifies the height/width depending on position. It can be an Int
---   -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
---   -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
---   -- Elements are the elements shown in the layout (in order).
---   -- Layouts are opened in order so that earlier layouts take priority in window sizing.
---   layouts = {
---     {
---       elements = {
---       -- Elements can be strings or table with id and size keys.
---         { id = "scopes", size = 0.25 },
---         "breakpoints",
---         "stacks",
---         "watches",
---       },
---       size = 40, -- 40 columns
---       position = "left",
---     },
---     {
---       elements = {
---         "repl",
---         "console",
---       },
---       size = 0.25, -- 25% of total lines
---       position = "bottom",
---     },
---   },
---   floating = {
---     max_height = nil, -- These can be integers or a float between 0 and 1.
---     max_width = nil, -- Floats will be treated as percentage of your screen.
---     border = "single", -- Border style. Can be "single", "double" or "rounded"
---     mappings = {
---       close = { "q", "<Esc>" },
---     },
---   },
---   windows = { indent = 1 },
---   render = {
---     max_type_length = nil, -- Can be integer or nil.
---   }
--- })
---
--- local original = {}
--- local debug_map = function(lhs, rhs, desc)
---   local keymaps = vim.api.nvim_get_keymap "n"
---   original[lhs] = vim.tbl_filter(function(v)
---     return v.lhs == lhs
---   end, keymaps)[1] or true
---
---   vim.keymap.set("n", lhs, rhs, { desc = desc })
--- end
---
--- local debug_unmap = function()
---   for k, v in pairs(original) do
---     if v == true then
---       vim.keymap.del("n", k)
---     else
---       local rhs = v.rhs
---
---       v.lhs = nil
---       v.rhs = nil
---       v.buffer = nil
---       v.mode = nil
---       v.sid = nil
---       v.lnum = nil
---
---       vim.keymap.set("n", k, rhs, v)
---     end
---   end
---
---   original = {}
--- end
---
--- dap.listeners.after.event_initialized["dapui_config"] = function()
---   debug_map("asdf", ":echo 'hello world<CR>", "showing things")
---
---   dapui.open()
--- end
---
--- dap.listeners.before.event_terminated["dapui_config"] = function()
---   debug_unmap()
---
---   dapui.close()
--- end
---
--- dap.listeners.before.event_exited["dapui_config"] = function()
---   dapui.close()
--- end
---
--- --[[
--- nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
--- nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
--- nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
--- nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
--- nnoremap <silent> <leader>dl :lua require'dap'.repl.run_last()<CR>
--- --]]
---
--- -- vim.cmd [[nmap <silent> <space>db <Plug>VimspectorToggleBreakpoint]]
--- -- vim.cmd [[nmap <space>ds <Plug>VimscectorContinue]]
---
--- local M = {}
---
--- local get_cargo_args = function(args)
---   local result = {}
---
---   assert(args.cargoArgs, vim.inspect(args))
---   for idx, a in ipairs(args.cargoArgs) do
---     table.insert(result, a)
---     if idx == 1 and a == "test" then
---       -- Don't run tests, just build
---       table.insert(result, "--no-run")
---     end
---   end
---
---   table.insert(result, "--message-format=json")
---
---   -- TODO: handle cargoExtraArgs
---
---   return result
--- end
---
--- M.select_rust_related = function(bufnr, win)
---   bufnr = bufnr or vim.api.nvim_get_current_buf()
---   win = win or vim.api.nvim_get_current_win()
---
---   vim.lsp.buf_request(bufnr, "rust-analyzer/relatedTests", vim.lsp.util.make_position_params(win), function(err, result)
---     local runnables = {}
---     for _, v in ipairs(result) do
---       table.insert(runnables, v.runnable)
---     end
---
---     vim.ui.select(runnables, {
---       prompt = "Related Rust Runnables",
---       format_item = function(item)
---         return item.label
---       end,
---     }, function(item)
---       M.debug_rust_runnable(item)
---     end)
---   end)
--- end
---
--- M.select_rust_runnable = function(bufnr)
---   bufnr = bufnr or vim.api.nvim_get_current_buf()
---
---   vim.lsp.buf_request(
---     bufnr,
---     "experimental/runnables",
---     { textDocument = vim.lsp.util.make_text_document_params(bufnr) },
---     function(_, result)
---       vim.ui.select(result, {
---         prompt = "Rust Runnables",
---         format_item = function(item)
---           return item.label
---         end,
---       }, function(item)
---         M.debug_rust_runnable(item)
---       end)
---     end
---   )
--- end
---
--- M.debug_rust_runnable = function(item)
---   item = item or {}
---   item = vim.deepcopy(item)
---
---   vim.notify("Debugging: " .. item.label)
---
---   Job
---     :new({
---       command = "cargo",
---       args = get_cargo_args(item.args),
---       cwd = item.args.workspaceRoot,
---       on_exit = function(j, code)
---         if code and code > 0 then
---           vim.notify "An error occured while compiling. Please fix all compilation issues and try again."
---         end
---
---         vim.schedule(function()
---           for _, value in pairs(j:result()) do
---             local json = vim.fn.json_decode(value)
---             if type(json) == "table" and json.executable ~= vim.NIL and json.executable ~= nil then
---               dap.run {
---                 name = "Rust tools debug",
---                 type = "rt_lldb",
---                 request = "launch",
---                 program = json.executable,
---                 args = item.args.executableArgs,
---                 cwd = item.workspaceRoot,
---                 stopOnEntry = false,
---                 runInTerminal = false,
---               }
---               break
---             end
---           end
---         end)
---       end,
---     })
---     :start()
--- end
---
--- return M
+
+-- You can set trigger characters OR it will default to '.'
+-- You can also trigger with the omnifunc, <c-x><c-o>
+vim.cmd [[
+augroup DapRepl
+  au!
+  au FileType dap-repl lua require('dap.ext.autocompl').attach()
+augroup END
+]]
+
+
