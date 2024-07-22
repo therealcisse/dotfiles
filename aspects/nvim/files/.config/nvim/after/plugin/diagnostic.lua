@@ -1,7 +1,10 @@
 local nmap = require("trc.keymap").nmap
 
 vim.diagnostic.config {
-  virtual_lines = true,
+  virtual_lines = { only_on_current_line = true, highlight_whole_line = false },
+  update_in_insert = true,
+  -- scope = 'cursor',
+  -- virt_text_pos = 'inline',
 
   virtual_text = false,
   -- virtual_text = {
@@ -30,7 +33,6 @@ vim.diagnostic.config {
 
   -- general purpose
   severity_sort = true,
-  update_in_insert = false,
 }
 
 local goto_opts = {

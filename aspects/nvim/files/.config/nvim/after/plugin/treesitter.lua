@@ -7,9 +7,40 @@ if ts_debugging then
   RELOAD 'nvim-treesitter'
 end
 
-local list = require('nvim-treesitter.parsers').get_parser_configs()
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
-list.sql = {
+parser_config.ziggy = {
+  install_info = {
+    url = "https://github.com/kristoff-it/ziggy", -- local path or git repo
+    includes = {"tree-sitter-ziggy/src"},
+    files = {"tree-sitter-ziggy/src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+    -- optional entries:
+    branch = "main", -- default branch in case of git repo if different from master
+    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+}
+
+parser_config.ziggy_schema = {
+  install_info = {
+    url = "https://github.com/kristoff-it/ziggy", -- local path or git repo
+    files = {"tree-sitter-ziggy-schema/src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+    -- optional entries:
+    branch = "main", -- default branch in case of git repo if different from master
+    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+  filetype = "ziggy-schema",
+}
+
+vim.filetype.add({
+  extension = {
+    ziggy = 'ziggy',
+    ["ziggy-schema"] = "ziggy_schema",
+  }
+})
+
+parser_config.sql = {
   install_info = {
     url = 'https://github.com/DerekStride/tree-sitter-sql',
     files = { 'src/parser.c' },
@@ -17,7 +48,7 @@ list.sql = {
   },
 }
 
--- list.dart = {
+-- parser_config.dart = {
 --   install_info = {
 --     url = 'https://github.com/UserNobody14/tree-sitter-dart',
 --     files = { 'src/parser.c', 'src/scanner.c' },
@@ -25,7 +56,7 @@ list.sql = {
 --   },
 -- }
 
--- list.scala = {
+-- parser_config.scala = {
 --   install_info = {
 --     -- url can be Git repo or a local directory:
 --     -- url = '~/work/tree-sitter-scala',
@@ -36,7 +67,7 @@ list.sql = {
 --   },
 -- }
 
--- list.rsx = {
+-- parser_config.rsx = {
 --   install_info = {
 --     url = 'https://github.com/tjdevries/tree-sitter-rsx',
 --     files = { 'src/parser.c', 'src/scanner.cc' },
@@ -44,7 +75,7 @@ list.sql = {
 --   },
 -- }
 
--- list.lua = nil
+-- parser_config.lua = nil
 
 -- :h nvim-treesitter-query-extensions
 local custom_captures = {

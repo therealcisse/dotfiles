@@ -14,18 +14,18 @@ vim.lsp.handlers["textDocument/definition"] = function(_, result)
   end
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
-    signs = {
-      severity_limit = "Error",
-    },
-    underline = {
-      severity_limit = "Warning",
-    },
-    virtual_text = false,
-    virtual_lines = false,
-    update_in_insert = true,
-  })
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] =
+--   vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
+--     signs = {
+--       severity_limit = "Error",
+--     },
+--     underline = {
+--       severity_limit = "Warning",
+--     -- },
+--     virtual_text = false,
+--     -- virtual_lines = false,
+--     -- update_in_insert = true,
+--   })
 
 vim.lsp.handlers["window/showMessage"] = require "trc.lsp.show_message"
 

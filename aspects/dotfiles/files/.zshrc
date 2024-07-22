@@ -638,3 +638,7 @@ export NODE_OPTIONS=--openssl-legacy-provider
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+# Add JBang to environment
+alias j!=jbang
+export PATH="$HOME/.jbang/bin:$PATH"

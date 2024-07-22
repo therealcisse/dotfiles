@@ -3,7 +3,7 @@ local nmap = require("trc.keymap").nmap
 
 local has_lsp, lspconfig = pcall(require, "lspconfig")
 if not has_lsp then
-  return
+	return
 end
 
 -- local navic_ok, navic = pcall(require, "nvim-navic")
@@ -11,271 +11,301 @@ end
 --   return
 -- end
 
-local is_mac = vim.fn.has "macunix" == 1
+local is_mac = vim.fn.has("macunix") == 1
 
-local lspconfig_util = require "lspconfig.util"
-local util = require 'trc.lsp.lsp_util'
+local lspconfig_util = require("lspconfig.util")
+local util = require("trc.lsp.lsp_util")
+local mason = require("trc.lsp.mason")
 
-local typescript_installer = util.npm_installer {
-  server_name = "tsserver",
-  packages = { "typescript-language-server" },
-  binaries = { "typescript-language-server"},
-}
+local typescript_installer = util.npm_installer({
+	server_name = "tsserver",
+	packages = { "typescript-language-server" },
+	binaries = { "typescript-language-server" },
+})
 
-local package_json_root_pattern = util.root_pattern("package.json");
+local package_json_root_pattern = util.root_pattern("package.json")
 
 local ok, nvim_status = pcall(require, "lsp-status")
 if not ok then
-  nvim_status = nil
+	nvim_status = nil
 end
 
-local telescope_mapper = require "trc.telescope.mappings"
-local handlers = require "trc.lsp.handlers"
+local telescope_mapper = require("trc.telescope.mappings")
+local handlers = require("trc.lsp.handlers")
 
-local ts_util = require "nvim-lsp-ts-utils"
+local ts_util = require("nvim-lsp-ts-utils")
 
 -- Can set this lower if needed.
 -- require("vim.lsp.log").set_level "debug"
 -- require("vim.lsp.log").set_level "trace"
 
-local status = require "trc.lsp.status"
+local status = require("trc.lsp.status")
 if status then
-  status.activate()
+	status.activate()
 end
 
 local custom_init = function(client, bufnr)
-  client.config.flags = client.config.flags or {}
-  client.config.flags.allow_incremental_sync = true
+	client.config.flags = client.config.flags or {}
+	client.config.flags.allow_incremental_sync = true
 
-  -- navic.attach(client, bufnr)
+	-- navic.attach(client, bufnr)
 
-  -- if pcall(require, "lsp_signature") then
-  --   -- Get signatures (and _only_ signatures) when in argument lists.
-  --   require "lsp_signature".on_attach({
-  --     bind = true,
-  --     doc_lines = 0,
-  --     handler_opts = {
-  --       border = "rounded"
-  --     },
-  --   }, bufnr)
-  -- end
-
+	-- if pcall(require, "lsp_signature") then
+	--   -- Get signatures (and _only_ signatures) when in argument lists.
+	--   require "lsp_signature".on_attach({
+	--     bind = true,
+	--     doc_lines = 0,
+	--     handler_opts = {
+	--       border = "rounded"
+	--     },
+	--   }, bufnr)
+	-- end
 end
 
 local augroup_format = vim.api.nvim_create_augroup("my_lsp_format", { clear = true })
 local autocmd_format = function(async, filter)
-  vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    buffer = 0,
-    callback = function()
-      vim.lsp.buf.format { async = async, filter = filter }
-    end,
-  })
+	vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		buffer = 0,
+		callback = function()
+			vim.lsp.buf.format({ async = async, filter = filter })
+		end,
+	})
 end
 
 local filetype_attach = setmetatable({
-  -- go = function()
-  --   autocmd_format(false)
-  -- end,
+	-- go = function()
+	--   autocmd_format(false)
+	-- end,
 
-  -- scss = function()
-  --   autocmd_format(false)
-  -- end,
+	-- scss = function()
+	--   autocmd_format(false)
+	-- end,
 
-  sqls = function()
-  end,
+	sqls = function() end,
 
-  -- jdtls = function()
-  -- end,
+	lua_ls = function() end,
 
-  metals = function()
-    autocmd_format(false)
-  end,
+	-- jdtls = function()
+	-- end,
 
-  -- dartls = function()
-  --   autocmd_format(true)
-  -- end,
+	metals = function()
+		autocmd_format(false)
+	end,
 
-  css = function()
-    autocmd_format(false)
-  end,
+	-- dartls = function()
+	--   autocmd_format(true)
+	-- end,
 
-  -- rust = function()
-  --   -- vim.cmd [[
-  --   --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
-  --   -- ]]
-  --
-  --   telescope_mapper("<leader>wf", "lsp_workspace_symbols", {
-  --     ignore_filename = true,
-  --     query = "#",
-  --   }, true)
-  --
-  --   autocmd_format(false)
-  -- end,
+	hls = function()
+		autocmd_format(false)
+	end,
 
-  typescript = function()
-    autocmd_format(false, function(clients)
-      return vim.tbl_filter(function(client)
-        return client.name ~= "tsserver"
-      end, clients)
-    end)
-  end,
+	clang = function()
+		autocmd_format(true)
+	end,
+
+	-- ziggy = function()
+	--   autocmd_format(false)
+	-- end,
+
+	-- ziggy_schema = function()
+	--   autocmd_format(false)
+	-- end,
+
+	-- rust = function()
+	--   -- vim.cmd [[
+	--   --   autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
+	--   -- ]]
+	--
+	--   telescope_mapper("<leader>wf", "lsp_workspace_symbols", {
+	--     ignore_filename = true,
+	--     query = "#",
+	--   }, true)
+	--
+	--   autocmd_format(false)
+	-- end,
+
+	typescript = function()
+		autocmd_format(false, function(clients)
+			return vim.tbl_filter(function(client)
+				return client.name ~= "tsserver"
+			end, clients)
+		end)
+	end,
 }, {
-  __index = function()
-    return function() end
-  end,
+	__index = function()
+		return function() end
+	end,
 })
 
 local buf_nnoremap = function(opts)
-  if opts[3] == nil then
-    opts[3] = {}
-  end
-  opts[3].buffer = 0
+	if opts[3] == nil then
+		opts[3] = {}
+	end
+	opts[3].buffer = 0
 
-  nmap(opts)
+	nmap(opts)
 end
 
 local buf_inoremap = function(opts)
-  if opts[3] == nil then
-    opts[3] = {}
-  end
-  opts[3].buffer = 0
+	if opts[3] == nil then
+		opts[3] = {}
+	end
+	opts[3].buffer = 0
 
-  imap(opts)
+	imap(opts)
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local bufnr = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
+	callback = function(args)
+		local bufnr = args.buf
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-    if client.server_capabilities.inlayHintProvider then
-      -- vim.lsp.inlay_hint.enable(true, bufnr)
-    end
+		if client.server_capabilities.inlayHintProvider then
+			-- vim.lsp.inlay_hint.enable(true, bufnr)
+		end
 
-    if client.server_capabilities.completionProvider then
-      vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-    end
+		if client.server_capabilities.completionProvider then
+			vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+		end
 
-    if client.server_capabilities.definitionProvider then
-      vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
-    end
-  end,
+		if client.server_capabilities.definitionProvider then
+			vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+		end
+	end,
 })
 
 vim.api.nvim_create_autocmd("LspDetach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    -- Do something with the client
-    -- vim.cmd("setlocal tagfunc< omnifunc<")
-  end,
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		-- Do something with the client
+		-- vim.cmd("setlocal tagfunc< omnifunc<")
+	end,
 })
 
-require('trc.lsp.codelens').setup()
+require("trc.lsp.codelens").setup()
 
-vim.keymap.set("n", "<leader>h", function () vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
+vim.keymap.set("n", "<leader>h", function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end)
 
-vim.keymap.set("n", "<leader>k", function () vim.lsp.codelens.run() end)
+vim.keymap.set("n", "<leader>k", function()
+	vim.lsp.codelens.run()
+end)
 
-vim.keymap.set("n", "<leader>b", function () require("dap").toggle_breakpoint() end, {noremap=true})
-vim.keymap.set("n", "<leader>dt", function () require("dapui").toggle() end, {noremap=true})
-vim.keymap.set("n", "<leader>dr", function () require("dapui").open({reset = true}) end, {noremap=true})
+vim.keymap.set("n", "<leader>b", function()
+	require("dap").toggle_breakpoint()
+end, { noremap = true })
+vim.keymap.set("n", "<leader>dt", function()
+	require("dapui").toggle()
+end, { noremap = true })
+vim.keymap.set("n", "<leader>dc", function()
+	require("dap").continue()
+end, { noremap = true })
+vim.keymap.set("n", "<leader>dr", function()
+	require("dapui").open({ reset = true })
+end, { noremap = true })
 
 vim.keymap.set("n", "<leader>dE", function()
-  require("dapui").eval(vim.fn.input "[DAP] Expression > ")
+	require("dapui").eval(vim.fn.input("[DAP] Expression > "))
 end)
 
 local custom_attach = function(client, bufnr)
-  local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
-  if nvim_status then
-    nvim_status.on_attach(client)
-  end
+	if nvim_status then
+		nvim_status.on_attach(client)
+	end
 
-  -- require("lsp-inlayhints").on_attach(client, bufnr)
+	-- require("lsp-inlayhints").on_attach(client, bufnr)
 
-  buf_inoremap { "<c-s>s", vim.lsp.buf.signature_help }
+	buf_inoremap({ "<c-s>s", vim.lsp.buf.signature_help })
 
-  buf_nnoremap { "<localleader>rn", vim.lsp.buf.rename }
-  buf_nnoremap { "<localleader>ca", vim.lsp.buf.code_action }
-  buf_nnoremap { "<leader>e", vim.diagnostic.open_float }
+	buf_nnoremap({ "<localleader>rn", vim.lsp.buf.rename })
+	buf_nnoremap({ "<localleader>ca", vim.lsp.buf.code_action })
+	buf_nnoremap({ "<leader>e", vim.diagnostic.open_float })
 
-  buf_nnoremap { "gd", vim.lsp.buf.definition }
-  buf_nnoremap { "gD", vim.lsp.buf.declaration }
-  buf_nnoremap { "gT", vim.lsp.buf.type_definition }
+	buf_nnoremap({ "gd", vim.lsp.buf.definition })
+	buf_nnoremap({ "gD", vim.lsp.buf.declaration })
+	buf_nnoremap({ "gT", vim.lsp.buf.type_definition })
 
-  buf_nnoremap { "gi", handlers.implementation }
+	buf_nnoremap({ "gi", handlers.implementation })
 
-  -- buf_nnoremap { "<leader><enter>", "LspRestart" }
+	-- buf_nnoremap { "<leader><enter>", "LspRestart" }
 
-  telescope_mapper("<localleader>gr", "lsp_references", nil, true)
-  telescope_mapper("gI", "lsp_implementations", nil, true)
+	telescope_mapper("<localleader>gr", "lsp_references", nil, true)
+	telescope_mapper("gI", "lsp_implementations", nil, true)
 
-  -- telescope_mapper(
-  --   "<localleader>wd",
-  --   "lsp_document_symbols",
-  --   { ignore_filename = true },
-  --   true
-  -- )
+	-- telescope_mapper(
+	--   "<localleader>wd",
+	--   "lsp_document_symbols",
+	--   { ignore_filename = true },
+	--   true
+	-- )
 
-  -- telescope_mapper(
-  --   "<localleader>ww",
-  --   "lsp_dynamic_workspace_symbols",
-  --   { ignore_filename = true },
-  --   true
-  -- )
+	-- telescope_mapper(
+	--   "<localleader>ww",
+	--   "lsp_dynamic_workspace_symbols",
+	--   { ignore_filename = true },
+	--   true
+	-- )
 
-  if filetype ~= "lua" then
-    -- buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
-  end
+	if filetype ~= "lua" then
+		-- buf_nnoremap { "K", vim.lsp.buf.hover, { desc = "lsp:hover" } }
+	end
 
-  -- Set autocommands conditional on server_capabilities
-  if client.server_capabilities.documentHighlightProvider then
-    vim.cmd [[
+	-- Set autocommands conditional on server_capabilities
+	if client.server_capabilities.documentHighlightProvider then
+		vim.cmd([[
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
-    ]]
-  end
+    ]])
+	end
 
-  if client.server_capabilities.codeLensProvider then
-    if filetype ~= "elm" then
-      vim.cmd [[
+	if client.server_capabilities.codeLensProvider then
+		if filetype ~= "elm" then
+			vim.cmd([[
         augroup lsp_document_codelens
           au! * <buffer>
           autocmd BufEnter ++once <buffer> lua require"vim.lsp.codelens".refresh()
           autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
         augroup END
-      ]]
-    end
-  end
+      ]])
+		end
+	end
 
-  -- local caps = client.server_capabilities
-  -- if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-  --   local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})
-  --   vim.api.nvim_create_autocmd("TextChanged", {
-  --     group = augroup,
-  --     buffer = bufnr,
-  --     callback = function()
-  --       vim.lsp.buf.semantic_tokens_full()
-  --     end,
-  --   })
-  --
-  --   -- fire it first time on load as well
-  --   vim.lsp.buf.semantic_tokens_full()
-  -- end
-  -- buf_nnoremap { "<ggd>", require('goto-preview').goto_preview_definition() }
+	-- local caps = client.server_capabilities
+	-- if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
+	--   local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})
+	--   vim.api.nvim_create_autocmd("TextChanged", {
+	--     group = augroup,
+	--     buffer = bufnr,
+	--     callback = function()
+	--       vim.lsp.buf.semantic_tokens_full()
+	--     end,
+	--   })
+	--
+	--   -- fire it first time on load as well
+	--   vim.lsp.buf.semantic_tokens_full()
+	-- end
+	-- buf_nnoremap { "<ggd>", require('goto-preview').goto_preview_definition() }
 
-  -- Attach any filetype specific options to the client
-  filetype_attach[filetype](client)
+	-- Attach any filetype specific options to the client
+	filetype_attach[filetype](client)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 if nvim_status then
-  updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
+	updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, nvim_status.capabilities)
 end
+updated_capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
 
@@ -285,268 +315,300 @@ updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport
 -- vim.lsp.buf_request(0, "textDocument/codeLens", { textDocument = vim.lsp.util.make_text_document_params() })
 
 local servers = {
-  -- gdscript = true,
-  graphql = true,
-  sqls = true,
-  -- jdtls = true,
-  -- pyright = true,
-  -- vimls = true,
-  -- yamlls = true,
-  -- eslint = true,
-  -- metals = pcall(require, "metals"),
+	-- gdscript = true,
+	graphql = true,
+	sqls = true,
+	-- jdtls = true,
+	-- pyright = true,
+	-- vimls = true,
+	-- yamlls = true,
+	-- eslint = true,
+	-- metals = pcall(require, "metals"),
 
-  cmake = (1 == vim.fn.executable "cmake-language-server"),
-  zls = (1 == vim.fn.executable "zig"),
-  dartls = true,
+	cmake = (1 == vim.fn.executable("cmake-language-server")),
+	zls = (1 == vim.fn.executable("zig")),
+	dartls = true,
 
-  solang = true,
+	solang = true,
 
-  solidity = {
-    default_config= {
-      cmd = {'nomicfoundation-solidity-language-server', '--stdio'},
-      filetypes = { 'solidity' },
-      root_dir = lspconfig.util.find_git_ancestor,
-      single_file_support = true,
-    },
-  },
+	solidity = {
+		default_config = {
+			cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+			filetypes = { "solidity" },
+			root_dir = lspconfig.util.find_git_ancestor,
+			single_file_support = true,
+		},
+	},
 
-  clangd = {
-    cmd = {
-      "clangd",
-      "--background-index",
-      "--suggest-missing-includes",
-      "--clang-tidy",
-      "--header-insertion=iwyu",
-    },
-    -- Required for lsp-status
-    init_options = {
-      clangdFileStatus = true,
-    },
-    handlers = nvim_status and nvim_status.extensions.clangd.setup() or nil,
-  },
+	clangd = {
+		cmd = {
+			"clangd",
+			"--background-index",
+			"--clang-tidy",
+			"--header-insertion=iwyu",
+		},
+		-- Required for lsp-status
+		init_options = {
+			clangdFileStatus = true,
+		},
+		handlers = nvim_status and nvim_status.extensions.clangd.setup() or nil,
+	},
 
-  gopls = {
-    root_dir = function(fname)
-      local Path = require "plenary.path"
+	gopls = {
+		root_dir = function(fname)
+			local Path = require("plenary.path")
 
-      local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
-      local absolute_fname = Path:new(fname):absolute()
+			local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
+			local absolute_fname = Path:new(fname):absolute()
 
-      if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
-        return absolute_cwd
-      end
+			if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
+				return absolute_cwd
+			end
 
-      return lspconfig_util.root_pattern("go.mod", ".git")(fname)
-    end,
+			return lspconfig_util.root_pattern("go.mod", ".git")(fname)
+		end,
 
-    settings = {
-      gopls = {
-        codelenses = { test = true },
-        completeUnimported = true,
-        usePlaceholders = true,
-        analyses = {
-          unusedparams = true,
-        },
-        hints = {
-          parameterNames = true,
-          constantValues = true,
-          compositeLiteralTypes = true,
-          assignVariableTypes = true,
-        },
-      },
-    },
+		settings = {
+			gopls = {
+				codelenses = { test = true },
+				completeUnimported = true,
+				usePlaceholders = true,
+				analyses = {
+					unusedparams = true,
+				},
+				hints = {
+					parameterNames = true,
+					constantValues = true,
+					compositeLiteralTypes = true,
+					assignVariableTypes = true,
+				},
+			},
+		},
 
-    flags = {
-      debounce_text_changes = 200,
-    },
-  },
+		flags = {
+			debounce_text_changes = 200,
+		},
+	},
 
-  -- omnisharp = {
-  --   cmd = { vim.fn.expand "~/build/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
-  -- },
+	-- omnisharp = {
+	--   cmd = { vim.fn.expand "~/build/omnisharp/run", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+	-- },
 
-  rust_analyzer = {
-    cmd = { "rustup", "run", "nightly", "rust-analyzer" },
-    flags = {
-      debounce_text_changes = 150,
-    },
-    settings = {
-      ["rust-analyzer"] = {
-        cargo = {
-          allFeatures = true,
-        },
-        completion = {
-          postfix = {
-            enable = false,
-          },
-        },
-      },
-    },
-  },
+	rust_analyzer = {
+		cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+		flags = {
+			debounce_text_changes = 150,
+		},
+		settings = {
+			["rust-analyzer"] = {
+				cargo = {
+					allFeatures = true,
+				},
+				completion = {
+					postfix = {
+						enable = false,
+					},
+				},
+			},
+		},
+	},
 
-  -- elmls = true,
+	-- elmls = true,
 
-  tsserver = {
-    init_options = ts_util.init_options,
-    cmd = { "typescript-language-server", "--stdio" },
-    install = typescript_installer.install,
-    install_info = typescript_installer.info,
-    on_new_config = function(new_config)
-      local install_info = typescript_installer.info()
-      if install_info.is_installed then
-        if type(new_config.cmd) == 'table' then
-          -- Try to preserve any additional args from upstream changes.
-          new_config.cmd[1] = install_info.binaries[ "typescript-language-server"]
-        else
-          new_config.cmd = {install_info.binaries[ "typescript-language-server"]}
-        end
-      end
-    end,
-    filetypes = {
-      "js",
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
-    root_dir = util.root_pattern("package.json"),
+	lua_ls = true,
 
-    on_attach = function(client)
-      custom_attach(client)
+	tsserver = {
+		init_options = ts_util.init_options,
+		cmd = { "typescript-language-server", "--stdio" },
+		install = typescript_installer.install,
+		install_info = typescript_installer.info,
+		on_new_config = function(new_config)
+			local install_info = typescript_installer.info()
+			if install_info.is_installed then
+				if type(new_config.cmd) == "table" then
+					-- Try to preserve any additional args from upstream changes.
+					new_config.cmd[1] = install_info.binaries["typescript-language-server"]
+				else
+					new_config.cmd = { install_info.binaries["typescript-language-server"] }
+				end
+			end
+		end,
+		filetypes = {
+			"js",
+			"javascript",
+			"javascriptreact",
+			"javascript.jsx",
+			"typescript",
+			"typescriptreact",
+			"typescript.tsx",
+		},
+		root_dir = util.root_pattern("package.json"),
 
-      ts_util.setup { auto_inlay_hints = false }
-      ts_util.setup_client(client)
-    end,
-  },
+		on_attach = function(client)
+			custom_attach(client)
 
+			ts_util.setup({ auto_inlay_hints = false })
+			ts_util.setup_client(client)
+		end,
+	},
+
+	hls = {
+		cmd = {
+			"haskell-language-server-wrapper",
+			"--lsp",
+			"-d",
+			"-l",
+			"/tmp/hls.log",
+		},
+		filetypes = { "haskell", "lhaskell" },
+		root_dir = util.root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"),
+	},
+
+	-- ziggy = {
+	--   cmd = {"ziggy", "lsp"},
+	--   filetypes = {"ziggy"},
+	--   root_dir = util.root_pattern("*.ziggy"),
+	-- },
+
+	-- ziggy_schema = {
+	--   cmd = {"ziggy", "lsp", "--schema"},
+	--   filetypes = {"ziggy"},
+	--   root_dir = util.root_pattern("*.ziggy_schema"),
+	-- },
 }
 
 local setup_server = function(server, config)
-  if not config then
-    return
-  end
+	if not config then
+		return
+	end
 
-  if type(config) ~= "table" then
-    config = {}
-  end
+	if type(config) ~= "table" then
+		config = {}
+	end
 
-  config = vim.tbl_deep_extend("force", {
-    on_init = custom_init,
-    on_attach = custom_attach,
-    capabilities = updated_capabilities,
-    flags = {
-      debounce_text_changes = nil,
-    },
-    hint = {
-      enable = true,
-      arrayIndex = 'Enable',
-      setType = true,
-    },
-  }, config)
+	config = vim.tbl_deep_extend("force", {
+		on_init = custom_init,
+		on_attach = custom_attach,
+		capabilities = updated_capabilities,
+		flags = {
+			debounce_text_changes = nil,
+		},
+		hint = {
+			enable = true,
+			arrayIndex = "Enable",
+			setType = true,
+		},
+	}, config)
 
-  lspconfig[server].setup(config)
+	lspconfig[server].setup(config)
 end
 
 if is_mac then
-  local lua_cmd, lua_env = nil, nil
-  require("nvim-lsp-installer").setup {
-    automatic_installation = false,
-    ensure_installed = { "lua_ls", "gopls" },
-  }
+	local lua_cmd, lua_env = nil, nil
+	require("nvim-lsp-installer").setup({
+		automatic_installation = false,
+		ensure_installed = { "lua_ls", "gopls" },
+	})
 
-  -- lua_cmd = {
-  --   vim.fn.stdpath "data" .. "/lsp_servers/lua_ls/extension/server/bin/lua-language-server",
-  -- }
-  --
-  -- local process = require "nvim-lsp-installer.core.process"
-  -- local path = require "nvim-lsp-installer.core.path"
-  --
-  -- lua_env = {
-  --   cmd_env = {
-  --     PATH = process.extend_path {
-  --       path.concat { vim.fn.stdpath "data", "lsp_servers", "lua_ls", "extension", "server", "bin" },
-  --     },
-  --   },
-  -- }
+-- lua_cmd = {
+--   vim.fn.stdpath "data" .. "/lsp_servers/lua_ls/extension/server/bin/lua-language-server",
+-- }
+--
+-- local process = require "nvim-lsp-installer.core.process"
+-- local path = require "nvim-lsp-installer.core.path"
+--
+-- lua_env = {
+--   cmd_env = {
+--     PATH = process.extend_path {
+--       path.concat { vim.fn.stdpath "data", "lsp_servers", "lua_ls", "extension", "server", "bin" },
+--     },
+--   },
+-- }
 
-  -- setup_server("lua_ls", {
-  --   settings = {
-  --     Lua = {
-  --       diagnostics = {
-  --         globals = {
-  --           -- vim
-  --           "vim",
-  --
-  --           -- Busted
-  --           "describe",
-  --           "it",
-  --           "before_each",
-  --           "after_each",
-  --           "teardown",
-  --           "pending",
-  --           "clear",
-  --
-  --           -- Colorbuddy
-  --           "Color",
-  --           "c",
-  --           "Group",
-  --           "g",
-  --           "s",
-  --
-  --           -- Custom
-  --           "RELOAD",
-  --         },
-  --       },
-  --
-  --       workspace = {
-  --         -- Make the server aware of Neovim runtime files
-  --         library = vim.api.nvim_get_runtime_file("", true),
-  --       },
-  --     },
-  --   },
-  -- })
+-- setup_server("lua_ls", {
+--   settings = {
+--     Lua = {
+--       diagnostics = {
+--         globals = {
+--           -- vim
+--           "vim",
+--
+--           -- Busted
+--           "describe",
+--           "it",
+--           "before_each",
+--           "after_each",
+--           "teardown",
+--           "pending",
+--           "clear",
+--
+--           -- Colorbuddy
+--           "Color",
+--           "c",
+--           "Group",
+--           "g",
+--           "s",
+--
+--           -- Custom
+--           "RELOAD",
+--         },
+--       },
+--
+--       workspace = {
+--         -- Make the server aware of Neovim runtime files
+--         library = vim.api.nvim_get_runtime_file("", true),
+--       },
+--     },
+--   },
+-- })
 else
-  -- Load lua configuration from nlua.
-  -- _ = require("nlua.lsp.nvim").setup(lspconfig, {
-  --   on_init = custom_init,
-  --   on_attach = custom_attach,
-  --   capabilities = updated_capabilities,
-  --
-  --   root_dir = function(fname)
-  --     if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
-  --       return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
-  --     end
-  --
-  --     -- ~/git/config_manager/xdg_config/nvim/...
-  --     return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
-  --   end,
-  --
-  --   globals = {
-  --     -- Colorbuddy
-  --     "Color",
-  --     "c",
-  --     "Group",
-  --     "g",
-  --     "s",
-  --
-  --     -- Custom
-  --     "RELOAD",
-  --   },
-  -- })
+	-- Load lua configuration from nlua.
+	-- _ = require("nlua.lsp.nvim").setup(lspconfig, {
+	--   on_init = custom_init,
+	--   on_attach = custom_attach,
+	--   capabilities = updated_capabilities,
+	--
+	--   root_dir = function(fname)
+	--     if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
+	--       return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
+	--     end
+	--
+	--     -- ~/git/config_manager/xdg_config/nvim/...
+	--     return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
+	--   end,
+	--
+	--   globals = {
+	--     -- Colorbuddy
+	--     "Color",
+	--     "c",
+	--     "Group",
+	--     "g",
+	--     "s",
+	--
+	--     -- Custom
+	--     "RELOAD",
+	--   },
+	-- })
 end
 
 for server, config in pairs(servers) do
-  setup_server(server, config)
+	setup_server(server, config)
 end
 
 if pcall(require, "sg.lsp") then
-  require("sg.lsp").setup {
-    on_init = custom_init,
-    on_attach = custom_attach,
-  }
+	require("sg.lsp").setup({
+		on_init = custom_init,
+		on_attach = custom_attach,
+	})
 end
+
+require("ufo").setup({
+	provider_selector = function(bufnr, filetype, buftype)
+		return { "treesitter", "indent" }
+	end,
+})
+
+mason.setup()
 
 --[ An example of using functions...
 -- 0. nil -> do default (could be enabled or disabled)
@@ -597,19 +659,22 @@ end
 -- Set up null-ls
 local use_null = true
 if use_null then
-  require("null-ls").setup {
-    sources = {
-      -- require("null-ls").builtins.formatting.stylua,
-      -- require("null-ls").builtins.diagnostics.eslint,
-      -- require("null-ls").builtins.completion.spell,
-      -- require("null-ls").builtins.diagnostics.selene,
-      require("null-ls").builtins.formatting.prettierd,
-    },
-  }
+	require("null-ls").setup({
+		sources = {
+			require("null-ls").builtins.formatting.stylua,
+			-- require("null-ls").builtins.diagnostics.eslint,
+			-- require("null-ls").builtins.completion.spell,
+			require("null-ls").builtins.diagnostics.selene,
+			require("null-ls").builtins.formatting.black.with({
+				extra_args = { "--line-length=120" },
+			}),
+			require("null-ls").builtins.formatting.prettierd,
+		},
+	})
 end
 
 return {
-  on_init = custom_init,
-  on_attach = custom_attach,
-  capabilities = updated_capabilities,
+	on_init = custom_init,
+	on_attach = custom_attach,
+	capabilities = updated_capabilities,
 }

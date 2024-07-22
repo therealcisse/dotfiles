@@ -1,24 +1,24 @@
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 -- Don't show the dumb matching stuff.
-vim.opt.shortmess:append "c"
+vim.opt.shortmess:append 'c'
 
 -- Complextras.nvim configuration
 -- vim.api.nvim_set_keymap(
---   "i",
---   "<C-x><C-m>",
---   [[<c-r>=luaeval("require('complextras').complete_matching_line()")<CR>]],
+--   'i',
+--   '<C-x><C-m>',
+--   [[<c-r>=luaeval('require('complextras').complete_matching_line()')<CR>]],
 --   { noremap = true }
 -- )
 
 -- vim.api.nvim_set_keymap(
---   "i",
---   "<C-x><C-d>",
---   [[<c-r>=luaeval("require('complextras').complete_line_from_cwd()")<CR>]],
+--   'i',
+--   '<C-x><C-d>',
+--   [[<c-r>=luaeval('require('complextras').complete_line_from_cwd()')<CR>]],
 --   { noremap = true }
 -- )
 
-local ok, lspkind = pcall(require, "lspkind")
+local ok, lspkind = pcall(require, 'lspkind')
 if not ok then
   return
 end
@@ -27,33 +27,33 @@ lspkind.init()
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
-local cmp = require "cmp"
-local luasnip = require("luasnip")
+local cmp = require 'cmp'
+local luasnip = require('luasnip')
 
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
     -- ['<C-e>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = cmp.mapping.confirm({ select = true }),
-    ["<C-J>"] = cmp.mapping(function(fallback)
+    ['<C-J>'] = cmp.mapping(function(fallback)
       if luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
       elseif cmp.visible() then cmp.select_next_item()
       elseif has_words_before() then cmp.complete()
       else fallback()
       end
-    end, { "i", "s" }),
+    end, { 'i', 's' }),
 
-    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+    ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
 
-    ["<C-K>"] = cmp.mapping(function(fallback)
+    ['<C-K>'] = cmp.mapping(function(fallback)
       if luasnip.jumpable(-1) then luasnip.jump(-1)
       elseif cmp.visible() then cmp.select_prev_item()
       else fallback()
       end
-    end, { "i", "s" }),
+    end, { 'i', 's' }),
 
     -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -70,23 +70,27 @@ cmp.setup {
   --        max_item_count
   --        (more?)
   sources = cmp.config.sources({
-    -- { name = "gh_issues" },
+    -- { name = 'gh_issues' },
 
     -- Youtube: Could enable this only for lua, but nvim_lua handles that already.
-    -- { name = "nvim_lua" },
+    -- { name = 'nvim_lua' },
 
-    {name = "nvim_lsp_signature_help"},
-    { name = "codeium" },
-    { name = "luasnip" },
-    { name = "nvim_lsp" },
-    { name = "buffer" },
-    { name = "path" },
+    {name = 'nvim_lsp_signature_help'},
+    -- { name = 'codeium' },
+    { name = 'luasnip' },
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+    { name = 'path' },
+    {
+        name = 'lazydev',
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+    },
 
     -- { name = 'nvim_lsp_signature_help' },
   }),
 
   -- sorting = {
-  --   -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
+  --   -- TODO: Would be cool to add stuff like 'See variable names before method names' in rust, or something like that.
   --   comparators = {
   --     cmp.config.compare.offset,
   --     cmp.config.compare.exact,
@@ -95,8 +99,8 @@ cmp.setup {
   --     -- copied from cmp-under, but I don't think I need the plugin for this.
   --     -- I might add some more of my own.
   --     function(entry1, entry2)
-  --       local _, entry1_under = entry1.completion_item.label:find "^_+"
-  --       local _, entry2_under = entry2.completion_item.label:find "^_+"
+  --       local _, entry1_under = entry1.completion_item.label:find '^_+'
+  --       local _, entry2_under = entry2.completion_item.label:find '^_+'
   --       entry1_under = entry1_under or 0
   --       entry2_under = entry2_under or 0
   --       if entry1_under > entry2_under then
@@ -116,7 +120,7 @@ cmp.setup {
   -- Youtube: mention that you need a separate snippets plugin
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      require('luasnip').lsp_expand(args.body)
     end,
   },
 
@@ -125,13 +129,13 @@ cmp.setup {
     format = lspkind.cmp_format {
       with_text = true,
       menu = {
-        buffer = "[buf]",
-        nvim_lsp = "[LSP]",
-        nvim_lua = "[api]",
-        path = "[path]",
-        luasnip = "[snip]",
-        gh_issues = "[issues]",
-        tn = "[TabNine]",
+        buffer = '[buf]',
+        nvim_lsp = '[LSP]',
+        nvim_lua = '[api]',
+        path = '[path]',
+        luasnip = '[snip]',
+        gh_issues = '[issues]',
+        tn = '[TabNine]',
       },
     },
   },
@@ -141,7 +145,7 @@ cmp.setup {
     native_menu = false,
 
     -- Let's play with this for a day or two
-    -- ghost_text = true,
+    ghost_text = true,
   },
 }
 
@@ -155,24 +159,24 @@ cmp.setup.cmdline({ '/', '?' }, {
   --   autocomplete = false,
   -- },
   sources = cmp.config.sources({
-    { name = "nvim_lsp_document_symbol" },
+    { name = 'nvim_lsp_document_symbol' },
   }, {
-    { name = "buffer", keyword_length = 5 },
+    { name = 'buffer', keyword_length = 5 },
   }),
 })
 
-cmp.setup.cmdline(":", {
+cmp.setup.cmdline(':', {
   -- completion = {
   --   autocomplete = false,
   -- },
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     {
-      name = "path",
+      name = 'path',
     },
   }, {
     {
-      name = "cmdline",
+      name = 'cmdline',
       max_item_count = 20,
       keyword_length = 4,
     },
@@ -180,11 +184,11 @@ cmp.setup.cmdline(":", {
 })
 
 --[[
-" Setup buffer configuration (nvim-lua source only enables in Lua filetype).
-"
-" ON YOUTUBE I SAID: This only _adds_ sources for a filetype, not removes the global ones.
-"
-" BUT I WAS WRONG! This will override the global setup. Sorry for any confusion.
+' Setup buffer configuration (nvim-lua source only enables in Lua filetype).
+'
+' ON YOUTUBE I SAID: This only _adds_ sources for a filetype, not removes the global ones.
+'
+' BUT I WAS WRONG! This will override the global setup. Sorry for any confusion.
 autocmd FileType lua lua require'cmp'.setup.buffer {
 \   sources = {
 \     { name = 'nvim_lua' },
@@ -204,52 +208,52 @@ _ = vim.cmd [[
 _ = vim.cmd [[
   augroup CmpZsh
     au!
-    autocmd Filetype zsh lua require'cmp'.setup.buffer { sources = { { name = "zsh" }, } }
+    autocmd Filetype zsh lua require'cmp'.setup.buffer { sources = { { name = 'zsh' }, } }
   augroup END
 ]]
 
 --[[
-" Disable cmp for a buffer
+' Disable cmp for a buffer
 autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }
 --]]
 
 -- Youtube: customizing appearance
 --
 -- nvim-cmp highlight groups.
--- local Group = require("colorbuddy.group").Group
--- local g = require("colorbuddy.group").groups
--- local s = require("colorbuddy.style").styles
+-- local Group = require('colorbuddy.group').Group
+-- local g = require('colorbuddy.group').groups
+-- local s = require('colorbuddy.style').styles
 --
--- Group.new("CmpItemAbbr", g.Comment)
--- Group.new("CmpItemAbbrDeprecated", g.Error)
--- Group.new("CmpItemAbbrMatchFuzzy", g.CmpItemAbbr.fg:dark(), nil, s.italic)
--- Group.new("CmpItemKind", g.Special)
--- Group.new("CmpItemMenu", g.NonText)
+-- Group.new('CmpItemAbbr', g.Comment)
+-- Group.new('CmpItemAbbrDeprecated', g.Error)
+-- Group.new('CmpItemAbbrMatchFuzzy', g.CmpItemAbbr.fg:dark(), nil, s.italic)
+-- Group.new('CmpItemKind', g.Special)
+-- Group.new('CmpItemMenu', g.NonText)
 -- vscode format
 
-require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g.vscode_snippets_path or "" })
+require('luasnip.loaders.from_vscode').lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load({ paths = vim.g.vscode_snippets_path or '' })
 
 -- snipmate format
-require("luasnip.loaders.from_snipmate").load()
-require("luasnip.loaders.from_snipmate").lazy_load({ paths = vim.g.snipmate_snippets_path or "" })
+require('luasnip.loaders.from_snipmate').load()
+require('luasnip.loaders.from_snipmate').lazy_load({ paths = vim.g.snipmate_snippets_path or '' })
 
 -- lua format
-require("luasnip.loaders.from_lua").load()
-require("luasnip.loaders.from_lua").lazy_load({ paths = vim.g.lua_snippets_path or "" })
+require('luasnip.loaders.from_lua').load()
+require('luasnip.loaders.from_lua').lazy_load({ paths = vim.g.lua_snippets_path or '' })
 
-vim.api.nvim_create_autocmd("InsertLeave", {
+vim.api.nvim_create_autocmd('InsertLeave', {
 	callback = function()
 		if
-			require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-			and not require("luasnip").session.jump_active
+			require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+			and not require('luasnip').session.jump_active
 		then
-			require("luasnip").unlink_current()
+			require('luasnip').unlink_current()
 		end
 	end,
 })
 
-local aok, autopair = pcall(require, "autopair")
+local aok, autopair = pcall(require, 'autopair')
 if aok then
-	cmp.event:on("confirm_done", autopair.on_confirm_done())
+	cmp.event:on('confirm_done', autopair.on_confirm_done())
 end

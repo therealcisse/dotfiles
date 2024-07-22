@@ -97,6 +97,9 @@ prepend_to PATH $HOME/.bun/bin
 prepend_to PATH "$HOME/Library/Application Support/Coursier/bin"
 prepend_to PATH "$HOME/spark-3.5.1-bin-hadoop3/bin"
 prepend_to PATH $(go env GOPATH)/bin
+prepend_to PATH ~/.ghcup/bin
+prepend_to PATH ~/async-profiler-3.0-macos/bin
+prepend_to PATH ~/kafka_2.13-3.7.0/bin
 
 # If you ever want to see this in easy-to-read form: `echo $PATH | tr : '\n'`
 export PATH

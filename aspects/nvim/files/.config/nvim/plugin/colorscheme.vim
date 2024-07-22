@@ -70,7 +70,8 @@ function s:HandleInactiveBackground()
       " hi! InactiveWindow guibg=#000000
 
       hi! LspInlayHint guifg=#AAAAAA gui=italic,bold
-    endif
+      hi! DiagnosticError guifg=Red
+endif
   " endif
 endfunction
 
