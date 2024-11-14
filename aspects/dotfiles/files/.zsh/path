@@ -100,6 +100,8 @@ prepend_to PATH $(go env GOPATH)/bin
 prepend_to PATH ~/.ghcup/bin
 prepend_to PATH ~/async-profiler-3.0-macos/bin
 prepend_to PATH ~/kafka_2.13-3.7.0/bin
+prepend_to PATH /opt/homebrew/opt/libpq/bin
+prepend_to PATH /opt/async-profiler-3.0-linux-arm64/bin/
 
 # If you ever want to see this in easy-to-read form: `echo $PATH | tr : '\n'`
 export PATH

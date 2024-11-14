@@ -29,12 +29,13 @@ metals_config.init_options.statusBarProvider = "on"
 metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities(lsp.capabilities)
 
 metals_config.on_attach = function(client, bufnr)
-  metals.setup_dap()
-  lsp.on_attach(client)
+  -- metals.setup_dap()
+  -- metals.initialize_or_attach({})
+  lsp.on_attach(client, bufnr)
 end
 
 metals_config.on_init = function(client)
-  lsp.on_init(client)
+  -- lsp.on_init(client)
 end
 
 local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
@@ -42,7 +43,11 @@ vim.api.nvim_create_autocmd("FileType", {
   -- NOTE: You may or may not want java included here. You will need it if you
   -- want basic Java support but it may also conflict if you are using
   -- something like nvim-jdtls which also works on a java filetype autocmd.
-  pattern = { "scala", "sbt", "java" },
+  pattern = {
+    "scala",
+    "sbt",
+    "java",
+  },
   callback = function()
     metals.initialize_or_attach(metals_config)
   end,

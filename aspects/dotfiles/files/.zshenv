@@ -12,9 +12,3 @@ else
   export GIT_CEILING_DIRECTORIES=/home
 fi
 
-if [ -d "$HOME/.zshenv.d" ]; then
-  for EXTENSION_FILE in $(find $HOME/.zshenv.d/ -name '*.zsh'); do
-    source "$EXTENSION_FILE"
-  done
-fi
-. "$HOME/.cargo/env"

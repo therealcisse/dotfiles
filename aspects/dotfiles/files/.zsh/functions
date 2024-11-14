@@ -341,13 +341,24 @@ function tick() {
   fi
 }
 
-
-function gitClean () {
+function __gitClean () {
   if [ $# -eq 0 ]; then
     git clean -f -d .
     git clean -f -X .
   else
     git clean -f -d $1
     git clean -f -X $1
+  fi
+}
+
+function gitClean () {
+  echo "Are you really sure about deleting all untracked files? This cannot be undone. (yes/no)"
+  read -r response
+  if [[ "$response" == "yes" ]]; then
+    echo "Proceeding with deletion..."
+    # Replace the following command with your dangerous command
+    __gitClean
+  else
+    echo "Aborted."
   fi
 }

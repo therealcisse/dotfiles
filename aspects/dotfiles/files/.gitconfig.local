@@ -76,8 +76,9 @@
 [gitchangelog]
 	rc-path = ~/.gitchangelog.rc
 
-[commit]
-	template = ~/.stCommitMsg
+; [commit]
+; 	template = ~/.stCommitMsg
 [credential]
   helper = osxkeychain
-
+[core]
+  longpaths = true

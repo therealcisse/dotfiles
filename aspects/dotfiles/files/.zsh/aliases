@@ -202,3 +202,18 @@ K () {
 # Mnemonic: "[R]eset"
 alias -g R=";clear;test -n "$TMUX" && tmux clear-history;"
 
+# Auto-activate virtualenv when entering a directory with venv
+function auto_activate_virtualenv() {
+  if [ -e "venv/bin/activate" ]; then
+    # Only activate if not already activated
+    if [[ "$VIRTUAL_ENV" != "$(pwd)/venv" ]]; then
+      echo "Activating virtualenv in $(pwd)"
+      source venv/bin/activate
+    fi
+  fi
+}
+
+# Hook this into the `cd` command
+function cd() {
+  builtin cd "$@" && auto_activate_virtualenv
+}

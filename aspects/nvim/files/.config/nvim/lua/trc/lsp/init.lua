@@ -11,19 +11,17 @@ end
 --   return
 -- end
 
-local is_mac = vim.fn.has("macunix") == 1
+-- local is_mac = vim.fn.has("macunix") == 1
 
 local lspconfig_util = require("lspconfig.util")
 local util = require("trc.lsp.lsp_util")
 local mason = require("trc.lsp.mason")
 
-local typescript_installer = util.npm_installer({
-	server_name = "tsserver",
-	packages = { "typescript-language-server" },
-	binaries = { "typescript-language-server" },
-})
-
-local package_json_root_pattern = util.root_pattern("package.json")
+-- local typescript_installer = util.npm_installer({
+-- 	server_name = "tsserver",
+-- 	packages = { "typescript-language-server" },
+-- 	binaries = { "typescript-language-server" },
+-- })
 
 local ok, nvim_status = pcall(require, "lsp-status")
 if not ok then
@@ -33,7 +31,7 @@ end
 local telescope_mapper = require("trc.telescope.mappings")
 local handlers = require("trc.lsp.handlers")
 
-local ts_util = require("nvim-lsp-ts-utils")
+-- local ts_util = require("nvim-lsp-ts-utils")
 
 -- Can set this lower if needed.
 -- require("vim.lsp.log").set_level "debug"
@@ -84,18 +82,27 @@ local filetype_attach = setmetatable({
 
 	sqls = function() end,
 
-	lua_ls = function() end,
-
 	-- jdtls = function()
-	-- end,
+	--      require("java").setup({})
+	--  end,
 
-	metals = function()
-		autocmd_format(false)
-	end,
+	-- lua_ls = function() end,
+
+	-- metals = function()
+	-- 	autocmd_format(false)
+	-- end,
 
 	-- dartls = function()
 	--   autocmd_format(true)
 	-- end,
+
+	terraformls = function()
+		autocmd_format(false)
+	end,
+
+	tflint = function()
+		autocmd_format(false)
+	end,
 
 	hls = function()
 		autocmd_format(false)
@@ -127,11 +134,12 @@ local filetype_attach = setmetatable({
 	-- end,
 
 	typescript = function()
-		autocmd_format(false, function(clients)
-			return vim.tbl_filter(function(client)
-				return client.name ~= "tsserver"
-			end, clients)
-		end)
+		autocmd_format(false)
+		-- autocmd_format(false, function(clients)
+		-- 	return vim.tbl_filter(function(client)
+		-- 		return client.name ~= "tsserver"
+		-- 	end, clients)
+		-- end)
 	end,
 }, {
 	__index = function()
@@ -218,7 +226,9 @@ local custom_attach = function(client, bufnr)
 		nvim_status.on_attach(client)
 	end
 
-	-- require("lsp-inlayhints").on_attach(client, bufnr)
+	if vim.g.vscode then
+    buf_inoremap({ "K", vim.lsp.buf.hover })
+	end
 
 	buf_inoremap({ "<c-s>s", vim.lsp.buf.signature_help })
 
@@ -256,27 +266,36 @@ local custom_attach = function(client, bufnr)
 	end
 
 	-- Set autocommands conditional on server_capabilities
-	if client.server_capabilities.documentHighlightProvider then
-		vim.cmd([[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]])
-	end
+	-- if client.server_capabilities.documentHighlightProvider then
+	-- 	vim.cmd([[
+	--      augroup lsp_document_highlight
+	--        autocmd! * <buffer>
+	--
+	--        if vim.g.vscode then
+	--        else
+	--          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+	--          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+	--        end
+	--
+	--      augroup END
+	--    ]])
+	-- end
 
-	if client.server_capabilities.codeLensProvider then
-		if filetype ~= "elm" then
-			vim.cmd([[
-        augroup lsp_document_codelens
-          au! * <buffer>
-          autocmd BufEnter ++once <buffer> lua require"vim.lsp.codelens".refresh()
-          autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-        augroup END
-      ]])
-		end
-	end
+	-- if client.server_capabilities.codeLensProvider then
+	-- 	if filetype ~= "elm" then
+	-- 		vim.cmd([[
+	--        augroup lsp_document_codelens
+	--          au! * <buffer>
+	--
+	--          if vim.g.vscode then
+	--          else
+	--            autocmd BufEnter ++once <buffer> lua require"vim.lsp.codelens".refresh()
+	--            autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
+	--          end
+	--        augroup END
+	--      ]])
+	-- 	end
+	-- end
 
 	-- local caps = client.server_capabilities
 	-- if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
@@ -318,8 +337,28 @@ local servers = {
 	-- gdscript = true,
 	graphql = true,
 	sqls = true,
-	-- jdtls = true,
+  -- jdtls = {
+  --   auto_start = false,
+  --   settings = {
+  --     java = {
+  --       signatureHelp = {enabled = true},
+  --       import = {enabled = true},
+  --       rename = {enabled = true}
+  --     }
+  --   },
+  --   init_options = {
+  --     jvm_args = { '--enable-preview' },
+  --   },
+  -- },
 	-- pyright = true,
+  pylsp = {
+        plugins = {
+          pycodestyle = { enabled = true, maxLineLength = 120 },
+          pylint = { enabled = false },
+          pyflakes = { enabled = true },
+          jedi_completion = { fuzzy = true },
+        },
+  },
 	-- vimls = true,
 	-- yamlls = true,
 	-- eslint = true,
@@ -346,9 +385,15 @@ local servers = {
 			"--background-index",
 			"--clang-tidy",
 			"--header-insertion=iwyu",
+      "--log=verbose"
 		},
 		-- Required for lsp-status
+    initialization_options = {
+      fallback_flags = { '-std=c++17' },
+			clangdFileStatus = true,
+    },
 		init_options = {
+      fallback_flags = { '-std=c++17' },
 			clangdFileStatus = true,
 		},
 		handlers = nvim_status and nvim_status.extensions.clangd.setup() or nil,
@@ -415,42 +460,45 @@ local servers = {
 
 	-- elmls = true,
 
-	lua_ls = true,
+	-- lua_ls = true,
 
-	tsserver = {
-		init_options = ts_util.init_options,
-		cmd = { "typescript-language-server", "--stdio" },
-		install = typescript_installer.install,
-		install_info = typescript_installer.info,
-		on_new_config = function(new_config)
-			local install_info = typescript_installer.info()
-			if install_info.is_installed then
-				if type(new_config.cmd) == "table" then
-					-- Try to preserve any additional args from upstream changes.
-					new_config.cmd[1] = install_info.binaries["typescript-language-server"]
-				else
-					new_config.cmd = { install_info.binaries["typescript-language-server"] }
-				end
-			end
-		end,
-		filetypes = {
-			"js",
-			"javascript",
-			"javascriptreact",
-			"javascript.jsx",
-			"typescript",
-			"typescriptreact",
-			"typescript.tsx",
-		},
-		root_dir = util.root_pattern("package.json"),
+	-- tsserver = {
+	-- 	init_options = ts_util.init_options,
+	-- 	cmd = { "typescript-language-server", "--stdio" },
+	-- 	install = typescript_installer.install,
+	-- 	install_info = typescript_installer.info,
+	-- 	on_new_config = function(new_config)
+	-- 		local install_info = typescript_installer.info()
+	-- 		if install_info.is_installed then
+	-- 			if type(new_config.cmd) == "table" then
+	-- 				-- Try to preserve any additional args from upstream changes.
+	-- 				new_config.cmd[1] = install_info.binaries["typescript-language-server"]
+	-- 			else
+	-- 				new_config.cmd = { install_info.binaries["typescript-language-server"] }
+	-- 			end
+	-- 		end
+	-- 	end,
+	-- 	filetypes = {
+	-- 		"js",
+	-- 		"javascript",
+	-- 		"javascriptreact",
+	-- 		"javascript.jsx",
+	-- 		"typescript",
+	-- 		"typescriptreact",
+	-- 		"typescript.tsx",
+	-- 	},
+	-- 	root_dir = util.root_pattern("package.json"),
+	--
+	-- 	on_attach = function(client)
+	-- 		custom_attach(client)
+	--
+	-- 		ts_util.setup({ auto_inlay_hints = false })
+	-- 		ts_util.setup_client(client)
+	-- 	end,
+	-- },
 
-		on_attach = function(client)
-			custom_attach(client)
-
-			ts_util.setup({ auto_inlay_hints = false })
-			ts_util.setup_client(client)
-		end,
-	},
+  terraformls = true,
+  tflint = true,
 
 	hls = {
 		cmd = {
@@ -491,7 +539,7 @@ local setup_server = function(server, config)
 		on_attach = custom_attach,
 		capabilities = updated_capabilities,
 		flags = {
-			debounce_text_changes = nil,
+			-- debounce_text_changes = nil,
 		},
 		hint = {
 			enable = true,
@@ -503,12 +551,12 @@ local setup_server = function(server, config)
 	lspconfig[server].setup(config)
 end
 
-if is_mac then
-	local lua_cmd, lua_env = nil, nil
-	require("nvim-lsp-installer").setup({
-		automatic_installation = false,
-		ensure_installed = { "lua_ls", "gopls" },
-	})
+-- if is_mac then
+-- 	local lua_cmd, lua_env = nil, nil
+-- 	require("nvim-lsp-installer").setup({
+-- 		automatic_installation = false,
+-- 		ensure_installed = { "lua_ls", "gopls" },
+-- 	})
 
 -- lua_cmd = {
 --   vim.fn.stdpath "data" .. "/lsp_servers/lua_ls/extension/server/bin/lua-language-server",
@@ -561,54 +609,54 @@ if is_mac then
 --     },
 --   },
 -- })
-else
-	-- Load lua configuration from nlua.
-	-- _ = require("nlua.lsp.nvim").setup(lspconfig, {
-	--   on_init = custom_init,
-	--   on_attach = custom_attach,
-	--   capabilities = updated_capabilities,
-	--
-	--   root_dir = function(fname)
-	--     if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
-	--       return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
-	--     end
-	--
-	--     -- ~/git/config_manager/xdg_config/nvim/...
-	--     return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
-	--   end,
-	--
-	--   globals = {
-	--     -- Colorbuddy
-	--     "Color",
-	--     "c",
-	--     "Group",
-	--     "g",
-	--     "s",
-	--
-	--     -- Custom
-	--     "RELOAD",
-	--   },
-	-- })
-end
+-- else
+-- Load lua configuration from nlua.
+-- _ = require("nlua.lsp.nvim").setup(lspconfig, {
+--   on_init = custom_init,
+--   on_attach = custom_attach,
+--   capabilities = updated_capabilities,
+--
+--   root_dir = function(fname)
+--     if string.find(vim.fn.fnamemodify(fname, ":p"), "xdg_config/nvim/") then
+--       return vim.fn.expand "~/git/config_manager/xdg_config/nvim/"
+--     end
+--
+--     -- ~/git/config_manager/xdg_config/nvim/...
+--     return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
+--   end,
+--
+--   globals = {
+--     -- Colorbuddy
+--     "Color",
+--     "c",
+--     "Group",
+--     "g",
+--     "s",
+--
+--     -- Custom
+--     "RELOAD",
+--   },
+-- })
+-- end
 
 for server, config in pairs(servers) do
 	setup_server(server, config)
 end
 
-if pcall(require, "sg.lsp") then
-	require("sg.lsp").setup({
-		on_init = custom_init,
-		on_attach = custom_attach,
-	})
-end
+-- if pcall(require, "sg.lsp") then
+-- 	require("sg.lsp").setup({
+-- 		on_init = custom_init,
+-- 		on_attach = custom_attach,
+-- 	})
+-- end
 
-require("ufo").setup({
-	provider_selector = function(bufnr, filetype, buftype)
-		return { "treesitter", "indent" }
-	end,
-})
+-- require("ufo").setup({
+-- 	provider_selector = function(bufnr, filetype, buftype)
+-- 		return { "treesitter", "indent" }
+-- 	end,
+-- })
 
-mason.setup()
+-- mason.setup()
 
 --[ An example of using functions...
 -- 0. nil -> do default (could be enabled or disabled)
@@ -657,7 +705,7 @@ mason.setup()
 -- }
 
 -- Set up null-ls
-local use_null = true
+local use_null = false
 if use_null then
 	require("null-ls").setup({
 		sources = {
@@ -669,9 +717,12 @@ if use_null then
 				extra_args = { "--line-length=120" },
 			}),
 			require("null-ls").builtins.formatting.prettierd,
+      require("null-ls").builtins.formatting.terraform_fmt,
 		},
 	})
 end
+
+-- vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
 
 return {
 	on_init = custom_init,

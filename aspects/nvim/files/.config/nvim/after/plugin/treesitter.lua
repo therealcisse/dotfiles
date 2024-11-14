@@ -113,6 +113,7 @@ end)()
 
 local _ = require('nvim-treesitter.configs').setup {
   ensure_installed = {
+    'hcl',
     'dap_repl',
     'lua',
     'regex',
@@ -144,7 +145,7 @@ local _ = require('nvim-treesitter.configs').setup {
   indent = { enable = true, disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd' } },
 
   refactor = {
-    highlight_definitions = { enable = true },
+    highlight_definitions = { enable = false },
     highlight_current_scope = { enable = false },
 
     smart_rename = {

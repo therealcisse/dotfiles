@@ -1,0 +1,17 @@
+-- local status_ok, vt = pcall(require, "better-virtual-text")
+-- if not status_ok then
+-- 	return
+-- end
+--
+-- vt.setup({
+-- 	highlights = {
+-- 		BetterVirtualTextError = { fg = "NonText" },
+-- 		BetterVirtualTextWarn = { fg = "NonText" },
+-- 		BetterVirtualTextInfo = { fg = "NonText" },
+-- 		BetterVirtualTextHint = { fg = "NonText" },
+-- 		BetterVirtualTextPrefixError = { link = "DiagnosticSignError" },
+-- 		BetterVirtualTextPrefixWarn = { link = "DiagnosticSignWarn" },
+-- 		BetterVirtualTextPrefixInfo = { link = "DiagnosticSignInfo" },
+-- 		BetterVirtualTextPrefixHint = { link = "DiagnosticSignHint" },
+-- 	},
+-- })

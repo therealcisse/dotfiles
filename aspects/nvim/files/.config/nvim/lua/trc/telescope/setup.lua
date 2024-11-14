@@ -160,7 +160,22 @@ require("telescope").setup({
 			grep_open_files = false, -- search in opened files
 			lang = nil, -- string value, specify language for ast-grep `nil` for default
 		},
-
+    live_grep_args = {
+      auto_quoting = true, -- enable/disable auto-quoting
+      -- define mappings, e.g.
+      mappings = { -- extend mappings
+        i = {
+          -- ["<C-k>"] = lga_actions.quote_prompt(),
+          -- ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+          -- -- freeze the current list and start a fuzzy search in the frozen list
+          -- ["<C-space>"] = actions.to_fuzzy_refine,
+        },
+      },
+      -- ... also accepts theme settings, for example:
+      -- theme = "dropdown", -- use dropdown theme
+      -- theme = { }, -- use own theme spec
+      -- layout_config = { mirror=true }, -- mirror preview pane
+    },
 		hop = {
 			-- keys define your hop keys in order; defaults to roughly lower- and uppercased home row
 			keys = { "a", "s", "d", "f", "g", "h", "j", "k", "l", ";" }, -- ... and more
@@ -205,7 +220,7 @@ require("telescope").setup({
 -- require("telescope").load_extension "flutter"
 
 _ = require("telescope").load_extension("dap")
-_ = require("telescope").load_extension("notify")
+-- _ = require("telescope").load_extension("notify")
 _ = require("telescope").load_extension("file_browser")
 _ = require("telescope").load_extension("ui-select")
 _ = require("telescope").load_extension("fzf")

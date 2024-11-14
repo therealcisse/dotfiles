@@ -8,13 +8,28 @@ wezterm.on("gui-startup", function(cmd)
 end)
 
 return {
-	leader = { key = "b", mods = "CTRL", timeout_milliseconds = 2000 },
+	leader = { key = "b", mods = "CTRL", timeout_milliseconds = 2001 },
 	window_decorations = "RESIZE",
 	font = wezterm.font("Iosevka Nerd Font"),
-	font_size = 13.5,
+	font_size = 14.5,
 	-- line_height = 1.2,
 	hide_tab_bar_if_only_one_tab = true,
 	keys = {
+		{
+			mods = "LEADER",
+			key = "[",
+			action = wezterm.action.ToggleAlwaysOnTop,
+		},
+		{
+			mods = "LEADER",
+			key = "]",
+			action = wezterm.action.ToggleAlwaysOnBottom,
+		},
+		{
+			mods = "LEADER",
+			key = "z",
+			action = wezterm.action.TogglePaneZoomState,
+		},
 		{
 			mods = "LEADER",
 			key = "c",
@@ -177,4 +192,5 @@ return {
 	},
 	-- window_background_opacity = 0.8,
 	scrollback_lines = 100000,
+  max_fps = 120,
 }

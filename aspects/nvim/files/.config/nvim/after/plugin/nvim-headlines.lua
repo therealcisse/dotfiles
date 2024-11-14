@@ -1,0 +1,20 @@
+-- local status_ok, self = pcall(require, "headlines")
+-- if not status_ok then
+-- 	return
+-- end
+--
+-- vim.cmd([[highlight Headline1 guibg=#2B2B36 guifg=#FF9900 gui=bold]])
+-- vim.cmd([[highlight Headline2 guibg=#262630 guifg=#9EB6F0 gui=bold]])
+-- vim.cmd([[highlight Headline3 guibg=#262630 guifg=#9EB6F0]])
+-- vim.cmd([[highlight CodeBlock guibg=#2C2F44]])
+-- vim.cmd([[highlight Dash guibg=#D19A66 gui=bold]])
+--
+-- self.setup({
+-- 	markdown = {
+-- 		headline_highlights = {
+-- 			"Headline1",
+-- 			"Headline2",
+-- 			"Headline3",
+-- 		},
+-- 	},
+-- })

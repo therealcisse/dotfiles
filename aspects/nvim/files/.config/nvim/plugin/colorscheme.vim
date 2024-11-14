@@ -47,7 +47,10 @@ function s:HandleInactiveBackground()
       " hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
     endif
 
-    " hi! Normal ctermbg=none guibg=none
+     hi! Normal ctermbg=none guibg=none
+     hi! InactiveWindow ctermbg=none guibg=none
+     hi! NormalNC ctermbg=none guibg=none
+     hi! EndOfBuffer ctermbg=none guibg=none
 
     " if exists('+winhighlight') && g:falcon_inactive == 1
       " hi! ActiveWindow guibg=NONE

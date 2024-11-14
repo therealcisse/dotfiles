@@ -634,7 +634,7 @@ alias java21="export JAVA_HOME=`/usr/libexec/java_home -v 21`"
 alias java11="export JAVA_HOME=`/usr/libexec/java_home -v 11`"
 alias java17="export JAVA_HOME=`/usr/libexec/java_home -v 17`"
 
-export NODE_OPTIONS=--openssl-legacy-provider
+# export NODE_OPTIONS=--openssl-legacy-provider
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -642,3 +642,16 @@ export NODE_OPTIONS=--openssl-legacy-provider
 # Add JBang to environment
 alias j!=jbang
 export PATH="$HOME/.jbang/bin:$PATH"
+
+eval "$(direnv hook zsh)"
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [ -d "$HOME/.zshenv.d" ]; then
+  for EXTENSION_FILE in $(find $HOME/.zshenv.d/ -name '*.zsh'); do
+    source "$EXTENSION_FILE"
+  done
+fi
