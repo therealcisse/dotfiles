@@ -179,20 +179,20 @@ return require('lazy').setup({
 			},
 		},
 	},
-  {
-    "nathom/filetype.nvim",
-    config = function()
-        require("filetype").setup {
-            overrides = {
-                extensions = {
-                    tf = "terraform",
-                    tfvars = "terraform",
-                    tfstate = "json",
-                },
-            },
-        }
-    end,
-  },
+  -- {
+  --   "nathom/filetype.nvim",
+  --   config = function()
+  --       require("filetype").setup {
+  --           overrides = {
+  --               extensions = {
+  --                   tf = "terraform",
+  --                   tfvars = "terraform",
+  --                   tfstate = "json",
+  --               },
+  --           },
+  --       }
+  --   end,
+  -- },
   'hashivim/vim-terraform',
 	{ 'Bilal2453/luvit-meta', lazy = true },
 	-- {
@@ -358,8 +358,26 @@ return require('lazy').setup({
 	--     end
 	-- }
 
+  {
+    "someone-stole-my-name/yaml-companion.nvim",
+    requires = {
+      { "neovim/nvim-lspconfig" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    },
+    config = function()
+      require("telescope").load_extension("yaml_schema")
+    end,
+  },
+
+  {
+    'Duologic/nvim-jsonnet',
+  },
+  'google/vim-jsonnet',
+  "b0o/schemastore.nvim",
+
 	-- 'RRethy/vim-illuminate'
-	-- 'tpope/vim-fugitive',
+	'tpope/vim-fugitive',
 	'DataWraith/auto_mkdir',
 	'tpope/vim-unimpaired',
 	-- { 'justinmk/vim-dirvish'},
@@ -433,19 +451,19 @@ return require('lazy').setup({
 	-- NOTE: lspconfig ONLY has configs, for people reading this :)
 	-- { 'luc-tielen/telescope_hoogle' },
 	{ 'Vigemus/iron.nvim' },
-	{
-		'kevinhwang91/nvim-ufo',
-		dependencies = {
-			{ 'kevinhwang91/promise-async' },
-		},
-    config = function()
-      require('ufo').setup({
-        provider_selector = function(bufnr, filetype, buftype)
-          return {'treesitter', 'indent'}
-        end
-      })
-    end,
-	},
+	-- {
+	-- 	'kevinhwang91/nvim-ufo',
+	-- 	dependencies = {
+	-- 		{ 'kevinhwang91/promise-async' },
+	-- 	},
+	--    config = function()
+	--      require('ufo').setup({
+	--        provider_selector = function(bufnr, filetype, buftype)
+	--          return {'treesitter', 'indent'}
+	--        end
+	--      })
+	--    end,
+	-- },
 	-- 'wbthomason/lsp-status.nvim',
 
 	{
@@ -465,7 +483,7 @@ return require('lazy').setup({
 	-- 		require('codelens_extensions').setup()
 	-- 	end,
 	-- },
-	'jose-elias-alvarez/null-ls.nvim',
+	-- 'jose-elias-alvarez/null-ls.nvim',
 	'onsails/lspkind-nvim',
 	'justinsgithub/wezterm-types',
   {'isaksamsten/better-virtual-text.nvim'},
@@ -1274,6 +1292,21 @@ return require('lazy').setup({
 		},
 	},
 	-- Theme: icons
+
+  'fgheng/winbar.nvim',
+
+  -- {
+  --   "utilyre/barbecue.nvim",
+  --   name = "barbecue",
+  --   version = "*",
+  --   dependencies = {
+  --     "SmiteshP/nvim-navic",
+  --     "nvim-tree/nvim-web-devicons", -- optional dependency
+  --   },
+  --   opts = {
+  --     -- configurations go here
+  --   },
+  -- },
 
   {
     'yetone/avante.nvim',

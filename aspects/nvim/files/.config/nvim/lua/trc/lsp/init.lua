@@ -192,7 +192,7 @@ vim.api.nvim_create_autocmd("LspDetach", {
 	end,
 })
 
-require("trc.lsp.codelens").setup()
+-- require("trc.lsp.codelens").setup()
 
 vim.keymap.set("n", "<leader>h", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -360,9 +360,75 @@ local servers = {
         },
   },
 	-- vimls = true,
-	-- yamlls = true,
 	-- eslint = true,
 	-- metals = pcall(require, "metals"),
+
+  jsonls = {
+    settings = {
+      json = {
+        schemas = require('schemastore').json.schemas {
+          select = {
+            'Renovate',
+            'GitHub Workflow Template Properties'
+          }
+        },
+        validate = { enable = true },
+      }
+    }
+  },
+
+  -- https://www.arthurkoziel.com/json-schemas-in-neovim/
+  yamlls = require("yaml-companion").setup {
+    -- detect k8s schemas based on file content
+    builtin_matchers = {
+      kubernetes = { enabled = true }
+    },
+
+    -- schemas available in Telescope picker
+    schemas = {
+      -- not loaded automatically, manually select with
+      -- :Telescope yaml_schema
+      {
+        name = "Argo CD Application",
+        uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json"
+      },
+      {
+        name = "SealedSecret",
+        uri = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/bitnami.com/sealedsecret_v1alpha1.json"
+      },
+      -- schemas below are automatically loaded, but added
+      -- them here so that they show up in the statusline
+      {
+        name = "Kustomization",
+        uri = "https://json.schemastore.org/kustomization.json"
+      },
+      {
+        name = "GitHub Workflow",
+        uri = "https://json.schemastore.org/github-workflow.json"
+      },
+    },
+
+    lspconfig = {
+      settings = {
+        yaml = {
+          validate = true,
+          schemaStore = {
+            enable = false,
+            url = ""
+          },
+
+          -- schemas from store, matched by filename
+          -- loaded automatically
+          schemas = require('schemastore').yaml.schemas {
+            select = {
+              'kustomization.yaml',
+              'GitHub Workflow',
+            }
+          }
+        }
+      }
+    }
+  },
 
 	cmake = (1 == vim.fn.executable("cmake-language-server")),
 	zls = (1 == vim.fn.executable("zig")),
@@ -705,22 +771,22 @@ end
 -- }
 
 -- Set up null-ls
-local use_null = false
-if use_null then
-	require("null-ls").setup({
-		sources = {
-			require("null-ls").builtins.formatting.stylua,
-			-- require("null-ls").builtins.diagnostics.eslint,
-			-- require("null-ls").builtins.completion.spell,
-			require("null-ls").builtins.diagnostics.selene,
-			require("null-ls").builtins.formatting.black.with({
-				extra_args = { "--line-length=120" },
-			}),
-			require("null-ls").builtins.formatting.prettierd,
-      require("null-ls").builtins.formatting.terraform_fmt,
-		},
-	})
-end
+-- local use_null = false
+-- if use_null then
+-- 	require("null-ls").setup({
+-- 		sources = {
+-- 			require("null-ls").builtins.formatting.stylua,
+-- 			-- require("null-ls").builtins.diagnostics.eslint,
+-- 			-- require("null-ls").builtins.completion.spell,
+-- 			require("null-ls").builtins.diagnostics.selene,
+-- 			require("null-ls").builtins.formatting.black.with({
+-- 				extra_args = { "--line-length=120" },
+-- 			}),
+-- 			require("null-ls").builtins.formatting.prettierd,
+--       require("null-ls").builtins.formatting.terraform_fmt,
+-- 		},
+-- 	})
+-- end
 
 -- vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
 

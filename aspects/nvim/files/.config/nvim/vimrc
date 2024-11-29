@@ -897,6 +897,7 @@ lua << EOF
   require "trc.autopairs"
   require "trc.gitsigns"
   require "trc.winbar"
+  -- require "trc.barbecue"
   require "trc.indentline"
   require "trc.toggleterm"
   -- require "trc.java"
@@ -930,11 +931,12 @@ lua << EOF
   require "trc.scrollbar"
   require "trc.tint"
   require "trc.iron"
-  require "trc.ufo"
+  -- require "trc.ufo"
   -- require "trc.autoclose"
   -- require "trc.foldtext"
   require "trc.dap"
   require "trc.terraform"
+  require "trc.jsonnet"
 
 
   if vim.loader then

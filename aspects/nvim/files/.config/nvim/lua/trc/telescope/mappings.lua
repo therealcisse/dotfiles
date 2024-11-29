@@ -28,6 +28,7 @@ end
 
 vim.api.nvim_set_keymap("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = false, nowait = true })
 
+
 -- Dotfiles
 -- map_tele("<leader>ez", "edit_zsh")
 -- map_tele("<localleader>cd", "diagnostics")
@@ -40,6 +41,9 @@ map_tele("<C-g>/", "live_grep_args", {
   only_sort_text = true,
   layout_strategy = "vertical",
   sorter = sorters.get_fzy_sorter(),
+})
+
+map_tele("<C-Y>", "yaml", {
 })
 
 map_tele("<C-g>]", "ast_grep", {

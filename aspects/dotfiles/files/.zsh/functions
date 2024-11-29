@@ -362,3 +362,15 @@ function gitClean () {
     echo "Aborted."
   fi
 }
+
+function kDebug() {
+  kubectl debug $1 -it --image=nicolaka/netshoot -n ${2-youtoo}
+}
+
+function dDebug() {
+  docker run -it --rm -it --network --net container:$1 nicolaka/netshoot
+}
+
+function kLogs() {
+  kubectl logs $1 -n ${2-youtoo}
+}

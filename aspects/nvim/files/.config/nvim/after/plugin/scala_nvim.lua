@@ -10,12 +10,23 @@ local metals_config = metals.bare_config()
 
 -- Example of settings
 metals_config.settings = {
-  showImplicitArguments = true,
-  showInferredType = true,
+  showImplicitArguments = false,
+  showInferredType = false,
   excludedPackages = {
     "akka.actor.typed.javadsl",
     "com.github.swagger.akka.javadsl"
   },
+  superMethodLensesEnabled = false,
+  inlayHints = true,
+  inlayHints = {
+    implicitArguments = { enable = false },
+    implicitConversions = { enable = false },
+    typeParameters = { enable = false },
+    inferredTypes = { enable = false },
+    hintsInPatternMatch = { enable = false },
+
+  },
+  enableSemanticHighlighting = false,
 }
 
 -- *READ THIS*
@@ -49,7 +60,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "java",
   },
   callback = function()
-    metals.initialize_or_attach(metals_config)
+    -- metals.initialize_or_attach(metals_config)
   end,
   group = nvim_metals_group,
 })

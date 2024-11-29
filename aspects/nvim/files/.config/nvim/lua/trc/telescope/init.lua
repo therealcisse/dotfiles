@@ -36,6 +36,10 @@ local _ = pcall(require, "nvim-nonicons")
 
 local M = {}
 
+function M.yaml()
+  require("yaml-companion").open_ui_select()
+end
+
 function M.fd()
   -- local opts = themes.get_ivy {
   --   hidden = false,

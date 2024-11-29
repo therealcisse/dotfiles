@@ -15,6 +15,7 @@ return {
 	-- line_height = 1.2,
 	hide_tab_bar_if_only_one_tab = true,
 	keys = {
+    { key = "q", action = wezterm.action.DisableDefaultAssignment },
 		{
 			mods = "LEADER",
 			key = "[",

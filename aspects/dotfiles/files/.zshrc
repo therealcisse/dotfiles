@@ -118,7 +118,7 @@ zstyle ':completion:*' menu select
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -295,7 +295,7 @@ function () {
 }
 
 export RPROMPT=$RPROMPT_BASE
-export SPROMPT="zsh: correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
+export SPROMPT="zsh: %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
 #
 # History
@@ -613,7 +613,7 @@ source $HOME/.cargo/env
 LOCAL_RC=$HOME/.zshrc.local
 test -f $LOCAL_RC && source $LOCAL_RC
 
-export DISABLE_UPDATE_PROMPT=true
+export DISABLE_UPDATE_PROMPT=false
 
 setopt inc_append_history
 setopt share_history
@@ -634,6 +634,8 @@ alias java21="export JAVA_HOME=`/usr/libexec/java_home -v 21`"
 alias java11="export JAVA_HOME=`/usr/libexec/java_home -v 11`"
 alias java17="export JAVA_HOME=`/usr/libexec/java_home -v 17`"
 
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 # export NODE_OPTIONS=--openssl-legacy-provider
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -644,7 +646,6 @@ alias j!=jbang
 export PATH="$HOME/.jbang/bin:$PATH"
 
 eval "$(direnv hook zsh)"
-
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
