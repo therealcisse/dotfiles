@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "java",
   },
   callback = function()
-    -- metals.initialize_or_attach(metals_config)
+    metals.initialize_or_attach(metals_config)
   end,
   group = nvim_metals_group,
 })

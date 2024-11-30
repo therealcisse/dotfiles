@@ -35,7 +35,39 @@ local luasnip = require('luasnip')
 
 cmp.setup {
   mapping = cmp.mapping.preset.insert({
-    -- ['<C-e>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-T>'] = function(fallback)
+      if cmp.visible() then
+        -- Reject the current completion and close the menu
+        cmp.close()
+      else
+        -- If completion menu is not visible, fall back
+        fallback()
+      end
+    end,
+    ['<C-E>'] = function(fallback)
+      local cmp_visible = cmp.visible()
+      local ghost_text_active = cmp.get_active_entry() == nil and cmp_visible
+
+      if ghost_text_active then
+        -- Confirm the ghost text suggestion
+        cmp.confirm({ select = true })
+      else
+        -- Move to the end of the line
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<End>', true, false, true), 'n', true)
+      end
+    end,
+    ['<Space>'] = function(fallback)
+      local cmp_visible = cmp.visible()
+      local ghost_text_active = cmp.get_active_entry() == nil and cmp_visible
+
+      if ghost_text_active then
+        -- Confirm the ghost text suggestion
+        cmp.confirm({ select = true })
+      else
+        -- Move to the end of the line
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<End>', true, false, true), 'n', true)
+      end
+    end,
     ['<Tab>'] = cmp.mapping.confirm({ select = true }),
     ['<C-J>'] = cmp.mapping(function(fallback)
       if luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
@@ -167,13 +199,13 @@ cmp.setup {
     },
   },
 
-  -- experimental = {
-  --   -- I like the new menu better! Nice work hrsh7th
-  --   native_menu = false,
-  --
-  --   -- Let's play with this for a day or two
-  --   -- ghost_text = true,
-  -- },
+  experimental = {
+    -- I like the new menu better! Nice work hrsh7th
+    native_menu = false,
+
+    -- Let's play with this for a day or two
+    ghost_text = true,
+  },
 }
 
 cmp.setup.cmdline({ '/', '?' }, {

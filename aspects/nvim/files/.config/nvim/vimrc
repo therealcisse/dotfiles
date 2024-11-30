@@ -89,7 +89,7 @@ set noignorecase                 " Don't ignore case in search patterns.
 set incsearch                  " Highlight search pattern
                                " as it is being typed.
 
-" set lazyredraw                 " Do not redraw the screen while
+ "set lazyredraw                 " Do not redraw the screen while
                                " executing macros, registers
                                " and other commands that have
                                " not been typed.
@@ -564,32 +564,6 @@ nnoremap <c-o> <c-o>zzzv
 " the /g flag on :s substitutions by default
 set gdefault
 
-" ----------------------------------------------------------------------
-" Startify
-" ----------------------------------------------------------------------
-
-let g:startify_enable_special         = 0
-let g:startify_files_number           = 10
-let g:startify_relative_path          = 1
-let g:startify_change_to_dir          = 0
-let g:startify_update_oldfiles        = 1
-let g:startify_session_delete_buffers = 0
-
-"let g:startify_skiplist = [
-"      \ 'COMMIT_EDITMSG',
-"      \ '~/.config/nvim/init.vim'
-"      \ ]
-
-let g:startify_bookmarks = [
-      \ '~/.config/nvim/init.vim'
-      \ ]
-
-let g:startify_custom_footer =
-      \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
-
-let g:startify_session_autoload     = 0
-let g:startify_session_persistence  = 0
-
 " Join lines with M
 nn M J
 
@@ -865,7 +839,7 @@ nnoremap yp Yp
 
 nnoremap <silent> <localleader>r :so %<CR>
 
-nnoremap <C-;> :Startify<CR>
+nnoremap <C-;> :lua Snacks.dashboard.open()<CR>
 
 nnoremap <C-w>o :TZAtaraxis<CR>
 nnoremap <C-Enter> :WindowsMaximizeHorizontally<CR>
