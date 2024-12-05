@@ -1290,18 +1290,24 @@ return require('lazy').setup({
 
 	-- TODO: Figure out why this randomly popups
 	--       Figure out if I want to it later as well :)
-	{
-	  'folke/which-key.nvim',
-	  config = function()
-	    -- TODO: Consider changing my timeoutlen?
-	    require('which-key').setup {
-	      presets = {
-	        g = true,
-	      },
-	    }
-	  end,
-	},
-
+-- {
+--   "folke/which-key.nvim",
+--   event = "VeryLazy",
+--   opts = {
+--     -- your configuration comes here
+--     -- or leave it empty to use the default settings
+--     -- refer to the configuration section below
+--   },
+--   keys = {
+--     {
+--       "<leader>?",
+--       function()
+--         require("which-key").show({ global = false })
+--       end,
+--       desc = "Buffer Local Keymaps (which-key)",
+--     },
+--   },
+-- },
 	-- It would be fun to think about making a wiki again...
 	-- local_'wander.nvim'
 	-- local_'riki.nvim'

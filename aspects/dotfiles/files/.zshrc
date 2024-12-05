@@ -657,4 +657,3 @@ if [ -d "$HOME/.zshenv.d" ]; then
   done
 fi
 
-eval "$(ssh-agent -s)"

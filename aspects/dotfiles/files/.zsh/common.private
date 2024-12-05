@@ -3,4 +3,7 @@
 # For a full list, run  `hash -d` (alias `d`).
 
 hash -d d=~/dotfiles
+hash -d ya=~/code/youtoogroup/app
+hash -d yi=~/code/youtoogroup/infra
+hash -d ym=~/code/youtoogroup/manifests
 

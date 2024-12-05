@@ -28,6 +28,7 @@
       ".config/sxhkd",
       ".config/xkeysnail.py",
       ".config/wezterm",
+      ".ssh/config",
       ".ghci",
       ".gitattributes",
       ".gitconfig.d",

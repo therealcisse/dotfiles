@@ -368,7 +368,7 @@ function kDebug() {
 }
 
 function dDebug() {
-  docker run -it --rm -it --network --net container:$1 nicolaka/netshoot
+  docker run --rm -it --network container:$1 nicolaka/netshoot
 }
 
 function kLogs() {
