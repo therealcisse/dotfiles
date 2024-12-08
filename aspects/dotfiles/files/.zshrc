@@ -96,7 +96,7 @@ zstyle ':completion:*' menu select
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="therealcisse"
 # ZSH_THEME="robbyrussell"
-# ZSH_THEME="powerlevel10k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
