@@ -41,7 +41,6 @@ alias t=tmux
 alias v=nvim
 alias prettyjson='python -m json.tool'
 alias trash=rm
-alias k=kubectl
 
 if command -v nvim &> /dev/null; then
   alias vim=nvim # Use `\vim` or `command vim` to get the real vim.

@@ -259,7 +259,7 @@ compctl -f -K _jump_complete jump
 
 # No arguments: `git status`
 # With arguments: acts like `git`
-g() {
+function g() {
   if [[ $# > 0 ]]; then
     nocorrect git $@
   else

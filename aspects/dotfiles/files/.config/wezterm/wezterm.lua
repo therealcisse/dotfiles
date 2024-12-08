@@ -10,8 +10,9 @@ end)
 return {
 	leader = { key = "b", mods = "CTRL", timeout_milliseconds = 2001 },
 	window_decorations = "RESIZE",
-	font = wezterm.font("Iosevka Nerd Font"),
-	font_size = 14.5,
+  font = wezterm.font("MesloLGS NF"),
+	-- font = wezterm.font("Iosevka Nerd Font"),
+	font_size = 13.0,
 	-- line_height = 1.2,
 	hide_tab_bar_if_only_one_tab = true,
 	keys = {

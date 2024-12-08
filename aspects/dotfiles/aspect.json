@@ -37,6 +37,9 @@
       ".gitk",
       ".gnupg/gpg-agent.conf",
       ".hammerspoon",
+      ".sbt",
+      ".sbtopts",
+      ".oh-my-zsh",
       ".hgrc",
       ".inputrc",
       ".lbdbrc",
@@ -55,7 +58,8 @@
       ".zshenv",
       ".zshenv.d",
       ".zshrc",
-      "ginit.vim"
+      "ginit.vim",
+      ".p10k.zsh"
     ],
     "templates": [
       ".corpusrc.erb",
