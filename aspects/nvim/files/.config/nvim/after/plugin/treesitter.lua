@@ -113,6 +113,8 @@ end)()
 
 local _ = require('nvim-treesitter.configs').setup {
   ensure_installed = {
+    'bash',
+    'yaml',
     'markdown',
     'markdown_inline',
     'hcl',
@@ -137,12 +139,12 @@ local _ = require('nvim-treesitter.configs').setup {
     -- 'typescript',
   },
 
-  -- highlight = {
-  --   enable = true,
-  --   use_languagetree = false,
-  --   -- disable = { 'json' },
-  --   custom_captures = custom_captures,
-  -- },
+  highlight = {
+    enable = true,
+    -- use_languagetree = false,
+    -- -- disable = { 'json' },
+    -- custom_captures = custom_captures,
+  },
 
   indent = { enable = true, disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd' } },
 

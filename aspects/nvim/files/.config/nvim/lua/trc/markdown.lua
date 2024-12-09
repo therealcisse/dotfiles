@@ -4,6 +4,8 @@ if not status_ok then
 end
 
 md.setup({
+  enabled = true,
+  latex = { enabled = false },
   -- Mimic org-indent-mode behavior by indenting everything under a heading based on the
   -- level of the heading. Indenting starts from level 2 headings onward.
   indent = {

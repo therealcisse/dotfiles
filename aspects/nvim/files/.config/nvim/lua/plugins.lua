@@ -410,21 +410,21 @@ return require('lazy').setup({
 		'scalameta/nvim-metals',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
-			'mfussenegger/nvim-dap',
-			'rcarriga/nvim-dap-ui',
+			-- 'mfussenegger/nvim-dap',
+			-- 'rcarriga/nvim-dap-ui',
 			'nvim-neotest/nvim-nio',
-			'theHamsta/nvim-dap-virtual-text',
-			'nvim-telescope/telescope-dap.nvim',
+			-- 'theHamsta/nvim-dap-virtual-text',
+			-- 'nvim-telescope/telescope-dap.nvim',
 			-- 'leoluz/nvim-dap-go',
-			'LiadOz/nvim-dap-repl-highlights',
+			-- 'LiadOz/nvim-dap-repl-highlights',
 		},
 		config = function(self, opts)
 
-			require('dapui').setup()
+			-- require('dapui').setup()
 			-- require('dap-go').setup()
 			-- require('nvim-dap-virtual-text').setup()
 
-			require('nvim-dap-repl-highlights').setup()
+			-- require('nvim-dap-repl-highlights').setup()
 		end,
 	},
 	'JASONews/glow-hover',
@@ -1082,7 +1082,7 @@ return require('lazy').setup({
 	-- },
 	-- 'troydm/zoomwintab.vim',
 
-	'levouh/tint.nvim',
+	-- 'levouh/tint.nvim',
 
 	-- {
 	--   'nyngwang/NeoNoName.lua',
@@ -1263,10 +1263,18 @@ return require('lazy').setup({
   {
     'MeanderingProgrammer/render-markdown.nvim',
     opts = {
-      file_types = { 'markdown', 'Avante', 'codecompanion' },
+      file_types = {
+        'markdown',
+        -- 'Avante',
+        'codecompanion'
+      },
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
-    ft = { 'markdown', 'Avante', 'codecompanion' },
+    ft = {
+      'markdown',
+      -- 'Avante',
+      'codecompanion'
+    },
   },
 
   -- {

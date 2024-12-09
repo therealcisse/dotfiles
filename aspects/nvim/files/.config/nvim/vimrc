@@ -899,7 +899,7 @@ lua << EOF
   -- require "trc.git_worktree"
   require "trc.glow"
   require "trc.scrollbar"
-  require "trc.tint"
+  -- require "trc.tint"
   -- require "trc.iron"
   -- require "trc.ufo"
   -- require "trc.autoclose"
@@ -907,6 +907,8 @@ lua << EOF
   -- require "trc.dap"
   require "trc.terraform"
   require "trc.jsonnet"
+  require "trc.markdown"
+  require "trc.codecompanion"
 
 
   if vim.loader then

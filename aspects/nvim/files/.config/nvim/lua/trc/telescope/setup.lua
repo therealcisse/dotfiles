@@ -219,7 +219,7 @@ require("telescope").setup({
 -- pcall(require("telescope").load_extension, "arecibo")
 -- require("telescope").load_extension "flutter"
 
-_ = require("telescope").load_extension("dap")
+-- _ = require("telescope").load_extension("dap")
 -- _ = require("telescope").load_extension("notify")
 _ = require("telescope").load_extension("file_browser")
 _ = require("telescope").load_extension("ui-select")
