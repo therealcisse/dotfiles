@@ -95,7 +95,10 @@ cmp.setup {
       cmp.config.compare.order,
     },
   },
-
+  window = {
+    completion = cmp.config.window.bordered({ border = 'rounded' }),
+    documentation = cmp.config.window.bordered({ border = 'rounded' }),
+  },
   -- Youtube:
   --    the order of your sources matter (by default). That gives them priority
   --    you can configure:
