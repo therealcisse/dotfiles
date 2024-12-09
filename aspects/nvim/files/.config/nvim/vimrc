@@ -885,7 +885,7 @@ lua << EOF
   require "trc.disable_builtin"
 
   -- Neovim builtin LSP configuration
-  require "trc.lsp"
+  -- require "trc.lsp"
 
   -- Telescope BTW
   require "trc.telescope.setup"

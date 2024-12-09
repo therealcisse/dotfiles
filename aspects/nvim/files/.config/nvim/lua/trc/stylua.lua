@@ -5,10 +5,12 @@ local Path = require "plenary.path"
 local Job = require "plenary.job"
 
 local lspconfig_util = require "lspconfig.util"
+local util = require('trc.lsp.lsp_util')
 
 local cached_configs = {}
 
 local root_finder = lspconfig_util.root_pattern ".git"
+local root_finder = util.root_pattern('.git')
 local stylua_finder = function(path)
   if cached_configs[path] == nil then
     local file_path = Path:new(path)

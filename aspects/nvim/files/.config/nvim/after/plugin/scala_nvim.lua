@@ -4,7 +4,6 @@ if not has_metals then
   return
 end
 
-local lsp = require "trc.lsp"
 
 local metals_config = metals.bare_config()
 
@@ -37,7 +36,6 @@ metals_config.settings = {
 metals_config.init_options.statusBarProvider = "on"
 
 -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-metals_config.capabilities = lsp.capabilities
 
 metals_config.on_attach = function(client, bufnr)
   -- metals.setup_dap()
@@ -60,6 +58,8 @@ vim.api.nvim_create_autocmd("FileType", {
     "java",
   },
   callback = function()
+    local lsp = require "trc.lsp"
+    metals_config.capabilities = lsp.capabilities
     metals.initialize_or_attach(metals_config)
   end,
   group = nvim_metals_group,
