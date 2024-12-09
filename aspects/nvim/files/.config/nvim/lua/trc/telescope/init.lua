@@ -366,7 +366,7 @@ return setmetatable({}, {
   __index = function(_, k)
     reloader()
 
-    local has_custom, custom = pcall(require, string.format("tj.telescope.custom.%s", k))
+    local has_custom, custom = pcall(require, string.format("trc.telescope.custom.%s", k))
 
     if M[k] then
       return M[k]

@@ -180,14 +180,14 @@ return require('lazy').setup({
 		},
 	},
   -- {
-  --   "nathom/filetype.nvim",
+  --   'nathom/filetype.nvim',
   --   config = function()
-  --       require("filetype").setup {
+  --       require('filetype').setup {
   --           overrides = {
   --               extensions = {
-  --                   tf = "terraform",
-  --                   tfvars = "terraform",
-  --                   tfstate = "json",
+  --                   tf = 'terraform',
+  --                   tfvars = 'terraform',
+  --                   tfstate = 'json',
   --               },
   --           },
   --       }
@@ -359,14 +359,14 @@ return require('lazy').setup({
 	-- }
 
   {
-    "someone-stole-my-name/yaml-companion.nvim",
+    'someone-stole-my-name/yaml-companion.nvim',
     requires = {
-      { "neovim/nvim-lspconfig" },
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope.nvim" },
+      { 'neovim/nvim-lspconfig' },
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope.nvim' },
     },
     config = function()
-      require("telescope").load_extension("yaml_schema")
+      require('telescope').load_extension('yaml_schema')
     end,
   },
 
@@ -374,7 +374,7 @@ return require('lazy').setup({
     'Duologic/nvim-jsonnet',
   },
   'google/vim-jsonnet',
-  "b0o/schemastore.nvim",
+  'b0o/schemastore.nvim',
 
 	-- 'RRethy/vim-illuminate'
 	'tpope/vim-fugitive',
@@ -559,7 +559,7 @@ return require('lazy').setup({
 	},
 	{ 'stevearc/dressing.nvim', event = 'User PackerDefered' },
   {
-    "folke/snacks.nvim",
+    'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
     ---@type snacks.Config
@@ -568,11 +568,11 @@ return require('lazy').setup({
       dashboard = {
         enabled = true,
         sections = {
-          { section = "header" },
-          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
-          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-          { section = "startup" },
+          { section = 'header' },
+          { icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
+          { icon = ' ', title = 'Keymaps', section = 'keys', indent = 2, padding = 1 },
+          { icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
+          { section = 'startup' },
         },
       },
       notifier = {
@@ -589,31 +589,31 @@ return require('lazy').setup({
       }
     },
     keys = {
-      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
-      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
-      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
-      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
-      { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
-      { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
-      { "<c-/>",      function() Snacks.terminal('zsh') end, desc = "Toggle Terminal" },
-      { "<c-_>",      function() Snacks.terminal() end, desc = "which_key_ignore" },
-      { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
-      { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+      { '<leader>un', function() Snacks.notifier.hide() end, desc = 'Dismiss All Notifications' },
+      { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
+      { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit' },
+      { '<leader>gb', function() Snacks.git.blame_line() end, desc = 'Git Blame Line' },
+      { '<leader>gB', function() Snacks.gitbrowse() end, desc = 'Git Browse' },
+      { '<leader>gf', function() Snacks.lazygit.log_file() end, desc = 'Lazygit Current File History' },
+      { '<leader>gl', function() Snacks.lazygit.log() end, desc = 'Lazygit Log (cwd)' },
+      { '<leader>cR', function() Snacks.rename.rename_file() end, desc = 'Rename File' },
+      { '<c-/>',      function() Snacks.terminal('zsh') end, desc = 'Toggle Terminal' },
+      { '<c-_>',      function() Snacks.terminal() end, desc = 'which_key_ignore' },
+      { ']]',         function() Snacks.words.jump(vim.v.count1) end, desc = 'Next Reference', mode = { 'n', 't' } },
+      { '[[',         function() Snacks.words.jump(-vim.v.count1) end, desc = 'Prev Reference', mode = { 'n', 't' } },
       {
-        "<leader>N",
-        desc = "Neovim News",
+        '<leader>N',
+        desc = 'Neovim News',
         function()
           Snacks.win({
-            file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+            file = vim.api.nvim_get_runtime_file('doc/news.txt', false)[1],
             width = 0.6,
             height = 0.6,
             wo = {
               spell = false,
               wrap = false,
-              signcolumn = "yes",
-              statuscolumn = " ",
+              signcolumn = 'yes',
+              statuscolumn = ' ',
               conceallevel = 3,
             },
           })
@@ -621,8 +621,8 @@ return require('lazy').setup({
       }
     },
     init = function()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "VeryLazy",
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'VeryLazy',
         callback = function()
           -- Setup some globals for debugging (lazy-loaded)
           _G.dd = function(...)
@@ -634,15 +634,15 @@ return require('lazy').setup({
           vim.print = _G.dd -- Override print to use snacks for `:=` command
 
           -- Create some toggle mappings
-          Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-          Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-          Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-          Snacks.toggle.diagnostics():map("<leader>ud")
-          Snacks.toggle.line_number():map("<leader>ul")
-          Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
-          Snacks.toggle.treesitter():map("<leader>uT")
-          Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-          Snacks.toggle.inlay_hints():map("<leader>uh")
+          Snacks.toggle.option('spell', { name = 'Spelling' }):map('<leader>us')
+          Snacks.toggle.option('wrap', { name = 'Wrap' }):map('<leader>uw')
+          Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map('<leader>uL')
+          Snacks.toggle.diagnostics():map('<leader>ud')
+          Snacks.toggle.line_number():map('<leader>ul')
+          Snacks.toggle.option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map('<leader>uc')
+          Snacks.toggle.treesitter():map('<leader>uT')
+          Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map('<leader>ub')
+          Snacks.toggle.inlay_hints():map('<leader>uh')
         end,
       })
     end,
@@ -726,30 +726,12 @@ return require('lazy').setup({
 	--   end,
 	-- },
 
-	'nanotee/luv-vimdocs',
-	'milisims/nvim-luaref',
 	-- PRACTICE:
-	{
-		'tpope/vim-projectionist', -- STREAM: Alternate file editting and some helpful stuff,
-		enable = false,
-	},
 	-- For narrowing regions of text to look at them alone
 	{
 		'chrisbra/NrrwRgn',
 		cmd = { 'NarrowRegion', 'NarrowWindow' },
 	},
-	-- {
-	--   'luukvbaal/stabilize.nvim',
-	--   config = function()
-	--     require('stabilize').setup()
-	--   end,
-	-- },
-
-	'tweekmonster/spellrotate.vim',
-	'haya14busa/vim-metarepeat', -- Never figured out how to this, but looks like fun.
-	--
-	-- VIM EDITOR:
-
 	-- Little know features:
 	--   :SSave
 	--   :SLoad
@@ -762,12 +744,6 @@ return require('lazy').setup({
 	},
 	-- Pretty colors
 	'norcalli/nvim-colorizer.lua',
-	{
-		'norcalli/nvim-terminal.lua',
-		config = function()
-			require('terminal').setup()
-		end,
-	},
   { 'brenoprata10/nvim-highlight-colors' },
   { 'gen740/SmoothCursor.nvim',
     config = function()
@@ -786,66 +762,26 @@ return require('lazy').setup({
 	-- STREAM: Could probably make this a bit better. Definitely needs docs
 	-- 'tjdevries/fold_search.vim',
 
-	{
-		'tweekmonster/haunted.vim',
-		cmd = 'Haunt',
-	},
-	{
-		'tpope/vim-scriptease',
-		cmd = {
-			'Messages', --view messages in quickfix list
-			'Verbose', -- view verbose output in preview window.
-			'Time', -- measure how long it takes to build some stuff.
-		},
-	},
 	-- Quickfix enhancements. See :help vim-qf
 	'romainl/vim-qf',
-	{
-		'glacambre/firenvim',
-		build = function()
-			vim.fn['firenvim#install'](0)
-		end,
-	},
-	-- TODO: Eventually statusline should consume this.
-	'mkitt/tabline.vim',
-	-- TODO: This would be cool to add back, but it breaks sg.nvim for now.
-	-- 'lambdalisue/vim-protocol'
+	-- {
+	-- 	'glacambre/firenvim',
+	-- 	build = function()
+	-- 		vim.fn['firenvim#install'](0)
+	-- 	end,
+	-- },
 
 	-- Undo helper
 	'sjl/gundo.vim',
 	-- Crazy good box drawing
-	'gyim/vim-boxdraw',
 	-- Better increment/decrement
 	'monaqa/dial.nvim',
-	--   FOCUSING:
-	-- local use_folke = true
-	-- if use_folke then
-	--   'folke/zen-mode.nvim'
-	--   'folke/twilight.nvim'
-	-- else
-	--   {
-	--     'junegunn/goyo.vim',
-	--     cmd = 'Goyo',
-	--     disable = use_folke,
-	--   }
-	--
-	--   {
-	--     'junegunn/limelight.vim',
-	--     after = 'goyo.vim',
-	--     disable = use_folke,
-	--   }
-	-- end
-
-	--
-	--
 	--  LANGUAGE:
 	-- TODO: Should check on these if they are the best ones
 	{ 'neovimhaskell/haskell-vim', ft = 'haskell' },
 	{ 'elzr/vim-json', ft = 'json' },
 	{ 'goodell/vim-mscgen', ft = 'mscgen' },
-	'PProvost/vim-ps1',
 	'Glench/Vim-Jinja2-Syntax',
-	'justinmk/vim-syntax-extra',
 	-- 'pearofducks/ansible-vim',
 	-- { 'cespare/vim-toml', ft = 'toml' },
 
@@ -867,14 +803,10 @@ return require('lazy').setup({
 	'peitalin/vim-jsx-typescript',
 	{ 'vim-scripts/JavaScript-Indent', ft = 'javascript' },
 	{ 'pangloss/vim-javascript', ft = { 'javascript', 'html' } },
-	-- Godot
-	'habamax/vim-godot',
-	-- end,
 
 	-- TODO: Turn emmet back on when I someday it
 	-- 'mattn/emmet-vim'
 
-	'tpope/vim-liquid',
 	-- Sql
 	-- 'tpope/vim-dadbod',
 	-- { 'kristijanhusak/vim-dadbod-completion' },
@@ -902,49 +834,21 @@ return require('lazy').setup({
 	'hrsh7th/cmp-nvim-lsp-signature-help',
 	-- Comparators
 	'lukas-reineke/cmp-under-comparator',
-  {
-    'ibhagwan/fzf-lua',
-    -- optional for icon support
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      -- calling `setup` is optional for customization
-      require('fzf-lua').setup({
-        defaults = {
-          git_icons = false,
-          file_icons = false,
-          color_icons = false,
-        },
-      })
-    end,
-  },
-  {
-    'nvim-java/nvim-java',
-    config = false,
-    dependencies = {
-      {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-          { 'williamboman/mason-lspconfig.nvim' },
-          { 'williamboman/mason.nvim' },
-
-        },
-        -- opts = {
-        --   servers = {
-        --     jdtls = {
-        --       -- your jdtls configuration goes here
-        --     },
-        --   },
-        --   setup = {
-        --     -- jdtls = function()
-        --       -- require('java').setup({
-        --       --   -- your nvim-java configuration goes here
-        --       -- })
-        --     -- end,
-        --   },
-        -- },
-      },
-    },
-  },
+  -- {
+  --   'ibhagwan/fzf-lua',
+  --   -- optional for icon support
+  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  --   config = function()
+  --     -- calling `setup` is optional for customization
+  --     require('fzf-lua').setup({
+  --       defaults = {
+  --         git_icons = false,
+  --         file_icons = false,
+  --         color_icons = false,
+  --       },
+  --     })
+  --   end,
+  -- },
 	-- ddc.vim
 	--  if executable 'deno' then
 	--      'vim-denops/denops.vim'
@@ -1129,24 +1033,6 @@ return require('lazy').setup({
 	},
 	-- Async signs!
 	'lewis6991/gitsigns.nvim',
-	-- use({
-	--   'dense-analysis/neural',
-	--   config = function()
-	--     require('neural').setup({
-	--       mappings = {
-	--         swift = '<C-.>', -- Context completion
-	--         prompt = '<C-space>', -- Open prompt
-	--       },
-	--       open_ai = {
-	--         api_key = os.getenv('OPENAI_API_KEY'),
-	--       }
-	--     })
-	--   end,
-	--   dependencies = {
-	--     'MunifTanjim/nui.nvim',
-	--     'ElPiloto/significant.nvim'
-	--   },
-	-- })
 
 	{
 		'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
@@ -1163,12 +1049,7 @@ return require('lazy').setup({
 	-- 	},
 	-- },
 
-	-- Git worktree utility
-	-- {
-	-- 	'ThePrimeagen/git-worktree.nvim',
-	-- 	config = function() end,
-	-- },
-	{ 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
+	-- { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 	-- {
 	--     'ThePrimeagen/harpoon',
 	--     dependencies = {'nvim-lua/plenary.nvim'}
@@ -1205,30 +1086,6 @@ return require('lazy').setup({
 	-- 'troydm/zoomwintab.vim',
 
 	'levouh/tint.nvim',
-	-- use({
-	--   'Pocco81/true-zen.nvim',
-	--   config = function()
-	--     require('true-zen').setup {
-	--       -- your config goes here
-	--       -- or just leave it empty :)
-	--       callbacks = {
-	--         open_pre = nil,
-	--         open_pos = nil,
-	--         close_pre = nil,
-	--         close_pos = nil
-	--       },
-	--       integrations = {
-	--         tmux = false, -- hide tmux status bar in (minimalist, ataraxis)
-	--         kitty = { -- increment font size in Kitty. Note: you must set `allow_remote_control socket-only` and `listen_on unix:/tmp/kitty` in your personal config (ataraxis)
-	--           enabled = true,
-	--           font = '+3'
-	--         },
-	--         twilight = false, -- enable twilight (ataraxis)
-	--         lualine = false -- hide nvim-lualine (ataraxis)
-	--       },
-	--     }
-	--   end,
-	-- })
 
 	-- {
 	--   'nyngwang/NeoNoName.lua',
@@ -1291,8 +1148,8 @@ return require('lazy').setup({
 	-- TODO: Figure out why this randomly popups
 	--       Figure out if I want to it later as well :)
 -- {
---   "folke/which-key.nvim",
---   event = "VeryLazy",
+--   'folke/which-key.nvim',
+--   event = 'VeryLazy',
 --   opts = {
 --     -- your configuration comes here
 --     -- or leave it empty to use the default settings
@@ -1300,11 +1157,11 @@ return require('lazy').setup({
 --   },
 --   keys = {
 --     {
---       "<leader>?",
+--       '<leader>?',
 --       function()
---         require("which-key").show({ global = false })
+--         require('which-key').show({ global = false })
 --       end,
---       desc = "Buffer Local Keymaps (which-key)",
+--       desc = 'Buffer Local Keymaps (which-key)',
 --     },
 --   },
 -- },
@@ -1321,7 +1178,7 @@ return require('lazy').setup({
 	--   'smithbm2316/centerpad.nvim'
 	-- },
 
-	{ 'xiyaowong/transparent.nvim' },
+	-- { 'xiyaowong/transparent.nvim' },
 	{
 		'tiagovla/tokyodark.nvim',
 		opts = {},
@@ -1384,89 +1241,97 @@ return require('lazy').setup({
   'fgheng/winbar.nvim',
 
   -- {
-  --   "utilyre/barbecue.nvim",
-  --   name = "barbecue",
-  --   version = "*",
+  --   'utilyre/barbecue.nvim',
+  --   name = 'barbecue',
+  --   version = '*',
   --   dependencies = {
-  --     "SmiteshP/nvim-navic",
-  --     "nvim-tree/nvim-web-devicons", -- optional dependency
+  --     'SmiteshP/nvim-navic',
+  --     'nvim-tree/nvim-web-devicons', -- optional dependency
   --   },
   --   opts = {
   --     -- configurations go here
   --   },
   -- },
 
+  { 'echasnovski/mini.nvim', version = false },
+
   {
-    'yetone/avante.nvim',
-    event = 'VeryLazy',
-    lazy = false,
-    version = false, -- set this if you want to always pull the latest change
-    opts = {
-      provider = 'openai',
-      auto_suggestions_provider = 'openai',
-      openai = {
-        -- endpoint = 'https://api.openai.com/v1/chat/completions',
-        model = 'gpt-4o',
-        temperature = 0,
-        max_tokens = 4096,
-      },
-    },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = 'make',
-    -- build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' -- for windows
+    'olimorris/codecompanion.nvim',
     dependencies = {
-      'stevearc/dressing.nvim',
       'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      --- The below dependencies are optional,
-      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-      -- {
-      --   'zbirenbaum/copilot.lua',
-      --   cmd = 'Copilot',
-      --   event = 'InsertEnter',
-      --   config = function()
-      --     require('copilot').setup({
-      --       filetypes = {
-      --         javascript = true, -- allow specific filetype
-      --         typescript = true, -- allow specific filetype
-      --         scala = true, -- allow specific filetype
-      --         dart = true, -- allow specific filetype
-      --         ['*'] = false, -- disable for all other filetypes and ignore default `filetypes`
-      --       },
-      --     })
-      --
-      --   end,
-      -- }, -- for providers='copilot'
-      {
-         -- support for image pasting
-        'HakonHarnes/img-clip.nvim',
-        event = 'VeryLazy',
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { 'markdown', 'Avante' },
-        },
-        ft = { 'markdown', 'Avante' },
-        config = function ()
-          -- require('render-markdown').setup({})
-        end,
-      },
+      'nvim-treesitter/nvim-treesitter',
     },
   },
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    opts = {
+      file_types = { 'markdown', 'Avante', 'codecompanion' },
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
+    ft = { 'markdown', 'Avante', 'codecompanion' },
+  },
+
+  -- {
+  --   'yetone/avante.nvim',
+  --   event = 'VeryLazy',
+  --   lazy = false,
+  --   version = false, -- set this if you want to always pull the latest change
+  --   opts = {
+  --     provider = 'openai',
+  --     auto_suggestions_provider = 'openai',
+  --     openai = {
+  --       -- endpoint = 'https://api.openai.com/v1/chat/completions',
+  --       model = 'gpt-4o',
+  --       temperature = 0,
+  --       max_tokens = 4096,
+  --     },
+  --   },
+  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+  --   build = 'make',
+  --   -- build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' -- for windows
+  --   dependencies = {
+  --     'stevearc/dressing.nvim',
+  --     'nvim-lua/plenary.nvim',
+  --     'MunifTanjim/nui.nvim',
+  --     --- The below dependencies are optional,
+  --     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
+  --     -- {
+  --     --   'zbirenbaum/copilot.lua',
+  --     --   cmd = 'Copilot',
+  --     --   event = 'InsertEnter',
+  --     --   config = function()
+  --     --     require('copilot').setup({
+  --     --       filetypes = {
+  --     --         javascript = true, -- allow specific filetype
+  --     --         typescript = true, -- allow specific filetype
+  --     --         scala = true, -- allow specific filetype
+  --     --         dart = true, -- allow specific filetype
+  --     --         ['*'] = false, -- disable for all other filetypes and ignore default `filetypes`
+  --     --       },
+  --     --     })
+  --     --
+  --     --   end,
+  --     -- }, -- for providers='copilot'
+  --     {
+  --        -- support for image pasting
+  --       'HakonHarnes/img-clip.nvim',
+  --       event = 'VeryLazy',
+  --       opts = {
+  --         -- recommended settings
+  --         default = {
+  --           embed_image_as_base64 = false,
+  --           prompt_for_file_name = false,
+  --           drag_and_drop = {
+  --             insert_mode = true,
+  --           },
+  --           -- required for Windows users
+  --           use_absolute_path = true,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   {
     'brenoprata10/nvim-highlight-colors',

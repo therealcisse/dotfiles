@@ -15,7 +15,6 @@ end
 
 local lspconfig_util = require('lspconfig.util')
 local util = require('trc.lsp.lsp_util')
-local mason = require('trc.lsp.mason')
 
 -- local typescript_installer = util.npm_installer({
 -- 	server_name = 'tsserver',
@@ -327,7 +326,6 @@ updated_capabilities.textDocument.foldingRange = {
 }
 updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
--- updated_capabilities = require('cmp_nvim_lsp').default_capabilities(updated_capabilities)
 
 updated_capabilities = vim.tbl_deep_extend('force', updated_capabilities, require('cmp_nvim_lsp').default_capabilities(updated_capabilities))
 -- TODO: check if this is the problem.
@@ -731,8 +729,6 @@ end
 -- 		return { 'treesitter', 'indent' }
 -- 	end,
 -- })
-
--- mason.setup()
 
 --[ An example of using functions...
 -- 0. nil -> do default (could be enabled or disabled)

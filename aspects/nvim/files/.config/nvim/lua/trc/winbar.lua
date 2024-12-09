@@ -23,6 +23,7 @@ winbar.setup({
     },
 
     exclude_filetype = {
+        'scratch',
         'help',
         'startify',
         'dashboard',

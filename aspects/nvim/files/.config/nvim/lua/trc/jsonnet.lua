@@ -9,10 +9,10 @@ jsonnet.setup({
     jsonnet_args = { '-J', 'vendor', '-J', 'lib' },
     jsonnet_string_bin = 'jsonnet',
     jsonnet_string_args = { '-S', '-J', 'vendor', '-J', 'lib' },
-    use_tanka_if_possible = true
+    use_tanka_if_possible = true,
 
     -- default to false to not break existing installs
-    load_lsp_config = false
+    load_lsp_config = false,
     -- Pass along nvim-cmp capabilities if you use that.
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
 

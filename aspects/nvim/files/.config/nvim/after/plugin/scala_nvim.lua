@@ -37,7 +37,7 @@ metals_config.settings = {
 metals_config.init_options.statusBarProvider = "on"
 
 -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities(lsp.capabilities)
+metals_config.capabilities = lsp.capabilities
 
 metals_config.on_attach = function(client, bufnr)
   -- metals.setup_dap()
