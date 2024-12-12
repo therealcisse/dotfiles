@@ -13,10 +13,13 @@ return function(opts)
   opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
   opts.shortcuts = opts.shortcuts
     or {
+      ["s"] = "*.scala",
       ["l"] = "*.lua",
       ["v"] = "*.vim",
       ["n"] = "*.{vim,lua}",
       ["c"] = "*.c",
+      ["r"] = "*.rs",
+      ["g"] = "*.go",
     }
   opts.pattern = opts.pattern or "%s"
 
@@ -56,11 +59,13 @@ return function(opts)
     cwd = opts.cwd,
   }
 
-  pickers.new(opts, {
-    debounce = 100,
-    prompt_title = "Live Grep (with shortcuts)",
-    finder = custom_grep,
-    previewer = conf.grep_previewer(opts),
-    sorter = require("telescope.sorters").empty(),
-  }):find()
+  pickers
+    .new(opts, {
+      debounce = 100,
+      prompt_title = "Live Grep (with shortcuts)",
+      finder = custom_grep,
+      previewer = conf.grep_previewer(opts),
+      sorter = require("telescope.sorters").empty(),
+    })
+    :find()
 end

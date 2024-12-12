@@ -463,6 +463,8 @@ return require('lazy').setup({
 	-- },
 	-- 'wbthomason/lsp-status.nvim',
 
+  { 'echasnovski/mini.nvim', version = false },
+
 	{
 		'j-hui/fidget.nvim',
 		module = 'fidget',
@@ -664,9 +666,9 @@ return require('lazy').setup({
 	'nvim-lua/popup.nvim',
 	'nvim-lua/plenary.nvim',
 	'nvim-telescope/telescope.nvim',
-	'nvim-telescope/telescope-rs.nvim',
-	'nvim-telescope/telescope-fzf-writer.nvim',
-	'nvim-telescope/telescope-fzy-native.nvim',
+	-- 'nvim-telescope/telescope-rs.nvim',
+	-- 'nvim-telescope/telescope-fzf-writer.nvim',
+	-- 'nvim-telescope/telescope-fzy-native.nvim',
 	'nvim-telescope/telescope-github.nvim',
 	'nvim-telescope/telescope-symbols.nvim',
 	'Marskey/telescope-sg',
@@ -1007,7 +1009,7 @@ return require('lazy').setup({
 			require('nvim-surround').setup({})
 		end,
 	},
-	-- { 'akinsho/toggleterm.nvim', version = 'v2.*' },
+	{ 'akinsho/toggleterm.nvim', version = '*', config = true },
 	'windwp/nvim-autopairs', -- Auto } }pairs, integrates with both cmp and treesitter
 
   -- {
@@ -1020,9 +1022,25 @@ return require('lazy').setup({
   --     })
   --   end,
   -- },
+
+  {
+    "letieu/harpoon-lualine",
+    dependencies = {
+      {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+      },
+
+    },
+  },
+
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      -- 'arkav/lualine-lsp-progress',
+    },
     config = function()
       local function buf_lsp_info()
         if vim.api.nvim_win_get_width(0) > 100 then
@@ -1039,7 +1057,12 @@ return require('lazy').setup({
       local filename = { 'filename', path = 1, shorting_target = 100 }
       require('lualine').setup({
         sections = {
-          lualine_c = { filename },
+          lualine_c = {
+            filename,
+            '%=',
+            -- 'lsp_progress',
+            'harpoon2',
+          },
           lualine_x = { '%n', buf_lsp_info, 'filetype' },
         },
         inactive_sections = {
@@ -1085,10 +1108,6 @@ return require('lazy').setup({
 	-- },
 
 	-- { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
-	-- {
-	--     'ThePrimeagen/harpoon',
-	--     dependencies = {'nvim-lua/plenary.nvim'}
-	-- },
 	-- 'untitled-ai/jupyter_ascending.vim'
 
 	-- 'tjdevries/standard.vim',
@@ -1287,8 +1306,6 @@ return require('lazy').setup({
   --     -- configurations go here
   --   },
   -- },
-
-  { 'echasnovski/mini.nvim', version = false },
 
   {
     'olimorris/codecompanion.nvim',

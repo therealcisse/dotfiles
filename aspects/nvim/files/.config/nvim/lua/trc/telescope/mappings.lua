@@ -33,6 +33,10 @@ vim.api.nvim_set_keymap("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)"
 -- map_tele("<leader>ez", "edit_zsh")
 -- map_tele("<localleader>cd", "diagnostics")
 
+map_tele("<leader>ep", "ep")
+map_tele("<leader>ec", "ec")
+map_tele("<leader>fg", "multi_rg")
+
 -- Search
 -- TODO: I would like to completely remove _mock from my search results here when I'm in SG/SG
 map_tele("<C-g>/", "live_grep_args", {

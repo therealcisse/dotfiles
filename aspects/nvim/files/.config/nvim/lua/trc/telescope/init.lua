@@ -15,13 +15,15 @@ local reloader = function()
     RELOAD "plenary"
     RELOAD "telescope"
     RELOAD "trc.telescope.setup"
-    -- RELOAD "trc.telescope.custom"
+    RELOAD "trc.telescope.custom.multi_rg"
   end
 end
 
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local themes = require "telescope.themes"
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -55,6 +57,18 @@ function M.fd()
   }
 end
 
+function M.multi_rg()
+  local opts = themes.get_ivy {
+    hidden = false,
+    sorting_strategy = "descending",
+    -- layout_config = {
+    --   prompt_position = 'top',
+    -- },
+  }
+
+  require"trc.telescope.custom.multi_rg"(opts)
+end
+
 function M.fs()
   local opts = themes.get_ivy {
     hidden = false,
@@ -72,6 +86,22 @@ function M.fs()
   -- }
 
   require("telescope.builtin").fd(opts)
+end
+
+function M.ep()
+  require("telescope.builtin").find_files(themes.get_ivy {
+    hidden = false,
+    sorting_strategy = "descending",
+    cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
+  })
+end
+
+function M.ec()
+  require("telescope.builtin").find_files(themes.get_ivy {
+    hidden = false,
+    sorting_strategy = "descending",
+    cwd = vim.fn.stdpath("config")
+  })
 end
 
 function M.builtin()

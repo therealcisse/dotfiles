@@ -74,6 +74,8 @@ function s:HandleInactiveBackground()
 
       hi! LspInlayHint guifg=#AAAAAA gui=italic,bold
       hi! DiagnosticError guifg=Red
+
+      hi! link SnacksDashboardDir Text
 endif
   " endif
 endfunction
@@ -92,7 +94,7 @@ function! s:MyHighlights() abort
   " hi! StatusLineNC guifg=#16252b guibg=#16252b
 
   hi! VertSplit guifg=#fff
-  hi! CursorLineNr gui=bold guifg=NONE guibg=NONE
+  hi! cursorLineNr gui=bold guifg=#fabd2f guibg=#1A1B2A
 
   hi! Search guifg=#969896 guibg=#f0c674
   hi! IncSearch guifg=#282a2e guibg=#de935f

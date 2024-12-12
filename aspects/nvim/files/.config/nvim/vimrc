@@ -58,6 +58,9 @@ set ttyfast
 set mouse=a
 set mousemodel=extend
 
+" Default to static completion for SQL
+let g:omni_sql_default_compl_type = 'syntax'
+
 " au BufWritePost *.lua PackerCompile
 
 if exists('$SUDO_USER')
@@ -758,6 +761,7 @@ augroup END
 
 set cursorline                 " Highlight the current line.
 set cursorcolumn               " Highlight the current column.
+set cursorlineopt=line,number
 
 " ----------------------------------------------------------------------------
 " HL | Find out syntax group
@@ -909,7 +913,7 @@ lua << EOF
   require "trc.jsonnet"
   require "trc.markdown"
   require "trc.codecompanion"
-
+  require "trc.harpoon"
 
   if vim.loader then
     -- vim.loader.enable()

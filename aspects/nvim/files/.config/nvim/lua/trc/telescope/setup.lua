@@ -5,6 +5,7 @@ end
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local action_layout = require("telescope.actions.layout")
+local themes = require "telescope.themes"
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
 	local entry = action_state.get_selected_entry()
@@ -124,6 +125,10 @@ require("telescope").setup({
 	},
 
 	pickers = {
+    find_files = {
+      theme = 'ivy'
+    },
+
 		fd = {
 			mappings = {
 				n = {
@@ -142,15 +147,23 @@ require("telescope").setup({
 	},
 
 	extensions = {
-		fzy_native = {
-			override_generic_sorter = true,
-			override_file_sorter = true,
-		},
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    },
 
-		fzf_writer = {
-			use_highlighter = false,
-			minimum_grep_characters = 6,
-		},
+		-- fzy_native = {
+		-- 	override_generic_sorter = true,
+		-- 	override_file_sorter = true,
+		-- },
+
+		-- fzf_writer = {
+		-- 	use_highlighter = false,
+		-- 	minimum_grep_characters = 6,
+		-- },
 
 		ast_grep = {
 			command = {
@@ -173,7 +186,9 @@ require("telescope").setup({
       },
       -- ... also accepts theme settings, for example:
       -- theme = "dropdown", -- use dropdown theme
-      -- theme = { }, -- use own theme spec
+      theme = themes.get_ivy {
+        sorting_strategy = "descending"
+      }, -- use own theme spec
       -- layout_config = { mirror=true }, -- mirror preview pane
     },
 		hop = {
