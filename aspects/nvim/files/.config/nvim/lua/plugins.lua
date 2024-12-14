@@ -1320,78 +1320,92 @@ return require('lazy').setup({
     opts = {
       file_types = {
         'markdown',
-        -- 'Avante',
+        'Avante',
         'codecompanion'
       },
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
     ft = {
       'markdown',
-      -- 'Avante',
+      'Avante',
       'codecompanion'
     },
   },
 
-  -- {
-  --   'yetone/avante.nvim',
-  --   event = 'VeryLazy',
-  --   lazy = false,
-  --   version = false, -- set this if you want to always pull the latest change
-  --   opts = {
-  --     provider = 'openai',
-  --     auto_suggestions_provider = 'openai',
-  --     openai = {
-  --       -- endpoint = 'https://api.openai.com/v1/chat/completions',
-  --       model = 'gpt-4o',
-  --       temperature = 0,
-  --       max_tokens = 4096,
-  --     },
-  --   },
-  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  --   build = 'make',
-  --   -- build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' -- for windows
-  --   dependencies = {
-  --     'stevearc/dressing.nvim',
-  --     'nvim-lua/plenary.nvim',
-  --     'MunifTanjim/nui.nvim',
-  --     --- The below dependencies are optional,
-  --     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-  --     -- {
-  --     --   'zbirenbaum/copilot.lua',
-  --     --   cmd = 'Copilot',
-  --     --   event = 'InsertEnter',
-  --     --   config = function()
-  --     --     require('copilot').setup({
-  --     --       filetypes = {
-  --     --         javascript = true, -- allow specific filetype
-  --     --         typescript = true, -- allow specific filetype
-  --     --         scala = true, -- allow specific filetype
-  --     --         dart = true, -- allow specific filetype
-  --     --         ['*'] = false, -- disable for all other filetypes and ignore default `filetypes`
-  --     --       },
-  --     --     })
-  --     --
-  --     --   end,
-  --     -- }, -- for providers='copilot'
-  --     {
-  --        -- support for image pasting
-  --       'HakonHarnes/img-clip.nvim',
-  --       event = 'VeryLazy',
-  --       opts = {
-  --         -- recommended settings
-  --         default = {
-  --           embed_image_as_base64 = false,
-  --           prompt_for_file_name = false,
-  --           drag_and_drop = {
-  --             insert_mode = true,
-  --           },
-  --           -- required for Windows users
-  --           use_absolute_path = true,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    "robitx/gp.nvim",
+    config = function()
+      local conf = {
+        openai_api_key = os.getenv("OPENAI_API_KEY"),
+      }
+      require("gp").setup(conf)
+
+      -- Setup shortcuts here (see Usage > Shortcuts in the Documentation/Readme)
+    end,
+  },
+
+  'NoahTheDuke/vim-just',
+
+  {
+    'yetone/avante.nvim',
+    event = 'VeryLazy',
+    lazy = false,
+    version = false, -- set this if you want to always pull the latest change
+    opts = {
+      provider = 'openai',
+      auto_suggestions_provider = 'openai',
+      openai = {
+        -- endpoint = 'https://api.openai.com/v1/chat/completions',
+        model = 'gpt-4o',
+        temperature = 0,
+        max_tokens = 4096,
+      },
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = 'make',
+    -- build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' -- for windows
+    dependencies = {
+      'stevearc/dressing.nvim',
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      --- The below dependencies are optional,
+      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
+      -- {
+      --   'zbirenbaum/copilot.lua',
+      --   cmd = 'Copilot',
+      --   event = 'InsertEnter',
+      --   config = function()
+      --     require('copilot').setup({
+      --       filetypes = {
+      --         javascript = true, -- allow specific filetype
+      --         typescript = true, -- allow specific filetype
+      --         scala = true, -- allow specific filetype
+      --         dart = true, -- allow specific filetype
+      --         ['*'] = false, -- disable for all other filetypes and ignore default `filetypes`
+      --       },
+      --     })
+      --
+      --   end,
+      -- }, -- for providers='copilot'
+      {
+         -- support for image pasting
+        'HakonHarnes/img-clip.nvim',
+        event = 'VeryLazy',
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+    },
+  },
 
   {
     'brenoprata10/nvim-highlight-colors',
