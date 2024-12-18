@@ -12,10 +12,19 @@ return {
 	window_decorations = "RESIZE",
   font = wezterm.font("MesloLGS NF"),
 	-- font = wezterm.font("Iosevka Nerd Font"),
+
 	font_size = 13.5,
 	-- line_height = 1.2,
 	hide_tab_bar_if_only_one_tab = true,
 	keys = {
+    {
+      key = '|',
+      mods = 'LEADER',
+      action = wezterm.action.SplitPane {
+        direction = 'Right',
+        size = { Percent = 50 },
+      },
+    },
     { key = "q", action = wezterm.action.DisableDefaultAssignment },
 		{
 			mods = "LEADER",

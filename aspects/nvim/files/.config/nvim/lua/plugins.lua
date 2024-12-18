@@ -113,7 +113,6 @@ return require('lazy').setup({
 	},
 	{ 'famiu/bufdelete.nvim', cmd = 'Bdelete' },
 	'ekalinin/Dockerfile.vim',
-	-- 'petertriho/nvim-scrollbar',
 	{
 		'anuvyklack/animation.nvim',
 	},
@@ -123,46 +122,6 @@ return require('lazy').setup({
 			require('colorful-winsep').setup()
 		end,
 	},
-	-- {
-	--     'glepnir/lspsaga.nvim',
-	--     after = 'nvim-lspconfig',
-	--     config = function()
-	--         require('lspsaga').setup(
-	--             {
-	--                 border_style = 'rounded',
-	--                 code_action = {
-	--                     num_shortcut = true,
-	--                     keys = {
-	--                         -- string |table type
-	--                         quit = 'q',
-	--                         exec = '<CR>'
-	--                     }
-	--                 },
-	--                 diagnostic = {
-	--                     show_code_action = true,
-	--                     show_source = true,
-	--                     jump_num_shortcut = true,
-	--                     keys = {
-	--                         exec_action = 'o',
-	--                         quit = 'q',
-	--                         go_action = 'g'
-	--                     }
-	--                 },
-	--                 lightbulb = {
-	--                     enable = false,
-	--                     enable_in_insert = false,
-	--                     sign = false,
-	--                     sign_priority = 40,
-	--                     virtual_text = false
-	--                 },
-	--                 symbol_in_winbar = {
-	--                     enable = true
-	--                 }
-	--             }
-	--         )
-	--     end,
-	--     ft = lsp_filetypes
-	-- },
 	{
 		'folke/lazydev.nvim',
 		ft = 'lua', -- only load on lua files
@@ -176,40 +135,7 @@ return require('lazy').setup({
 			},
 		},
 	},
-  -- {
-  --   'nathom/filetype.nvim',
-  --   config = function()
-  --       require('filetype').setup {
-  --           overrides = {
-  --               extensions = {
-  --                   tf = 'terraform',
-  --                   tfvars = 'terraform',
-  --                   tfstate = 'json',
-  --               },
-  --           },
-  --       }
-  --   end,
-  -- },
   'hashivim/vim-terraform',
-	{ 'Bilal2453/luvit-meta', lazy = true },
-	-- {
-	-- 	'theHamsta/nvim-semantic-tokens',
-	-- 	config = function()
-	-- 		-- vim.o.winwidth = 5
-	-- 		-- vim.o.winminwidth = 5
-	-- 		-- vim.o.equalalways = false
-	--
-	-- 		require('nvim-semantic-tokens').setup({
-	-- 			preset = 'default',
-	-- 			-- highlighters is a list of modules following the interface of nvim-semantic-tokens.table-highlighter or
-	-- 			-- function with the signature: highlight_token(ctx, token, highlight) where
-	-- 			--        ctx (as defined in :h lsp-handler)
-	-- 			--        token  (as defined in :h vim.lsp.semantic_tokens.on_full())
-	-- 			--        highlight (a helper function that you can call (also multiple times) with the determined highlight group(s) as the only parameter)
-	-- 			highlighters = { require('nvim-semantic-tokens.table-highlighter') },
-	-- 		})
-	-- 	end,
-	-- },
 	{
 		'anuvyklack/windows.nvim',
 		dependencies = {
@@ -248,112 +174,7 @@ return require('lazy').setup({
 			})
 		end,
 	},
-	-- {
-	--   'ggandor/leap.nvim',
-	--   config = function()
-	--     for _, _1_ in ipairs(
-	--       {
-	--         {{'n', 'x', 'o'}, 'f', '<Plug>(leap-forward-to)'},
-	--         {{'n', 'x', 'o'}, 'F', '<Plug>(leap-backward-to)'},
-	--         {{'x', 'o'}, 'x', '<Plug>(leap-forward-till)'},
-	--         {{'x', 'o'}, 'X', '<Plug>(leap-backward-till)'},
-	--         {{'n', 'x', 'o'}, 'gs', '<Plug>(leap-cross-window)'}
-	--       }
-	--     ) do
-	--       local _each_2_ = _1_
-	--       local modes = _each_2_[1]
-	--       local lhs = _each_2_[2]
-	--       local rhs = _each_2_[3]
-	--       for _0, mode in ipairs(modes) do
-	--         if (force_3f or ((vim.fn.mapcheck(lhs, mode) == '') and (vim.fn.hasmapto(rhs, mode) == 0))) then
-	--           vim.keymap.set(mode, lhs, rhs, {silent = true})
-	--         else
-	--         end
-	--       end
-	--     end
-	--     -- require('leap').add_default_mappings()
-	--   end
-	--
-	--
-	-- }
-
-	-- {
-	--   'jcdickinson/codeium.nvim',
-	--   dependencies = {
-	--     'nvim-lua/plenary.nvim',
-	--     'MunifTanjim/nui.nvim',
-	--     'hrsh7th/nvim-cmp',
-	--   },
-	--   config = function()
-	--     require('codeium').setup({
-	--     })
-	--   end
-	-- },
-
-	-- {
-	--   'Exafunction/codeium.vim',
-	--   event = 'BufEnter',
-	--   config = function ()
-	--     vim.g.codeium_disable_bindings = 1
-	--
-	--     -- Change '<C-g>' here to any keycode you like.
-	--     vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-	--     vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-	--     vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-	--     vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
-	--   end,
-	-- },
-
 	'mustache/vim-mustache-handlebars',
-	-- {
-	--   'jackMort/ChatGPT.nvim',
-	--   event = 'VeryLazy',
-	--   config = function()
-	--     require('chatgpt').setup({
-	--       api_key_cmd = 'op read op://private/ChatGPT/password --no-newline'
-	--     })
-	--   end,
-	--   dependencies = {
-	--     'MunifTanjim/nui.nvim',
-	--     'nvim-lua/plenary.nvim',
-	--     'nvim-telescope/telescope.nvim'
-	--   }
-	-- },
-
-	-- {
-	-- 	'levouh/tint.nvim',
-	-- },
-	-- { 'typicode/bg.nvim', lazy = false },
-
-	-- {
-	--     'lvimuser/lsp-inlayhints.nvim',
-	--     config = function()
-	--         local config = {
-	--             inlay_hints = {
-	--                 parameter_hints = {
-	--                     show = true,
-	--                     separator = ', '
-	--                 },
-	--                 type_hints = {
-	--                     show = true,
-	--                     prefix = '',
-	--                     separator = ', ',
-	--                     remove_colon_end = false,
-	--                     remove_colon_start = false
-	--                 },
-	--                 labels_separator = '  ',
-	--                 max_len_align = false,
-	--                 max_len_align_padding = 1,
-	--                 right_align = false,
-	--                 right_align_padding = 7,
-	--                 highlight = 'Comment'
-	--             },
-	--             debug_mode = false
-	--         }
-	--
-	--         require('lsp-inlayhints').setup(config)
-	--     end
-	-- }
 
   {
     'someone-stole-my-name/yaml-companion.nvim',
@@ -373,12 +194,9 @@ return require('lazy').setup({
   'google/vim-jsonnet',
   'b0o/schemastore.nvim',
 
-	-- 'RRethy/vim-illuminate'
 	'tpope/vim-fugitive',
 	'DataWraith/auto_mkdir',
 	'tpope/vim-unimpaired',
-	-- { 'justinmk/vim-dirvish'},
-	-- { 'kristijanhusak/vim-dirvish-git'},
 	'tommcdo/vim-lion', -- Align = gl, gL
 	'tpope/vim-eunuch', --  =SudoWrite, ...
 	-- J
@@ -390,8 +208,6 @@ return require('lazy').setup({
       { '<leader>gr', '<Plug>ReplaceWithRegisterOperator', {'n', 'v'}, desc = 'ReplaceWithRegisterOperator' },
     },
   }, -- replace <motion> with register
-	-- { 'fenetikm/falcon' },
-	-- 'folke/tokyonight.nvim',
 
 	{ 'EdenEast/nightfox.nvim' },
 	{
@@ -405,7 +221,6 @@ return require('lazy').setup({
 			})
 		end,
 	},
-	-- { 'folke/neodev.nvim', opts = {} },
 	{
 		'scalameta/nvim-metals',
 		dependencies = {
@@ -437,63 +252,17 @@ return require('lazy').setup({
 
 	-- Contributor Plugins
 	'L3MON4D3/LuaSnip',
-	-- When I have some extra time...
-	--local_'train.vim'
-	--local_'command_and_conquer.nvim'
-	--local_'streamer.nvim'
-	--local_'bandaid.nvim'
-
-	-- LSP Plugins:
-
-	-- NOTE: lspconfig ONLY has configs, for people reading this :)
-	-- { 'luc-tielen/telescope_hoogle' },
 	{ 'Vigemus/iron.nvim' },
-	-- {
-	-- 	'kevinhwang91/nvim-ufo',
-	-- 	dependencies = {
-	-- 		{ 'kevinhwang91/promise-async' },
-	-- 	},
-	--    config = function()
-	--      require('ufo').setup({
-	--        provider_selector = function(bufnr, filetype, buftype)
-	--          return {'treesitter', 'indent'}
-	--        end
-	--      })
-	--    end,
-	-- },
-	-- 'wbthomason/lsp-status.nvim',
 
   { 'echasnovski/mini.nvim', version = false },
 
-	{
-		'j-hui/fidget.nvim',
-		module = 'fidget',
-		-- tag = 'legacy',
-		config = function()
-			require('fidget').setup({
-			})
-			-- HACK: prevent error when exiting Neovim
-			vim.api.nvim_create_autocmd('VimLeavePre', { command = [[silent! FidgetClose]] })
-		end,
-	},
-	-- {
-	-- 	'ericpubu/lsp_codelens_extensions.nvim',
-	-- 	config = function()
-	-- 		require('codelens_extensions').setup()
-	-- 	end,
-	-- },
-	-- 'jose-elias-alvarez/null-ls.nvim',
 	'onsails/lspkind-nvim',
 	'justinsgithub/wezterm-types',
   {'isaksamsten/better-virtual-text.nvim'},
-	-- 'glepnir/lspsaga.nvim',
-	-- https://github.com/rmagatti/goto-preview
 
 	{ 'dart-lang/dart-vim-plugin' },
 	{ 'akinsho/flutter-tools.nvim' },
 	'simrat39/rust-tools.nvim',
-	-- 'ray-x/go.nvim',
-	-- 'ray-x/guihua.lua',
 	{
 		'folke/trouble.nvim',
 		event = 'BufReadPre',
@@ -530,25 +299,6 @@ return require('lazy').setup({
 			require('stay-in-place').setup({})
 		end,
 	},
-	-- {
-	-- 	'stevearc/overseer.nvim',
-	-- 	config = function()
-	-- 		require('overseer').setup()
-	-- 	end,
-	-- },
-	-- {
-	-- 	'anuvyklack/fold-preview.nvim',
-	-- 	dependencies = 'anuvyklack/keymap-amend.nvim',
-	-- 	config = function()
-	-- 		require('fold-preview').setup()
-	-- 	end,
-	-- },
-	-- use({
-	--   'zakharykaplan/nvim-retrail',
-	--   config = function()
-	--     require('retrail').setup()
-	--   end,
-	-- })
 
 	{
 		'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
@@ -563,6 +313,8 @@ return require('lazy').setup({
     lazy = false,
     ---@type snacks.Config
     opts = {
+      -- zen = { enabled = true },
+      indent = { enabled = true },
       bigfile = { enabled = true },
       dashboard = {
         enabled = true,
@@ -646,22 +398,6 @@ return require('lazy').setup({
       })
     end,
   },
-	-- {
-	-- 	'rcarriga/nvim-notify',
-	-- 	-- event = 'User PackerDefered',
-	-- 	config = function()
-	-- 		require('notify').setup({ level = vim.log.levels.ERROR, fps = 20 })
-	-- 		vim.notify = require('notify')
-	-- 	end,
-	-- },
-	-- {
-	-- 	'vigoux/notifier.nvim',
-	-- 	config = function()
-	-- 		require('notifier').setup({})
-	-- 	end,
-	-- },
-	-- TODO: Investigate
-	-- 'jose-elias-alvarez/nvim-lsp-ts-utils',
 
 	'nvim-lua/popup.nvim',
 	'nvim-lua/plenary.nvim',
@@ -685,7 +421,6 @@ return require('lazy').setup({
 		end,
 	},
 	{ 'nvim-telescope/telescope-live-grep-args.nvim' },
-	-- local_use('nvim-telescope', 'telescope-async-sorter-test.nvim')
 
 	{
 		'AckslD/nvim-neoclip.lua',
@@ -693,44 +428,7 @@ return require('lazy').setup({
 			require('neoclip').setup()
 		end,
 	},
-	-- TODO: When i'm back w/ some npm stuff, get this working.
-	-- elianiva/telescope-npm.nvim
 
-	--local_'telescope-hacks.nvim'
-	-- local_'sg.nvim'
-	--local_'green_light.nvim'
-
-	-- 'vimwiki/vimwiki'
-
-	-- TODO: Need to figure out how to install all of this stuff on mac
-	-- if not is_mac then
-	--    {'tami5/sql.nvim', rocks = {'sqlite', 'luv'}}
-	--    {'nvim-telescope/telescope-smart-history.nvim'}
-	--     'nvim-telescope/telescope-frecency.nvim'
-	--    'nvim-telescope/telescope-cheat.nvim'
-	--    {'nvim-telescope/telescope-arecibo.nvim', rocks = {'openssl', 'lua-http-parser'}}
-	-- end
-
-	-- {
-	--     'NTBBloodbath/rest.nvim',
-	--     config = function()
-	--         require('rest-nvim').setup()
-	--     end
-	-- },
-
-	-- {
-	--   'antoinemadec/FixCursorHold.nvim',
-	--   run = function()
-	--     vim.g.curshold_updatime = 1000
-	--   end,
-	-- },
-
-	-- PRACTICE:
-	-- For narrowing regions of text to look at them alone
-	{
-		'chrisbra/NrrwRgn',
-		cmd = { 'NarrowRegion', 'NarrowWindow' },
-	},
 	-- Little know features:
 	--   :SSave
 	--   :SLoad
@@ -749,13 +447,6 @@ return require('lazy').setup({
       require('smoothcursor').setup()
     end
   },
-	-- Make comments appear IN YO FACE
-	-- {
-	--   'tjdevries/vim-inyoface',
-	--   config = function()
-	--     vim.api.nvim_set_keymap('n', '<leader>cc', '<Plug>(InYoFace_Toggle)', {})
-	--   end,
-	-- },
 
 	-- Show only what you're searching for.
 	-- STREAM: Could probably make this a bit better. Definitely needs docs
@@ -787,7 +478,6 @@ return require('lazy').setup({
 	{ 'ziglang/zig.vim', ft = 'zig' },
 	-- { 'JuliaEditorSupport/julia-vim', ft = 'julia' },
 
-	-- { 'iamcco/markdown-preview.nvim', ft = 'markdown', build = 'cd app && yarn install' },
 	{ 'dmmulroy/tsc.nvim' },
 	{ 'nanotee/sqls.nvim' },
 
@@ -810,12 +500,6 @@ return require('lazy').setup({
 	-- 'tpope/vim-dadbod',
 	-- { 'kristijanhusak/vim-dadbod-completion' },
 	-- { 'kristijanhusak/vim-dadbod-ui' },
-	--
-	-- Lisp
-	-- { 'eraserhd/parinfer-rust', build = 'cargo build --release' }
-	--
-	-- STREAM: Figure out how to snippets better
-	--
 
 	-- Completion
 
@@ -833,39 +517,6 @@ return require('lazy').setup({
 	'hrsh7th/cmp-nvim-lsp-signature-help',
 	-- Comparators
 	'lukas-reineke/cmp-under-comparator',
-  -- {
-  --   'ibhagwan/fzf-lua',
-  --   -- optional for icon support
-  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  --   config = function()
-  --     -- calling `setup` is optional for customization
-  --     require('fzf-lua').setup({
-  --       defaults = {
-  --         git_icons = false,
-  --         file_icons = false,
-  --         color_icons = false,
-  --       },
-  --     })
-  --   end,
-  -- },
-	-- ddc.vim
-	--  if executable 'deno' then
-	--      'vim-denops/denops.vim'
-	--      'lambdalisue/guise.vim'
-	--  end
-
-	-- 'Shougo/ddc.vim'
-	-- 'Shougo/ddc-nvim-lsp'
-
-	-- coq.nvim
-	-- { 'ms-jpq/coq_nvim', branch = 'coq' }
-
-	-- Completion stuff
-	-- local_'rofl.nvim'
-
-	-- Cool tags based viewer
-	--   :Vista  <-- Opens up a really cool sidebar with info about file.
-	-- { 'liuchengxu/vista.vim', cmd = 'Vista' },
 	-- Find and replace
 	{
     'windwp/nvim-spectre',
@@ -873,22 +524,6 @@ return require('lazy').setup({
       require('spectre').setup()
 		end,
 	},
-	-- 'mfussenegger/nvim-dap-python',
-	-- 'jbyuki/one-small-step-for-vimkind',
-
-	-- 'airblade/vim-gitgutter',
-
-	-- {
-	--   'rcarriga/vim-ultest',
-
-	--   enable = false,
-	--   dependencies = { 'vim-test/vim-test' },
-	--   build = ':UpdateRemotePlugins',
-	--   config = function()
-	--     vim.cmd [[nmap ]t <Plug>(ultest-next-fail)]]
-	--     vim.cmd [[nmap [t <Plug>(ultest-prev-fail)]]
-	--   end,
-	-- },
 
 	-- TREE SITTER:
 	{
@@ -900,10 +535,6 @@ return require('lazy').setup({
 	},
 	'nvim-treesitter/nvim-treesitter-context',
 	'nvim-treesitter/playground',
-	-- 'vigoux/architext.nvim',
-
-	-- TODO: YouTube Highlight
-	-- 'danymat/neogen',
 
 	'nvim-treesitter/nvim-treesitter-textobjects',
 	-- 'JoosepAlviste/nvim-ts-context-commentstring',
@@ -914,41 +545,6 @@ return require('lazy').setup({
 			vim.cmd([[vnoremap <silent> m :lua require('tsht').nodes()<CR>]])
 		end,
 	},
-	-- {
-	--   'romgrk/nvim-treesitter-context',
-	--   config = function()
-	--     require('treesitter-context.config').setup {
-	--       enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-	--     }
-
-	--     -- TODO: Decide on a better highlighting color
-	--     -- vim.cmd [[highlight TreesitterContext link NormalFloat]]
-	--   end,
-	-- },
-
-	-- Grammars
-	-- local_'tree-sitter-lua'
-	-- { 'm-novikov/tree-sitter-sql' }
-	-- { 'DerekStride/tree-sitter-sql' }
-	-- local_'tree-sitter-sql'
-
-	--
-	-- NAVIGATION:
-	-- STREAM: Show off edit_alternate.vim
-	-- {
-	--   'tjdevries/edit_alternate.vim',
-	--   config = function()
-	--     vim.fn['edit_alternate#rule#add']('go', function(filename)
-	--       if filename:find '_test.go' then
-	--         return (filename:gsub('_test%.go', '.go'))
-	--       else
-	--         return (filename:gsub('%.go', '_test.go'))
-	--       end
-	--     end)
-	--
-	--     vim.api.nvim_set_keymap('n', '<leader>ea', '<cmd>EditAlternate<CR>', { silent = true })
-	--   end,
-	-- }
 
 	'google/vim-searchindex',
 	'tamago324/lir.nvim',
@@ -973,7 +569,6 @@ return require('lazy').setup({
 	'tpope/vim-abolish', -- Cool things with words!
 	'tpope/vim-characterize',
 	{ 'tpope/vim-dispatch', cmd = { 'Dispatch', 'Make' } },
-	-- 'numToStr/Comment.nvim',
 
 	{
 		'AndrewRadev/splitjoin.vim',
@@ -998,8 +593,6 @@ return require('lazy').setup({
 			vim.keymap.set('n', '<leader>cs', '<cmd>SymbolsOutline<cr>', { desc = 'Symbols Outline' })
 		end,
 	},
-	-- TODO: Check out macvhakann/vim-sandwich at some point
-	-- 'tpope/vim-surround' -- Surround text objects easily
 
 	{
 		'kylechui/nvim-surround',
@@ -1012,76 +605,73 @@ return require('lazy').setup({
 	{ 'akinsho/toggleterm.nvim', version = '*', config = true },
 	'windwp/nvim-autopairs', -- Auto } }pairs, integrates with both cmp and treesitter
 
-  -- {
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   main = "ibl",
-  --   config = function()
-  --     require('ibl').setup({
-  --       exclude = { filetypes = { 'dashboard' } },
-  --       scope = { enabled = true },
-  --     })
-  --   end,
-  -- },
-
-  {
-    "letieu/harpoon-lualine",
-    dependencies = {
-      {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" },
-      },
-
-    },
-  },
-
   {
     'nvim-lualine/lualine.nvim',
     dependencies = {
       'nvim-tree/nvim-web-devicons',
-      -- 'arkav/lualine-lsp-progress',
     },
     config = function()
-      local function buf_lsp_info()
-        if vim.api.nvim_win_get_width(0) > 100 then
-          local bufnr = vim.api.nvim_get_current_buf()
-          return vim.iter(vim.lsp.get_clients({ bufnr = bufnr }))
-            :map(function(client)
-              return client.name
-            end)
-            :join(' ')
-        else
-          return ''
-        end
-      end
-      local filename = { 'filename', path = 1, shorting_target = 100 }
-      require('lualine').setup({
+      -- stylua: ignore
+      local colors = {
+        blue   = '#80a0ff',
+        cyan   = '#79dac8',
+        black  = '#080808',
+        white  = '#c6c6c6',
+        red    = '#ff5189',
+        violet = '#d183e8',
+        grey   = '#303030',
+      }
+
+      local bubbles_theme = {
+        normal = {
+          a = { fg = colors.black, bg = colors.violet },
+          b = { fg = colors.white, bg = colors.grey },
+          c = { fg = colors.white },
+        },
+
+        insert = { a = { fg = colors.black, bg = colors.blue } },
+        visual = { a = { fg = colors.black, bg = colors.cyan } },
+        replace = { a = { fg = colors.black, bg = colors.red } },
+
+        inactive = {
+          a = { fg = colors.white, bg = colors.black },
+          b = { fg = colors.white, bg = colors.black },
+          c = { fg = colors.white },
+        },
+      }
+
+      require('lualine').setup {
+        options = {
+          theme = bubbles_theme,
+          component_separators = '',
+          section_separators = { left = '', right = '' },
+        },
         sections = {
+          lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
+          lualine_b = { 'filename', 'branch' },
           lualine_c = {
-            filename,
-            '%=',
-            -- 'lsp_progress',
-            'harpoon2',
+            '%=', --[[ add your center compoentnts here in place of this comment ]]
           },
-          lualine_x = { '%n', buf_lsp_info, 'filetype' },
+          lualine_x = {},
+          -- lualine_x = { '%n', buf_lsp_info, 'filetype' },
+          lualine_y = { 'filetype', 'progress' },
+          lualine_z = {
+            { 'location', separator = { right = '' }, left_padding = 2 },
+          },
         },
         inactive_sections = {
-          lualine_c = { filename },
+          lualine_a = { 'filename' },
+          lualine_b = {},
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { 'location' },
         },
-        extensions = { 'oil' },
-      })
+        tabline = {},
+        extensions = {},
+      }
     end,
   },
-	-- { 'm4xshen/autoclose.nvim' },
-
-	--
-	-- GIT:
-	-- 'TimUntersberger/neogit',
-	-- Github integration
-	--  if vim.fn.executable 'gh' == 1 then
-	--      'pwntester/octo.nvim'
-	--  end
-	-- 'ruifm/gitlinker.nvim',
 	-- Sweet message committer
 	'rhysd/committia.vim',
 	-- Floating windows are awesome :)
@@ -1099,140 +689,6 @@ return require('lazy').setup({
 		end,
 	},
 
-	-- {
-	-- 	'nvimdev/guard.nvim',
-	-- 	-- Builtin configuration, optional
-	-- 	dependencies = {
-	-- 		'nvimdev/guard-collection',
-	-- 	},
-	-- },
-
-	-- { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
-	-- 'untitled-ai/jupyter_ascending.vim'
-
-	-- 'tjdevries/standard.vim',
-	-- 'tjdevries/conf.vim',
-
-	-- {'junegunn/fzf', build = './install --all'},
-	-- {'junegunn/fzf.vim'},
-
-	--     if false and vim.fn.executable 'neuron' == 1 then
-	--         {
-	--             'oberblastmeister/neuron.nvim',
-	--             branch = 'unstable',
-	--             config = function()
-	-- these are all the default values
-	--                 require('neuron').setup {
-	--                     virtual_titles = true,
-	--                     mappings = true,
-	--                     build = nil,
-	--                     neuron_dir = '~/neuron',
-	--                     leader = 'gz'
-	--                 }
-	--             end
-	--        }
-	--     end
-
-	-- {
-	-- 	'alec-gibson/nvim-tetris',
-	-- 	cmd = 'Tetris',
-	-- },
-	-- 'troydm/zoomwintab.vim',
-
-	-- 'levouh/tint.nvim',
-
-	-- {
-	--   'nyngwang/NeoNoName.lua',
-	--   config = function ()
-	--     -- vim.keymap.set('n', '<M-w>', function () vim.cmd('NeoNoName') end, {slient=true, noremap=true, nowait=true})
-	--     -- If you are using bufferline.nvim
-	--     -- vim.keymap.set('n', '<M-w>', function () vim.cmd('NeoNoNameBufferline') end, {slient=true, noremap=true, nowait=true})
-	--   end
-	-- }
-
-	-- {
-	--   'nyngwang/NeoZoom.lua',
-	--   config = function ()
-	--     require('neo-zoom').setup { -- the defaults or UNCOMMENT and change any one to overwrite
-	--     -- left_ratio = 0.2,
-	--     -- top_ratio = 0.03,
-	--     -- width_ratio = 0.67,
-	--     -- height_ratio = 0.9,
-	--     -- border = 'double',
-	--       exclude_filetype = {
-	--         'fzf',
-	--         'qf',
-	--         'dashboard',
-	--         'telescope'
-	--       },
-	--     }
-	--
-	--     local NOREF_NOERR_TRUNC = { silent = true, nowait = true }
-	--     vim.keymap.set('n', '<C-CR>', require('neo-zoom').neo_zoom, NOREF_NOERR_TRUNC)
-	--
-	--     -- My setup (This dependencies NeoNoName.lua, and optionally NeoWell.lua)
-	--     local cur_buf = nil
-	--     local cur_cur = nil
-	--     vim.keymap.set('n', '<C-CR>', function ()
-	--       -- Pop-up Effect
-	--       if vim.api.nvim_win_get_config(0).relative == '' then
-	--         cur_buf = vim.fn.bufnr()
-	--         cur_cur = vim.api.nvim_win_get_cursor(0)
-	--         if vim.fn.bufname() ~= '' then
-	--           vim.cmd('NeoNoName')
-	--         end
-	--         vim.cmd('NeoZoomToggle')
-	--         vim.api.nvim_set_current_buf(cur_buf)
-	--         vim.api.nvim_win_set_cursor(0, cur_cur)
-	--         vim.cmd('normal! zt')
-	--         vim.cmd('normal! 7k7j')
-	--         return
-	--       end
-	--       vim.cmd('NeoZoomToggle')
-	--       vim.api.nvim_set_current_buf(cur_buf)
-	--       cur_buf = nil
-	--       cur_cur = nil
-	--       -- vim.cmd('NeoWellJump') -- you can safely remove this line.
-	--     end, NOREF_NOERR_TRUNC)
-	--   end
-	-- }
-
-	-- 'fladson/vim-kitty'
-
-	-- TODO: Figure out why this randomly popups
-	--       Figure out if I want to it later as well :)
--- {
---   'folke/which-key.nvim',
---   event = 'VeryLazy',
---   opts = {
---     -- your configuration comes here
---     -- or leave it empty to use the default settings
---     -- refer to the configuration section below
---   },
---   keys = {
---     {
---       '<leader>?',
---       function()
---         require('which-key').show({ global = false })
---       end,
---       desc = 'Buffer Local Keymaps (which-key)',
---     },
---   },
--- },
-	-- It would be fun to think about making a wiki again...
-	-- local_'wander.nvim'
-	-- local_'riki.nvim'
-
-	-- {
-	--     'Vhyrro/neorg'
-	--     -- branch = 'unstable'
-	-- },
-
-	-- {
-	--   'smithbm2316/centerpad.nvim'
-	-- },
-
-	-- { 'xiyaowong/transparent.nvim' },
 	{
 		'tiagovla/tokyodark.nvim',
 		opts = {},
@@ -1294,19 +750,6 @@ return require('lazy').setup({
 
   'fgheng/winbar.nvim',
 
-  -- {
-  --   'utilyre/barbecue.nvim',
-  --   name = 'barbecue',
-  --   version = '*',
-  --   dependencies = {
-  --     'SmiteshP/nvim-navic',
-  --     'nvim-tree/nvim-web-devicons', -- optional dependency
-  --   },
-  --   opts = {
-  --     -- configurations go here
-  --   },
-  -- },
-
   {
     'olimorris/codecompanion.nvim',
     dependencies = {
@@ -1333,12 +776,95 @@ return require('lazy').setup({
   },
 
   {
-    "robitx/gp.nvim",
+    'robitx/gp.nvim',
     config = function()
       local conf = {
-        openai_api_key = os.getenv("OPENAI_API_KEY"),
+        openai_api_key = os.getenv('OPENAI_API_KEY'),
+
+        default_command_agent = 'CodeGemini',
+        default_chat_agent = 'CodeGemini',
+
+        providers = {
+          googleai = {
+            disable = false,
+            endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}',
+            secret = os.getenv('GOOGLEAI_API_KEY'),
+          },
+        },
+
+        agents = {
+          {
+            name = 'ChatGPT4o',
+            chat = true,
+            command = false,
+            -- string with model name or table with model name and parameters
+            model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
+            -- system prompt (use this to specify the persona/role of the AI)
+            system_prompt = require('gp.defaults').chat_system_prompt,
+          },
+          {
+            provider = 'openai',
+            name = 'ChatGPT4o-mini',
+            chat = true,
+            command = false,
+            -- string with model name or table with model name and parameters
+            model = { model = 'gpt-4o-mini', temperature = 1.1, top_p = 1 },
+            -- system prompt (use this to specify the persona/role of the AI)
+            system_prompt = require('gp.defaults').chat_system_prompt,
+          },
+          {
+            provider = 'googleai',
+            name = 'ChatGemini',
+            chat = true,
+            command = false,
+            -- string with model name or table with model name and parameters
+            model = { model = 'gemini-pro', temperature = 1.1, top_p = 1 },
+            -- system prompt (use this to specify the persona/role of the AI)
+            system_prompt = require('gp.defaults').chat_system_prompt,
+          },
+        },
+
+        hooks = {
+          -- example of adding command which writes unit tests for the selected code
+          UnitTests = function(gp, params)
+            local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please respond by writing table driven unit tests for the code above.'
+            local agent = gp.get_command_agent()
+            gp.Prompt(params, gp.Target.vnew, agent, template)
+          end,
+
+          -- example of adding command which explains the selected code
+          Explain = function(gp, params)
+            local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please respond by explaining the code above.'
+            local agent = gp.get_chat_agent()
+            gp.Prompt(params, gp.Target.popup, agent, template)
+          end,
+
+          -- example of usig enew as a function specifying type for the new buffer
+          CodeReview = function(gp, params)
+            local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please analyze for code smells and suggest improvements.'
+            local agent = gp.get_chat_agent()
+            gp.Prompt(params, gp.Target.enew('markdown'), agent, template)
+          end,
+
+          -- example of adding command which opens new chat dedicated for translation
+          Translator = function(gp, params)
+            local chat_system_prompt = 'You are a Translator, please translate between English and Chinese.'
+            gp.cmd.ChatNew(params, chat_system_prompt)
+
+            -- -- you can also create a chat with a specific fixed agent like this:
+            -- local agent = gp.get_chat_agent('ChatGPT4o')
+            -- gp.cmd.ChatNew(params, chat_system_prompt, agent)
+          end,
+
+        },
       }
-      require("gp").setup(conf)
+      require('gp').setup(conf)
 
       -- Setup shortcuts here (see Usage > Shortcuts in the Documentation/Readme)
     end,
@@ -1352,13 +878,18 @@ return require('lazy').setup({
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = 'openai',
-      auto_suggestions_provider = 'openai',
+      provider = 'gemini',
+      auto_suggestions_provider = 'gemini',
       openai = {
         -- endpoint = 'https://api.openai.com/v1/chat/completions',
         model = 'gpt-4o',
-        temperature = 0,
+        temperature = 1.1,
         max_tokens = 4096,
+      },
+      file_selector = {
+        provider = 'telescope',
+        -- Options override for custom providers
+        provider_opts = {},
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

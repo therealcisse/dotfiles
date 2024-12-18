@@ -470,7 +470,7 @@ set shell=/bin/sh
 set signcolumn=yes:2
 
 " Better display for messages
-set cmdheight=2
+set cmdheight=0
 set laststatus=3
 
 if exists('&swapsync')
@@ -830,6 +830,7 @@ cnoremap <expr> <C-F>  (getcmdpos()<(len(getcmdline())+1)) && (getcmdtype()==":"
 
 command! CopyBuffer let @+ = expand('%:p')
 command! Jq :%!jq '.'
+command! -range -nargs=+ GpDiff lua gp_diff(<q-args>, <line1>, <line2>)
 
 " nnoremap <localleader>z <cmd>Centerpad 24 24<CR>
 
@@ -838,14 +839,12 @@ map <C-M> <CR>
 nnoremap <leader><leader> <C-D>
 nnoremap <leader><backspace> <C-U>
 
-nnoremap <leader>y :ChatGPT<CR>
 nnoremap yp Yp
 
 nnoremap <silent> <localleader>r :so %<CR>
 
 nnoremap <C-;> :lua Snacks.dashboard.open()<CR>
 
-nnoremap <C-w>o :TZAtaraxis<CR>
 nnoremap <C-Enter> :WindowsMaximizeHorizontally<CR>
 
 nnoremap <leader><Up> <C-W><Up>
@@ -876,10 +875,10 @@ lua << EOF
   require "trc.gitsigns"
   require "trc.winbar"
   -- require "trc.barbecue"
-  require "trc.indentline"
+  -- require "trc.indentline"
   require "trc.toggleterm"
   -- require "trc.java"
-  require "trc.tsc"
+  -- require "trc.tsc"
 
   -- I set some global variables to use as configuration throughout my config.
   -- These don't have any special meaning.
@@ -912,8 +911,9 @@ lua << EOF
   require "trc.terraform"
   require "trc.jsonnet"
   require "trc.markdown"
-  require "trc.codecompanion"
-  require "trc.harpoon"
+  -- require "trc.codecompanion"
+  -- require "trc.harpoon"
+  require "trc.gp"
 
   if vim.loader then
     -- vim.loader.enable()
