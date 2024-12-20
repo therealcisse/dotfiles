@@ -898,7 +898,6 @@ lua << EOF
 
   -- require "trc.g"
   -- require "trc.colorizer"
-  require "trc.navic"
   require "trc.autocommands"
   require "trc.surround"
   -- require "trc.git_worktree"

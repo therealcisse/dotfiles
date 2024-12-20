@@ -1,29 +1,3 @@
-local setup = {
-	'c',
-	'cpp',
-	'html',
-	'css',
-	'json',
-	'zig',
-	'python',
-	'rust',
-	'solidity',
-	'lua',
-	'javascript',
-	'javascriptreact',
-	'typescript',
-	'typescriptreact',
-	'yaml',
-	'sql',
-	'sh',
-	'scala',
-	'go',
-	'gomod',
-	'java',
-	'r',
-	'bib',
-}
-
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd([[
   augroup lazy_user_config
@@ -50,44 +24,11 @@ local has = function(x)
 	return vim.fn.has(x) == 1
 end
 
-local executable = function(x)
-	return vim.fn.executable(x) == 1
-end
-
 local is_mac = has('macunix')
 
 local max_jobs = nil
 if is_mac then
 	max_jobs = 32
-end
-
-local local_ = function(first, second, opts)
-	opts = opts or {}
-
-	local plug_path, home
-	if second == nil then
-		plug_path = first
-		home = 'tjdevries'
-	else
-		plug_path = second
-		home = first
-	end
-
-	if vim.fn.isdirectory(vim.fn.expand('~/plugins/' .. plug_path)) == 1 then
-		opts[1] = '~/plugins/' .. plug_path
-	else
-		opts[1] = string.format('%s/%s', home, plug_path)
-	end
-
-	use(opts)
-end
-
-local py_ = function(opts)
-	if not has('python3') then
-		return
-	end
-
-	use(opts)
 end
 
 return require('lazy').setup({
@@ -102,15 +43,6 @@ return require('lazy').setup({
 
 	-----------------------------------------------------------
 
-	{
-		'SmiteshP/nvim-navic',
-		module = 'nvim-navic',
-	  dependencies = 'neovim/nvim-lspconfig',
-		config = function()
-			vim.g.navic_silence = true
-			require('nvim-navic').setup({ separator = ' ', highlight = true, depth_limit = 5 })
-		end,
-	},
 	{ 'famiu/bufdelete.nvim', cmd = 'Bdelete' },
 	'ekalinin/Dockerfile.vim',
 	{
@@ -175,6 +107,7 @@ return require('lazy').setup({
 		end,
 	},
 	'mustache/vim-mustache-handlebars',
+  { 'neovim/nvim-lspconfig' },
 
   {
     'someone-stole-my-name/yaml-companion.nvim',
@@ -257,7 +190,7 @@ return require('lazy').setup({
 
   { 'echasnovski/mini.nvim', version = false },
 
-	'onsails/lspkind-nvim',
+	-- 'onsails/lspkind-nvim',
 	'justinsgithub/wezterm-types',
   {'isaksamsten/better-virtual-text.nvim'},
 
@@ -879,12 +812,12 @@ return require('lazy').setup({
 
   'NoahTheDuke/vim-just',
 
-  {
-    'zbirenbaum/copilot-cmp',
-    config = function ()
-      require('copilot_cmp').setup()
-    end
-  },
+  -- {
+  --   'zbirenbaum/copilot-cmp',
+  --   config = function ()
+  --     require('copilot_cmp').setup()
+  --   end
+  -- },
 
   {
     'saghen/blink.cmp',
@@ -895,19 +828,72 @@ return require('lazy').setup({
 
     version = 'v0.*',
 
+    lazy = false,
+
     opts = {
       keymap = {
         preset = 'default',
-        ['<CR>'] = { 'select_and_accept', 'fallback' },
-        ['<C-e>'] = { 'select_and_accept' },
+
+        ['<CR>'] = { 'accept', 'fallback' },
+        ['<C-e>'] = { 'select_and_accept', 'fallback' },
         ['<C-j>'] = { 'snippet_forward', 'fallback' },
         ['<C-k>'] = { 'snippet_backward', 'fallback' },
       },
 
+      snippets = {
+        expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+        active = function(filter)
+          if filter and filter.direction then
+            return require('luasnip').jumpable(filter.direction)
+          end
+          return require('luasnip').in_snippet()
+        end,
+        jump = function(direction) require('luasnip').jump(direction) end,
+      },
+
+      completion = {
+        menu = {
+          scrollbar = false,
+          border = {
+            { "󱐋", "WarningMsg" },
+            "─",
+            "╮",
+            "│",
+            "╯",
+            "─",
+            "╰",
+            "│",
+          },
+        },
+        documentation = {
+          auto_show = true,
+          treesitter_highlighting = true,
+          window = {
+            border = {
+              { "", "DiagnosticHint" },
+              "─",
+              "╮",
+              "│",
+              "╯",
+              "─",
+              "╰",
+              "│",
+            },
+          },
+        },
+        ghost_text = {
+          enabled = true,
+        },
+      },
+
       sources = {
+        cmdline = function()
+          return {}
+        end,
         default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
         providers = {
           copilot = {
+            enabled = true,
             name = 'copilot',
             module = 'blink-cmp-copilot',
             score_offset = 100,
@@ -924,6 +910,7 @@ return require('lazy').setup({
           },
         },
       },
+
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
@@ -963,7 +950,23 @@ return require('lazy').setup({
         },
       },
 
-      signature = { enabled = true },
+      signature = {
+        enabled = true,
+        window = {
+          border = {
+            { "", "DiagnosticHint" },
+            "─",
+            "╮",
+            "│",
+            "╯",
+            "─",
+            "╰",
+            "│",
+          },
+        },
+
+      },
+
     },
     opts_extend = { 'sources.default' }
   },

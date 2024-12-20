@@ -9,36 +9,36 @@ end
 
 local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
-parser_config.ziggy = {
-  install_info = {
-    url = 'https://github.com/kristoff-it/ziggy', -- local path or git repo
-    includes = {'tree-sitter-ziggy/src'},
-    files = {'tree-sitter-ziggy/src/parser.c'}, -- note that some parsers also require src/scanner.c or src/scanner.cc
-    -- optional entries:
-    branch = 'main', -- default branch in case of git repo if different from master
-    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-  },
-}
+-- parser_config.ziggy = {
+--   install_info = {
+--     url = 'https://github.com/kristoff-it/ziggy', -- local path or git repo
+--     includes = {'tree-sitter-ziggy/src'},
+--     files = {'tree-sitter-ziggy/src/parser.c'}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+--     -- optional entries:
+--     branch = 'main', -- default branch in case of git repo if different from master
+--     generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+--     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+--   },
+-- }
 
-parser_config.ziggy_schema = {
-  install_info = {
-    url = 'https://github.com/kristoff-it/ziggy', -- local path or git repo
-    files = {'tree-sitter-ziggy-schema/src/parser.c'}, -- note that some parsers also require src/scanner.c or src/scanner.cc
-    -- optional entries:
-    branch = 'main', -- default branch in case of git repo if different from master
-    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-  },
-  filetype = 'ziggy-schema',
-}
+-- parser_config.ziggy_schema = {
+--   install_info = {
+--     url = 'https://github.com/kristoff-it/ziggy', -- local path or git repo
+--     files = {'tree-sitter-ziggy-schema/src/parser.c'}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+--     -- optional entries:
+--     branch = 'main', -- default branch in case of git repo if different from master
+--     generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+--     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+--   },
+--   filetype = 'ziggy-schema',
+-- }
 
-vim.filetype.add({
-  extension = {
-    ziggy = 'ziggy',
-    ['ziggy-schema'] = 'ziggy_schema',
-  }
-})
+-- vim.filetype.add({
+--   extension = {
+--     ziggy = 'ziggy',
+--     ['ziggy-schema'] = 'ziggy_schema',
+--   }
+-- })
 
 parser_config.sql = {
   install_info = {
@@ -112,6 +112,14 @@ local swap_next, swap_prev = (function()
 end)()
 
 local _ = require('nvim-treesitter.configs').setup {
+  sync_install = false,
+
+  auto_install = true,
+
+  ignore_install = {},
+
+  modules = {},
+
   ensure_installed = {
     -- 'sql',
     'bash',
@@ -147,7 +155,10 @@ local _ = require('nvim-treesitter.configs').setup {
     -- custom_captures = custom_captures,
   },
 
-  indent = { enable = true, disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd' } },
+  indent = {
+    enable = true,
+    disable = { 'dart', 'python', 'css', 'html', 'gdscript', 'gdscript3', 'gd' },
+  },
 
   refactor = {
     highlight_definitions = { enable = false },
@@ -173,10 +184,10 @@ local _ = require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = '<CR>',
-      scope_incremental = '<CR>',
-      node_incremental = '<CR>',
-      node_decremental = '<C-Enter>'
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
     },
   },
 

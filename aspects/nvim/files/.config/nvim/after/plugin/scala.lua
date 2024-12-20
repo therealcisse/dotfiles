@@ -17,7 +17,6 @@ metals_config.settings = {
     'com.github.swagger.akka.javadsl'
   },
   superMethodLensesEnabled = false,
-  inlayHints = true,
   inlayHints = {
     implicitArguments = { enable = false },
     implicitConversions = { enable = false },
@@ -36,31 +35,16 @@ metals_config.settings = {
 -- docs about this
 metals_config.init_options.statusBarProvider = 'on'
 
-local updated_capabilities = require('blink.cmp').get_lsp_capabilities() -- vim.lsp.protocol.make_client_capabilities()
-if nvim_status then
-	updated_capabilities = vim.tbl_deep_extend('keep', updated_capabilities, nvim_status.capabilities)
-end
-updated_capabilities.textDocument.foldingRange = {
-	dynamicRegistration = false,
-	lineFoldingOnly = true,
-}
--- updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
-updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
-
--- updated_capabilities = vim.tbl_deep_extend('force', updated_capabilities, require('cmp_nvim_lsp').default_capabilities(updated_capabilities))
--- TODO: check if this is the problem.
--- updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
-updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 
 -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-metals_config.capabilities = updated_capabilities
+metals_config.capabilities = lsp.capabilities
 
 metals_config.on_attach = function(client, bufnr)
   lsp.on_attach(client, bufnr)
 end
 
 metals_config.on_init = function(client)
-  -- lsp.on_init(client)
+  lsp.on_init(client)
 end
 
 local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })

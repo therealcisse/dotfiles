@@ -6,14 +6,11 @@ if not has_lsp then
 	return
 end
 
--- local navic_ok, navic = pcall(require, 'nvim-navic')
--- if not navic_ok then
---   return
--- end
+local M = {}
 
 -- local is_mac = vim.fn.has('macunix') == 1
 
-local lspconfig_util = require('lspconfig.util')
+-- local lspconfig_util = require('lspconfig.util')
 local util = require('trc.lsp.lsp_util')
 
 -- local typescript_installer = util.npm_installer({
@@ -21,11 +18,6 @@ local util = require('trc.lsp.lsp_util')
 -- 	packages = { 'typescript-language-server' },
 -- 	binaries = { 'typescript-language-server' },
 -- })
-
-local ok, nvim_status = pcall(require, 'lsp-status')
-if not ok then
-	nvim_status = nil
-end
 
 local telescope_mapper = require('trc.telescope.mappings')
 local handlers = require('trc.lsp.handlers')
@@ -41,22 +33,10 @@ if status then
 	status.activate()
 end
 
-local custom_init = function(client, bufnr)
+function M.on_init(client, bufnr)
 	client.config.flags = client.config.flags or {}
 	client.config.flags.allow_incremental_sync = true
 
-	-- navic.attach(client, bufnr)
-
-	-- if pcall(require, 'lsp_signature') then
-	--   -- Get signatures (and _only_ signatures) when in argument lists.
-	--   require 'lsp_signature'.on_attach({
-	--     bind = true,
-	--     doc_lines = 0,
-	--     handler_opts = {
-	--       border = 'rounded'
-	--     },
-	--   }, bufnr)
-	-- end
 end
 
 local augroup_format = vim.api.nvim_create_augroup('my_lsp_format', { clear = true })
@@ -85,11 +65,7 @@ local filetype_attach = setmetatable({
 	--      require('java').setup({})
 	--  end,
 
-	-- lua_ls = function() end,
-
-	-- metals = function()
-	-- 	autocmd_format(false)
-	-- end,
+	lua_ls = function() end,
 
 	-- dartls = function()
 	--   autocmd_format(true)
@@ -110,6 +86,10 @@ local filetype_attach = setmetatable({
 	clang = function()
 		autocmd_format(true)
 	end,
+
+	-- scala = function()
+	--   autocmd_format(false)
+	-- end,
 
 	-- ziggy = function()
 	--   autocmd_format(false)
@@ -132,14 +112,14 @@ local filetype_attach = setmetatable({
 	--   autocmd_format(false)
 	-- end,
 
-	typescript = function()
-		autocmd_format(false)
-		-- autocmd_format(false, function(clients)
-		-- 	return vim.tbl_filter(function(client)
-		-- 		return client.name ~= 'tsserver'
-		-- 	end, clients)
-		-- end)
-	end,
+	-- typescript = function()
+	-- 	autocmd_format(false)
+	-- 	-- autocmd_format(false, function(clients)
+	-- 	-- 	return vim.tbl_filter(function(client)
+	-- 	-- 		return client.name ~= 'tsserver'
+	-- 	-- 	end, clients)
+	-- 	-- end)
+	-- end,
 }, {
 	__index = function()
 		return function() end
@@ -218,12 +198,8 @@ vim.keymap.set('n', '<leader>dE', function()
 	require('dapui').eval(vim.fn.input('[DAP] Expression > '))
 end)
 
-local custom_attach = function(client, bufnr)
+function M.on_attach(client, bufnr)
 	local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
-
-	if nvim_status then
-		nvim_status.on_attach(client)
-	end
 
 	if vim.g.vscode then
     buf_inoremap({ 'K', vim.lsp.buf.hover })
@@ -264,62 +240,11 @@ local custom_attach = function(client, bufnr)
 		-- buf_nnoremap { 'K', vim.lsp.buf.hover, { desc = 'lsp:hover' } }
 	end
 
-	-- Set autocommands conditional on server_capabilities
-	-- if client.server_capabilities.documentHighlightProvider then
-	-- 	vim.cmd([[
-	--      augroup lsp_document_highlight
-	--        autocmd! * <buffer>
-	--
-	--        if vim.g.vscode then
-	--        else
-	--          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-	--          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-	--        end
-	--
-	--      augroup END
-	--    ]])
-	-- end
-
-	-- if client.server_capabilities.codeLensProvider then
-	-- 	if filetype ~= 'elm' then
-	-- 		vim.cmd([[
-	--        augroup lsp_document_codelens
-	--          au! * <buffer>
-	--
-	--          if vim.g.vscode then
-	--          else
-	--            autocmd BufEnter ++once <buffer> lua require'vim.lsp.codelens'.refresh()
-	--            autocmd BufWritePost,CursorHold <buffer> lua require'vim.lsp.codelens'.refresh()
-	--          end
-	--        augroup END
-	--      ]])
-	-- 	end
-	-- end
-
-	-- local caps = client.server_capabilities
-	-- if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-	--   local augroup = vim.api.nvim_create_augroup('SemanticTokens', {})
-	--   vim.api.nvim_create_autocmd('TextChanged', {
-	--     group = augroup,
-	--     buffer = bufnr,
-	--     callback = function()
-	--       vim.lsp.buf.semantic_tokens_full()
-	--     end,
-	--   })
-	--
-	--   -- fire it first time on load as well
-	--   vim.lsp.buf.semantic_tokens_full()
-	-- end
-	-- buf_nnoremap { '<ggd>', require('goto-preview').goto_preview_definition() }
-
 	-- Attach any filetype specific options to the client
 	filetype_attach[filetype](client)
 end
 
 local updated_capabilities = require('blink.cmp').get_lsp_capabilities() -- vim.lsp.protocol.make_client_capabilities()
-if nvim_status then
-	updated_capabilities = vim.tbl_deep_extend('keep', updated_capabilities, nvim_status.capabilities)
-end
 updated_capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
@@ -331,6 +256,8 @@ updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 -- TODO: check if this is the problem.
 -- updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
+
+M.capabilities = updated_capabilities
 
 -- vim.lsp.buf_request(0, 'textDocument/codeLens', { textDocument = vim.lsp.util.make_text_document_params() })
 
@@ -362,7 +289,6 @@ local servers = {
   },
 	-- vimls = true,
 	-- eslint = true,
-	-- metals = pcall(require, 'metals'),
 
   jsonls = {
     settings = {
@@ -377,6 +303,37 @@ local servers = {
       }
     }
   },
+
+  -- metals = vim.tbl_deep_extend(require('metals').bare_config(), {
+  -- filetypes = { 'scala', 'java', 'sbt' },
+  -- root_dir = util.root_pattern('build.sbt', '.git'),
+  --
+  --   init_options = {
+  --     statusBarProvider = 'on'
+  --   },
+  --
+  --   settings = {
+  --     showImplicitArguments = false,
+  --     showInferredType = false,
+  --     excludedPackages = {
+  --       'akka.actor.typed.javadsl',
+  --       'com.github.swagger.akka.javadsl'
+  --     },
+  --     superMethodLensesEnabled = false,
+  --     inlayHints = true,
+  --     inlayHints = {
+  --       implicitArguments = { enable = false },
+  --       implicitConversions = { enable = false },
+  --       typeParameters = { enable = false },
+  --       inferredTypes = { enable = false },
+  --       hintsInPatternMatch = { enable = false },
+  --
+  --     },
+  --     enableSemanticHighlighting = false,
+  --
+  --   },
+  --
+  -- }),
 
   -- https://www.arthurkoziel.com/json-schemas-in-neovim/
   yamlls = require('yaml-companion').setup {
@@ -470,7 +427,7 @@ local servers = {
       fallback_flags = { '-std=c++17' },
 			clangdFileStatus = true,
 		},
-		handlers = nvim_status and nvim_status.extensions.clangd.setup() or nil,
+		handlers = nil,
 	},
 
 	gopls = {
@@ -484,7 +441,7 @@ local servers = {
 				return absolute_cwd
 			end
 
-			return lspconfig_util.root_pattern('go.mod', '.git')(fname)
+			return util.root_pattern('go.mod', '.git')(fname)
 		end,
 
 		settings = {
@@ -534,7 +491,12 @@ local servers = {
 
 	-- elmls = true,
 
-	-- lua_ls = true,
+	lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
 
 	-- tsserver = {
 	-- 	init_options = ts_util.init_options,
@@ -609,8 +571,8 @@ local setup_server = function(server, config)
 	end
 
 	config = vim.tbl_deep_extend('force', {
-		on_init = custom_init,
-		on_attach = custom_attach,
+		on_init = M.on_init,
+		on_attach = M.on_attach,
 		capabilities = updated_capabilities,
 		flags = {
 			-- debounce_text_changes = nil,
@@ -625,179 +587,8 @@ local setup_server = function(server, config)
 	lspconfig[server].setup(config)
 end
 
--- if is_mac then
--- 	local lua_cmd, lua_env = nil, nil
--- 	require('nvim-lsp-installer').setup({
--- 		automatic_installation = false,
--- 		ensure_installed = { 'lua_ls', 'gopls' },
--- 	})
-
--- lua_cmd = {
---   vim.fn.stdpath 'data' .. '/lsp_servers/lua_ls/extension/server/bin/lua-language-server',
--- }
---
--- local process = require 'nvim-lsp-installer.core.process'
--- local path = require 'nvim-lsp-installer.core.path'
---
--- lua_env = {
---   cmd_env = {
---     PATH = process.extend_path {
---       path.concat { vim.fn.stdpath 'data', 'lsp_servers', 'lua_ls', 'extension', 'server', 'bin' },
---     },
---   },
--- }
-
--- setup_server('lua_ls', {
---   settings = {
---     Lua = {
---       diagnostics = {
---         globals = {
---           -- vim
---           'vim',
---
---           -- Busted
---           'describe',
---           'it',
---           'before_each',
---           'after_each',
---           'teardown',
---           'pending',
---           'clear',
---
---           -- Colorbuddy
---           'Color',
---           'c',
---           'Group',
---           'g',
---           's',
---
---           -- Custom
---           'RELOAD',
---         },
---       },
---
---       workspace = {
---         -- Make the server aware of Neovim runtime files
---         library = vim.api.nvim_get_runtime_file('', true),
---       },
---     },
---   },
--- })
--- else
--- Load lua configuration from nlua.
--- _ = require('nlua.lsp.nvim').setup(lspconfig, {
---   on_init = custom_init,
---   on_attach = custom_attach,
---   capabilities = updated_capabilities,
---
---   root_dir = function(fname)
---     if string.find(vim.fn.fnamemodify(fname, ':p'), 'xdg_config/nvim/') then
---       return vim.fn.expand '~/git/config_manager/xdg_config/nvim/'
---     end
---
---     -- ~/git/config_manager/xdg_config/nvim/...
---     return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
---   end,
---
---   globals = {
---     -- Colorbuddy
---     'Color',
---     'c',
---     'Group',
---     'g',
---     's',
---
---     -- Custom
---     'RELOAD',
---   },
--- })
--- end
-
 for server, config in pairs(servers) do
 	setup_server(server, config)
 end
 
--- if pcall(require, 'sg.lsp') then
--- 	require('sg.lsp').setup({
--- 		on_init = custom_init,
--- 		on_attach = custom_attach,
--- 	})
--- end
-
--- require('ufo').setup({
--- 	provider_selector = function(bufnr, filetype, buftype)
--- 		return { 'treesitter', 'indent' }
--- 	end,
--- })
-
---[ An example of using functions...
--- 0. nil -> do default (could be enabled or disabled)
--- 1. false -> disable it
--- 2. true -> enable, use defaults
--- 3. table -> enable, with (some) overrides
--- 4. function -> can return any of above
---
--- vim.lsp.handlers['textDocument/publishDiagnostics'] = function(err, method, params, client_id, bufnr, config)
---   local uri = params.uri
---
---   vim.lsp.with(
---     vim.lsp.diagnostic.on_publish_diagnostics, {
---       underline = true,
---       virtual_text = true,
---       signs = sign_decider,
---       update_in_insert = false,
---     }
---   )(err, method, params, client_id, bufnr, config)
---
---   bufnr = bufnr or vim.uri_to_bufnr(uri)
---
---   if bufnr == vim.api.nvim_get_current_buf() then
---     vim.lsp.diagnostic.set_loclist { open_loclist = false }
---   end
--- end
---]]
-
--- python graveyard
--- lspconfig.pyls.setup {
---   plugins = {
---     pyls_mypy = {
---       enabled = true,
---       live_mode = false
---     }
---   },
---   on_init = custom_init,
---   on_attach = custom_attach,
---   capabilities = updated_capabilities,
--- }
-
--- lspconfig.jedi_language_server.setup {
---   on_init = custom_init,
---   on_attach = custom_attach,
---   capabilities = updated_capabilities,
--- }
-
--- Set up null-ls
--- local use_null = false
--- if use_null then
--- 	require('null-ls').setup({
--- 		sources = {
--- 			require('null-ls').builtins.formatting.stylua,
--- 			-- require('null-ls').builtins.diagnostics.eslint,
--- 			-- require('null-ls').builtins.completion.spell,
--- 			require('null-ls').builtins.diagnostics.selene,
--- 			require('null-ls').builtins.formatting.black.with({
--- 				extra_args = { '--line-length=120' },
--- 			}),
--- 			require('null-ls').builtins.formatting.prettierd,
---       require('null-ls').builtins.formatting.terraform_fmt,
--- 		},
--- 	})
--- end
-
--- vim.keymap.set('n', 'gp', '<cmd>lua require('goto-preview').goto_preview_definition()<CR>', {noremap=true})
-
-return {
-	on_init = custom_init,
-	on_attach = custom_attach,
-	capabilities = updated_capabilities,
-}
+return M
