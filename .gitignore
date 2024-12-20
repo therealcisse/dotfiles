@@ -3,6 +3,10 @@ target
 node_modules
 /python
 
+.scala-build/
+.bps/
+target
+
 .DS_Store
 /aspects/ssh/files/ssh_config
 

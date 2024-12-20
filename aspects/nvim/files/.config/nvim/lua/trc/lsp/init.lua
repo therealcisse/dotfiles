@@ -316,7 +316,7 @@ local custom_attach = function(client, bufnr)
 	filetype_attach[filetype](client)
 end
 
-local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+local updated_capabilities = require('blink.cmp').get_lsp_capabilities() -- vim.lsp.protocol.make_client_capabilities()
 if nvim_status then
 	updated_capabilities = vim.tbl_deep_extend('keep', updated_capabilities, nvim_status.capabilities)
 end
@@ -324,12 +324,12 @@ updated_capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
 }
-updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+-- updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 
-updated_capabilities = vim.tbl_deep_extend('force', updated_capabilities, require('cmp_nvim_lsp').default_capabilities(updated_capabilities))
+-- updated_capabilities = vim.tbl_deep_extend('force', updated_capabilities, require('cmp_nvim_lsp').default_capabilities(updated_capabilities))
 -- TODO: check if this is the problem.
-updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+-- updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 
 -- vim.lsp.buf_request(0, 'textDocument/codeLens', { textDocument = vim.lsp.util.make_text_document_params() })

@@ -1,10 +1,10 @@
-local has_metals, metals = pcall(require, "metals")
+local has_metals, metals = pcall(require, 'metals')
 
 if not has_metals then
   return
 end
 
-local lsp = require "trc.lsp"
+local lsp = require 'trc.lsp'
 
 local metals_config = metals.bare_config()
 
@@ -13,8 +13,8 @@ metals_config.settings = {
   showImplicitArguments = false,
   showInferredType = false,
   excludedPackages = {
-    "akka.actor.typed.javadsl",
-    "com.github.swagger.akka.javadsl"
+    'akka.actor.typed.javadsl',
+    'com.github.swagger.akka.javadsl'
   },
   superMethodLensesEnabled = false,
   inlayHints = true,
@@ -34,9 +34,9 @@ metals_config.settings = {
 -- you *have* to have a setting to display this in your statusline or else
 -- you'll not see any messages from metals. There is more info in the help
 -- docs about this
-metals_config.init_options.statusBarProvider = "on"
+metals_config.init_options.statusBarProvider = 'on'
 
-local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+local updated_capabilities = require('blink.cmp').get_lsp_capabilities() -- vim.lsp.protocol.make_client_capabilities()
 if nvim_status then
 	updated_capabilities = vim.tbl_deep_extend('keep', updated_capabilities, nvim_status.capabilities)
 end
@@ -44,12 +44,12 @@ updated_capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
 }
-updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+-- updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 
-updated_capabilities = vim.tbl_deep_extend('force', updated_capabilities, require('cmp_nvim_lsp').default_capabilities(updated_capabilities))
+-- updated_capabilities = vim.tbl_deep_extend('force', updated_capabilities, require('cmp_nvim_lsp').default_capabilities(updated_capabilities))
 -- TODO: check if this is the problem.
-updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+-- updated_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 
 -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
@@ -63,15 +63,15 @@ metals_config.on_init = function(client)
   -- lsp.on_init(client)
 end
 
-local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
+local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
   -- NOTE: You may or may not want java included here. You will need it if you
   -- want basic Java support but it may also conflict if you are using
   -- something like nvim-jdtls which also works on a java filetype autocmd.
   pattern = {
-    "scala",
-    "sbt",
-    "java",
+    'scala',
+    'sbt',
+    'java',
   },
   callback = function()
     metals.initialize_or_attach(metals_config)

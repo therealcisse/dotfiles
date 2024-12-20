@@ -6,10 +6,10 @@ end
 codecompanion.setup({
   adapters = {
     openai = function()
-      return require("codecompanion.adapters").extend("openai", {
+      return require('codecompanion.adapters').extend('openai', {
         env = {
-          api_key = "OPENAI_API_KEY",
-          model = "gpt-4o",
+          api_key = 'OPENAI_API_KEY',
+          model = 'gpt-4o',
         },
       })
     end,
@@ -28,7 +28,7 @@ codecompanion.setup({
           callback = function(chat)
             -- chat.ui:hide()
           end,
-          description = "Hide the chat buffer",
+          description = 'Hide the chat buffer',
         },
       },
     },
@@ -36,7 +36,7 @@ codecompanion.setup({
       adapter = 'openai',
     },
     cmd = {
-      adapter = "openai"
+      adapter = 'openai'
     },
   },
   display = {

@@ -14,7 +14,8 @@ jsonnet.setup({
     -- default to false to not break existing installs
     load_lsp_config = false,
     -- Pass along nvim-cmp capabilities if you use that.
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    -- capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    capabilities = require('blink.cmp').get_lsp_capabilities(),
 
     -- default to false to not break existing installs
     load_dap_config = false,

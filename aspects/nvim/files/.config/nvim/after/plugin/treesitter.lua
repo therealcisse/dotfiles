@@ -11,11 +11,11 @@ local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
 parser_config.ziggy = {
   install_info = {
-    url = "https://github.com/kristoff-it/ziggy", -- local path or git repo
-    includes = {"tree-sitter-ziggy/src"},
-    files = {"tree-sitter-ziggy/src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+    url = 'https://github.com/kristoff-it/ziggy', -- local path or git repo
+    includes = {'tree-sitter-ziggy/src'},
+    files = {'tree-sitter-ziggy/src/parser.c'}, -- note that some parsers also require src/scanner.c or src/scanner.cc
     -- optional entries:
-    branch = "main", -- default branch in case of git repo if different from master
+    branch = 'main', -- default branch in case of git repo if different from master
     generate_requires_npm = false, -- if stand-alone parser without npm dependencies
     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
   },
@@ -23,20 +23,20 @@ parser_config.ziggy = {
 
 parser_config.ziggy_schema = {
   install_info = {
-    url = "https://github.com/kristoff-it/ziggy", -- local path or git repo
-    files = {"tree-sitter-ziggy-schema/src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+    url = 'https://github.com/kristoff-it/ziggy', -- local path or git repo
+    files = {'tree-sitter-ziggy-schema/src/parser.c'}, -- note that some parsers also require src/scanner.c or src/scanner.cc
     -- optional entries:
-    branch = "main", -- default branch in case of git repo if different from master
+    branch = 'main', -- default branch in case of git repo if different from master
     generate_requires_npm = false, -- if stand-alone parser without npm dependencies
     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
   },
-  filetype = "ziggy-schema",
+  filetype = 'ziggy-schema',
 }
 
 vim.filetype.add({
   extension = {
     ziggy = 'ziggy',
-    ["ziggy-schema"] = "ziggy_schema",
+    ['ziggy-schema'] = 'ziggy_schema',
   }
 })
 
@@ -173,10 +173,10 @@ local _ = require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = '<M-w>', -- maps in normal mode to init the node/scope selection
-      node_incremental = '<M-w>', -- increment to the upper named parent
-      node_decremental = '<M-C-w>', -- decrement to the previous node
-      scope_incremental = '<M-e>', -- increment to the upper scope (as defined in locals.scm)
+      init_selection = '<CR>',
+      scope_incremental = '<CR>',
+      node_incremental = '<CR>',
+      node_decremental = '<C-Enter>'
     },
   },
 
@@ -276,29 +276,29 @@ vim.cmd [[highlight IncludedC guibg=#373b41]]
 vim.cmd [[nnoremap <leader>tp :TSPlaygroundToggle<CR>]]
 vim.cmd [[nnoremap <leader>th :TSHighlightCapturesUnderCursor<CR>]]
 
-local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
 
 -- Repeat movement with ; and ,
 -- ensure ; goes forward and , goes backward regardless of the last direction
-vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move_next)
+vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_previous)
 
 -- vim way: ; goes to the direction you were moving.
--- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
--- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+-- vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
+-- vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
 
 -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
+vim.keymap.set({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f_expr, { expr = true })
+vim.keymap.set({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F_expr, { expr = true })
+vim.keymap.set({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t_expr, { expr = true })
+vim.keymap.set({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T_expr, { expr = true })
 
 -- example: make gitsigns.nvim movement repeatable with ; and , keys.
-local gs = require("gitsigns")
+local gs = require('gitsigns')
 
 -- make sure forward function comes first
 local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
 -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
 
-vim.keymap.set({ "n", "x", "o" }, "]c", next_hunk_repeat)
-vim.keymap.set({ "n", "x", "o" }, "[c", prev_hunk_repeat)
+vim.keymap.set({ 'n', 'x', 'o' }, ']c', next_hunk_repeat)
+vim.keymap.set({ 'n', 'x', 'o' }, '[c', prev_hunk_repeat)

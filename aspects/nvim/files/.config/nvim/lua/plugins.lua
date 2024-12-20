@@ -206,6 +206,7 @@ return require('lazy').setup({
     'vim-scripts/ReplaceWithRegister',
     keys = {
       { '<leader>gr', '<Plug>ReplaceWithRegisterOperator', {'n', 'v'}, desc = 'ReplaceWithRegisterOperator' },
+      { 'mr', '<Plug>ReplaceWithRegisterOperator', {'n', 'v'}, desc = 'ReplaceWithRegisterOperator' },
     },
   }, -- replace <motion> with register
 
@@ -504,19 +505,19 @@ return require('lazy').setup({
 	-- Completion
 
 	-- Sources
-	'hrsh7th/nvim-cmp',
-	'hrsh7th/cmp-cmdline',
-	'hrsh7th/cmp-buffer',
-	'hrsh7th/cmp-path',
-	'hrsh7th/cmp-nvim-lua',
-	'hrsh7th/cmp-nvim-lsp',
-	'hrsh7th/cmp-nvim-lsp-document-symbol',
-	'saadparwaiz1/cmp_luasnip',
-	'tamago324/cmp-zsh',
-	'ray-x/lsp_signature.nvim',
-	'hrsh7th/cmp-nvim-lsp-signature-help',
+	-- 'hrsh7th/nvim-cmp',
+	-- 'hrsh7th/cmp-cmdline',
+	-- 'hrsh7th/cmp-buffer',
+	-- 'hrsh7th/cmp-path',
+	-- 'hrsh7th/cmp-nvim-lua',
+	-- 'hrsh7th/cmp-nvim-lsp',
+	-- 'hrsh7th/cmp-nvim-lsp-document-symbol',
+	-- 'saadparwaiz1/cmp_luasnip',
+	-- 'tamago324/cmp-zsh',
+	-- 'ray-x/lsp_signature.nvim',
+	-- 'hrsh7th/cmp-nvim-lsp-signature-help',
 	-- Comparators
-	'lukas-reineke/cmp-under-comparator',
+	-- 'lukas-reineke/cmp-under-comparator',
 	-- Find and replace
 	{
     'windwp/nvim-spectre',
@@ -750,6 +751,8 @@ return require('lazy').setup({
 
   'fgheng/winbar.nvim',
 
+  'rlane/pounce.nvim',
+
   {
     'olimorris/codecompanion.nvim',
     dependencies = {
@@ -764,6 +767,7 @@ return require('lazy').setup({
       file_types = {
         'markdown',
         'Avante',
+        'AvanteInput',
         'codecompanion'
       },
     },
@@ -771,6 +775,7 @@ return require('lazy').setup({
     ft = {
       'markdown',
       'Avante',
+      'AvanteInput',
       'codecompanion'
     },
   },
@@ -818,7 +823,9 @@ return require('lazy').setup({
             chat = true,
             command = false,
             -- string with model name or table with model name and parameters
-            model = { model = 'gemini-pro', temperature = 1.1, top_p = 1 },
+            -- model = { model = 'gemini-pro', temperature = 1.1, top_p = 1 },
+            -- model = { model = 'gemini-2.0-flash-exp', temperature = 1.1, top_p = 1 },
+            model = { model = 'gemini-exp-1206', temperature = 1.1, top_p = 1 },
             -- system prompt (use this to specify the persona/role of the AI)
             system_prompt = require('gp.defaults').chat_system_prompt,
           },
@@ -873,18 +880,119 @@ return require('lazy').setup({
   'NoahTheDuke/vim-just',
 
   {
+    'zbirenbaum/copilot-cmp',
+    config = function ()
+      require('copilot_cmp').setup()
+    end
+  },
+
+  {
+    'saghen/blink.cmp',
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      'giuxtaposition/blink-cmp-copilot',
+    },
+
+    version = 'v0.*',
+
+    opts = {
+      keymap = {
+        preset = 'default',
+        ['<CR>'] = { 'select_and_accept', 'fallback' },
+        ['<C-e>'] = { 'select_and_accept' },
+        ['<C-j>'] = { 'snippet_forward', 'fallback' },
+        ['<C-k>'] = { 'snippet_backward', 'fallback' },
+      },
+
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+        providers = {
+          copilot = {
+            name = 'copilot',
+            module = 'blink-cmp-copilot',
+            score_offset = 100,
+            async = true,
+            transform_items = function(_, items)
+              local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = 'Copilot'
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
+          },
+        },
+      },
+      appearance = {
+        use_nvim_cmp_as_default = true,
+        nerd_font_variant = 'mono',
+        -- Blink does not expose its default kind icons so you must copy them all (or set your custom ones) and add Copilot
+        kind_icons = {
+          Copilot = '',
+          Text = '󰉿',
+          Method = '󰊕',
+          Function = '󰊕',
+          Constructor = '󰒓',
+
+          Field = '󰜢',
+          Variable = '󰆦',
+          Property = '󰖷',
+
+          Class = '󱡠',
+          Interface = '󱡠',
+          Struct = '󱡠',
+          Module = '󰅩',
+
+          Unit = '󰪚',
+          Value = '󰦨',
+          Enum = '󰦨',
+          EnumMember = '󰦨',
+
+          Keyword = '󰻾',
+          Constant = '󰏿',
+
+          Snippet = '󱄽',
+          Color = '󰏘',
+          File = '󰈔',
+          Reference = '󰬲',
+          Folder = '󰉋',
+          Event = '󱐋',
+          Operator = '󰪚',
+          TypeParameter = '󰬛',
+        },
+      },
+
+      signature = { enabled = true },
+    },
+    opts_extend = { 'sources.default' }
+  },
+
+  {
     'yetone/avante.nvim',
     event = 'VeryLazy',
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = 'gemini',
-      auto_suggestions_provider = 'gemini',
+      -- provider = 'gemini-2.0-flash-exp',
+      provider = 'gemini-exp-1206',
+      auto_suggestions_provider = 'copilot',
       openai = {
         -- endpoint = 'https://api.openai.com/v1/chat/completions',
         model = 'gpt-4o',
         temperature = 1.1,
         max_tokens = 4096,
+      },
+      vendors = {
+        ['gemini-exp-1206'] = {
+          __inherited_from = 'gemini',
+          endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
+          -- model = 'gemini-2.0-flash-exp',
+          model = 'gemini-exp-1206',
+          timeout = 30000, -- Timeout in milliseconds
+          temperature = 1.1,
+          max_tokens = 4096,
+        },
       },
       file_selector = {
         provider = 'telescope',
@@ -901,23 +1009,25 @@ return require('lazy').setup({
       'MunifTanjim/nui.nvim',
       --- The below dependencies are optional,
       'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-      -- {
-      --   'zbirenbaum/copilot.lua',
-      --   cmd = 'Copilot',
-      --   event = 'InsertEnter',
-      --   config = function()
-      --     require('copilot').setup({
-      --       filetypes = {
-      --         javascript = true, -- allow specific filetype
-      --         typescript = true, -- allow specific filetype
-      --         scala = true, -- allow specific filetype
-      --         dart = true, -- allow specific filetype
-      --         ['*'] = false, -- disable for all other filetypes and ignore default `filetypes`
-      --       },
-      --     })
-      --
-      --   end,
-      -- }, -- for providers='copilot'
+      {
+        'zbirenbaum/copilot.lua',
+        cmd = 'Copilot',
+        event = 'InsertEnter',
+        config = function()
+          require('copilot').setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+            filetypes = {
+              scala = true, -- allow specific filetype
+              -- javascript = true, -- allow specific filetype
+              -- typescript = true, -- allow specific filetype
+              -- dart = true, -- allow specific filetype
+              ['*'] = false, -- disable for all other filetypes and ignore default `filetypes`
+            },
+          })
+
+        end,
+      }, -- for providers='copilot'
       {
          -- support for image pasting
         'HakonHarnes/img-clip.nvim',

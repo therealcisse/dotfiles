@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "gitcommit", "markdown" },
+  pattern = { "gitcommit", "markdown", "Avante" },
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
@@ -69,3 +69,11 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
     vim.cmd "hi link illuminatedWord LspReferenceText"
   end,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'Avante',
+    callback = function()
+        vim.keymap.set({'n', 'o'}, '<ESC>', '<Nop>', { buffer = true })
+    end
+})
+

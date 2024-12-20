@@ -862,6 +862,8 @@ nnoremap <localleader>ww <cmd>Telescope lsp_document_symbols<CR>
 lua << EOF
   require "trc.impatient"
 
+  vim.opt.fillchars:append({ eob = " " })
+
   require "trc.profile"
   require 'trc.globals'
 
@@ -911,9 +913,10 @@ lua << EOF
   require "trc.terraform"
   require "trc.jsonnet"
   require "trc.markdown"
-  -- require "trc.codecompanion"
+  require "trc.codecompanion"
   -- require "trc.harpoon"
   require "trc.gp"
+  require "trc.pounce"
 
   if vim.loader then
     -- vim.loader.enable()
