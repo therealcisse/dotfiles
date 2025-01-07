@@ -27,7 +27,6 @@
       ".config/screenkey.json",
       ".config/sxhkd",
       ".config/xkeysnail.py",
-      ".config/wezterm",
       ".ssh/config",
       ".ghci",
       ".gitattributes",
@@ -39,7 +38,6 @@
       ".hammerspoon",
       ".sbt",
       ".sbtopts",
-      ".oh-my-zsh",
       ".hgrc",
       ".inputrc",
       ".lbdbrc",
@@ -50,16 +48,10 @@
       ".rgrc",
       ".rspec",
       ".screenrc",
-      ".tmux.conf",
       ".scalafmt.conf",
       ".urlview",
       ".xinitrc",
-      ".zsh",
-      ".zshenv",
-      ".zshenv.d",
-      ".zshrc",
-      "ginit.vim",
-      ".p10k.zsh"
+      "ginit.vim"
     ],
     "templates": [
       ".corpusrc.erb",

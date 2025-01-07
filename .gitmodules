@@ -1,33 +1,9 @@
-[submodule "vendor/base16-templates-source"]
-	path = vendor/base16-templates-source
-	url = https://github.com/chriskempson/base16-templates-source.git
-[submodule "vendor/base16-schemes-source"]
-	path = vendor/base16-schemes-source
-	url = https://github.com/chriskempson/base16-schemes-source.git
 [submodule "vendor/n"]
 	path = vendor/n
 	url = https://github.com/tj/n.git
 [submodule "vendor/git-cipher"]
 	path = vendor/git-cipher
 	url = https://github.com/wincent/git-cipher
-[submodule "aspects/dotfiles/files/.oh-my-zsh"]
-	path = aspects/dotfiles/files/.oh-my-zsh
-	url = https://github.com/robbyrussell/oh-my-zsh
 [submodule "aspects/dotfiles/files/.tpm"]
 	path = aspects/dotfiles/files/.tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "aspects/dotfiles/files/.zsh/bundle/zsh-autopair"]
-	path = aspects/dotfiles/files/.zsh/bundle/zsh-autopair
-	url = https://github.com/hlissner/zsh-autopair
-[submodule "aspects/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions"]
-	path = aspects/dotfiles/files/.zsh/oh-my-zsh/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "aspects/dotfiles/files/.zsh/zsh-history-substring-search"]
-	path = aspects/dotfiles/files/.zsh/zsh-history-substring-search
-	url = https://github.com/zsh-users/zsh-history-substring-search
-[submodule "aspects/dotfiles/files/.zsh/zsh-syntax-highlighting"]
-	path = aspects/dotfiles/files/.zsh/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "aspects/dotfiles/files/.zsh/oh-my-zsh/themes/powerlevel10k"]
-	path = aspects/dotfiles/files/.zsh/oh-my-zsh/themes/powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git

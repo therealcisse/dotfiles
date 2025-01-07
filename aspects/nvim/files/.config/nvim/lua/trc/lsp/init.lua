@@ -199,6 +199,8 @@ vim.keymap.set('n', '<leader>dE', function()
 end)
 
 function M.on_attach(client, bufnr)
+  -- client.server_capabilities.semanticTokensProvider = nil
+
 	local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
 
 	if vim.g.vscode then
@@ -471,7 +473,7 @@ local servers = {
 	-- },
 
 	rust_analyzer = {
-		cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
+		cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
 		flags = {
 			debounce_text_changes = 150,
 		},

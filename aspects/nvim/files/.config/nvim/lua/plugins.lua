@@ -1,10 +1,10 @@
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup lazy_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | Lazy sync
-  augroup end
-]])
+-- vim.cmd([[
+--   augroup lazy_user_config
+--     autocmd!
+--     autocmd BufWritePost plugins.lua source <afile> | Lazy sync
+--   augroup end
+-- ]])
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -138,7 +138,7 @@ return require('lazy').setup({
   {
     'vim-scripts/ReplaceWithRegister',
     keys = {
-      { '<leader>gr', '<Plug>ReplaceWithRegisterOperator', {'n', 'v'}, desc = 'ReplaceWithRegisterOperator' },
+      -- { '<leader>gr', '<Plug>ReplaceWithRegisterOperator', {'n', 'v'}, desc = 'ReplaceWithRegisterOperator' },
       { 'mr', '<Plug>ReplaceWithRegisterOperator', {'n', 'v'}, desc = 'ReplaceWithRegisterOperator' },
     },
   }, -- replace <motion> with register
@@ -274,18 +274,18 @@ return require('lazy').setup({
       }
     },
     keys = {
-      { '<leader>un', function() Snacks.notifier.hide() end, desc = 'Dismiss All Notifications' },
-      { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
-      { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit' },
-      { '<leader>gb', function() Snacks.git.blame_line() end, desc = 'Git Blame Line' },
-      { '<leader>gB', function() Snacks.gitbrowse() end, desc = 'Git Browse' },
-      { '<leader>gf', function() Snacks.lazygit.log_file() end, desc = 'Lazygit Current File History' },
-      { '<leader>gl', function() Snacks.lazygit.log() end, desc = 'Lazygit Log (cwd)' },
-      { '<leader>cR', function() Snacks.rename.rename_file() end, desc = 'Rename File' },
+      -- { '<leader>un', function() Snacks.notifier.hide() end, desc = 'Dismiss All Notifications' },
+      -- { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
+      -- { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit' },
+      -- { '<leader>gb', function() Snacks.git.blame_line() end, desc = 'Git Blame Line' },
+      -- { '<leader>gB', function() Snacks.gitbrowse() end, desc = 'Git Browse' },
+      -- { '<leader>gf', function() Snacks.lazygit.log_file() end, desc = 'Lazygit Current File History' },
+      -- { '<leader>gl', function() Snacks.lazygit.log() end, desc = 'Lazygit Log (cwd)' },
+      -- { '<leader>cR', function() Snacks.rename.rename_file() end, desc = 'Rename File' },
       { '<c-/>',      function() Snacks.terminal('zsh') end, desc = 'Toggle Terminal' },
-      { '<c-_>',      function() Snacks.terminal() end, desc = 'which_key_ignore' },
-      { ']]',         function() Snacks.words.jump(vim.v.count1) end, desc = 'Next Reference', mode = { 'n', 't' } },
-      { '[[',         function() Snacks.words.jump(-vim.v.count1) end, desc = 'Prev Reference', mode = { 'n', 't' } },
+      -- { '<c-_>',      function() Snacks.terminal() end, desc = 'which_key_ignore' },
+      -- { ']]',         function() Snacks.words.jump(vim.v.count1) end, desc = 'Next Reference', mode = { 'n', 't' } },
+      -- { '[[',         function() Snacks.words.jump(-vim.v.count1) end, desc = 'Prev Reference', mode = { 'n', 't' } },
       {
         '<leader>N',
         desc = 'Neovim News',
@@ -346,22 +346,7 @@ return require('lazy').setup({
 	{ 'nvim-telescope/telescope-hop.nvim' },
 	{ 'nvim-telescope/telescope-file-browser.nvim' },
 	{ 'nvim-telescope/telescope-ui-select.nvim' },
-	{
-		'Shatur/neovim-ayu',
-		config = function()
-			require('ayu').setup({
-				overrides = {},
-			})
-		end,
-	},
 	{ 'nvim-telescope/telescope-live-grep-args.nvim' },
-
-	{
-		'AckslD/nvim-neoclip.lua',
-		config = function()
-			require('neoclip').setup()
-		end,
-	},
 
 	-- Little know features:
 	--   :SSave
@@ -378,13 +363,9 @@ return require('lazy').setup({
   { 'brenoprata10/nvim-highlight-colors' },
   { 'gen740/SmoothCursor.nvim',
     config = function()
-      require('smoothcursor').setup()
+      require('smoothcursor').setup {}
     end
   },
-
-	-- Show only what you're searching for.
-	-- STREAM: Could probably make this a bit better. Definitely needs docs
-	-- 'tjdevries/fold_search.vim',
 
 	-- Quickfix enhancements. See :help vim-qf
 	'romainl/vim-qf',
@@ -452,12 +433,12 @@ return require('lazy').setup({
 	-- Comparators
 	-- 'lukas-reineke/cmp-under-comparator',
 	-- Find and replace
-	{
-    'windwp/nvim-spectre',
-		config = function()
-      require('spectre').setup()
-		end,
-	},
+	-- {
+	--    'windwp/nvim-spectre',
+	-- 	config = function()
+	--      require('spectre').setup()
+	-- 	end,
+	-- },
 
 	-- TREE SITTER:
 	{
@@ -467,8 +448,8 @@ return require('lazy').setup({
 		event = 'BufReadPost',
 		-- commit = '33eb472',
 	},
-	'nvim-treesitter/nvim-treesitter-context',
-	'nvim-treesitter/playground',
+	-- 'nvim-treesitter/nvim-treesitter-context',
+	-- 'nvim-treesitter/playground',
 
 	'nvim-treesitter/nvim-treesitter-textobjects',
 	-- 'JoosepAlviste/nvim-ts-context-commentstring',
@@ -508,25 +489,15 @@ return require('lazy').setup({
 		'AndrewRadev/splitjoin.vim',
 		keys = { 'gJ', 'gS' },
 	},
-	{
-		'm-demare/hlargs.nvim',
-		event = 'User PackerDefered',
-		config = function()
-			require('hlargs').setup({
-				color = require('tokyonight.colors').setup().yellow,
-			})
-		end,
-	},
-	{
-		'simrat39/symbols-outline.nvim',
-		cmd = { 'SymbolsOutline' },
-		config = function()
-			require('symbols-outline').setup()
-		end,
-		setup = function()
-			vim.keymap.set('n', '<leader>cs', '<cmd>SymbolsOutline<cr>', { desc = 'Symbols Outline' })
-		end,
-	},
+	-- {
+	-- 	'm-demare/hlargs.nvim',
+	-- 	event = 'User PackerDefered',
+	-- 	config = function()
+	-- 		require('hlargs').setup({
+	-- 			color = require('tokyonight.colors').setup().yellow,
+	-- 		})
+	-- 	end,
+	-- },
 
 	{
 		'kylechui/nvim-surround',
@@ -627,7 +598,7 @@ return require('lazy').setup({
 		'tiagovla/tokyodark.nvim',
 		opts = {},
 		config = function(_, opts)
-			require('tokyodark').setup(opts) -- calling setup is optional
+			-- require('tokyodark').setup(opts) -- calling setup is optional
 			vim.cmd([[colorscheme tokyodark]])
 		end,
 	},
@@ -701,7 +672,8 @@ return require('lazy').setup({
         'markdown',
         'Avante',
         'AvanteInput',
-        'codecompanion'
+        'codecompanion',
+        'CopilotChat',
       },
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
@@ -758,7 +730,8 @@ return require('lazy').setup({
             -- string with model name or table with model name and parameters
             -- model = { model = 'gemini-pro', temperature = 1.1, top_p = 1 },
             -- model = { model = 'gemini-2.0-flash-exp', temperature = 1.1, top_p = 1 },
-            model = { model = 'gemini-exp-1206', temperature = 1.1, top_p = 1 },
+            -- model = { model = 'gemini-exp-1206', temperature = 1.1, top_p = 1 },
+            model = { model = 'gemini-2.0-flash-thinking-exp-1219', temperature = 1.1, top_p = 1 },
             -- system prompt (use this to specify the persona/role of the AI)
             system_prompt = require('gp.defaults').chat_system_prompt,
           },
@@ -812,13 +785,30 @@ return require('lazy').setup({
 
   'NoahTheDuke/vim-just',
 
-  -- {
-  --   'zbirenbaum/copilot-cmp',
-  --   config = function ()
-  --     require('copilot_cmp').setup()
-  --   end
-  -- },
+  {
+    'javiorfo/nvim-nyctophilia',
+    lazy = false,
+    init = function()
+      -- Available themes: nox, umbra, nebula and tenebra
+      -- vim.cmd[[colorscheme nox]]
+    end
+  },
 
+  -- {
+  --   "folke/edgy.nvim",
+  --   event = "VeryLazy",
+  --   opts = {}
+  -- },
+  {
+    'saghen/blink.compat',
+    -- use the latest release, via version = '*', if you also use the latest release for blink.cmp
+    version = '*',
+    -- lazy.nvim will automatically load the plugin when it's required by blink.cmp
+    lazy = true,
+    -- make sure to set opts so that lazy.nvim calls blink.compat's setup
+    opts = {
+    },
+  },
   {
     'saghen/blink.cmp',
     dependencies = {
@@ -831,6 +821,16 @@ return require('lazy').setup({
     lazy = false,
 
     opts = {
+      enabled = function()
+        return not vim.tbl_contains({
+          'AvanteInput',
+          'copilot-chat',
+          'markdown',
+          'codecompanion',
+          'CopilotChat',
+        }, vim.bo.filetype) and vim.bo.buftype ~= 'prompt' and vim.b.completion ~= false
+      end,
+
       keymap = {
         preset = 'default',
 
@@ -852,51 +852,127 @@ return require('lazy').setup({
       },
 
       completion = {
+
+        trigger = {
+          show_on_keyword = true,
+          -- show_on_trigger_character = true,
+          -- show_on_insert_on_trigger_character = true,
+          -- show_on_accept_on_trigger_character = true,
+        },
+
+        list = {
+          selection = function(ctx)
+            return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect'
+          end
+        },
+
         menu = {
+
+          draw = {
+            components = {
+              kind_icon = {
+                ellipsis = false,
+                text = function(ctx)
+                  local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+                  return kind_icon
+                end,
+                -- Optionally, you may also use the highlights from mini.icons
+                highlight = function(ctx)
+                  local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                  return hl
+                end,
+              }
+            }
+          },
+
+          auto_show = function(ctx) return ctx.mode ~= 'cmdline' end,
           scrollbar = false,
           border = {
-            { "󱐋", "WarningMsg" },
-            "─",
-            "╮",
-            "│",
-            "╯",
-            "─",
-            "╰",
-            "│",
+            { '󱐋', 'WarningMsg' },
+            '─',
+            '╮',
+            '│',
+            '╯',
+            '─',
+            '╰',
+            '│',
           },
         },
         documentation = {
+          auto_show_delay_ms = 500,
           auto_show = true,
           treesitter_highlighting = true,
           window = {
             border = {
-              { "", "DiagnosticHint" },
-              "─",
-              "╮",
-              "│",
-              "╯",
-              "─",
-              "╰",
-              "│",
+              { '', 'DiagnosticHint' },
+              '─',
+              '╮',
+              '│',
+              '╯',
+              '─',
+              '╰',
+              '│',
             },
           },
         },
         ghost_text = {
-          enabled = true,
+          enabled = false,
         },
       },
 
       sources = {
-        cmdline = function()
-          return {}
+        default = function(ctx)
+          local success, node = pcall(vim.treesitter.get_node)
+          if vim.bo.filetype == 'lua' then
+            return { 'lsp', 'path' }
+          elseif success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+            return { 'buffer' }
+          else
+            return {
+              'lsp',
+              'path',
+              'cmdline',
+              'snippets',
+              'buffer',
+              'copilot',
+              'avante_commands',
+              'avante_mentions',
+              'avante_files',
+             }
+          end
         end,
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+        -- cmdline = {},
         providers = {
+          avante_commands = {
+            name = 'avante_commands',
+            module = 'blink.compat.source',
+            score_offset = 90, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_files = {
+            name = 'avante_commands',
+            module = 'blink.compat.source',
+            score_offset = 100, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_mentions = {
+            name = 'avante_mentions',
+            module = 'blink.compat.source',
+            score_offset = 1000, -- show at a higher priority than lsp
+            opts = {},
+          },
+          -- dadbod = {
+          --   name = 'Dadbod',
+          --   module = 'vim_dadbod_completion.blink',
+          --   score_offset = 950,
+          -- },
           copilot = {
-            enabled = true,
+            enabled = function()
+              return not vim.tbl_contains({ 'scala', 'sbt', 'java', 'dart' }, vim.bo.filetype) and vim.bo.buftype ~= 'prompt'
+            end,
             name = 'copilot',
             module = 'blink-cmp-copilot',
-            score_offset = 100,
+            score_offset = 2000,
             async = true,
             transform_items = function(_, items)
               local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
@@ -954,14 +1030,14 @@ return require('lazy').setup({
         enabled = true,
         window = {
           border = {
-            { "", "DiagnosticHint" },
-            "─",
-            "╮",
-            "│",
-            "╯",
-            "─",
-            "╰",
-            "│",
+            { '', 'DiagnosticHint' },
+            '─',
+            '╮',
+            '│',
+            '╯',
+            '─',
+            '╰',
+            '│',
           },
         },
 
@@ -972,13 +1048,195 @@ return require('lazy').setup({
   },
 
   {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    -- version = 'v3.3.0', -- Use a specific version to prevent breaking changes
+    dependencies = {
+      { 'nvim-telescope/telescope.nvim' }, -- Use telescope for help actions
+      { 'nvim-lua/plenary.nvim' },
+    },
+    build = 'make tiktoken', -- Only on MacOS or Linux
+    opts = {
+      question_header = '## User ',
+      answer_header = '## Copilot ',
+      error_header = '## Error ',
+      prompts = {
+        -- Code related prompts
+        Explain = 'Please explain how the following code works.',
+        Review = 'Please review the following code and provide suggestions for improvement.',
+        Tests = 'Please explain how the selected code works, then generate unit tests for it.',
+        Refactor = 'Please refactor the following code to improve its clarity and readability.',
+        FixCode = 'Please fix the following code to make it work as intended.',
+        FixError = 'Please explain the error in the following text and provide a solution.',
+        BetterNamings = 'Please provide better names for the following variables and functions.',
+        Documentation = 'Please provide documentation for the following code.',
+        SwaggerApiDocs = 'Please provide documentation for the following API using Swagger.',
+        SwaggerJsDocs = 'Please write JSDoc for the following API using Swagger.',
+        -- Text related prompts
+        Summarize = 'Please summarize the following text.',
+        Spelling = 'Please correct any grammar and spelling errors in the following text.',
+        Wording = 'Please improve the grammar and wording of the following text.',
+        Concise = 'Please rewrite the following text to make it more concise.',
+      },
+      auto_follow_cursor = false, -- Don't follow the cursor after getting response
+      mappings = {
+        chat_autocomplete = false,
+        -- Use tab for completion
+        complete = {
+          detail = 'Use @<C-space> or /<C-space> for options.',
+          insert = '<C-space>',
+        },
+        -- Close the chat
+        close = {
+          normal = 'q',
+          insert = '',
+        },
+        -- Reset the chat buffer
+        reset = {
+          normal = '<C-x>',
+          insert = '<C-x>',
+        },
+        -- Submit the prompt to Copilot
+        submit_prompt = {
+          normal = '<C-g><C-g>',
+          insert = '<C-g><C-g>',
+        },
+        -- Accept the diff
+        accept_diff = {
+          normal = '<C-y>',
+          insert = '<C-y>',
+        },
+        -- Show help
+        show_help = {
+          normal = 'g?',
+        },
+      },
+    },
+    config = function(_, opts)
+      local chat = require('CopilotChat')
+      chat.setup(opts)
+
+      local select = require('CopilotChat.select')
+      vim.api.nvim_create_user_command('CopilotChatVisual', function(args)
+        chat.ask(args.args, { selection = select.visual })
+      end, { nargs = '*', range = true })
+
+      -- Inline chat with Copilot
+      vim.api.nvim_create_user_command('CopilotChatInline', function(args)
+        chat.ask(args.args, {
+          selection = select.visual,
+          window = {
+            layout = 'float',
+            relative = 'cursor',
+            width = 1,
+            height = 0.4,
+            row = 1,
+          },
+        })
+      end, { nargs = '*', range = true })
+
+      -- Restore CopilotChatBuffer
+      vim.api.nvim_create_user_command('CopilotChatBuffer', function(args)
+        chat.ask(args.args, { selection = select.buffer })
+      end, { nargs = '*', range = true })
+
+      -- Custom buffer for CopilotChat
+      vim.api.nvim_create_autocmd('BufEnter', {
+        pattern = 'copilot-*',
+        callback = function()
+          vim.opt_local.relativenumber = true
+          vim.opt_local.number = true
+
+          -- Get current filetype and set it to markdown if the current filetype is copilot-chat
+          local ft = vim.bo.filetype
+          if ft == 'copilot-chat' then
+            vim.bo.filetype = 'markdown'
+          end
+        end,
+      })
+    end,
+    event = 'VeryLazy',
+    keys = {
+      -- Show prompts actions with telescope
+      {
+        '<leader>gp',
+        function()
+          local actions = require('CopilotChat.actions')
+          require('CopilotChat.integrations.telescope').pick(actions.prompt_actions())
+        end,
+        desc = 'CopilotChat - Prompt actions',
+      },
+      {
+        '<leader>gp',
+        ':lua require("CopilotChat.integrations.telescope").pick(require("CopilotChat.actions").prompt_actions({selection = require("CopilotChat.select").visual}))<CR>',
+        mode = 'x',
+        desc = 'CopilotChat - Prompt actions',
+      },
+      -- Code related commands
+      { '<leader>ge', '<cmd>CopilotChatExplain<cr>', desc = 'CopilotChat - Explain code' },
+      { '<leader>gt', '<cmd>CopilotChatTests<cr>', desc = 'CopilotChat - Generate tests' },
+      { '<leader>gr', '<cmd>CopilotChatReview<cr>', desc = 'CopilotChat - Review code' },
+      { '<leader>gR', '<cmd>CopilotChatRefactor<cr>', desc = 'CopilotChat - Refactor code' },
+      { '<leader>gn', '<cmd>CopilotChatBetterNamings<cr>', desc = 'CopilotChat - Better Naming' },
+      -- Chat with Copilot in visual mode
+      {
+        '<leader>gv',
+        ':CopilotChatVisual',
+        mode = 'x',
+        desc = 'CopilotChat - Open in vertical split',
+      },
+      {
+        '<leader>gx',
+        ':CopilotChatInline<cr>',
+        mode = 'x',
+        desc = 'CopilotChat - Inline chat',
+      },
+      -- Custom input for CopilotChat
+      {
+        '<leader>gi',
+        function()
+          local input = vim.fn.input('Ask Copilot: ')
+          if input ~= '' then
+            vim.cmd('CopilotChat ' .. input)
+          end
+        end,
+        desc = 'CopilotChat - Ask input',
+      },
+      -- Generate commit message based on the git diff
+      {
+        '<leader>gm',
+        '<cmd>CopilotChatCommit<cr>',
+        desc = 'CopilotChat - Generate commit message for all changes',
+      },
+      -- Quick chat with Copilot
+      {
+        '<leader>gq',
+        function()
+          local input = vim.fn.input('Quick Chat: ')
+          if input ~= '' then
+            vim.cmd('CopilotChatBuffer ' .. input)
+          end
+        end,
+        desc = 'CopilotChat - Quick chat',
+      },
+      { '<leader>gd', '<cmd>CopilotChatDebugInfo<cr>', desc = 'CopilotChat - Debug Info' },
+      { '<leader>gf', '<cmd>CopilotChatFixDiagnostic<cr>', desc = 'CopilotChat - Fix Diagnostic' },
+      { '<leader>gl', '<cmd>CopilotChatReset<cr>', desc = 'CopilotChat - Clear buffer and chat history' },
+      { '<leader>gv', '<cmd>CopilotChatToggle<cr>', desc = 'CopilotChat - Toggle' },
+      { '<leader>g?', '<cmd>CopilotChatModels<cr>', desc = 'CopilotChat - Select Models' },
+      { '<leader>gs', '<cmd>CopilotChatStop<cr>',  desc = 'AI Stop'  },
+      { '<leader>ga', '<cmd>CopilotChatToggle<cr>',  desc = 'AI Toggle'  },
+    },
+  },
+
+  {
     'yetone/avante.nvim',
     event = 'VeryLazy',
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
       -- provider = 'gemini-2.0-flash-exp',
-      provider = 'gemini-exp-1206',
+      -- provider = 'gemini-exp-1206',
+      provider = 'gemini-2.0-flash-thinking-exp-1219',
       auto_suggestions_provider = 'copilot',
       openai = {
         -- endpoint = 'https://api.openai.com/v1/chat/completions',
@@ -987,11 +1245,12 @@ return require('lazy').setup({
         max_tokens = 4096,
       },
       vendors = {
-        ['gemini-exp-1206'] = {
+        ['gemini-2.0-flash-thinking-exp-1219'] = {
           __inherited_from = 'gemini',
           endpoint = 'https://generativelanguage.googleapis.com/v1beta/models',
           -- model = 'gemini-2.0-flash-exp',
-          model = 'gemini-exp-1206',
+          -- model = 'gemini-exp-1206',
+          model = 'gemini-2.0-flash-thinking-exp-1219',
           timeout = 30000, -- Timeout in milliseconds
           temperature = 1.1,
           max_tokens = 4096,
@@ -1001,6 +1260,11 @@ return require('lazy').setup({
         provider = 'telescope',
         -- Options override for custom providers
         provider_opts = {},
+      },
+      behaviour = {
+        close = { 'q' },
+        auto_focus_sidebar = true,
+        auto_suggestions_respect_ignore = true,
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

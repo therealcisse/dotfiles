@@ -76,6 +76,7 @@ function s:HandleInactiveBackground()
       hi! DiagnosticError guifg=Red
 
       hi! link SnacksDashboardDir Text
+      hi! link BlinkCmpGhostText Comment
 endif
   " endif
 endfunction

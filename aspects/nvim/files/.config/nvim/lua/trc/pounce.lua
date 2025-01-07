@@ -11,9 +11,11 @@ pounce.setup{
 }
 
 local map = vim.keymap.set
-map("n", "gS", function() require'pounce'.pounce { } end)
-map("n", "gs", function() require'pounce'.pounce { do_repeat = true } end)
-map("x", "gS", function() require'pounce'.pounce { } end)
-map("o", "gS", function() require'pounce'.pounce { } end)
-map("n", "gs", function() require'pounce'.pounce { input = {reg="/"} } end)
+map("n", "gs", function() require'pounce'.pounce { } end)
+map("n", "gS", function() require'pounce'.pounce { do_repeat = true } end)
+
+map("x", "gs", function() require'pounce'.pounce { } end)
+map("o", "gs", function() require'pounce'.pounce { } end)
+
+map("n", "gS", function() require'pounce'.pounce { input = {reg="/"} } end)
 

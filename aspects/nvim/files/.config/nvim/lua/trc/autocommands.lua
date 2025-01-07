@@ -71,3 +71,18 @@ vim.api.nvim_create_autocmd('FileType', {
     end
 })
 
+vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
+  pattern = '*',
+  callback = function()
+    vim.opt.cursorline = false
+    vim.opt.cursorcolumn = false
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
+  pattern = '*',
+  callback = function()
+    vim.opt.cursorline = true -- Restore your preferred setting
+    vim.opt.cursorcolumn = true -- Restore your preferred setting
+  end,
+})

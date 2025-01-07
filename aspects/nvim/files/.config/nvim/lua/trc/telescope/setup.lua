@@ -147,6 +147,7 @@ require("telescope").setup({
 	},
 
 	extensions = {
+
     fzf = {
       fuzzy = true,                    -- false will only do exact matching
       override_generic_sorter = true,  -- override the generic sorter
@@ -218,6 +219,8 @@ require("telescope").setup({
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown({
 				-- even more opts
+        hidden = false,
+        sorting_strategy = "descending",
 			}),
 		},
 
@@ -236,11 +239,11 @@ require("telescope").setup({
 
 -- _ = require("telescope").load_extension("dap")
 -- _ = require("telescope").load_extension("notify")
-_ = require("telescope").load_extension("file_browser")
+-- _ = require("telescope").load_extension("file_browser")
 _ = require("telescope").load_extension("ui-select")
 _ = require("telescope").load_extension("fzf")
 -- _ = require("telescope").load_extension "git_worktree"
-_ = require("telescope").load_extension("neoclip")
+-- _ = require("telescope").load_extension("neoclip")
 _ = require("telescope").load_extension("live_grep_args")
 _ = require("telescope").load_extension("ast_grep")
 -- _ = require("telescope").load_extension "hoggle"
@@ -248,10 +251,10 @@ _ = require("telescope").load_extension("ast_grep")
 pcall(require("telescope").load_extension, "smart_history")
 pcall(require("telescope").load_extension, "frecency")
 
-if vim.fn.executable("gh") == 1 then
-	pcall(require("telescope").load_extension, "gh")
-	pcall(require("telescope").load_extension, "octo")
-end
+-- if vim.fn.executable("gh") == 1 then
+-- 	pcall(require("telescope").load_extension, "gh")
+-- 	pcall(require("telescope").load_extension, "octo")
+-- end
 
 -- LOADED_FRECENCY = LOADED_FRECENCY or true
 -- local has_frecency = true

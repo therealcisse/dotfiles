@@ -10,6 +10,7 @@ local metals_config = metals.bare_config()
 
 -- Example of settings
 metals_config.settings = {
+  autoImportBuild = "initial",
   showImplicitArguments = false,
   showInferredType = false,
   excludedPackages = {

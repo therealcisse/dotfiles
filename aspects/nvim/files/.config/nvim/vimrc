@@ -766,11 +766,34 @@ set cursorlineopt=line,number
 " ----------------------------------------------------------------------------
 " HL | Find out syntax group
 " ----------------------------------------------------------------------------
-function! s:hl()
-  " ech  synIDattr(synID(line('.'), col('.'), 0), 'name')
-  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
+
+function! s:GetHighlightGroupUnderCursor()
+  " Get the syntax ID at the current cursor position
+  let syn_id = synID(line("."), col("."), 1)
+
+  " Get the highlight group name from the syntax ID
+  let hl_group = synIDattr(syn_id, "name")
+
+  " Check if a highlight group was found
+  if hl_group != ""
+    " Get the highlight definition
+    let hl_definition = execute('highlight ' . hl_group)
+
+    " Print the highlight group name
+    echo "Highlight group: " . hl_group
+
+    " Print the highlight definition (in a slightly more readable way)
+    let hl_lines = split(hl_definition, "\n")
+    for line in hl_lines
+      echo line
+    endfor
+
+  else
+    echo "No highlight group found for the word under the cursor."
+  endif
 endfunction
-command! HL call <SID>hl()
+
+command! HL call <SID>GetHighlightGroupUnderCursor()<CR>
 
 set clipboard=unnamedplus
 
@@ -832,6 +855,11 @@ command! CopyBuffer let @+ = expand('%:p')
 command! Jq :%!jq '.'
 command! -range -nargs=+ GpDiff lua gp_diff(<q-args>, <line1>, <line2>)
 
+command! Scratch execute 'vsplit' | execute 'enew' | setlocal buftype=nofile bufhidden=hide noswapfile
+autocmd FileType * nnoremap <buffer> <localleader>s :Scratch<CR>
+
+nnoremap <localleader>m :%s/\V\\n\\t/<C-V><C-M>/g<CR>
+
 " nnoremap <localleader>z <cmd>Centerpad 24 24<CR>
 
 map <C-M> <CR>
@@ -875,7 +903,7 @@ lua << EOF
   -- require "trc.oil"
   require "trc.autopairs"
   require "trc.gitsigns"
-  require "trc.winbar"
+  -- require "trc.winbar"
   -- require "trc.barbecue"
   -- require "trc.indentline"
   require "trc.toggleterm"
