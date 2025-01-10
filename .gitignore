@@ -4,7 +4,8 @@ node_modules
 /python
 
 .scala-build/
-.bps/
+.bsp/
+.metals
 target
 
 .DS_Store
