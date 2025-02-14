@@ -1,3 +1,4 @@
+.sbt/
 .bsp
 target
 node_modules

@@ -194,6 +194,13 @@
 	# Added in Git 2.9.0.
 	fetchJobs = 4
 
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = cache
+
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+
 [user]
 <%- if (variables.gitUserEmail) { -%>
 	email = <%= variables.gitUserEmail %>

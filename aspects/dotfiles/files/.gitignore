@@ -1,6 +1,19 @@
 # Useful `.gitignore` templates:
 # https://github.com/github/gitignore
 
+# Bloop
+.bsp
+
+# VS Code
+.vscode/
+
+# Metals
+.bloop/
+.metals/
+.scala-build/
+metals.sbt
+
+
 # ----------------------------------------------------------------------
 # | Linux                                                              |
 # ----------------------------------------------------------------------
